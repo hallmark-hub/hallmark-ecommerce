@@ -74,6 +74,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Payment endpoints can be retried by browsers, webhooks, and operators; retries and late events must not create duplicate records or corrupt paid order state.
 **What was rejected:** Trusting status alone from verify/webhook responses, because amount mismatches and late failed events are common payment integration risks.
 
+## 2026-05-25, Paystack error wrapping
+**What was decided:** Normalize Paystack HTTP, network, and malformed response failures into `PaymentValidationError` messages.
+**Why:** API clients should receive stable envelope-wrapped errors instead of raw `httpx` exceptions or internal parsing failures.
+**What was rejected:** Letting gateway exceptions bubble out of services, because that would produce inconsistent error responses.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

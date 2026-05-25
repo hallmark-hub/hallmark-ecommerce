@@ -15,6 +15,10 @@ class PaymentValidationError(ValueError):
     """Raised when a payment request violates business rules."""
 
 
+class PaystackGatewayError(RuntimeError):
+    """Raised when Paystack API communication fails."""
+
+
 class PaystackGateway(Protocol):
     """Paystack API boundary."""
 
@@ -64,37 +68,43 @@ class HttpPaystackGateway:
         reference: str,
     ) -> dict[str, str]:
         """Initialize a Paystack payment through Paystack API."""
-        response = httpx.post(
-            "https://api.paystack.co/transaction/initialize",
-            headers={"Authorization": f"Bearer {self.secret_key}"},
-            json={"email": email, "amount": amount_pesewas, "reference": reference},
-            timeout=15,
-        )
-        response.raise_for_status()
-        payload = response.json()
-        data = payload["data"]
-        return {
-            "authorization_url": data["authorization_url"],
-            "access_code": data["access_code"],
-            "reference": data["reference"],
-        }
+        try:
+            response = httpx.post(
+                "https://api.paystack.co/transaction/initialize",
+                headers={"Authorization": f"Bearer {self.secret_key}"},
+                json={"email": email, "amount": amount_pesewas, "reference": reference},
+                timeout=15,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            data = payload["data"]
+            return {
+                "authorization_url": data["authorization_url"],
+                "access_code": data["access_code"],
+                "reference": data["reference"],
+            }
+        except (KeyError, TypeError, ValueError, httpx.HTTPError) as exc:
+            raise PaystackGatewayError("Paystack initialization failed") from exc
 
     def verify(self, reference: str) -> dict[str, object]:
         """Verify a Paystack payment through Paystack API."""
-        response = httpx.get(
-            f"https://api.paystack.co/transaction/verify/{reference}",
-            headers={"Authorization": f"Bearer {self.secret_key}"},
-            timeout=15,
-        )
-        response.raise_for_status()
-        payload = response.json()
-        data = payload["data"]
-        return {
-            "reference": reference,
-            "status": data.get("status"),
-            "amount": data.get("amount"),
-            "raw": payload,
-        }
+        try:
+            response = httpx.get(
+                f"https://api.paystack.co/transaction/verify/{reference}",
+                headers={"Authorization": f"Bearer {self.secret_key}"},
+                timeout=15,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            data = payload["data"]
+            return {
+                "reference": reference,
+                "status": data.get("status"),
+                "amount": data.get("amount"),
+                "raw": payload,
+            }
+        except (KeyError, TypeError, ValueError, httpx.HTTPError) as exc:
+            raise PaystackGatewayError("Paystack verification failed") from exc
 
 
 class PaystackService:
@@ -127,11 +137,14 @@ class PaystackService:
                 reference=existing["reference"],
             )
 
-        initialized = self.gateway.initialize(
-            email=order["customer_email"],
-            amount_pesewas=order["total_pesewas"],
-            reference=order["reference"],
-        )
+        try:
+            initialized = self.gateway.initialize(
+                email=order["customer_email"],
+                amount_pesewas=order["total_pesewas"],
+                reference=order["reference"],
+            )
+        except PaystackGatewayError as exc:
+            raise PaymentValidationError(str(exc)) from exc
         self.payments.create_payment(
             {
                 "order_id": order["id"],
@@ -152,7 +165,10 @@ class PaystackService:
         if payment is None:
             raise PaymentValidationError("Payment not found")
 
-        verified = self.gateway.verify(reference)
+        try:
+            verified = self.gateway.verify(reference)
+        except PaystackGatewayError as exc:
+            raise PaymentValidationError(str(exc)) from exc
         _validate_payment_amount(payment, verified.get("amount"))
         payment_status = (
             PaymentStatus.paid

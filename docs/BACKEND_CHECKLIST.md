@@ -70,6 +70,7 @@ Status key:
 - `[x]` Make Paystack initialization idempotent.
 - `[x]` Verify Paystack amounts before marking payments paid.
 - `[x]` Prevent paid Paystack payments from being downgraded by late failed signals.
+- `[x]` Wrap Paystack API/network failures in stable API errors.
 - `[x]` Add `POST /api/v1/payments/bank-transfer`.
 - `[!]` Confirm official GCB and Stanbic bank details before enabling production bank transfer instructions.
 
@@ -105,6 +106,7 @@ Status key:
 - `[x]` Add payment initialization tests with mocked Paystack.
 - `[x]` Add webhook signature tests.
 - `[x]` Add Paystack reliability tests for idempotency, amount checks, and status transitions.
+- `[x]` Add Paystack gateway error wrapping tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.

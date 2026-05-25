@@ -8,6 +8,7 @@ from app.repositories.payment_repository import InMemoryPaymentRepository
 from app.services.order_service import OrderService
 from app.services.paystack_service import (
     LocalPaystackGateway,
+    PaystackGatewayError,
     PaymentValidationError,
     PaystackService,
 )
@@ -85,6 +86,21 @@ class FailedGateway(LocalPaystackGateway):
         return {"reference": reference, "status": "failed", "amount": 30000}
 
 
+class FailingInitializeGateway(LocalPaystackGateway):
+    def initialize(
+        self,
+        email: str,
+        amount_pesewas: int,
+        reference: str,
+    ) -> dict[str, str]:
+        raise PaystackGatewayError("Paystack initialization failed")
+
+
+class FailingVerifyGateway(LocalPaystackGateway):
+    def verify(self, reference: str) -> dict[str, object]:
+        raise PaystackGatewayError("Paystack verification failed")
+
+
 def test_paystack_verify_rejects_amount_mismatch() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
@@ -110,3 +126,25 @@ def test_paystack_verify_does_not_downgrade_paid_payment() -> None:
 
     assert verified.payment_status == "paid"
     assert payments.get_payment_by_reference(initialized.reference)["status"] == "paid"
+
+
+def test_paystack_initialize_wraps_gateway_failure() -> None:
+    orders = InMemoryOrderRepository()
+    payments = InMemoryPaymentRepository()
+    order_id = create_order(orders)
+    service = PaystackService(orders, payments, FailingInitializeGateway())
+
+    with pytest.raises(PaymentValidationError, match="Paystack initialization failed"):
+        service.initialize(order_id)
+
+
+def test_paystack_verify_wraps_gateway_failure() -> None:
+    orders = InMemoryOrderRepository()
+    payments = InMemoryPaymentRepository()
+    order_id = create_order(orders)
+    service = PaystackService(orders, payments, LocalPaystackGateway())
+    initialized = service.initialize(order_id)
+    failing_service = PaystackService(orders, payments, FailingVerifyGateway())
+
+    with pytest.raises(PaymentValidationError, match="Paystack verification failed"):
+        failing_service.verify(initialized.reference)
