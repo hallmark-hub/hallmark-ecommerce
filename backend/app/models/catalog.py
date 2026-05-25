@@ -50,3 +50,32 @@ class ProductList(BaseModel):
     page: int
     limit: int
     pages: int
+
+
+class AdminProductRequest(BaseModel):
+    """Admin product create/update request model."""
+
+    name: str = Field(min_length=1)
+    slug: str = Field(min_length=1)
+    description: str = ""
+    category_slug: str = Field(min_length=1)
+    checkout_type: CheckoutType
+    price_pesewas: int | None = Field(ge=0, default=None)
+    price_label: str | None = None
+    images: list[str] = Field(default_factory=list)
+    in_stock: bool = True
+    stock_qty: int = Field(ge=0, default=0)
+    tags: list[str] = Field(default_factory=list)
+
+
+class UpdateProductStockRequest(BaseModel):
+    """Admin product stock update request model."""
+
+    stock_qty: int = Field(ge=0)
+    in_stock: bool
+
+
+class UpdateProductActiveRequest(BaseModel):
+    """Admin product active-state update request model."""
+
+    is_active: bool

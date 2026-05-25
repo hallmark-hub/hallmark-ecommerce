@@ -89,11 +89,11 @@ Status key:
 ## Admin Backend
 
 - `[x]` Define admin authentication approach.
-- `[ ]` Add product management endpoints.
+- `[x]` Add product management endpoints.
 - `[x]` Add order management endpoints.
 - `[ ]` Add manual bank transfer confirmation endpoint.
 - `[ ]` Add basic analytics endpoints.
-- `[ ]` Add inventory update endpoints.
+- `[x]` Add inventory update endpoints.
 
 ## Testing
 

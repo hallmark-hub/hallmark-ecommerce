@@ -94,6 +94,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Admin order operations are the next useful backend capability, and an API key is enough for this phase without building full user auth.
 **What was rejected:** Building a full admin user/auth system now, because it would add scope beyond the current backend needs.
 
+## 2026-05-25, Minimal admin product management
+**What was decided:** Add admin product create/update, stock update, and active-state endpoints behind the existing admin API-key guard.
+**Why:** Admin product and inventory operations are needed for the dashboard, and the smallest useful surface can reuse the current catalog schema.
+**What was rejected:** Building bulk imports, media upload workflows, or complex product lifecycle states, because those would expand scope beyond the current admin baseline.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.
