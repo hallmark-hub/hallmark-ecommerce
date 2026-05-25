@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     admin_notification_phone: str = Field(default="", alias="ADMIN_NOTIFICATION_PHONE")
     paystack_secret_key: str = Field(default="", alias="PAYSTACK_SECRET_KEY")
     paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
+    admin_api_key: str = Field(default="", alias="ADMIN_API_KEY")
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

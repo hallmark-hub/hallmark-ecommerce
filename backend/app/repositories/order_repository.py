@@ -34,6 +34,19 @@ class OrderRepository(Protocol):
     ) -> dict[str, Any] | None:
         """Update an order payment status."""
 
+    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent orders for admin views."""
+
+    def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
+        """Return an order by reference."""
+
+    def update_order_status(
+        self,
+        reference: str,
+        order_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an order status."""
+
 
 class InMemoryOrderRepository:
     """Local order repository for tests/dev without Supabase credentials."""
@@ -82,6 +95,34 @@ class InMemoryOrderRepository:
         if order is None:
             return None
         order["payment_status"] = payment_status
+        return order
+
+    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent in-memory orders."""
+        orders = sorted(
+            self.orders.values(),
+            key=lambda order: order["created_at"],
+            reverse=True,
+        )
+        return orders[:limit]
+
+    def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
+        """Return an in-memory order by reference."""
+        order = self.orders.get(reference)
+        if order is None:
+            return None
+        return {**order, "items": self.items.get(reference, [])}
+
+    def update_order_status(
+        self,
+        reference: str,
+        order_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an in-memory order status."""
+        order = self.orders.get(reference)
+        if order is None:
+            return None
+        order["order_status"] = order_status
         return order
 
 
@@ -172,6 +213,59 @@ class SupabaseOrderRepository:
             self.client.table("orders")
             .update({"payment_status": payment_status})
             .eq("id", order_id)
+            .execute()
+        )
+        rows = response_data(response)
+        return rows[0] if rows else None
+
+    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent orders for admin views."""
+        response = (
+            self.client.table("orders")
+            .select(
+                "id,reference,customer_name,customer_phone,total_pesewas,"
+                "payment_method,payment_status,order_status,created_at"
+            )
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
+        return response_data(response)
+
+    def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
+        """Return an order by reference."""
+        order_response = (
+            self.client.table("orders")
+            .select(
+                "id,reference,customer_name,customer_phone,total_pesewas,"
+                "payment_method,payment_status,order_status,returns_policy,created_at"
+            )
+            .eq("reference", reference)
+            .limit(1)
+            .execute()
+        )
+        orders = response_data(order_response)
+        if not orders:
+            return None
+        order = orders[0]
+        items_response = (
+            self.client.table("order_items")
+            .select("product_name,quantity,unit_price_pesewas")
+            .eq("order_id", order["id"])
+            .execute()
+        )
+        return {**order, "items": response_data(items_response)}
+
+    def update_order_status(
+        self,
+        reference: str,
+        order_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an order status."""
+        response = (
+            self.client.table("orders")
+            .update({"order_status": order_status})
+            .eq("reference", reference)
             .execute()
         )
         rows = response_data(response)

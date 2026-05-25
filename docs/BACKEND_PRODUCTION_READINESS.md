@@ -27,6 +27,7 @@ SUPABASE_ANON_KEY=<supabase-anon-key>
 SUPABASE_SERVICE_ROLE_KEY=<supabase-service-role-key>
 PAYSTACK_SECRET_KEY=<paystack-secret-key>
 PAYSTACK_PUBLIC_KEY=<paystack-public-key>
+ADMIN_API_KEY=<strong-admin-api-key>
 ```
 
 Optional until real notifications are enabled:
@@ -78,7 +79,7 @@ The backend already expects frontend requests from `FRONTEND_URL` through CORS.
 ## Known Blockers
 
 - Official GCB and Stanbic account details are still `TBC`.
-- Admin authentication is not implemented yet.
+- Admin authentication is API-key based; rotate `ADMIN_API_KEY` if exposed.
 - Admin product, order, inventory, and analytics endpoints are not implemented yet.
 - Africa's Talking notification sending is gated and not integrated with real sends yet.
 

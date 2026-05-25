@@ -115,3 +115,23 @@ class LookupOrderResponse(BaseModel):
     order_status: OrderStatus
     returns_policy: str
     created_at: datetime
+
+
+class AdminOrderSummary(BaseModel):
+    """Admin order list item."""
+
+    id: UUID
+    reference: str
+    customer_name: str
+    customer_phone: str
+    total_pesewas: int
+    payment_method: PaymentMethod
+    payment_status: PaymentStatus
+    order_status: OrderStatus
+    created_at: datetime
+
+
+class UpdateOrderStatusRequest(BaseModel):
+    """Admin order status update request."""
+
+    order_status: OrderStatus
