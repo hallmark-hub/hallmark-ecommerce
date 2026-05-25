@@ -59,6 +59,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Frontend checkout needs payment initialization and verification routes now, while tests and local development must not call Paystack or depend on live credentials.
 **What was rejected:** Implementing webhook processing in the same slice, because webhook signature validation and event persistence should be handled separately with focused tests.
 
+## 2026-05-25, Paystack webhook validation
+**What was decided:** Add Paystack webhook processing with HMAC SHA-512 signature validation, event persistence, and payment/order status updates for `charge.success`.
+**Why:** Webhooks are the authoritative async payment signal and must be validated before changing payment state.
+**What was rejected:** Accepting unsigned webhook payloads or processing webhook updates without storing the provider event, because that would weaken payment auditability and security.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

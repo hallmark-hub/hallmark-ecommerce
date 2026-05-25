@@ -24,12 +24,16 @@ class PaymentRepository(Protocol):
     ) -> dict[str, Any] | None:
         """Persist payment verification status."""
 
+    def create_payment_event(self, event: dict[str, Any]) -> dict[str, Any]:
+        """Persist a payment provider event."""
+
 
 class InMemoryPaymentRepository:
     """Local payment repository for tests/dev without Supabase credentials."""
 
     def __init__(self) -> None:
         self.payments: dict[str, dict[str, Any]] = {}
+        self.payment_events: list[dict[str, Any]] = []
 
     def create_payment(self, payment: dict[str, Any]) -> dict[str, Any]:
         """Store a payment in memory."""
@@ -54,6 +58,12 @@ class InMemoryPaymentRepository:
         payment["status"] = status
         payment["raw_response"] = raw_response
         return payment
+
+    def create_payment_event(self, event: dict[str, Any]) -> dict[str, Any]:
+        """Store a payment event in memory."""
+        event = {**event, "id": str(uuid4()), "created_at": datetime.now(UTC)}
+        self.payment_events.append(event)
+        return event
 
 
 class SupabasePaymentRepository:
@@ -97,6 +107,12 @@ class SupabasePaymentRepository:
         )
         rows = response_data(response)
         return rows[0] if rows else None
+
+    def create_payment_event(self, event: dict[str, Any]) -> dict[str, Any]:
+        """Persist a payment provider event."""
+        response = self.client.table("payment_events").insert(event).execute()
+        rows = response_data(response)
+        return rows[0]
 
 
 _IN_MEMORY_REPOSITORY = InMemoryPaymentRepository()

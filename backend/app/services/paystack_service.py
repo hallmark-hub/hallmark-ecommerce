@@ -1,4 +1,6 @@
-from typing import Protocol
+import hashlib
+import hmac
+from typing import Any, Protocol
 
 import httpx
 
@@ -156,6 +158,53 @@ class PaystackService:
             order_id=payment["order_id"],
         )
 
+    def handle_webhook(
+        self,
+        raw_body: bytes,
+        signature: str | None,
+        payload: dict[str, Any],
+    ) -> dict[str, bool]:
+        """Validate and process a Paystack webhook payload."""
+        settings = get_settings()
+        if not settings.paystack_secret_key:
+            raise PaymentValidationError("Paystack webhook secret is not configured")
+        if not _valid_paystack_signature(
+            raw_body,
+            signature,
+            settings.paystack_secret_key,
+        ):
+            raise PaymentValidationError("Invalid Paystack webhook signature")
+
+        event_type = str(payload.get("event", ""))
+        data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
+        reference = str(data.get("reference", ""))
+        payment = self.payments.get_payment_by_reference(reference) if reference else None
+
+        payment_status = _payment_status_from_webhook(event_type, data)
+        if payment is not None and payment_status is not None:
+            self.payments.update_payment_status(
+                reference=reference,
+                status=payment_status.value,
+                raw_response=payload,
+            )
+            self.orders.update_payment_status(
+                str(payment["order_id"]),
+                payment_status.value,
+            )
+
+        self.payments.create_payment_event(
+            {
+                "payment_id": payment.get("id") if payment is not None else None,
+                "order_id": payment.get("order_id") if payment is not None else None,
+                "provider": PaymentMethod.paystack.value,
+                "event_type": event_type,
+                "reference": reference or None,
+                "payload": payload,
+                "signature_valid": True,
+            }
+        )
+        return {"received": True}
+
 
 def get_paystack_gateway() -> PaystackGateway:
     """Return the configured Paystack gateway."""
@@ -163,6 +212,26 @@ def get_paystack_gateway() -> PaystackGateway:
     if settings.paystack_secret_key:
         return HttpPaystackGateway(settings.paystack_secret_key)
     return LocalPaystackGateway()
+
+
+def _valid_paystack_signature(
+    raw_body: bytes,
+    signature: str | None,
+    secret_key: str,
+) -> bool:
+    if not signature:
+        return False
+    digest = hmac.new(secret_key.encode(), raw_body, hashlib.sha512).hexdigest()
+    return hmac.compare_digest(digest, signature)
+
+
+def _payment_status_from_webhook(
+    event_type: str,
+    data: dict[str, Any],
+) -> PaymentStatus | None:
+    if event_type != "charge.success":
+        return None
+    return PaymentStatus.paid if data.get("status") == "success" else PaymentStatus.failed
 
 
 async def get_paystack_service() -> PaystackService:

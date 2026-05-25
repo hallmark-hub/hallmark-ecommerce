@@ -64,9 +64,9 @@ Status key:
 - `[x]` Add `POST /api/v1/payments/paystack/initialize`.
 - `[x]` Add `GET /api/v1/payments/paystack/verify/{reference}`.
 - `[x]` Persist Paystack verification results to order `payment_status`.
-- `[ ]` Add `POST /api/v1/payments/paystack/webhook`.
-- `[ ]` Validate Paystack webhook signatures before processing.
-- `[ ]` Persist validated Paystack webhook events to order/payment records.
+- `[x]` Add `POST /api/v1/payments/paystack/webhook`.
+- `[x]` Validate Paystack webhook signatures before processing.
+- `[x]` Persist validated Paystack webhook events to order/payment records.
 - `[ ]` Add `POST /api/v1/payments/bank-transfer`.
 - `[!]` Confirm official GCB and Stanbic bank details before enabling production bank transfer instructions.
 
@@ -100,7 +100,7 @@ Status key:
 - `[x]` Add order lookup security tests.
 - `[x]` Add quote request tests.
 - `[x]` Add payment initialization tests with mocked Paystack.
-- `[ ]` Add webhook signature tests.
+- `[x]` Add webhook signature tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.
