@@ -119,4 +119,4 @@ Status key:
 - `[x]` Document required backend environment variables.
 - `[x]` Document local backend startup command.
 - `[x]` Document manual migration execution order.
-- `[ ]` Document known production blockers before launch.
+- `[x]` Document known production blockers before launch.
