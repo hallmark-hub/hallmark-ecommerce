@@ -33,3 +33,18 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **What was decided:** Use async route handlers and `httpx.AsyncClient` with ASGI transport for route tests.
 **Why:** Synchronous FastAPI route execution and `TestClient` hung in the current sandbox, while async ASGI tests execute reliably and still exercise the app routes.
 **What was rejected:** Keeping `fastapi.testclient.TestClient` route tests, because the local verification command stalled before reporting results.
+
+## 2026-05-25, Manual backend migrations
+**What was decided:** Keep ordered SQL migrations in `backend/migrations/` for manual Supabase execution.
+**Why:** Render free tier will not reliably run automatic migration jobs, and Evans needs copy/paste SQL files that can be applied in order.
+**What was rejected:** Auto-running migrations from the app startup path, because production database changes require explicit manual control and Render free tier startup behavior is not a safe migration runner.
+
+## 2026-05-25, Supabase catalog repository
+**What was decided:** Add a Supabase-backed catalog repository and use local seed data only when Supabase credentials are not configured.
+**Why:** Production should read catalog data from Supabase, but local tests and development still need to run without real database credentials or external calls.
+**What was rejected:** Removing seed fallback immediately, because it would make local verification depend on a configured remote Supabase project.
+
+## 2026-05-25, Frontend scaffold complete
+**What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
+**Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.
+**What was rejected:** Starting with only a few pages — the full checklist was completed in one session because the mock layer makes every page immediately runnable without a backend.

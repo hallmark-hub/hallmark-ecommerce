@@ -1,7 +1,7 @@
 from math import ceil
-from uuid import UUID
 
 from app.models.catalog import Category, CheckoutType, Product, ProductList
+from app.repositories.catalog_repository import CatalogRepository, get_catalog_repository
 
 _CATEGORY_DATA = [
     {
@@ -123,11 +123,19 @@ _PRODUCT_DATA = [
 
 
 class CatalogService:
-    """Catalog business logic backed by seed data until Supabase is connected."""
+    """Catalog business logic backed by Supabase or local seed data."""
+
+    def __init__(self, repository: CatalogRepository | None = None) -> None:
+        self.repository = repository
 
     def list_categories(self) -> list[Category]:
         """Return all product categories."""
-        return [Category.model_validate(category) for category in _CATEGORY_DATA]
+        if self.repository is not None:
+            return [
+                Category.model_validate(category)
+                for category in self.repository.list_categories()
+            ]
+        return self._seed_categories()
 
     def list_products(
         self,
@@ -138,6 +146,47 @@ class CatalogService:
         limit: int = 20,
     ) -> ProductList:
         """Return products filtered and paginated according to API query params."""
+        if self.repository is not None:
+            rows, total = self.repository.list_products(
+                category=category,
+                search=search,
+                in_stock=in_stock,
+                page=page,
+                limit=limit,
+            )
+            pages = ceil(total / limit) if total else 0
+            return ProductList(
+                items=[Product.model_validate(product) for product in rows],
+                total=total,
+                page=page,
+                limit=limit,
+                pages=pages,
+            )
+
+        return self._seed_products(category, search, in_stock, page, limit)
+
+    def get_product_by_slug(self, slug: str) -> Product | None:
+        """Return one product by slug."""
+        if self.repository is not None:
+            row = self.repository.get_product_by_slug(slug)
+            return Product.model_validate(row) if row is not None else None
+
+        for product in _PRODUCT_DATA:
+            if product["slug"] == slug:
+                return Product.model_validate(product)
+        return None
+
+    def _seed_categories(self) -> list[Category]:
+        return [Category.model_validate(category) for category in _CATEGORY_DATA]
+
+    def _seed_products(
+        self,
+        category: str | None,
+        search: str | None,
+        in_stock: bool | None,
+        page: int,
+        limit: int,
+    ) -> ProductList:
         products = [Product.model_validate(product) for product in _PRODUCT_DATA]
 
         if category is not None:
@@ -158,14 +207,7 @@ class CatalogService:
         pages = ceil(total / limit) if total else 0
         return ProductList(items=items, total=total, page=page, limit=limit, pages=pages)
 
-    def get_product_by_slug(self, slug: str) -> Product | None:
-        """Return one product by slug."""
-        for product in _PRODUCT_DATA:
-            if product["slug"] == slug:
-                return Product.model_validate(product)
-        return None
-
 
 async def get_catalog_service() -> CatalogService:
     """Dependency provider for catalog service."""
-    return CatalogService()
+    return CatalogService(repository=get_catalog_repository())

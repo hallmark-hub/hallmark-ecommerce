@@ -72,9 +72,10 @@ Status key:
 
 ## Supabase Integration
 
-- `[ ]` Create Supabase client wrapper.
-- `[ ]` Define table access layer through services only.
-- `[ ]` Replace in-memory catalog data with Supabase reads.
+- `[x]` Create Supabase client wrapper.
+- `[x]` Add manual SQL migrations under `backend/migrations/`.
+- `[~]` Define table access layer through services only.
+- `[~]` Replace in-memory catalog data with Supabase reads.
 - `[ ]` Replace in-memory order writes with Supabase writes.
 - `[ ]` Replace in-memory quote request writes with Supabase writes.
 - `[ ]` Replace in-memory payment status updates with Supabase writes.
@@ -100,6 +101,8 @@ Status key:
 - `[ ]` Add quote request tests.
 - `[ ]` Add payment initialization tests with mocked Paystack.
 - `[ ]` Add webhook signature tests.
+- `[x]` Add migration file structure tests.
+- `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.
 
 ## Documentation
@@ -107,4 +110,5 @@ Status key:
 - `[ ]` Keep `docs/API_CONTRACT.md` synchronized with implemented routes.
 - `[x]` Document required backend environment variables.
 - `[x]` Document local backend startup command.
+- `[x]` Document manual migration execution order.
 - `[ ]` Document known production blockers before launch.
