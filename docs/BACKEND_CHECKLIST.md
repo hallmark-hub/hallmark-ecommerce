@@ -61,9 +61,9 @@ Status key:
 
 ## Payments
 
-- `[ ]` Add `POST /api/v1/payments/paystack/initialize`.
-- `[ ]` Add `GET /api/v1/payments/paystack/verify/{reference}`.
-- `[ ]` Persist Paystack verification results to order `payment_status`.
+- `[x]` Add `POST /api/v1/payments/paystack/initialize`.
+- `[x]` Add `GET /api/v1/payments/paystack/verify/{reference}`.
+- `[x]` Persist Paystack verification results to order `payment_status`.
 - `[ ]` Add `POST /api/v1/payments/paystack/webhook`.
 - `[ ]` Validate Paystack webhook signatures before processing.
 - `[ ]` Persist validated Paystack webhook events to order/payment records.
@@ -78,7 +78,7 @@ Status key:
 - `[~]` Replace in-memory catalog data with Supabase reads.
 - `[~]` Replace in-memory order writes with Supabase writes.
 - `[~]` Replace in-memory quote request writes with Supabase writes.
-- `[ ]` Replace in-memory payment status updates with Supabase writes.
+- `[~]` Replace in-memory payment status updates with Supabase writes.
 - `[!]` Confirm schema before any migration or database-changing action.
 
 ## Admin Backend
@@ -99,7 +99,7 @@ Status key:
 - `[x]` Add order creation tests.
 - `[x]` Add order lookup security tests.
 - `[x]` Add quote request tests.
-- `[ ]` Add payment initialization tests with mocked Paystack.
+- `[x]` Add payment initialization tests with mocked Paystack.
 - `[ ]` Add webhook signature tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.

@@ -24,6 +24,16 @@ class OrderRepository(Protocol):
     def lookup_order(self, reference: str, phone: str) -> dict[str, Any] | None:
         """Return an order by reference and customer phone."""
 
+    def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
+        """Return an order by ID."""
+
+    def update_payment_status(
+        self,
+        order_id: str,
+        payment_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an order payment status."""
+
 
 class InMemoryOrderRepository:
     """Local order repository for tests/dev without Supabase credentials."""
@@ -54,6 +64,25 @@ class InMemoryOrderRepository:
         if order is None or order["customer_phone"] != phone:
             return None
         return {**order, "items": self.items.get(reference, [])}
+
+    def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
+        """Return an in-memory order by ID."""
+        for order in self.orders.values():
+            if str(order["id"]) == order_id:
+                return order
+        return None
+
+    def update_payment_status(
+        self,
+        order_id: str,
+        payment_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an in-memory order payment status."""
+        order = self.get_order_by_id(order_id)
+        if order is None:
+            return None
+        order["payment_status"] = payment_status
+        return order
 
 
 class SupabaseOrderRepository:
@@ -117,6 +146,36 @@ class SupabaseOrderRepository:
             .execute()
         )
         return {**order, "items": response_data(items_response)}
+
+    def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
+        """Return an order by ID."""
+        response = (
+            self.client.table("orders")
+            .select(
+                "id,reference,customer_email,total_pesewas,payment_method,"
+                "payment_status,order_status"
+            )
+            .eq("id", order_id)
+            .limit(1)
+            .execute()
+        )
+        rows = response_data(response)
+        return rows[0] if rows else None
+
+    def update_payment_status(
+        self,
+        order_id: str,
+        payment_status: str,
+    ) -> dict[str, Any] | None:
+        """Update an order payment status."""
+        response = (
+            self.client.table("orders")
+            .update({"payment_status": payment_status})
+            .eq("id", order_id)
+            .execute()
+        )
+        rows = response_data(response)
+        return rows[0] if rows else None
 
 
 _IN_MEMORY_REPOSITORY = InMemoryOrderRepository()

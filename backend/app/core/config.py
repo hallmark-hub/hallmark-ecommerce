@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     at_username: str = Field(default="", alias="AT_USERNAME")
     at_sender_id: str = Field(default="", alias="AT_SENDER_ID")
     admin_notification_phone: str = Field(default="", alias="ADMIN_NOTIFICATION_PHONE")
+    paystack_secret_key: str = Field(default="", alias="PAYSTACK_SECRET_KEY")
+    paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
