@@ -23,50 +23,51 @@ export default function OrderConfirmationPage() {
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-2xl mx-auto px-gutter py-xl">
+      <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section">
         {/* Success header */}
         <div className="text-center mb-xl">
           <CheckCircle size={64} className="text-primary mx-auto mb-md" />
-          <h1 className="text-h1 font-medium text-on-surface mb-sm">Order Confirmed!</h1>
-          <p className="text-body text-secondary">Medaase! Thank you for your order.</p>
+          <h1 className="text-h1 text-on-surface mb-sm">Order Confirmed!</h1>
+          <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
           <p className="text-body-sm text-secondary mt-xs">We'll send confirmation updates to {order.customer.phone}</p>
         </div>
 
         <div className="bg-white rounded-xl border border-outline-variant p-xl mb-md">
           <div className="flex justify-between items-start mb-md pb-md border-b border-outline-variant">
             <div>
-              <p className="text-label text-xs text-secondary uppercase tracking-wide mb-xs">Order Reference</p>
-              <p className="text-h3 font-bold text-primary">{order.reference}</p>
+              <p className="text-label uppercase text-secondary mb-xs">Order Reference</p>
+              <p className="text-h3 text-primary">{order.reference}</p>
             </div>
             <div className="text-right">
-              <p className="text-label text-xs text-secondary uppercase tracking-wide mb-xs">Date</p>
+              <p className="text-label uppercase text-secondary mb-xs">Date</p>
               <p className="text-body-sm text-on-surface">{formatDate(order.created_at)}</p>
             </div>
           </div>
 
           {/* Items */}
           <div className="mb-md">
-            <h3 className="text-h3 font-medium text-on-surface mb-sm">Items Ordered</h3>
+            <h3 className="text-h3 text-on-surface mb-sm">Items Ordered</h3>
             <div className="space-y-sm">
               {order.items.map((item, i) => (
-                <div key={i} className="flex justify-between text-body-sm">
+                <div key={i} className="flex justify-between text-body">
                   <span className="text-on-surface">{item.product_name} <span className="text-secondary">× {item.quantity}</span></span>
-                  <span className="font-medium text-primary">{formatPrice(item.unit_price_pesewas * item.quantity)}</span>
+                  <span className="font-semibold text-primary whitespace-nowrap">{formatPrice(item.unit_price_pesewas * item.quantity)}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Totals */}
-          <div className="border-t border-outline-variant pt-md space-y-xs">
-            <div className="flex justify-between text-body-sm text-secondary">
+          <div className="border-t border-outline-variant pt-md space-y-2">
+            <div className="flex justify-between text-body text-secondary">
               <span>Subtotal</span><span>{formatPrice(order.total_pesewas)}</span>
             </div>
-            <div className="flex justify-between text-body-sm text-secondary">
-              <span>Delivery</span><span className="text-primary font-medium">Free (Accra)</span>
+            <div className="flex justify-between text-body text-secondary">
+              <span>Delivery</span><span className="text-primary font-semibold">Free (Accra)</span>
             </div>
-            <div className="flex justify-between text-h3 font-semibold text-on-surface pt-sm">
-              <span>Total Paid</span><span>{formatPrice(order.total_pesewas)}</span>
+            <div className="flex justify-between items-baseline pt-sm border-t border-outline-variant">
+              <span className="text-h3 text-on-surface">Total Paid</span>
+              <span className="text-price text-primary whitespace-nowrap">{formatPrice(order.total_pesewas)}</span>
             </div>
           </div>
         </div>
@@ -74,14 +75,14 @@ export default function OrderConfirmationPage() {
         {/* Delivery & Payment cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-md mb-md">
           <div className="bg-white rounded-xl border border-outline-variant p-md">
-            <p className="text-label text-xs text-secondary uppercase tracking-wide mb-sm">Delivery</p>
+            <p className="text-label uppercase text-secondary mb-sm">Delivery</p>
             <p className="text-body-sm font-medium text-on-surface">24 hours after payment confirmed</p>
             <p className="text-body-sm text-secondary mt-xs">Greater Accra delivery only.</p>
           </div>
           <div className="bg-white rounded-xl border border-outline-variant p-md">
-            <p className="text-label text-xs text-secondary uppercase tracking-wide mb-sm">Payment</p>
+            <p className="text-label uppercase text-secondary mb-sm">Payment</p>
             <p className="text-body-sm font-medium text-on-surface capitalize">{order.payment_method.replace('_', ' ')}</p>
-            <p className={`text-label text-xs mt-xs font-semibold ${order.payment_status === 'paid' ? 'text-primary' : 'text-tertiary'}`}>
+            <p className={`text-label uppercase mt-xs ${order.payment_status === 'paid' ? 'text-primary' : 'text-tertiary'}`}>
               {order.payment_status === 'paid' ? '✓ Payment received' : 'Pending confirmation'}
             </p>
           </div>
@@ -93,11 +94,11 @@ export default function OrderConfirmationPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-sm">
-          <Link to="/" className="flex-1">
-            <Button variant="primary" className="w-full"><Home size={18} /> Back to Home</Button>
-          </Link>
-          <Button variant="ghost" onClick={() => window.print()} className="flex-1">
-            <Printer size={18} /> Print Receipt
+          <Button as={Link} to="/" variant="primary" size="lg" iconLeft={<Home />} className="flex-1">
+            Back to Home
+          </Button>
+          <Button variant="ghost" size="lg" onClick={() => window.print()} iconLeft={<Printer />} className="flex-1">
+            Print Receipt
           </Button>
         </div>
       </div>

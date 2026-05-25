@@ -56,36 +56,38 @@ export default function HomePage() {
   }, [])
 
   return (
-    <main>
+    <main className="pt-20">
       {/* Hero */}
-      <section className="relative h-[640px] flex items-center overflow-hidden">
+      <section className="relative min-h-[560px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src={HERO_IMAGE} alt="Premium industrial kitchen in Accra" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/60" />
         </div>
-        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter flex flex-col items-center text-center">
-          <span className="bg-gold/90 backdrop-blur-sm text-white text-xs font-bold px-4 py-1.5 rounded-full mb-5 uppercase tracking-widest inline-block">
+        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter py-section-mobile md:py-section flex flex-col items-center text-center">
+          <span className="bg-gold/90 backdrop-blur-sm text-white text-label uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
             Accra's #1 Hospitality Supplier
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-5 leading-[1.1] max-w-3xl">
+          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-tight text-white mb-6 max-w-3xl">
             Premium Supplies for Ghana's Finest Kitchens
           </h1>
-          <p className="text-lg text-white/80 mb-8 max-w-xl leading-relaxed">
+          <p className="text-body-lg text-white/80 mb-8 max-w-xl">
             Equipping leading hotels and restaurants with industrial-grade equipment, bespoke uniforms, and custom branding services.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/products">
-              <button className="flex items-center gap-2 px-7 py-3.5 bg-gold hover:bg-gold/90 text-white text-base font-bold rounded-xl transition-all duration-200 cursor-pointer shadow-lg">
-                Shop Now <ArrowRight size={18} />
-              </button>
-            </Link>
-            <Link to="/services">
-              <button className="flex items-center gap-2 px-7 py-3.5 bg-white/10 backdrop-blur-sm hover:bg-white hover:text-primary text-white text-base font-semibold rounded-xl border-2 border-white/60 transition-all duration-200 cursor-pointer">
-                Our Services
-              </button>
-            </Link>
+            <Button as={Link} to="/products" variant="gold" size="lg" iconRight={<ArrowRight />} className="shadow-lg">
+              Shop Now
+            </Button>
+            <Button
+              as={Link}
+              to="/services"
+              variant="ghost"
+              size="lg"
+              className="!bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white"
+            >
+              Our Services
+            </Button>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-white/70 text-sm">
+          <div className="mt-8 flex items-center gap-2 text-white/70 text-body-sm">
             <Truck size={16} />
             <span>Free delivery on orders over GH₵ 250 across Greater Accra</span>
           </div>
@@ -93,84 +95,98 @@ export default function HomePage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-primary py-6 px-gutter">
+      <section className="bg-primary py-section-mobile md:py-section px-gutter">
         <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {STATS.map(s => (
             <div key={s.label}>
-              <p className="text-3xl font-black text-white">{s.value}</p>
-              <p className="text-primary-fixed text-sm mt-1">{s.label}</p>
+              <p className="text-h1 text-white">{s.value}</p>
+              <p className="text-primary-fixed text-body-sm mt-1">{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Featured Categories */}
-      <section className="py-16 px-gutter max-w-container-max mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10">
+      <section className="py-section-mobile md:py-section bg-white">
+        <div className="max-w-container-max mx-auto px-gutter">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">What We Offer</p>
-            <h2 className="text-3xl font-bold text-on-surface">Shop by Category</h2>
-            <p className="text-secondary mt-2">Specialized solutions for every hospitality need.</p>
+            <h2 className="text-h2 text-on-surface">Shop by Category</h2>
+            <p className="text-body text-secondary mt-2">Specialized solutions for every hospitality need.</p>
           </div>
-          <Link to="/products" className="text-primary text-sm font-semibold flex items-center gap-1 hover:underline mt-4 md:mt-0">
+          <Link
+            to="/products"
+            className="text-primary text-body-sm font-semibold flex items-center gap-1 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
+          >
             Browse All <ChevronRight size={16} />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-5 md:h-[500px]">
           {/* Chef Uniforms — hero card */}
-          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[320px] md:h-auto cursor-pointer">
+          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[320px] md:h-auto">
             <img src={CAT_IMAGES['chef-uniforms']} alt="Chef Uniforms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-gold mb-2">Most Popular</p>
-              <h3 className="text-2xl font-bold text-white mb-2">Chef Uniforms</h3>
-              <p className="text-white/70 text-sm mb-5">Forest green jackets, aprons, trousers & caps</p>
-              <Link to="/products?category=chef-uniforms" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-primary text-sm font-bold rounded-xl hover:bg-gold hover:text-white transition-colors">
-                Shop Collection <ArrowRight size={15} />
-              </Link>
+              <p className="text-label uppercase text-gold mb-2">Most Popular</p>
+              <h3 className="text-h1 text-white mb-2">Chef Uniforms</h3>
+              <p className="text-white/70 text-body-sm mb-5">Forest green jackets, aprons, trousers & caps</p>
+              <Button
+                as={Link}
+                to="/products?category=chef-uniforms"
+                size="sm"
+                variant="ghost"
+                iconRight={<ArrowRight />}
+                className="!bg-white !text-primary hover:!bg-gold hover:!text-white"
+              >
+                Shop Collection
+              </Button>
             </div>
           </div>
 
           <div className="md:col-span-5 grid grid-rows-2 gap-5">
             {/* Industrial Equipment */}
-            <div className="group relative rounded-2xl overflow-hidden cursor-pointer h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden h-[200px] md:h-auto">
               <img src={CAT_IMAGES['kitchen-equipment-tools']} alt="Kitchen Equipment" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-lg font-bold text-white">Industrial Equipment</h3>
-                <Link to="/products?category=kitchen-equipment-tools" className="text-gold text-xs font-semibold hover:underline">Browse Machines →</Link>
+                <h3 className="text-h3 text-white mb-1">Industrial Equipment</h3>
+                <Link
+                  to="/products?category=kitchen-equipment-tools"
+                  className="text-gold text-body-sm font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
+                >
+                  Browse Machines →
+                </Link>
               </div>
             </div>
 
             {/* Services Strip */}
-            <div className="group relative rounded-2xl overflow-hidden bg-primary-container cursor-pointer h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[200px] md:h-auto">
               <img src={CAT_IMAGES['staff-uniforms']} alt="Staff Uniforms" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <p className="text-xs font-bold uppercase tracking-wider text-gold mb-1">All Services</p>
-                <h3 className="text-lg font-bold text-white mb-1">Branding & Customization</h3>
-                <p className="text-white/70 text-xs mb-3">Embroidery, printing, kitchen setup</p>
-                <Link to="/services" className="inline-flex items-center gap-1.5 px-4 py-2 bg-gold hover:bg-gold/90 text-white text-xs font-bold rounded-lg transition-colors w-fit">
-                  View Services <ArrowRight size={13} />
-                </Link>
+                <h3 className="text-h3 text-white mb-1">Branding & Customization</h3>
+                <p className="text-white/70 text-body-sm mb-3">Embroidery, printing, kitchen setup</p>
+                <Button as={Link} to="/services" variant="gold" size="sm" iconRight={<ArrowRight />} className="w-fit">
+                  View Services
+                </Button>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Top Products */}
-      <section className="py-16 bg-surface-container-lowest">
+      <section className="py-section-mobile md:py-section bg-surface-container-low border-t border-outline-variant">
         <div className="max-w-container-max mx-auto px-gutter">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Bestsellers</p>
-              <h2 className="text-3xl font-bold text-on-surface">Top Ghanaian Essentials</h2>
-              <p className="text-secondary mt-2">Trusted by Ghana's finest hotels and restaurants.</p>
+              <h2 className="text-h2 text-on-surface">Top Ghanaian Essentials</h2>
+              <p className="text-body text-secondary mt-2">Trusted by Ghana's finest hotels and restaurants.</p>
             </div>
-            <Link to="/products">
-              <Button variant="ghost" size="md">View Full Catalog <ArrowRight size={16} /></Button>
-            </Link>
+            <Button as={Link} to="/products" variant="ghost" size="md" iconRight={<ArrowRight />}>
+              View Full Catalog
+            </Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {loading
@@ -182,11 +198,11 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 px-gutter bg-surface">
+      <section className="py-section-mobile md:py-section px-gutter bg-white border-t border-outline-variant">
         <div className="max-w-container-max mx-auto">
           <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Why ChefWare</p>
-            <h2 className="text-3xl font-bold text-on-surface">Built for Ghana's Hospitality Industry</h2>
+            <p className="text-label uppercase text-primary mb-3">Why ChefWare</p>
+            <h2 className="text-h2 text-on-surface">Built for Ghana's Hospitality Industry</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -198,8 +214,8 @@ export default function HomePage() {
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
                   <item.icon size={28} className="text-primary" />
                 </div>
-                <h3 className="text-lg font-bold text-on-surface mb-2">{item.title}</h3>
-                <p className="text-secondary text-sm leading-relaxed">{item.desc}</p>
+                <h3 className="text-h3 text-on-surface mb-2">{item.title}</h3>
+                <p className="text-body-sm text-secondary">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -207,26 +223,26 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 px-gutter bg-primary">
-        <div className="max-w-container-max mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-2">Client Stories</p>
-            <h2 className="text-3xl font-bold text-white">Trusted by Ghana's Best</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(t => (
-              <div key={t.name} className="bg-white/10 backdrop-blur-sm rounded-2xl p-7 border border-white/20 flex flex-col">
+      <section className="py-16 md:py-28 bg-primary">
+        <div className="max-w-container-max mx-auto px-gutter text-center mb-12 md:mb-16">
+          <p className="text-label uppercase text-primary-fixed mb-3">Client Stories</p>
+          <h2 className="text-h2 text-white">Trusted by Ghana's Best</h2>
+        </div>
+        <div className="overflow-hidden">
+          <div className="flex marquee-track" style={{ width: 'max-content' }}>
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+              <div key={i} className="w-[340px] shrink-0 mr-6 bg-white/10 backdrop-blur-sm rounded-2xl p-7 border border-white/20 flex flex-col">
                 <Quote size={28} className="text-gold mb-4 shrink-0" />
-                <p className="text-white/90 text-sm leading-relaxed flex-1 mb-6">"{t.quote}"</p>
-                <div className="flex items-center justify-between">
+                <p className="text-white/90 text-body flex-1 mb-6">"{t.quote}"</p>
+                <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-white font-bold text-sm">{t.name}</p>
-                    <p className="text-white/60 text-xs mt-0.5">{t.role}</p>
-                    <p className="text-gold text-xs font-semibold mt-0.5">{t.company}</p>
+                    <p className="text-white font-bold text-body-sm">{t.name}</p>
+                    <p className="text-white/60 text-body-sm mt-0.5">{t.role}</p>
+                    <p className="text-gold text-body-sm font-semibold mt-0.5">{t.company}</p>
                   </div>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star key={i} size={13} className="text-gold fill-gold" />
+                  <div className="flex gap-0.5 shrink-0">
+                    {Array.from({ length: t.rating }).map((_, j) => (
+                      <Star key={j} size={14} className="text-gold fill-gold" />
                     ))}
                   </div>
                 </div>
@@ -237,23 +253,18 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 px-gutter bg-surface-container-lowest text-center">
-        <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">Get Started Today</p>
-        <h2 className="text-3xl font-bold text-on-surface mb-4">Need a Custom Quote?</h2>
-        <p className="text-secondary max-w-md mx-auto mb-8 text-sm leading-relaxed">
+      <section className="py-section-mobile md:py-section px-gutter bg-surface-container-low text-center">
+        <h2 className="text-h2 text-on-surface mb-4">Need a Custom Quote?</h2>
+        <p className="text-body text-secondary max-w-md mx-auto mb-8">
           Services like kitchen setup, embroidery, and machine customization require a personalised quote. We respond within 24 hours.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link to="/quote">
-            <button className="flex items-center gap-2 px-7 py-3.5 bg-primary hover:bg-primary-container text-white font-bold rounded-xl transition-colors cursor-pointer">
-              Request a Free Quote <ArrowRight size={18} />
-            </button>
-          </Link>
-          <Link to="/products">
-            <button className="flex items-center gap-2 px-7 py-3.5 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold rounded-xl transition-colors cursor-pointer">
-              Browse Products
-            </button>
-          </Link>
+          <Button as={Link} to="/quote" variant="primary" size="lg" iconRight={<ArrowRight />}>
+            Request a Free Quote
+          </Button>
+          <Button as={Link} to="/products" variant="secondary" size="lg">
+            Browse Products
+          </Button>
         </div>
       </section>
     </main>

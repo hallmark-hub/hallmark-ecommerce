@@ -36,9 +36,9 @@ export default function AuthPage() {
     <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
       <div className="w-full max-w-md px-gutter py-xl">
         <div className="text-center mb-xl">
-          <h1 className="text-h1 font-medium text-on-surface">{mode === 'login' ? 'Sign In' : 'Create Account'}</h1>
+          <h1 className="text-h1 text-on-surface">{mode === 'login' ? 'Sign In' : 'Create Account'}</h1>
           <p className="text-body text-secondary mt-2">ChefWare Enterprise — Accra</p>
-          <p className="text-label text-xs text-tertiary mt-1 font-semibold uppercase tracking-wide">Mock UI — auth pending backend</p>
+          <p className="text-label uppercase text-tertiary mt-1">Mock UI — auth pending backend</p>
         </div>
 
         <div className="bg-white rounded-xl border border-outline-variant p-xl">
@@ -52,32 +52,35 @@ export default function AuthPage() {
           <form onSubmit={handleSubmit} className="space-y-md">
             {mode === 'register' && (
               <div>
-                <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="name">Full Name *</label>
+                <label className="block text-label uppercase text-secondary mb-xs" htmlFor="name">Full Name *</label>
                 <input id="name" type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kwame Asante" />
               </div>
             )}
             <div>
-              <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="email">Email *</label>
+              <label className="block text-label uppercase text-secondary mb-xs" htmlFor="email">Email *</label>
               <input id="email" type="email" value={form.email} onChange={e => update('email', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="kwame@example.com" />
             </div>
             {mode === 'register' && (
               <div>
-                <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="phone">Phone *</label>
+                <label className="block text-label uppercase text-secondary mb-xs" htmlFor="phone">Phone *</label>
                 <input id="phone" type="tel" value={form.phone} onChange={e => update('phone', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+233244123456" />
               </div>
             )}
             <div>
-              <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="password">Password *</label>
+              <label className="block text-label uppercase text-secondary mb-xs" htmlFor="password">Password *</label>
               <input id="password" type="password" value={form.password} onChange={e => update('password', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
             </div>
-            <Button type="submit" loading={loading} variant="primary" size="lg" className="w-full">
+            <Button type="submit" loading={loading} variant="primary" size="lg" fullWidth>
               {mode === 'login' ? 'Sign In' : 'Create Account'}
             </Button>
           </form>
 
           <p className="text-center text-body-sm text-secondary mt-md">
             {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
-            <button onClick={() => { setMode(m => m === 'login' ? 'register' : 'login'); setError('') }} className="text-primary font-medium hover:underline cursor-pointer">
+            <button
+              onClick={() => { setMode(m => m === 'login' ? 'register' : 'login'); setError('') }}
+              className="text-primary font-semibold hover:underline cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
+            >
               {mode === 'login' ? 'Register' : 'Sign In'}
             </button>
           </p>

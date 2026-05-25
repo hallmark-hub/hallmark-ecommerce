@@ -1,0 +1,190 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - paragraph [ref=e6]: Admin
+      - paragraph [ref=e7]: Admin
+    - navigation [ref=e8]:
+      - link "Dashboard" [ref=e9] [cursor=pointer]:
+        - /url: /admin
+        - img [ref=e10]
+        - text: Dashboard
+      - link "Orders" [ref=e15] [cursor=pointer]:
+        - /url: /admin/orders
+        - img [ref=e16]
+        - text: Orders
+      - link "Inventory" [ref=e19] [cursor=pointer]:
+        - /url: /admin/inventory
+        - img [ref=e20]
+        - text: Inventory
+      - link "Settings" [ref=e24] [cursor=pointer]:
+        - /url: /admin/settings
+        - img [ref=e25]
+        - text: Settings
+    - button "Sign Out" [ref=e28] [cursor=pointer]:
+      - img [ref=e29]
+      - text: Sign Out
+  - main [ref=e32]:
+    - generic [ref=e33]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - heading "Enterprise Overview" [level=1] [ref=e36]
+          - paragraph [ref=e37]: ChefWare Enterprise — May 2026
+        - link "Manage Orders" [ref=e38] [cursor=pointer]:
+          - /url: /admin/orders
+          - button "Manage Orders" [ref=e39]:
+            - img [ref=e40]
+            - text: Manage Orders
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - img [ref=e47]
+          - paragraph [ref=e49]: GH₵ 485,000.00
+          - paragraph [ref=e50]: Total Revenue
+          - paragraph [ref=e51]:
+            - img [ref=e52]
+            - text: +12%
+        - generic [ref=e55]:
+          - img [ref=e57]
+          - paragraph [ref=e60]: "142"
+          - paragraph [ref=e61]: Total Orders
+          - paragraph [ref=e62]:
+            - img [ref=e63]
+            - text: "+18"
+        - generic [ref=e66]:
+          - img [ref=e68]
+          - paragraph [ref=e71]: "6"
+          - paragraph [ref=e72]: Pending Orders
+        - generic [ref=e73]:
+          - img [ref=e75]
+          - paragraph [ref=e78]: "128"
+          - paragraph [ref=e79]: Delivered
+          - paragraph [ref=e80]:
+            - img [ref=e81]
+            - text: 90.1%
+        - generic [ref=e84]:
+          - img [ref=e86]
+          - paragraph [ref=e91]: "89"
+          - paragraph [ref=e92]: Active Clients
+          - paragraph [ref=e93]:
+            - img [ref=e94]
+            - text: "+5"
+        - generic [ref=e97]:
+          - img [ref=e99]
+          - paragraph [ref=e101]: "14"
+          - paragraph [ref=e102]: Quote Requests
+          - paragraph [ref=e103]: 3 new
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]:
+                - heading "Monthly Revenue" [level=2] [ref=e109]
+                - paragraph [ref=e110]: Jan – May 2026
+              - generic [ref=e111]: ↑ 12% vs last month
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - generic [ref=e114]: 30070k
+                - generic [ref=e117]: Jan
+              - generic [ref=e118]:
+                - generic [ref=e119]: 23280k
+                - generic [ref=e122]: Feb
+              - generic [ref=e123]:
+                - generic [ref=e124]: 36375k
+                - generic [ref=e127]: Mar
+              - generic [ref=e128]:
+                - generic [ref=e129]: 26675k
+                - generic [ref=e132]: Apr
+              - generic [ref=e133]:
+                - generic [ref=e134]: 42680k
+                - generic [ref=e137]: May
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - heading "Recent Orders" [level=2] [ref=e140]
+              - link "View All" [ref=e141] [cursor=pointer]:
+                - /url: /admin/orders
+                - text: View All
+                - img [ref=e142]
+            - table [ref=e145]:
+              - rowgroup [ref=e146]:
+                - row "Reference Client Amount Status" [ref=e147]:
+                  - columnheader "Reference" [ref=e148]
+                  - columnheader "Client" [ref=e149]
+                  - columnheader "Amount" [ref=e150]
+                  - columnheader "Status" [ref=e151]
+              - rowgroup [ref=e152]:
+                - row "CW-20260525-0042 Kempinski Hotel Accra GH₵ 4,800.00 confirmed" [ref=e153]:
+                  - cell "CW-20260525-0042" [ref=e154]
+                  - cell "Kempinski Hotel Accra" [ref=e155]
+                  - cell "GH₵ 4,800.00" [ref=e156]
+                  - cell "confirmed" [ref=e157]
+                - row "CW-20260524-0041 Mövenpick Hotel GH₵ 1,850.00 pending" [ref=e158]:
+                  - cell "CW-20260524-0041" [ref=e159]
+                  - cell "Mövenpick Hotel" [ref=e160]
+                  - cell "GH₵ 1,850.00" [ref=e161]
+                  - cell "pending" [ref=e162]
+                - row "CW-20260523-0040 Holiday Inn Accra GH₵ 900.00 delivered" [ref=e163]:
+                  - cell "CW-20260523-0040" [ref=e164]
+                  - cell "Holiday Inn Accra" [ref=e165]
+                  - cell "GH₵ 900.00" [ref=e166]
+                  - cell "delivered" [ref=e167]
+                - row "CW-20260522-0039 La Palm Royal Beach GH₵ 2,100.00 confirmed" [ref=e168]:
+                  - cell "CW-20260522-0039" [ref=e169]
+                  - cell "La Palm Royal Beach" [ref=e170]
+                  - cell "GH₵ 2,100.00" [ref=e171]
+                  - cell "confirmed" [ref=e172]
+                - row "CW-20260521-0038 Accra City Hotel GH₵ 650.00 delivered" [ref=e173]:
+                  - cell "CW-20260521-0038" [ref=e174]
+                  - cell "Accra City Hotel" [ref=e175]
+                  - cell "GH₵ 650.00" [ref=e176]
+                  - cell "delivered" [ref=e177]
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - generic [ref=e180]:
+              - heading "Inventory Alerts" [level=3] [ref=e181]
+              - link "Manage" [ref=e182] [cursor=pointer]:
+                - /url: /admin/inventory
+            - generic [ref=e183]:
+              - generic [ref=e184]:
+                - generic [ref=e185]:
+                  - paragraph [ref=e186]: Industrial Gas Range 6-Burner
+                  - generic [ref=e190]: 2/5
+                - img [ref=e191]
+              - generic [ref=e193]:
+                - generic [ref=e194]:
+                  - paragraph [ref=e195]: Classic White Chef Jacket (XL)
+                  - generic [ref=e199]: 3/10
+                - img [ref=e200]
+              - generic [ref=e202]:
+                - generic [ref=e203]:
+                  - paragraph [ref=e204]: Commercial Double Fryer
+                  - generic [ref=e207]: 0/3
+                - generic [ref=e208]: Empty
+              - generic [ref=e209]:
+                - generic [ref=e210]:
+                  - paragraph [ref=e211]: Stainless Prep Table 1.5m
+                  - generic [ref=e215]: 4/8
+                - img [ref=e216]
+            - link "Reorder Low Stock →" [ref=e219] [cursor=pointer]:
+              - /url: /admin/inventory
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - heading "Quote Requests" [level=3] [ref=e222]
+              - generic [ref=e223]: 3 new
+            - generic [ref=e224]:
+              - generic [ref=e225]:
+                - generic [ref=e226]:
+                  - paragraph [ref=e227]: Kwame Asante
+                  - generic [ref=e228]: Urgent
+                - paragraph [ref=e229]: Frankie's Hotel
+                - paragraph [ref=e230]: Industrial Kitchen Setup
+                - paragraph [ref=e231]: 25 May 2026 · QR-20260525-0001
+              - generic [ref=e232]:
+                - paragraph [ref=e234]: Abena Osei
+                - paragraph [ref=e235]: Volta Hotel
+                - paragraph [ref=e236]: Embroidery Services
+                - paragraph [ref=e237]: 24 May 2026 · QR-20260524-0002
+              - generic [ref=e238]:
+                - paragraph [ref=e240]: Kofi Mensah
+                - paragraph [ref=e241]: Fiesta Royale
+                - paragraph [ref=e242]: Machine Pre-Orders
+                - paragraph [ref=e243]: 24 May 2026 · QR-20260524-0003
+            - button "Reply to All →" [ref=e245] [cursor=pointer]

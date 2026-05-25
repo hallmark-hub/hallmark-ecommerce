@@ -1,0 +1,331 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - button "Uniforms" [ref=e8] [cursor=pointer]:
+          - text: Uniforms
+          - img [ref=e9]
+        - button "Equipment" [ref=e12] [cursor=pointer]:
+          - text: Equipment
+          - img [ref=e13]
+        - button "Services" [ref=e16] [cursor=pointer]:
+          - text: Services
+          - img [ref=e17]
+        - link "All Products" [ref=e19] [cursor=pointer]:
+          - /url: /products
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - img [ref=e22]
+          - textbox "Search products..." [ref=e25]
+        - link "Get Quote" [ref=e26] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e27]
+          - text: Get Quote
+        - button "Open cart" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+        - link "My account" [ref=e35] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e36]
+  - generic [ref=e39]:
+    - generic [ref=e40]:
+      - heading "Your Cart (0)" [level=2] [ref=e41]
+      - button "Close cart" [ref=e42] [cursor=pointer]:
+        - img [ref=e43]
+    - generic [ref=e46]:
+      - img [ref=e47]
+      - paragraph [ref=e50]: Your cart is empty
+      - paragraph [ref=e51]: Add products to get started.
+      - button "Continue Shopping" [ref=e52] [cursor=pointer]
+  - main [ref=e53]:
+    - generic [ref=e54]:
+      - img "Premium industrial kitchen in Accra" [ref=e56]
+      - generic [ref=e58]:
+        - generic [ref=e59]: "Accra's #1 Hospitality Supplier"
+        - heading "Premium Supplies for Ghana's Finest Kitchens" [level=1] [ref=e60]
+        - paragraph [ref=e61]: Equipping leading hotels and restaurants with industrial-grade equipment, bespoke uniforms, and custom branding services.
+        - generic [ref=e62]:
+          - link "Shop Now" [ref=e63] [cursor=pointer]:
+            - /url: /products
+            - button "Shop Now" [ref=e64]:
+              - text: Shop Now
+              - img [ref=e65]
+          - link "Our Services" [ref=e67] [cursor=pointer]:
+            - /url: /services
+            - button "Our Services" [ref=e68]
+        - generic [ref=e69]:
+          - img [ref=e70]
+          - generic [ref=e75]: Free delivery on orders over GH₵ 250 across Greater Accra
+    - generic [ref=e77]:
+      - generic [ref=e78]:
+        - paragraph [ref=e79]: 500+
+        - paragraph [ref=e80]: Hotels & Restaurants
+      - generic [ref=e81]:
+        - paragraph [ref=e82]: 10+
+        - paragraph [ref=e83]: Years of Excellence
+      - generic [ref=e84]:
+        - paragraph [ref=e85]: 24hr
+        - paragraph [ref=e86]: Accra Delivery
+      - generic [ref=e87]:
+        - paragraph [ref=e88]: 1,000+
+        - paragraph [ref=e89]: Products in Stock
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - paragraph [ref=e93]: What We Offer
+          - heading "Shop by Category" [level=2] [ref=e94]
+          - paragraph [ref=e95]: Specialized solutions for every hospitality need.
+        - link "Browse All" [ref=e96] [cursor=pointer]:
+          - /url: /products
+          - text: Browse All
+          - img [ref=e97]
+      - generic [ref=e99]:
+        - generic [ref=e100] [cursor=pointer]:
+          - img "Chef Uniforms" [ref=e101]
+          - generic [ref=e103]:
+            - paragraph [ref=e104]: Most Popular
+            - heading "Chef Uniforms" [level=3] [ref=e105]
+            - paragraph [ref=e106]: Forest green jackets, aprons, trousers & caps
+            - link "Shop Collection" [ref=e107]:
+              - /url: /products?category=chef-uniforms
+              - text: Shop Collection
+              - img [ref=e108]
+        - generic [ref=e110]:
+          - generic [ref=e111] [cursor=pointer]:
+            - img "Kitchen Equipment" [ref=e112]
+            - generic [ref=e114]:
+              - heading "Industrial Equipment" [level=3] [ref=e115]
+              - link "Browse Machines →" [ref=e116]:
+                - /url: /products?category=kitchen-equipment-tools
+          - generic [ref=e117] [cursor=pointer]:
+            - img "Staff Uniforms" [ref=e118]
+            - generic [ref=e119]:
+              - paragraph [ref=e120]: All Services
+              - heading "Branding & Customization" [level=3] [ref=e121]
+              - paragraph [ref=e122]: Embroidery, printing, kitchen setup
+              - link "View Services" [ref=e123]:
+                - /url: /services
+                - text: View Services
+                - img [ref=e124]
+    - generic [ref=e127]:
+      - generic [ref=e128]:
+        - generic [ref=e129]:
+          - paragraph [ref=e130]: Bestsellers
+          - heading "Top Ghanaian Essentials" [level=2] [ref=e131]
+          - paragraph [ref=e132]: Trusted by Ghana's finest hotels and restaurants.
+        - link "View Full Catalog" [ref=e133] [cursor=pointer]:
+          - /url: /products
+          - button "View Full Catalog" [ref=e134]:
+            - text: View Full Catalog
+            - img [ref=e135]
+      - generic [ref=e137]:
+        - article [ref=e138] [cursor=pointer]:
+          - link "Classic White Chef Jacket chef uniforms" [ref=e139]:
+            - /url: /products/classic-white-chef-jacket
+            - img "Classic White Chef Jacket" [ref=e140]
+            - generic [ref=e141]: chef uniforms
+          - generic [ref=e142]:
+            - link "Classic White Chef Jacket" [ref=e143]:
+              - /url: /products/classic-white-chef-jacket
+              - heading "Classic White Chef Jacket" [level=3] [ref=e144]
+            - generic [ref=e145]:
+              - generic [ref=e146]: GH₵ 450.00
+              - button "Add to Cart" [ref=e147]:
+                - img [ref=e148]
+                - text: Add to Cart
+        - article [ref=e152] [cursor=pointer]:
+          - link "Forest Green Executive Chef Jacket chef uniforms" [ref=e153]:
+            - /url: /products/forest-green-exec-jacket
+            - img "Forest Green Executive Chef Jacket" [ref=e154]
+            - generic [ref=e155]: chef uniforms
+          - generic [ref=e156]:
+            - link "Forest Green Executive Chef Jacket" [ref=e157]:
+              - /url: /products/forest-green-exec-jacket
+              - heading "Forest Green Executive Chef Jacket" [level=3] [ref=e158]
+            - generic [ref=e159]:
+              - generic [ref=e160]: GH₵ 650.00
+              - button "Add to Cart" [ref=e161]:
+                - img [ref=e162]
+                - text: Add to Cart
+        - article [ref=e166] [cursor=pointer]:
+          - link "Chef Trouser Set (3-Pack) chef uniforms" [ref=e167]:
+            - /url: /products/chef-trouser-set
+            - img "Chef Trouser Set (3-Pack)" [ref=e168]
+            - generic [ref=e169]: chef uniforms
+          - generic [ref=e170]:
+            - link "Chef Trouser Set (3-Pack)" [ref=e171]:
+              - /url: /products/chef-trouser-set
+              - heading "Chef Trouser Set (3-Pack)" [level=3] [ref=e172]
+            - generic [ref=e173]:
+              - generic [ref=e174]: GH₵ 380.00
+              - button "Add to Cart" [ref=e175]:
+                - img [ref=e176]
+                - text: Add to Cart
+        - article [ref=e180] [cursor=pointer]:
+          - link "Professional Bib Apron chef uniforms" [ref=e181]:
+            - /url: /products/professional-bib-apron
+            - img "Professional Bib Apron" [ref=e182]
+            - generic [ref=e183]: chef uniforms
+          - generic [ref=e184]:
+            - link "Professional Bib Apron" [ref=e185]:
+              - /url: /products/professional-bib-apron
+              - heading "Professional Bib Apron" [level=3] [ref=e186]
+            - generic [ref=e187]:
+              - generic [ref=e188]: GH₵ 150.00
+              - button "Add to Cart" [ref=e189]:
+                - img [ref=e190]
+                - text: Add to Cart
+    - generic [ref=e195]:
+      - generic [ref=e196]:
+        - paragraph [ref=e197]: Why ChefWare
+        - heading "Built for Ghana's Hospitality Industry" [level=2] [ref=e198]
+      - generic [ref=e199]:
+        - generic [ref=e200]:
+          - img [ref=e202]
+          - heading "Accra-Based Support" [level=3] [ref=e205]
+          - paragraph [ref=e206]: Dedicated local team for consultations, deliveries, and after-sales support across Greater Accra.
+        - generic [ref=e207]:
+          - img [ref=e209]
+          - heading "Free 24hr Delivery" [level=3] [ref=e214]
+          - paragraph [ref=e215]: Complimentary next-day delivery on all orders over GH₵ 250 within Greater Accra.
+        - generic [ref=e216]:
+          - img [ref=e218]
+          - heading "12-Month Warranty" [level=3] [ref=e221]
+          - paragraph [ref=e222]: Every piece of industrial kitchen equipment comes with a full 12-month standard warranty.
+    - generic [ref=e224]:
+      - generic [ref=e225]:
+        - paragraph [ref=e226]: Client Stories
+        - heading "Trusted by Ghana's Best" [level=2] [ref=e227]
+      - generic [ref=e228]:
+        - generic [ref=e229]:
+          - img [ref=e230]
+          - paragraph [ref=e233]: "\"ChefWare transformed our kitchen. The equipment quality is outstanding and delivery was next-day as promised. Our chefs love the uniforms.\""
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - paragraph [ref=e236]: Kwame Mensah
+              - paragraph [ref=e237]: Executive Chef
+              - paragraph [ref=e238]: Kempinski Hotel Gold Coast City
+            - generic [ref=e239]:
+              - img [ref=e240]
+              - img [ref=e242]
+              - img [ref=e244]
+              - img [ref=e246]
+              - img [ref=e248]
+        - generic [ref=e250]:
+          - img [ref=e251]
+          - paragraph [ref=e254]: "\"We've been sourcing all our front-of-house uniforms from ChefWare for 3 years. The embroidery quality is exceptional and the pricing is fair.\""
+          - generic [ref=e255]:
+            - generic [ref=e256]:
+              - paragraph [ref=e257]: Ama Serwaa
+              - paragraph [ref=e258]: F&B Operations Manager
+              - paragraph [ref=e259]: Mövenpick Ambassador Hotel Accra
+            - generic [ref=e260]:
+              - img [ref=e261]
+              - img [ref=e263]
+              - img [ref=e265]
+              - img [ref=e267]
+              - img [ref=e269]
+        - generic [ref=e271]:
+          - img [ref=e272]
+          - paragraph [ref=e275]: "\"The kitchen setup service was seamless. They handled everything from design to installation. Highly recommend for any restaurant owner in Accra.\""
+          - generic [ref=e276]:
+            - generic [ref=e277]:
+              - paragraph [ref=e278]: Abena Owusu
+              - paragraph [ref=e279]: Owner
+              - paragraph [ref=e280]: The Kitchen Restaurant, Osu
+            - generic [ref=e281]:
+              - img [ref=e282]
+              - img [ref=e284]
+              - img [ref=e286]
+              - img [ref=e288]
+              - img [ref=e290]
+    - generic [ref=e292]:
+      - paragraph [ref=e293]: Get Started Today
+      - heading "Need a Custom Quote?" [level=2] [ref=e294]
+      - paragraph [ref=e295]: Services like kitchen setup, embroidery, and machine customization require a personalised quote. We respond within 24 hours.
+      - generic [ref=e296]:
+        - link "Request a Free Quote" [ref=e297] [cursor=pointer]:
+          - /url: /quote
+          - button "Request a Free Quote" [ref=e298]:
+            - text: Request a Free Quote
+            - img [ref=e299]
+        - link "Browse Products" [ref=e301] [cursor=pointer]:
+          - /url: /products
+          - button "Browse Products" [ref=e302]
+  - contentinfo [ref=e303]:
+    - generic [ref=e304]:
+      - generic [ref=e305]:
+        - generic [ref=e306]:
+          - generic [ref=e307]: ChefWare Enterprise
+          - paragraph [ref=e308]: Accra's premier supplier of industrial kitchen equipment, chef uniforms, and hospitality branding services since 2015.
+          - generic [ref=e309]:
+            - link "WhatsApp" [ref=e310] [cursor=pointer]:
+              - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+              - img [ref=e311]
+            - link "Instagram" [ref=e313] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e314]
+            - link "Facebook" [ref=e316] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e317]
+          - generic [ref=e319]:
+            - paragraph [ref=e320]: Osu — Oxford Street, Accra
+            - paragraph [ref=e321]: +233 302 000 000
+            - paragraph [ref=e322]: info@chefware.com.gh
+        - generic [ref=e323]:
+          - heading "Shop" [level=5] [ref=e324]
+          - navigation [ref=e325]:
+            - link "Chef Uniforms" [ref=e326] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+            - link "Staff Uniforms" [ref=e327] [cursor=pointer]:
+              - /url: /products?category=staff-uniforms-branding
+            - link "Kitchen Equipment" [ref=e328] [cursor=pointer]:
+              - /url: /products?category=kitchen-equipment-tools
+            - link "All Products" [ref=e329] [cursor=pointer]:
+              - /url: /products
+        - generic [ref=e330]:
+          - heading "Services" [level=5] [ref=e331]
+          - navigation [ref=e332]:
+            - link "All Services" [ref=e333] [cursor=pointer]:
+              - /url: /services
+            - link "Embroidery" [ref=e334] [cursor=pointer]:
+              - /url: /services
+            - link "Logo Printing" [ref=e335] [cursor=pointer]:
+              - /url: /services
+            - link "Kitchen Setup" [ref=e336] [cursor=pointer]:
+              - /url: /services
+            - link "Request a Quote →" [ref=e337] [cursor=pointer]:
+              - /url: /quote
+        - generic [ref=e338]:
+          - heading "Support" [level=5] [ref=e339]
+          - navigation [ref=e340]:
+            - link "My Account" [ref=e341] [cursor=pointer]:
+              - /url: /account
+            - link "Track Order" [ref=e342] [cursor=pointer]:
+              - /url: /account
+            - link "Returns Policy" [ref=e343] [cursor=pointer]:
+              - /url: "#"
+            - link "Privacy Policy" [ref=e344] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e345]:
+          - heading "Stay Updated" [level=5] [ref=e346]
+          - paragraph [ref=e347]: New arrivals and exclusive offers.
+          - generic [ref=e348]:
+            - textbox "your@email.com" [ref=e349]
+            - button "Subscribe" [ref=e350] [cursor=pointer]
+      - generic [ref=e351]:
+        - paragraph [ref=e352]: © 2026 ChefWare Enterprise. All rights reserved.
+        - generic [ref=e353]:
+          - generic [ref=e354]: MTN MoMo
+          - generic [ref=e355]: ·
+          - generic [ref=e356]: Vodafone Cash
+          - generic [ref=e357]: ·
+          - generic [ref=e358]: AirtelTigo
+          - generic [ref=e359]: ·
+          - generic [ref=e360]: GCB Bank
+          - generic [ref=e361]: ·
+          - generic [ref=e362]: Stanbic
+  - link "Chat with us on WhatsApp" [ref=e363] [cursor=pointer]:
+    - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+    - img [ref=e365]

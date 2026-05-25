@@ -43,11 +43,11 @@ export default function PaymentVerifyPage() {
     <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
       <div className="text-center max-w-sm px-gutter">
         <XCircle size={56} className="text-error mx-auto mb-md" />
-        <h1 className="text-h2 font-medium text-on-surface mb-sm">Payment Verification Failed</h1>
-        <p className="text-secondary text-body-sm mb-md">We couldn't verify your payment. If you were charged, please contact us with reference: <strong>{reference}</strong></p>
+        <h1 className="text-h2 text-on-surface mb-sm">Payment Verification Failed</h1>
+        <p className="text-body text-secondary mb-md">We couldn't verify your payment. If you were charged, please contact us with reference: <strong>{reference}</strong></p>
         <div className="flex flex-col gap-sm">
-          <Button onClick={() => navigate('/checkout')} variant="primary">Try Again</Button>
-          <Button onClick={() => navigate('/')} variant="ghost">Back to Home</Button>
+          <Button onClick={() => navigate('/checkout')} variant="primary" size="lg" fullWidth>Try Again</Button>
+          <Button onClick={() => navigate('/')} variant="ghost" size="lg" fullWidth>Back to Home</Button>
         </div>
       </div>
     </main>

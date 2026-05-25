@@ -1,0 +1,238 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - button "Uniforms" [ref=e8] [cursor=pointer]:
+          - text: Uniforms
+          - img [ref=e9]
+        - button "Equipment" [ref=e12] [cursor=pointer]:
+          - text: Equipment
+          - img [ref=e13]
+        - button "Services" [ref=e16] [cursor=pointer]:
+          - text: Services
+          - img [ref=e17]
+        - link "All Products" [ref=e19] [cursor=pointer]:
+          - /url: /products
+      - generic [ref=e20]:
+        - link "Get Quote" [ref=e21] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e22]
+          - text: Get Quote
+        - button "Open cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "My account" [ref=e30] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e31]
+  - generic [ref=e34]:
+    - generic [ref=e35]:
+      - heading "Your Cart (0)" [level=2] [ref=e36]
+      - button "Close cart" [ref=e37] [cursor=pointer]:
+        - img [ref=e38]
+    - generic [ref=e41]:
+      - img [ref=e42]
+      - paragraph [ref=e45]: Your cart is empty
+      - paragraph [ref=e46]: Add products to get started.
+      - button "Continue Shopping" [ref=e47] [cursor=pointer]
+  - main [ref=e48]:
+    - complementary [ref=e49]:
+      - generic [ref=e51] [cursor=pointer]:
+        - radio "All Products" [checked] [ref=e52]
+        - generic [ref=e53]: All Products
+      - generic [ref=e54]:
+        - paragraph [ref=e55]: Uniforms
+        - generic [ref=e56]:
+          - generic [ref=e57] [cursor=pointer]:
+            - radio "Chef Uniforms" [ref=e58]
+            - generic [ref=e59]: Chef Uniforms
+          - generic [ref=e60] [cursor=pointer]:
+            - radio "Restaurant Staff Uniforms & Branding" [ref=e61]
+            - generic [ref=e62]: Restaurant Staff Uniforms & Branding
+      - generic [ref=e63]:
+        - paragraph [ref=e64]: Equipment
+        - generic [ref=e66] [cursor=pointer]:
+          - radio "Industrial Kitchen Equipment & Tools" [ref=e67]
+          - generic [ref=e68]: Industrial Kitchen Equipment & Tools
+      - generic [ref=e69]:
+        - paragraph [ref=e70]: Services
+        - paragraph [ref=e71]: Embroidery, logo printing, kitchen setup and machine customization require a custom quote.
+        - link "Request a Quote" [ref=e72] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e73]
+          - text: Request a Quote
+    - generic [ref=e76]:
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - heading "Premium Supplies" [level=1] [ref=e79]
+          - paragraph [ref=e80]: Showing 12 of 12 products
+        - generic [ref=e81]:
+          - generic [ref=e82]: "Sort by:"
+          - combobox [ref=e83] [cursor=pointer]:
+            - option "Recommended" [selected]
+            - 'option "Price: Low to High"'
+            - 'option "Price: High to Low"'
+            - option "Newest"
+      - generic [ref=e84]:
+        - article [ref=e85] [cursor=pointer]:
+          - link "Classic White Chef Jacket chef uniforms Classic White Chef Jacket" [ref=e86]:
+            - /url: /products/classic-white-chef-jacket
+            - img "Classic White Chef Jacket" [ref=e88]
+            - paragraph [ref=e89]: chef uniforms
+            - heading "Classic White Chef Jacket" [level=3] [ref=e90]
+          - generic [ref=e91]:
+            - generic [ref=e92]: GH₵ 450.00
+            - button "Add to cart" [ref=e93]:
+              - img [ref=e94]
+        - article [ref=e98] [cursor=pointer]:
+          - link "Forest Green Executive Chef Jacket chef uniforms Forest Green Executive Chef Jacket" [ref=e99]:
+            - /url: /products/forest-green-exec-jacket
+            - img "Forest Green Executive Chef Jacket" [ref=e101]
+            - paragraph [ref=e102]: chef uniforms
+            - heading "Forest Green Executive Chef Jacket" [level=3] [ref=e103]
+          - generic [ref=e104]:
+            - generic [ref=e105]: GH₵ 650.00
+            - button "Add to cart" [ref=e106]:
+              - img [ref=e107]
+        - article [ref=e111] [cursor=pointer]:
+          - link "Chef Trouser Set (3-Pack) chef uniforms Chef Trouser Set (3-Pack)" [ref=e112]:
+            - /url: /products/chef-trouser-set
+            - img "Chef Trouser Set (3-Pack)" [ref=e114]
+            - paragraph [ref=e115]: chef uniforms
+            - heading "Chef Trouser Set (3-Pack)" [level=3] [ref=e116]
+          - generic [ref=e117]:
+            - generic [ref=e118]: GH₵ 380.00
+            - button "Add to cart" [ref=e119]:
+              - img [ref=e120]
+        - article [ref=e124] [cursor=pointer]:
+          - link "Professional Bib Apron chef uniforms Professional Bib Apron" [ref=e125]:
+            - /url: /products/professional-bib-apron
+            - img "Professional Bib Apron" [ref=e127]
+            - paragraph [ref=e128]: chef uniforms
+            - heading "Professional Bib Apron" [level=3] [ref=e129]
+          - generic [ref=e130]:
+            - generic [ref=e131]: GH₵ 150.00
+            - button "Add to cart" [ref=e132]:
+              - img [ref=e133]
+        - article [ref=e137] [cursor=pointer]:
+          - link "Industrial Gas Range 6-Burner kitchen equipment tools Industrial Gas Range 6-Burner" [ref=e138]:
+            - /url: /products/industrial-gas-range-6-burner
+            - img "Industrial Gas Range 6-Burner" [ref=e140]
+            - paragraph [ref=e141]: kitchen equipment tools
+            - heading "Industrial Gas Range 6-Burner" [level=3] [ref=e142]
+          - generic [ref=e143]:
+            - generic [ref=e144]: GH₵ 4,800.00
+            - button "Add to cart" [ref=e145]:
+              - img [ref=e146]
+        - article [ref=e150] [cursor=pointer]:
+          - link "Industrial Stock Pot 50L kitchen equipment tools Industrial Stock Pot 50L" [ref=e151]:
+            - /url: /products/industrial-stock-pot-50l
+            - img "Industrial Stock Pot 50L" [ref=e153]
+            - paragraph [ref=e154]: kitchen equipment tools
+            - heading "Industrial Stock Pot 50L" [level=3] [ref=e155]
+          - generic [ref=e156]:
+            - generic [ref=e157]: GH₵ 1,250.00
+            - button "Add to cart" [ref=e158]:
+              - img [ref=e159]
+        - article [ref=e163] [cursor=pointer]:
+          - link "Stainless Steel Prep Table 1.5m kitchen equipment tools Stainless Steel Prep Table 1.5m" [ref=e164]:
+            - /url: /products/ss-prep-table-1-5m
+            - img "Stainless Steel Prep Table 1.5m" [ref=e166]
+            - paragraph [ref=e167]: kitchen equipment tools
+            - heading "Stainless Steel Prep Table 1.5m" [level=3] [ref=e168]
+          - generic [ref=e169]:
+            - generic [ref=e170]: GH₵ 2,100.00
+            - button "Add to cart" [ref=e171]:
+              - img [ref=e172]
+        - article [ref=e176] [cursor=pointer]:
+          - link "Signature 8\" Chef Knife kitchen equipment tools Signature 8\" Chef Knife" [ref=e177]:
+            - /url: /products/signature-chef-knife-8
+            - img "Signature 8\" Chef Knife" [ref=e179]
+            - paragraph [ref=e180]: kitchen equipment tools
+            - heading "Signature 8\" Chef Knife" [level=3] [ref=e181]
+          - generic [ref=e182]:
+            - generic [ref=e183]: GH₵ 890.00
+            - button "Add to cart" [ref=e184]:
+              - img [ref=e185]
+        - article [ref=e189] [cursor=pointer]:
+          - link "Waiter Vest & Bow Tie Set staff uniforms branding Waiter Vest & Bow Tie Set" [ref=e190]:
+            - /url: /products/waiter-vest-bow-tie
+            - img "Waiter Vest & Bow Tie Set" [ref=e192]
+            - paragraph [ref=e193]: staff uniforms branding
+            - heading "Waiter Vest & Bow Tie Set" [level=3] [ref=e194]
+          - generic [ref=e195]:
+            - generic [ref=e196]: GH₵ 220.00
+            - button "Add to cart" [ref=e197]:
+              - img [ref=e198]
+        - article [ref=e202] [cursor=pointer]:
+          - link "Full Kitchen Turnkey Setup kitchen setup Full Kitchen Turnkey Setup" [ref=e203]:
+            - /url: /products/full-kitchen-setup
+            - img "Full Kitchen Turnkey Setup" [ref=e205]
+            - paragraph [ref=e206]: kitchen setup
+            - heading "Full Kitchen Turnkey Setup" [level=3] [ref=e207]
+          - generic [ref=e208]:
+            - generic [ref=e209]: Request a quote
+            - link "Request quote" [ref=e210]:
+              - /url: /quote?product=p10
+              - img [ref=e211]
+        - article [ref=e214] [cursor=pointer]:
+          - link "Logo Embroidery on Uniforms embroidery Logo Embroidery on Uniforms" [ref=e215]:
+            - /url: /products/logo-embroidery
+            - img "Logo Embroidery on Uniforms" [ref=e217]
+            - paragraph [ref=e218]: embroidery
+            - heading "Logo Embroidery on Uniforms" [level=3] [ref=e219]
+          - generic [ref=e220]:
+            - generic [ref=e221]: Request a quote
+            - link "Request quote" [ref=e222]:
+              - /url: /quote?product=p11
+              - img [ref=e223]
+        - article [ref=e226] [cursor=pointer]:
+          - link "Commercial Double Deep Fryer Out of Stock kitchen equipment tools Commercial Double Deep Fryer" [ref=e227]:
+            - /url: /products/commercial-double-fryer
+            - generic [ref=e228]:
+              - img "Commercial Double Deep Fryer" [ref=e229]
+              - generic [ref=e231]: Out of Stock
+            - paragraph [ref=e232]: kitchen equipment tools
+            - heading "Commercial Double Deep Fryer" [level=3] [ref=e233]
+          - generic [ref=e234]:
+            - generic [ref=e235]: GH₵ 1,850.00
+            - button "Add to cart" [disabled] [ref=e236]:
+              - img [ref=e237]
+  - contentinfo [ref=e241]:
+    - generic [ref=e242]:
+      - generic [ref=e243]:
+        - generic [ref=e244]: ChefWare Enterprise
+        - paragraph [ref=e245]: Premium Ghanaian hospitality supplies. Equipping the nation's finest hotels and restaurants.
+      - generic [ref=e246]:
+        - heading "Office Location" [level=5] [ref=e247]
+        - paragraph [ref=e248]: Accra Office, Osu — Oxford Street
+        - paragraph [ref=e249]: +233 302 000 000
+        - paragraph [ref=e250]: info@chefware.com.gh
+      - generic [ref=e251]:
+        - heading "Customer Support" [level=5] [ref=e252]
+        - navigation [ref=e253]:
+          - link "Browse Catalog" [ref=e254] [cursor=pointer]:
+            - /url: /products
+          - link "Request a Quote" [ref=e255] [cursor=pointer]:
+            - /url: /quote
+          - link "MTN MoMo Payments" [ref=e256] [cursor=pointer]:
+            - /url: "#"
+          - link "Track Order" [ref=e257] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e258]:
+        - heading "Legal & Privacy" [level=5] [ref=e259]
+        - navigation [ref=e260]:
+          - link "Terms of Service" [ref=e261] [cursor=pointer]:
+            - /url: "#"
+          - link "Privacy Policy" [ref=e262] [cursor=pointer]:
+            - /url: "#"
+          - link "Returns & Exchanges" [ref=e263] [cursor=pointer]:
+            - /url: "#"
+    - generic [ref=e264]:
+      - paragraph [ref=e265]: © 2026 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.
+      - generic [ref=e266]:
+        - generic [ref=e267]: MTN MoMo
+        - generic [ref=e268]: ·
+        - generic [ref=e269]: Vodafone Cash
+        - generic [ref=e270]: ·
+        - generic [ref=e271]: Bank Transfer

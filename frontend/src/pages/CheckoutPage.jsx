@@ -102,11 +102,11 @@ export default function CheckoutPage() {
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-on-surface mb-2">Your cart is empty</h1>
-          <p className="text-secondary text-sm mb-8 max-w-sm mx-auto">Looks like you haven't added anything yet. Browse our catalog to get started.</p>
+          <h1 className="text-h2 text-on-surface mb-2">Your cart is empty</h1>
+          <p className="text-body text-secondary mb-8 max-w-sm mx-auto">Looks like you haven't added anything yet. Browse our catalog to get started.</p>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             <Button onClick={() => navigate('/products')} variant="primary" size="lg">Browse Products</Button>
-            <Button onClick={() => navigate('/quote')} variant="cta" size="lg">Request a Quote</Button>
+            <Button onClick={() => navigate('/quote')} variant="gold" size="lg">Request a Quote</Button>
           </div>
           <div className="grid grid-cols-3 gap-4 text-center border-t border-outline-variant pt-8">
             {[
@@ -114,7 +114,11 @@ export default function CheckoutPage() {
               { label: 'Kitchen Equipment', to: '/products?category=kitchen-equipment-tools' },
               { label: 'Staff Uniforms', to: '/products?category=staff-uniforms-branding' },
             ].map(c => (
-              <button key={c.label} onClick={() => navigate(c.to)} className="py-3 px-2 rounded-xl border border-outline-variant text-body-sm text-secondary hover:border-primary hover:text-primary transition-colors cursor-pointer">
+              <button
+                key={c.label}
+                onClick={() => navigate(c.to)}
+                className="py-3 px-2 rounded-xl border border-outline-variant text-body-sm text-secondary hover:border-primary hover:text-primary transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
                 {c.label}
               </button>
             ))}
@@ -130,8 +134,8 @@ export default function CheckoutPage() {
         <div className="max-w-lg mx-auto px-gutter py-xl text-center">
           <div className="bg-white rounded-xl border border-outline-variant p-xl">
             <Building2 size={48} className="text-primary mx-auto mb-md" />
-            <h1 className="text-h2 font-medium text-on-surface mb-sm">Bank Transfer Instructions</h1>
-            <p className="text-secondary text-body-sm mb-md">{bankDetails.instructions}</p>
+            <h1 className="text-h2 text-on-surface mb-sm">Bank Transfer Instructions</h1>
+            <p className="text-body text-secondary mb-md">{bankDetails.instructions}</p>
             <div className="text-left space-y-sm bg-surface-container-low rounded-lg p-md mb-md">
               <div className="flex justify-between text-body-sm"><span className="text-secondary">Bank</span><span className="font-medium">{bankDetails.bank_name}</span></div>
               <div className="flex justify-between text-body-sm"><span className="text-secondary">Account Name</span><span className="font-medium">{bankDetails.account_name}</span></div>
@@ -141,7 +145,7 @@ export default function CheckoutPage() {
               <div className="flex justify-between text-body-sm"><span className="text-secondary">Amount</span><span className="font-bold text-primary">{formatPrice(bankDetails.amount_pesewas)}</span></div>
             </div>
             <p className="text-body-sm text-error font-medium mb-md">Use the reference number exactly as shown above.</p>
-            <Button onClick={() => navigate('/')} variant="primary" className="w-full">Back to Home</Button>
+            <Button onClick={() => navigate('/')} variant="primary" size="lg" fullWidth>Back to Home</Button>
           </div>
         </div>
       </main>
@@ -176,39 +180,49 @@ export default function CheckoutPage() {
 
             {step === STEP_SHIPPING && (
               <div className="bg-white rounded-xl border border-outline-variant p-xl">
-                <h2 className="text-h2 font-medium text-on-surface mb-md">Shipping Information</h2>
+                <h2 className="text-h2 text-on-surface mb-md">Shipping Information</h2>
                 <div className="space-y-md">
                   <div>
-                    <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="name">Full Name *</label>
+                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="name">Full Name *</label>
                     <input id="name" type="text" value={shipping.name} onChange={e => updateShipping('name', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kwame Asante" />
                   </div>
                   <div>
-                    <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="company">Company / Restaurant (optional)</label>
+                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="company">Company / Restaurant (optional)</label>
                     <input id="company" type="text" value={shipping.company} onChange={e => updateShipping('company', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kempinski Hotel Accra" />
                   </div>
                   <div>
-                    <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="address">Delivery Address (Accra) *</label>
+                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="address">Delivery Address (Accra) *</label>
                     <input id="address" type="text" value={shipping.address} onChange={e => updateShipping('address', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="House 12, Osu Oxford Street, Accra" />
-                    <p className="text-label text-xs text-secondary mt-xs">Delivery within Greater Accra. 24 hours after payment confirmed.</p>
+                    <p className="text-label uppercase text-secondary mt-xs">Delivery within Greater Accra. 24 hours after payment confirmed.</p>
                   </div>
                   <div>
-                    <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="phone">Phone Number *</label>
+                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="phone">Phone Number *</label>
                     <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+233244123456" />
-                    <p className="text-label text-xs text-secondary mt-xs">Format: +233XXXXXXXXX</p>
+                    <p className="text-label uppercase text-secondary mt-xs">Format: +233XXXXXXXXX</p>
                   </div>
                 </div>
-                <Button onClick={handleShippingNext} variant="primary" size="lg" className="w-full mt-xl">
-                  Continue to Payment <ChevronRight size={18} />
+                <Button
+                  onClick={handleShippingNext}
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  iconRight={<ChevronRight />}
+                  className="mt-xl"
+                >
+                  Continue to Payment
                 </Button>
               </div>
             )}
 
             {step === STEP_PAYMENT && (
               <div className="bg-white rounded-xl border border-outline-variant p-xl">
-                <button onClick={() => setStep(STEP_SHIPPING)} className="text-secondary hover:text-primary text-body-sm mb-md flex items-center gap-1 cursor-pointer">
+                <button
+                  onClick={() => setStep(STEP_SHIPPING)}
+                  className="text-secondary hover:text-primary text-body-sm mb-md flex items-center gap-1 cursor-pointer focus:outline-none focus-visible:underline rounded"
+                >
                   ← Back to Shipping
                 </button>
-                <h2 className="text-h2 font-medium text-on-surface mb-md">Payment Method</h2>
+                <h2 className="text-h2 text-on-surface mb-md">Payment Method</h2>
                 <div className="space-y-sm mb-md">
                   {PAYMENT_METHODS.map(m => {
                     const Icon = m.icon
@@ -235,7 +249,7 @@ export default function CheckoutPage() {
                   <span className="text-body-sm text-on-surface">I have read and accept the returns policy — No refunds. Exchange only within 3 days of purchase.</span>
                 </label>
 
-                <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" className="w-full">
+                <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" fullWidth>
                   Place Order
                 </Button>
               </div>
@@ -244,31 +258,32 @@ export default function CheckoutPage() {
 
           {/* Order summary sidebar */}
           <aside className="bg-white rounded-xl border border-outline-variant p-xl h-fit">
-            <h2 className="text-h3 font-medium text-on-surface mb-md">Order Summary</h2>
+            <h2 className="text-h3 text-on-surface mb-md">Order Summary</h2>
             <div className="divide-y divide-outline-variant mb-md">
               {items.map(item => (
                 <div key={item.id} className="py-sm flex gap-sm">
                   <img src={item.images?.[0]} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-surface-container" />
                   <div className="flex-1 min-w-0">
                     <p className="text-body-sm font-medium line-clamp-1">{item.name}</p>
-                    <p className="text-label text-xs text-secondary">Qty: {item.quantity}</p>
+                    <p className="text-body-sm text-secondary">Qty: {item.quantity}</p>
                   </div>
-                  <p className="text-body-sm font-bold text-primary shrink-0">{formatPrice(item.price_pesewas * item.quantity)}</p>
+                  <p className="text-body-sm font-bold text-primary shrink-0 whitespace-nowrap">{formatPrice(item.price_pesewas * item.quantity)}</p>
                 </div>
               ))}
             </div>
-            <div className="space-y-xs">
-              <div className="flex justify-between text-body-sm text-secondary">
+            <div className="space-y-2">
+              <div className="flex justify-between text-body text-secondary">
                 <span>Subtotal</span><span>{formatPrice(total)}</span>
               </div>
-              <div className="flex justify-between text-body-sm text-secondary">
-                <span>Delivery</span><span className="text-primary font-medium">Free (Accra)</span>
+              <div className="flex justify-between text-body text-secondary">
+                <span>Delivery</span><span className="text-primary font-semibold">Free (Accra)</span>
               </div>
-              <div className="flex justify-between text-h3 font-semibold text-on-surface pt-sm border-t border-outline-variant">
-                <span>Total</span><span>{formatPrice(total)}</span>
+              <div className="flex justify-between items-baseline pt-sm border-t border-outline-variant">
+                <span className="text-h3 text-on-surface">Total</span>
+                <span className="text-price text-primary whitespace-nowrap">{formatPrice(total)}</span>
               </div>
             </div>
-            <p className="text-label text-xs text-secondary mt-md">VAT treatment TBC. Prices shown inclusive.</p>
+            <p className="text-label uppercase text-secondary mt-md">VAT treatment TBC. Prices shown inclusive.</p>
           </aside>
         </div>
       </div>

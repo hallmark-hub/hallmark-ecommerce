@@ -1,0 +1,137 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - button "Uniforms" [ref=e8] [cursor=pointer]:
+          - text: Uniforms
+          - img [ref=e9]
+        - button "Equipment" [ref=e12] [cursor=pointer]:
+          - text: Equipment
+          - img [ref=e13]
+        - button "Services" [ref=e16] [cursor=pointer]:
+          - text: Services
+          - img [ref=e17]
+        - link "All Products" [ref=e19] [cursor=pointer]:
+          - /url: /products
+      - generic [ref=e20]:
+        - link "Get Quote" [ref=e21] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e22]
+          - text: Get Quote
+        - button "Open cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "My account" [ref=e30] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e31]
+  - generic [ref=e34]:
+    - generic [ref=e35]:
+      - heading "Your Cart (0)" [level=2] [ref=e36]
+      - button "Close cart" [ref=e37] [cursor=pointer]:
+        - img [ref=e38]
+    - generic [ref=e41]:
+      - img [ref=e42]
+      - paragraph [ref=e45]: Your cart is empty
+      - paragraph [ref=e46]: Add products to get started.
+      - button "Continue Shopping" [ref=e47] [cursor=pointer]
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - heading "Sign In" [level=1] [ref=e51]
+        - paragraph [ref=e52]: ChefWare Enterprise — Accra
+        - paragraph [ref=e53]: Mock UI — auth pending backend
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e57]: Email *
+            - textbox "Email *" [ref=e58]:
+              - /placeholder: kwame@example.com
+          - generic [ref=e59]:
+            - generic [ref=e60]: Password *
+            - textbox "Password *" [ref=e61]:
+              - /placeholder: ••••••••
+          - button "Sign In" [ref=e62] [cursor=pointer]
+        - paragraph [ref=e63]:
+          - text: Don't have an account?
+          - button "Register" [ref=e64] [cursor=pointer]
+      - paragraph [ref=e65]:
+        - text: "Hint: use"
+        - code [ref=e66]: admin@chefware.com
+        - text: to log in as admin
+  - contentinfo [ref=e67]:
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: ChefWare Enterprise
+          - paragraph [ref=e72]: Accra's premier supplier of industrial kitchen equipment, chef uniforms, and hospitality branding services since 2015.
+          - generic [ref=e73]:
+            - link "WhatsApp" [ref=e74] [cursor=pointer]:
+              - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+              - img [ref=e75]
+            - link "Instagram" [ref=e77] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e78]
+            - link "Facebook" [ref=e80] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e81]
+          - generic [ref=e83]:
+            - paragraph [ref=e84]: Osu — Oxford Street, Accra
+            - paragraph [ref=e85]: +233 302 000 000
+            - paragraph [ref=e86]: info@chefware.com.gh
+        - generic [ref=e87]:
+          - heading "Shop" [level=5] [ref=e88]
+          - navigation [ref=e89]:
+            - link "Chef Uniforms" [ref=e90] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+            - link "Staff Uniforms" [ref=e91] [cursor=pointer]:
+              - /url: /products?category=staff-uniforms-branding
+            - link "Kitchen Equipment" [ref=e92] [cursor=pointer]:
+              - /url: /products?category=kitchen-equipment-tools
+            - link "All Products" [ref=e93] [cursor=pointer]:
+              - /url: /products
+        - generic [ref=e94]:
+          - heading "Services" [level=5] [ref=e95]
+          - navigation [ref=e96]:
+            - link "All Services" [ref=e97] [cursor=pointer]:
+              - /url: /services
+            - link "Embroidery" [ref=e98] [cursor=pointer]:
+              - /url: /services
+            - link "Logo Printing" [ref=e99] [cursor=pointer]:
+              - /url: /services
+            - link "Kitchen Setup" [ref=e100] [cursor=pointer]:
+              - /url: /services
+            - link "Request a Quote →" [ref=e101] [cursor=pointer]:
+              - /url: /quote
+        - generic [ref=e102]:
+          - heading "Support" [level=5] [ref=e103]
+          - navigation [ref=e104]:
+            - link "My Account" [ref=e105] [cursor=pointer]:
+              - /url: /account
+            - link "Track Order" [ref=e106] [cursor=pointer]:
+              - /url: /account
+            - link "Returns Policy" [ref=e107] [cursor=pointer]:
+              - /url: "#"
+            - link "Privacy Policy" [ref=e108] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e109]:
+          - heading "Stay Updated" [level=5] [ref=e110]
+          - paragraph [ref=e111]: New arrivals and exclusive offers.
+          - generic [ref=e112]:
+            - textbox "your@email.com" [ref=e113]
+            - button "Subscribe" [ref=e114] [cursor=pointer]
+      - generic [ref=e115]:
+        - paragraph [ref=e116]: © 2026 ChefWare Enterprise. All rights reserved.
+        - generic [ref=e117]:
+          - generic [ref=e118]: MTN MoMo
+          - generic [ref=e119]: ·
+          - generic [ref=e120]: Vodafone Cash
+          - generic [ref=e121]: ·
+          - generic [ref=e122]: AirtelTigo
+          - generic [ref=e123]: ·
+          - generic [ref=e124]: GCB Bank
+          - generic [ref=e125]: ·
+          - generic [ref=e126]: Stanbic
+  - link "Chat with us on WhatsApp" [ref=e127] [cursor=pointer]:
+    - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+    - img [ref=e129]

@@ -78,7 +78,7 @@ export default function ProductCatalogPage() {
 
         {/* Uniforms group */}
         <div className="px-md mb-md">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">Uniforms</p>
+          <p className="text-label uppercase text-secondary mb-2">Uniforms</p>
           <div className="space-y-1">
             {categories.filter(c => c.checkout_type === 'direct' && c.slug.includes('uniform') || c.slug === 'chef-uniforms' || c.slug === 'staff-uniforms-branding').map(c => (
               <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
@@ -91,7 +91,7 @@ export default function ProductCatalogPage() {
 
         {/* Equipment group */}
         <div className="px-md mb-md">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">Equipment</p>
+          <p className="text-label uppercase text-secondary mb-2">Equipment</p>
           <div className="space-y-1">
             {categories.filter(c => c.slug === 'kitchen-equipment-tools').map(c => (
               <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
@@ -104,13 +104,13 @@ export default function ProductCatalogPage() {
 
         {/* Services — not filterable, redirect to quote */}
         <div className="mx-md mt-auto mb-md rounded-xl bg-primary/5 border border-primary/20 p-md">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Services</p>
-          <p className="text-[11px] text-secondary leading-snug mb-3">
+          <p className="text-label uppercase text-primary mb-1">Services</p>
+          <p className="text-body-sm text-secondary leading-snug mb-3">
             Embroidery, logo printing, kitchen setup and machine customization require a custom quote.
           </p>
-          <Link to="/quote" className="flex items-center justify-center gap-1.5 w-full py-2 bg-gold hover:bg-gold/90 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer">
-            <FileText size={13} /> Request a Quote
-          </Link>
+          <Button as={Link} to="/quote" variant="gold" size="sm" fullWidth iconLeft={<FileText />}>
+            Request a Quote
+          </Button>
         </div>
       </aside>
 
@@ -126,7 +126,7 @@ export default function ProductCatalogPage() {
             </p>
           </div>
           <div className="flex items-center gap-sm">
-            <span className="text-label text-secondary text-xs">Sort by:</span>
+            <span className="text-label uppercase text-secondary">Sort by:</span>
             <select
               value={sort}
               onChange={e => setParam('sort', e.target.value)}
@@ -139,16 +139,27 @@ export default function ProductCatalogPage() {
 
         {/* Mobile category chips — direct checkout only */}
         <div className="md:hidden flex gap-2 flex-wrap mb-md">
-          <button onClick={() => setParam('category', '')} className={`px-3 py-1 rounded-full text-label text-xs border cursor-pointer ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}>All</button>
+          <button
+            onClick={() => setParam('category', '')}
+            className={`px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+          >
+            All
+          </button>
           {categories.filter(c => c.checkout_type === 'direct').map(c => (
-            <button key={c.id} onClick={() => setParam('category', c.slug)} className={`px-3 py-1 rounded-full text-label text-xs border cursor-pointer ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}>{c.name}</button>
+            <button
+              key={c.id}
+              onClick={() => setParam('category', c.slug)}
+              className={`px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+            >
+              {c.name}
+            </button>
           ))}
         </div>
 
         {isQuoteCat && (
           <div className="mb-md p-md bg-tertiary-fixed/30 border border-outline-variant rounded-xl flex items-center justify-between gap-4">
             <p className="text-body-sm text-on-surface">This category requires a custom quote. Fill in our form to get pricing.</p>
-            <Link to="/quote"><Button variant="cta" size="sm">Request Quote</Button></Link>
+            <Button as={Link} to="/quote" variant="gold" size="sm">Request Quote</Button>
           </div>
         )}
 
@@ -170,13 +181,30 @@ export default function ProductCatalogPage() {
         {/* Pagination */}
         {pages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-xl">
-            <button onClick={() => setPage(page - 1)} disabled={page <= 1} className="p-2 rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 cursor-pointer">
+            <button
+              onClick={() => setPage(page - 1)}
+              disabled={page <= 1}
+              aria-label="Previous page"
+              className="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
               <ChevronLeft size={18} />
             </button>
             {Array.from({ length: pages }, (_, i) => i + 1).map(p => (
-              <button key={p} onClick={() => setPage(p)} className={`w-9 h-9 rounded-lg text-body-sm font-medium cursor-pointer ${p === page ? 'bg-primary text-white' : 'border border-outline-variant hover:bg-surface-container'}`}>{p}</button>
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                aria-current={p === page ? 'page' : undefined}
+                className={`w-9 h-9 rounded-lg text-body-sm font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${p === page ? 'bg-primary text-white' : 'border border-outline-variant hover:bg-surface-container'}`}
+              >
+                {p}
+              </button>
             ))}
-            <button onClick={() => setPage(page + 1)} disabled={page >= pages} className="p-2 rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 cursor-pointer">
+            <button
+              onClick={() => setPage(page + 1)}
+              disabled={page >= pages}
+              aria-label="Next page"
+              className="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
               <ChevronRight size={18} />
             </button>
           </div>

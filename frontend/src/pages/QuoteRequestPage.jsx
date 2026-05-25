@@ -57,9 +57,9 @@ export default function QuoteRequestPage() {
       <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
         <div className="max-w-md mx-auto px-gutter text-center">
           <CheckCircle size={56} className="text-primary mx-auto mb-md" />
-          <h1 className="text-h2 font-medium text-on-surface mb-sm">Quote Request Received!</h1>
+          <h1 className="text-h2 text-on-surface mb-sm">Quote Request Received!</h1>
           <p className="text-body text-secondary mb-md">Your reference is <strong className="text-primary">{result.reference}</strong>. Our team will contact you within 24 hours.</p>
-          <Button onClick={() => setResult(null)} variant="ghost">Submit Another</Button>
+          <Button onClick={() => setResult(null)} variant="ghost" size="md">Submit Another</Button>
         </div>
       </main>
     )
@@ -67,10 +67,10 @@ export default function QuoteRequestPage() {
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-2xl mx-auto px-gutter py-xl">
+      <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section">
         <div className="mb-lg">
-          <h1 className="text-h1 font-medium text-on-surface">Request a Quote</h1>
-          <p className="text-body text-secondary mt-2">Tell us about your requirements and we'll prepare a custom quote within 24 hours.</p>
+          <h1 className="text-h1 text-on-surface">Request a Quote</h1>
+          <p className="text-body-lg text-secondary mt-2">Tell us about your requirements and we'll prepare a custom quote within 24 hours.</p>
         </div>
 
         <div className="bg-white rounded-xl border border-outline-variant p-xl">
@@ -84,23 +84,23 @@ export default function QuoteRequestPage() {
           <form onSubmit={handleSubmit} className="space-y-md">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
               <div>
-                <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="name">Full Name *</label>
+                <label className="block text-label uppercase text-secondary mb-xs" htmlFor="name">Full Name *</label>
                 <input id="name" type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kwame Asante" required />
               </div>
               <div>
-                <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="email">Email Address *</label>
+                <label className="block text-label uppercase text-secondary mb-xs" htmlFor="email">Email Address *</label>
                 <input id="email" type="email" value={form.email} onChange={e => update('email', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="kwame@example.com" required />
               </div>
             </div>
 
             <div>
-              <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="phone">Phone Number *</label>
+              <label className="block text-label uppercase text-secondary mb-xs" htmlFor="phone">Phone Number *</label>
               <input id="phone" type="tel" value={form.phone} onChange={e => update('phone', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+233244123456" required />
-              <p className="text-label text-xs text-secondary mt-xs">Format: +233XXXXXXXXX</p>
+              <p className="text-label uppercase text-secondary mt-xs">Format: +233XXXXXXXXX</p>
             </div>
 
             <div>
-              <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="category">Service Category *</label>
+              <label className="block text-label uppercase text-secondary mb-xs" htmlFor="category">Service Category *</label>
               <select id="category" value={form.category_slug} onChange={e => update('category_slug', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer" required>
                 <option value="">Select a category...</option>
                 {CATEGORIES.map(c => <option key={c.slug} value={c.slug}>{c.name}</option>)}
@@ -108,11 +108,11 @@ export default function QuoteRequestPage() {
             </div>
 
             <div>
-              <label className="block text-label text-xs font-semibold text-secondary uppercase tracking-wide mb-xs" htmlFor="message">Requirements *</label>
+              <label className="block text-label uppercase text-secondary mb-xs" htmlFor="message">Requirements *</label>
               <textarea id="message" value={form.message} onChange={e => update('message', e.target.value)} rows={5} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary resize-none" placeholder="Describe your needs — e.g. 'We need a full kitchen setup for a 60-seat restaurant, including industrial ovens and prep stations.'" required />
             </div>
 
-            <Button type="submit" loading={loading} variant="primary" size="lg" className="w-full">
+            <Button type="submit" loading={loading} variant="primary" size="lg" fullWidth>
               Submit Quote Request
             </Button>
           </form>

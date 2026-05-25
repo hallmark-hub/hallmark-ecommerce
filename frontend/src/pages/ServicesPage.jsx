@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle, MessageSquare, FileText, Truck } from 'lucide-react'
+import Button from '../components/Button'
 
 const SERVICES = [
   {
@@ -95,27 +96,24 @@ export default function ServicesPage() {
     <main className="pt-20 bg-surface min-h-screen">
 
       {/* Hero */}
-      <section className="bg-primary text-on-primary py-16 px-gutter text-center">
-        <p className="text-sm font-semibold uppercase tracking-widest text-primary-fixed mb-3">What We Offer</p>
-        <h1 className="text-h1 md:text-5xl font-bold text-white mb-4 max-w-2xl mx-auto leading-tight">
+      <section className="bg-primary py-section-mobile md:py-section px-gutter text-center">
+        <p className="text-label uppercase text-primary-fixed mb-3">What We Offer</p>
+        <h1 className="text-h1 md:text-display-sm text-white mb-4 max-w-2xl mx-auto">
           Bespoke Services for Ghana's Hospitality Industry
         </h1>
-        <p className="text-body text-on-primary/80 max-w-xl mx-auto mb-8">
+        <p className="text-body-lg text-on-primary/80 max-w-xl mx-auto mb-8">
           From custom embroidery to full kitchen installations — every service is tailored to your operation and priced with a free quote.
         </p>
-        <Link
-          to="/quote"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold/90 text-white font-semibold rounded-xl transition-colors cursor-pointer text-base"
-        >
-          Request a Free Quote <ArrowRight size={18} />
-        </Link>
+        <Button as={Link} to="/quote" variant="gold" size="lg" iconRight={<ArrowRight />}>
+          Request a Free Quote
+        </Button>
       </section>
 
       {/* Services Grid */}
-      <section className="max-w-container-max mx-auto px-gutter py-xl">
+      <section className="max-w-container-max mx-auto px-gutter py-section-mobile md:py-section">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-lg">
           {SERVICES.map(service => (
-            <div key={service.slug} className="group bg-white rounded-2xl border border-outline-variant overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+            <div key={service.slug} className="group bg-white rounded-2xl border border-outline-variant overflow-hidden flex flex-col hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300">
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
@@ -125,33 +123,38 @@ export default function ServicesPage() {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <span className="absolute bottom-3 left-3 text-[10px] font-bold uppercase tracking-widest bg-gold text-white px-2.5 py-1 rounded-full">
+                <span className="absolute bottom-3 left-3 text-label uppercase bg-gold text-white px-2.5 py-1 rounded-full">
                   {service.tag}
                 </span>
               </div>
 
               {/* Content */}
-              <div className="flex flex-col flex-1 p-lg">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{service.label}</p>
-                <h2 className="text-h3 font-semibold text-on-surface mb-3 leading-snug">{service.title}</h2>
-                <p className="text-body-sm text-on-surface-variant mb-4 leading-relaxed">{service.desc}</p>
+              <div className="flex flex-col flex-1 p-lg gap-3">
+                <p className="text-label uppercase text-primary">{service.label}</p>
+                <h2 className="text-h3 text-on-surface">{service.title}</h2>
+                <p className="text-body-sm text-on-surface-variant">{service.desc}</p>
 
                 {/* Includes */}
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-4">
                   {service.includes.map(item => (
                     <li key={item} className="flex items-start gap-2 text-body-sm text-on-surface">
-                      <CheckCircle size={15} className="text-primary shrink-0 mt-0.5" />
+                      <CheckCircle size={16} className="text-primary shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}
                 </ul>
 
-                <Link
+                <Button
+                  as={Link}
                   to={`/quote?service=${service.slug}`}
-                  className="mt-auto flex items-center justify-center gap-2 py-3 px-4 bg-primary hover:bg-primary-container text-white font-semibold rounded-xl text-sm transition-colors cursor-pointer"
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                  iconRight={<ArrowRight />}
+                  className="mt-auto"
                 >
-                  Request a Quote <ArrowRight size={16} />
-                </Link>
+                  Request a Quote
+                </Button>
               </div>
             </div>
           ))}
@@ -159,10 +162,10 @@ export default function ServicesPage() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-surface-container-lowest py-xl px-gutter">
+      <section className="bg-surface-container-lowest py-section-mobile md:py-section px-gutter">
         <div className="max-w-container-max mx-auto">
           <div className="text-center mb-xl">
-            <h2 className="text-h2 font-bold text-on-surface mb-2">How It Works</h2>
+            <h2 className="text-h2 text-on-surface mb-2">How It Works</h2>
             <p className="text-body text-secondary">Simple, transparent, and always on time.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-lg">
@@ -174,9 +177,9 @@ export default function ServicesPage() {
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-md">
                   <step.icon size={26} className="text-primary" />
                 </div>
-                <span className="text-4xl font-black text-primary/10 absolute top-4 right-6 leading-none select-none">{step.step}</span>
-                <h3 className="text-h3 font-semibold text-on-surface mb-2">{step.title}</h3>
-                <p className="text-body-sm text-secondary leading-relaxed">{step.desc}</p>
+                <span className="text-display-sm text-primary/10 absolute top-4 right-6 leading-none select-none">{step.step}</span>
+                <h3 className="text-h3 text-on-surface mb-2">{step.title}</h3>
+                <p className="text-body-sm text-secondary">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -184,24 +187,24 @@ export default function ServicesPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-primary py-xl px-gutter text-center">
-        <h2 className="text-h2 font-bold text-white mb-3">Ready to Get Started?</h2>
-        <p className="text-on-primary/80 text-body mb-8 max-w-md mx-auto">
+      <section className="bg-primary py-section-mobile md:py-section px-gutter text-center">
+        <h2 className="text-h2 text-white mb-3">Ready to Get Started?</h2>
+        <p className="text-body-lg text-on-primary/80 mb-8 max-w-md mx-auto">
           Tell us what you need and we'll get back with a detailed quote within 24 hours.
         </p>
         <div className="flex flex-wrap justify-center gap-md">
-          <Link
-            to="/quote"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold/90 text-white font-semibold rounded-xl transition-colors cursor-pointer"
-          >
-            Request a Free Quote <ArrowRight size={18} />
-          </Link>
-          <Link
+          <Button as={Link} to="/quote" variant="gold" size="lg" iconRight={<ArrowRight />}>
+            Request a Free Quote
+          </Button>
+          <Button
+            as={Link}
             to="/products"
-            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/60 hover:bg-white hover:text-primary text-white font-semibold rounded-xl transition-colors cursor-pointer"
+            variant="ghost"
+            size="lg"
+            className="!bg-transparent border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white"
           >
             Browse Products
-          </Link>
+          </Button>
         </div>
       </section>
 

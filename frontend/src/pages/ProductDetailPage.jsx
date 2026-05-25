@@ -61,7 +61,13 @@ export default function ProductDetailPage() {
             {images.length > 1 && (
               <div className="flex gap-sm">
                 {images.map((img, i) => (
-                  <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer ${i === activeImg ? 'border-primary' : 'border-outline-variant'}`}>
+                  <button
+                    key={i}
+                    onClick={() => setActiveImg(i)}
+                    aria-label={`View image ${i + 1}`}
+                    aria-current={i === activeImg ? 'true' : undefined}
+                    className={`w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${i === activeImg ? 'border-primary ring-1 ring-primary/30' : 'border-outline-variant hover:border-primary/60 opacity-70 hover:opacity-100'}`}
+                  >
                     <img src={img} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -71,8 +77,8 @@ export default function ProductDetailPage() {
 
           {/* Info */}
           <div className="flex flex-col">
-            <p className="text-label text-[11px] uppercase tracking-wider text-primary mb-xs">{product.category_slug?.replace(/-/g, ' ')}</p>
-            <h1 className="text-h1 font-medium text-on-surface mb-sm">{product.name}</h1>
+            <p className="text-label uppercase text-primary mb-xs">{product.category_slug?.replace(/-/g, ' ')}</p>
+            <h1 className="text-h1 text-on-surface mb-sm">{product.name}</h1>
 
             {/* Star rating placeholder */}
             <div className="flex items-center gap-1 mb-md">
@@ -101,20 +107,37 @@ export default function ProductDetailPage() {
 
             {isQuote ? (
               <div className="flex flex-col gap-sm">
-                <Link to={`/quote?product=${product.id}`}>
-                  <Button variant="cta" size="lg" className="w-full">
-                    <FileText size={18} /> Request a Quote
-                  </Button>
-                </Link>
+                <Button
+                  as={Link}
+                  to={`/quote?product=${product.id}`}
+                  variant="gold"
+                  size="lg"
+                  fullWidth
+                  iconLeft={<FileText />}
+                >
+                  Request a Quote
+                </Button>
                 <p className="text-body-sm text-secondary text-center">We'll respond within 24 hours with pricing.</p>
               </div>
             ) : (
               <div className="flex flex-col gap-sm">
                 <div className="flex items-center gap-sm">
-                  <div className="flex items-center border border-outline-variant rounded-lg overflow-hidden">
-                    <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-2 hover:bg-surface-container cursor-pointer text-on-surface font-medium">−</button>
-                    <span className="px-4 py-2 text-body font-medium">{qty}</span>
-                    <button onClick={() => setQty(q => q + 1)} className="px-3 py-2 hover:bg-surface-container cursor-pointer text-on-surface font-medium">+</button>
+                  <div className="flex items-center border border-outline-variant rounded-xl overflow-hidden h-12">
+                    <button
+                      onClick={() => setQty(q => Math.max(1, q - 1))}
+                      aria-label="Decrease quantity"
+                      className="h-full px-4 hover:bg-surface-container cursor-pointer text-on-surface text-body font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+                    >
+                      −
+                    </button>
+                    <span className="px-4 text-body font-semibold min-w-[2ch] text-center">{qty}</span>
+                    <button
+                      onClick={() => setQty(q => q + 1)}
+                      aria-label="Increase quantity"
+                      className="h-full px-4 hover:bg-surface-container cursor-pointer text-on-surface text-body font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+                    >
+                      +
+                    </button>
                   </div>
                   <Button
                     onClick={handleAddToCart}
@@ -122,15 +145,15 @@ export default function ProductDetailPage() {
                     variant="primary"
                     size="lg"
                     className="flex-1"
+                    iconLeft={<ShoppingCart />}
                   >
-                    <ShoppingCart size={18} />
                     {added ? 'Added!' : 'Add to Cart'}
                   </Button>
                 </div>
                 {product.category_slug === 'kitchen-equipment-tools' && (
-                  <Link to="/quote">
-                    <Button variant="ghost" size="lg" className="w-full">Request Professional Installation</Button>
-                  </Link>
+                  <Button as={Link} to="/quote" variant="ghost" size="lg" fullWidth>
+                    Request Professional Installation
+                  </Button>
                 )}
               </div>
             )}

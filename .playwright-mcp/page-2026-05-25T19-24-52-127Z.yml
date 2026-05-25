@@ -1,0 +1,217 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - button "Uniforms" [ref=e8] [cursor=pointer]:
+          - text: Uniforms
+          - img [ref=e9]
+        - button "Equipment" [ref=e12] [cursor=pointer]:
+          - text: Equipment
+          - img [ref=e13]
+        - button "Services" [ref=e16] [cursor=pointer]:
+          - text: Services
+          - img [ref=e17]
+        - link "All Products" [ref=e19] [cursor=pointer]:
+          - /url: /products
+      - generic [ref=e20]:
+        - link "Get Quote" [ref=e21] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e22]
+          - text: Get Quote
+        - button "Open cart" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+        - link "My account" [ref=e30] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e31]
+  - generic [ref=e34]:
+    - generic [ref=e35]:
+      - heading "Your Cart (0)" [level=2] [ref=e36]
+      - button "Close cart" [ref=e37] [cursor=pointer]:
+        - img [ref=e38]
+    - generic [ref=e41]:
+      - img [ref=e42]
+      - paragraph [ref=e45]: Your cart is empty
+      - paragraph [ref=e46]: Add products to get started.
+      - button "Continue Shopping" [ref=e47] [cursor=pointer]
+  - main [ref=e131]:
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - heading "Welcome back, Kwame" [level=1] [ref=e134]
+        - paragraph [ref=e135]: Manage your orders and services
+        - paragraph [ref=e136]: Mock UI — real auth pending backend contract
+      - generic [ref=e137]:
+        - generic [ref=e138]:
+          - img [ref=e139]
+          - paragraph [ref=e143]: "2"
+          - paragraph [ref=e144]: Active Orders
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - paragraph [ref=e148]: "5"
+          - paragraph [ref=e149]: Equipment in Service
+        - generic [ref=e150]:
+          - img [ref=e151]
+          - paragraph [ref=e154]: "1"
+          - paragraph [ref=e155]: Service Requests
+        - generic [ref=e156]:
+          - img [ref=e157]
+          - paragraph [ref=e160]: Gold
+          - paragraph [ref=e161]: Loyalty Tier
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - heading "Recent Orders" [level=2] [ref=e166]
+              - link "Browse Catalog" [ref=e167] [cursor=pointer]:
+                - /url: /products
+            - table [ref=e168]:
+              - rowgroup [ref=e169]:
+                - row "Order ID Date Status Total" [ref=e170]:
+                  - columnheader "Order ID" [ref=e171]
+                  - columnheader "Date" [ref=e172]
+                  - columnheader "Status" [ref=e173]
+                  - columnheader "Total" [ref=e174]
+              - rowgroup [ref=e175]:
+                - row "CW-20260520-0001 20 May 2026 delivered GH₵ 900.00" [ref=e176]:
+                  - cell "CW-20260520-0001" [ref=e177]
+                  - cell "20 May 2026" [ref=e178]
+                  - cell "delivered" [ref=e179]
+                  - cell "GH₵ 900.00" [ref=e180]
+                - row "CW-20260518-0002 18 May 2026 confirmed GH₵ 1,850.00" [ref=e181]:
+                  - cell "CW-20260518-0002" [ref=e182]
+                  - cell "18 May 2026" [ref=e183]
+                  - cell "confirmed" [ref=e184]
+                  - cell "GH₵ 1,850.00" [ref=e185]
+                - row "CW-20260510-0003 10 May 2026 pending GH₵ 450.00" [ref=e186]:
+                  - cell "CW-20260510-0003" [ref=e187]
+                  - cell "10 May 2026" [ref=e188]
+                  - cell "pending" [ref=e189]
+                  - cell "GH₵ 450.00" [ref=e190]
+          - generic [ref=e191]:
+            - heading "Quick Procurement" [level=3] [ref=e192]
+            - generic [ref=e193]:
+              - link "Chef Uniforms" [ref=e194] [cursor=pointer]:
+                - /url: /products
+                - text: Chef Uniforms
+                - img [ref=e195]
+              - link "Equipment" [ref=e197] [cursor=pointer]:
+                - /url: /products
+                - text: Equipment
+                - img [ref=e198]
+              - link "Branding" [ref=e200] [cursor=pointer]:
+                - /url: /products
+                - text: Branding
+                - img [ref=e201]
+              - link "Kitchen Setup" [ref=e203] [cursor=pointer]:
+                - /url: /products
+                - text: Kitchen Setup
+                - img [ref=e204]
+              - link "Embroidery" [ref=e206] [cursor=pointer]:
+                - /url: /products
+                - text: Embroidery
+                - img [ref=e207]
+              - link "Pre-orders" [ref=e209] [cursor=pointer]:
+                - /url: /products
+                - text: Pre-orders
+                - img [ref=e210]
+        - generic [ref=e212]:
+          - generic [ref=e213]:
+            - heading "Track an Order" [level=3] [ref=e214]
+            - generic [ref=e215]:
+              - textbox "Order reference (CW-...)" [ref=e216]
+              - textbox "Phone (+233...)" [ref=e217]
+              - button "Track Order" [ref=e218] [cursor=pointer]:
+                - img [ref=e219]
+                - text: Track Order
+          - generic [ref=e222]:
+            - heading "Kitchen Audit" [level=3] [ref=e223]
+            - paragraph [ref=e224]: Free audit of your current kitchen setup by our experts.
+            - link "Book Audit" [ref=e225] [cursor=pointer]:
+              - /url: /quote
+              - button "Book Audit" [ref=e226]
+          - generic [ref=e227]:
+            - paragraph [ref=e228]: New Arrival
+            - heading "Heritage Collection" [level=3] [ref=e229]
+            - paragraph [ref=e230]: Explore our new line of premium forest green uniforms.
+            - link "View Collection" [ref=e231] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+              - button "View Collection" [ref=e232]:
+                - text: View Collection
+                - img [ref=e233]
+  - contentinfo [ref=e67]:
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: ChefWare Enterprise
+          - paragraph [ref=e72]: Accra's premier supplier of industrial kitchen equipment, chef uniforms, and hospitality branding services since 2015.
+          - generic [ref=e73]:
+            - link "WhatsApp" [ref=e74] [cursor=pointer]:
+              - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+              - img [ref=e75]
+            - link "Instagram" [ref=e77] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e78]
+            - link "Facebook" [ref=e80] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e81]
+          - generic [ref=e83]:
+            - paragraph [ref=e84]: Osu — Oxford Street, Accra
+            - paragraph [ref=e85]: +233 302 000 000
+            - paragraph [ref=e86]: info@chefware.com.gh
+        - generic [ref=e87]:
+          - heading "Shop" [level=5] [ref=e88]
+          - navigation [ref=e89]:
+            - link "Chef Uniforms" [ref=e90] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+            - link "Staff Uniforms" [ref=e91] [cursor=pointer]:
+              - /url: /products?category=staff-uniforms-branding
+            - link "Kitchen Equipment" [ref=e92] [cursor=pointer]:
+              - /url: /products?category=kitchen-equipment-tools
+            - link "All Products" [ref=e93] [cursor=pointer]:
+              - /url: /products
+        - generic [ref=e94]:
+          - heading "Services" [level=5] [ref=e95]
+          - navigation [ref=e96]:
+            - link "All Services" [ref=e97] [cursor=pointer]:
+              - /url: /services
+            - link "Embroidery" [ref=e98] [cursor=pointer]:
+              - /url: /services
+            - link "Logo Printing" [ref=e99] [cursor=pointer]:
+              - /url: /services
+            - link "Kitchen Setup" [ref=e100] [cursor=pointer]:
+              - /url: /services
+            - link "Request a Quote →" [ref=e101] [cursor=pointer]:
+              - /url: /quote
+        - generic [ref=e102]:
+          - heading "Support" [level=5] [ref=e103]
+          - navigation [ref=e104]:
+            - link "My Account" [ref=e105] [cursor=pointer]:
+              - /url: /account
+            - link "Track Order" [ref=e106] [cursor=pointer]:
+              - /url: /account
+            - link "Returns Policy" [ref=e107] [cursor=pointer]:
+              - /url: "#"
+            - link "Privacy Policy" [ref=e108] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e109]:
+          - heading "Stay Updated" [level=5] [ref=e110]
+          - paragraph [ref=e111]: New arrivals and exclusive offers.
+          - generic [ref=e112]:
+            - textbox "your@email.com" [ref=e113]
+            - button "Subscribe" [ref=e114] [cursor=pointer]
+      - generic [ref=e115]:
+        - paragraph [ref=e116]: © 2026 ChefWare Enterprise. All rights reserved.
+        - generic [ref=e117]:
+          - generic [ref=e118]: MTN MoMo
+          - generic [ref=e119]: ·
+          - generic [ref=e120]: Vodafone Cash
+          - generic [ref=e121]: ·
+          - generic [ref=e122]: AirtelTigo
+          - generic [ref=e123]: ·
+          - generic [ref=e124]: GCB Bank
+          - generic [ref=e125]: ·
+          - generic [ref=e126]: Stanbic
+  - link "Chat with us on WhatsApp" [ref=e127] [cursor=pointer]:
+    - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+    - img [ref=e129]

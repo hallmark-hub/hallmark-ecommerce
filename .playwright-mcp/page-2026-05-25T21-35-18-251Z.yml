@@ -1,0 +1,266 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]:
+        - button "Uniforms" [ref=e8] [cursor=pointer]:
+          - text: Uniforms
+          - img [ref=e9]
+        - button "Equipment" [ref=e12] [cursor=pointer]:
+          - text: Equipment
+          - img [ref=e13]
+        - button "Services" [ref=e16] [cursor=pointer]:
+          - text: Services
+          - img [ref=e17]
+        - link "All Products" [ref=e19] [cursor=pointer]:
+          - /url: /products
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - img [ref=e22]
+          - textbox "Search products..." [ref=e25]
+        - link "Get Quote" [ref=e26] [cursor=pointer]:
+          - /url: /quote
+          - img [ref=e27]
+          - text: Get Quote
+        - button "Open cart" [ref=e30] [cursor=pointer]:
+          - img [ref=e31]
+        - link "My account" [ref=e35] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e36]
+  - generic [ref=e39]:
+    - generic [ref=e40]:
+      - heading "Your Cart (0)" [level=2] [ref=e41]
+      - button "Close cart" [ref=e42] [cursor=pointer]:
+        - img [ref=e43]
+    - generic [ref=e46]:
+      - img [ref=e47]
+      - paragraph [ref=e50]: Your cart is empty
+      - paragraph [ref=e51]: Add products to get started.
+      - button "Continue Shopping" [ref=e52] [cursor=pointer]
+  - main [ref=e53]:
+    - generic [ref=e54]:
+      - paragraph [ref=e55]: What We Offer
+      - heading "Bespoke Services for Ghana's Hospitality Industry" [level=1] [ref=e56]
+      - paragraph [ref=e57]: From custom embroidery to full kitchen installations — every service is tailored to your operation and priced with a free quote.
+      - link "Request a Free Quote" [ref=e58] [cursor=pointer]:
+        - /url: /quote
+        - text: Request a Free Quote
+        - img [ref=e59]
+    - generic [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - img "Industrial Kitchen Setup" [ref=e65]
+          - generic [ref=e67]: Turnkey Solution
+        - generic [ref=e68]:
+          - paragraph [ref=e69]: Kitchen Infrastructure
+          - heading "Industrial Kitchen Setup" [level=2] [ref=e70]
+          - paragraph [ref=e71]: End-to-end design, supply, and installation of commercial kitchens for hotels, restaurants, and catering companies across Ghana.
+          - list [ref=e72]:
+            - listitem [ref=e73]:
+              - img [ref=e74]
+              - text: Space planning & 3D kitchen design
+            - listitem [ref=e77]:
+              - img [ref=e78]
+              - text: Equipment sourcing & procurement
+            - listitem [ref=e81]:
+              - img [ref=e82]
+              - text: Professional installation & commissioning
+          - link "Request a Quote" [ref=e85] [cursor=pointer]:
+            - /url: /quote?service=kitchen-setup
+            - text: Request a Quote
+            - img [ref=e86]
+      - generic [ref=e88]:
+        - generic [ref=e89]:
+          - img "Machine Pre-Orders" [ref=e90]
+          - generic [ref=e92]: 6–8 Week Lead Time
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: Custom Manufacturing
+          - heading "Machine Pre-Orders" [level=2] [ref=e95]
+          - paragraph [ref=e96]: Bespoke industrial kitchen equipment built to your exact specification. Ideal for large-scale operations with unique requirements.
+          - list [ref=e97]:
+            - listitem [ref=e98]:
+              - img [ref=e99]
+              - text: Specification consultation
+            - listitem [ref=e102]:
+              - img [ref=e103]
+              - text: Custom fabrication & quality testing
+            - listitem [ref=e106]:
+              - img [ref=e107]
+              - text: 6–8 week lead time with progress updates
+          - link "Request a Quote" [ref=e110] [cursor=pointer]:
+            - /url: /quote?service=machine-preorders
+            - text: Request a Quote
+            - img [ref=e111]
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - img "Machine Customization" [ref=e115]
+          - generic [ref=e117]: Upgrade & Optimise
+        - generic [ref=e118]:
+          - paragraph [ref=e119]: Equipment Upgrade
+          - heading "Machine Customization" [level=2] [ref=e120]
+          - paragraph [ref=e121]: Modify and upgrade your existing kitchen equipment to meet growing operational demands — without replacing your entire setup.
+          - list [ref=e122]:
+            - listitem [ref=e123]:
+              - img [ref=e124]
+              - text: Equipment assessment & diagnostics
+            - listitem [ref=e127]:
+              - img [ref=e128]
+              - text: Capacity upgrades & component replacement
+            - listitem [ref=e131]:
+              - img [ref=e132]
+              - text: Post-modification testing & warranty
+          - link "Request a Quote" [ref=e135] [cursor=pointer]:
+            - /url: /quote?service=machine-customization
+            - text: Request a Quote
+            - img [ref=e136]
+      - generic [ref=e138]:
+        - generic [ref=e139]:
+          - img "Embroidery Services" [ref=e140]
+          - generic [ref=e142]: Min. 10 Pieces
+        - generic [ref=e143]:
+          - paragraph [ref=e144]: Uniform Branding
+          - heading "Embroidery Services" [level=2] [ref=e145]
+          - paragraph [ref=e146]: Professional logo embroidery on chef jackets, aprons, caps, and any garment. Minimum 10 pieces. Sharp, durable, and brand-perfect.
+          - list [ref=e147]:
+            - listitem [ref=e148]:
+              - img [ref=e149]
+              - text: Logo digitisation & sample approval
+            - listitem [ref=e152]:
+              - img [ref=e153]
+              - text: Multi-colour thread embroidery
+            - listitem [ref=e156]:
+              - img [ref=e157]
+              - text: "Minimum order: 10 pieces"
+          - link "Request a Quote" [ref=e160] [cursor=pointer]:
+            - /url: /quote?service=embroidery
+            - text: Request a Quote
+            - img [ref=e161]
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - img "Logo Printing & Garment Branding" [ref=e165]
+          - generic [ref=e167]: Bulk Pricing
+        - generic [ref=e168]:
+          - paragraph [ref=e169]: Garment Branding
+          - heading "Logo Printing & Garment Branding" [level=2] [ref=e170]
+          - paragraph [ref=e171]: Screen printing, heat transfer, and full garment branding for uniforms, promotional wear, and hospitality merchandise.
+          - list [ref=e172]:
+            - listitem [ref=e173]:
+              - img [ref=e174]
+              - text: Screen printing & heat transfer options
+            - listitem [ref=e177]:
+              - img [ref=e178]
+              - text: Full-colour logo reproduction
+            - listitem [ref=e181]:
+              - img [ref=e182]
+              - text: Bulk pricing available
+          - link "Request a Quote" [ref=e185] [cursor=pointer]:
+            - /url: /quote?service=logo-printing-branding
+            - text: Request a Quote
+            - img [ref=e186]
+    - generic [ref=e189]:
+      - generic [ref=e190]:
+        - heading "How It Works" [level=2] [ref=e191]
+        - paragraph [ref=e192]: Simple, transparent, and always on time.
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - img [ref=e197]
+          - generic [ref=e199]: "01"
+          - heading "Tell Us What You Need" [level=3] [ref=e200]
+          - paragraph [ref=e201]: Fill in our quote form with your service requirements, quantities, and any references or files.
+        - generic [ref=e202]:
+          - img [ref=e205]
+          - generic [ref=e208]: "02"
+          - heading "We Send a Custom Quote" [level=3] [ref=e209]
+          - paragraph [ref=e210]: Our team reviews your request and sends a detailed, itemised quote within 24 hours.
+        - generic [ref=e211]:
+          - img [ref=e213]
+          - generic [ref=e218]: "03"
+          - heading "We Deliver & Install" [level=3] [ref=e219]
+          - paragraph [ref=e220]: On approval, we schedule production or installation and keep you updated every step of the way.
+    - generic [ref=e221]:
+      - heading "Ready to Get Started?" [level=2] [ref=e222]
+      - paragraph [ref=e223]: Tell us what you need and we'll get back with a detailed quote within 24 hours.
+      - generic [ref=e224]:
+        - link "Request a Free Quote" [ref=e225] [cursor=pointer]:
+          - /url: /quote
+          - text: Request a Free Quote
+          - img [ref=e226]
+        - link "Browse Products" [ref=e228] [cursor=pointer]:
+          - /url: /products
+  - contentinfo [ref=e229]:
+    - generic [ref=e230]:
+      - generic [ref=e231]:
+        - generic [ref=e232]:
+          - generic [ref=e233]: ChefWare Enterprise
+          - paragraph [ref=e234]: Accra's premier supplier of industrial kitchen equipment, chef uniforms, and hospitality branding services since 2015.
+          - generic [ref=e235]:
+            - link "WhatsApp" [ref=e236] [cursor=pointer]:
+              - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+              - img [ref=e237]
+            - link "Instagram" [ref=e239] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e240]
+            - link "Facebook" [ref=e242] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e243]
+          - generic [ref=e245]:
+            - paragraph [ref=e246]: Osu — Oxford Street, Accra
+            - paragraph [ref=e247]: +233 302 000 000
+            - paragraph [ref=e248]: info@chefware.com.gh
+        - generic [ref=e249]:
+          - heading "Shop" [level=5] [ref=e250]
+          - navigation [ref=e251]:
+            - link "Chef Uniforms" [ref=e252] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+            - link "Staff Uniforms" [ref=e253] [cursor=pointer]:
+              - /url: /products?category=staff-uniforms-branding
+            - link "Kitchen Equipment" [ref=e254] [cursor=pointer]:
+              - /url: /products?category=kitchen-equipment-tools
+            - link "All Products" [ref=e255] [cursor=pointer]:
+              - /url: /products
+        - generic [ref=e256]:
+          - heading "Services" [level=5] [ref=e257]
+          - navigation [ref=e258]:
+            - link "All Services" [ref=e259] [cursor=pointer]:
+              - /url: /services
+            - link "Embroidery" [ref=e260] [cursor=pointer]:
+              - /url: /services
+            - link "Logo Printing" [ref=e261] [cursor=pointer]:
+              - /url: /services
+            - link "Kitchen Setup" [ref=e262] [cursor=pointer]:
+              - /url: /services
+            - link "Request a Quote →" [ref=e263] [cursor=pointer]:
+              - /url: /quote
+        - generic [ref=e264]:
+          - heading "Support" [level=5] [ref=e265]
+          - navigation [ref=e266]:
+            - link "My Account" [ref=e267] [cursor=pointer]:
+              - /url: /account
+            - link "Track Order" [ref=e268] [cursor=pointer]:
+              - /url: /account
+            - link "Returns Policy" [ref=e269] [cursor=pointer]:
+              - /url: "#"
+            - link "Privacy Policy" [ref=e270] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e271]:
+          - heading "Stay Updated" [level=5] [ref=e272]
+          - paragraph [ref=e273]: New arrivals and exclusive offers.
+          - generic [ref=e274]:
+            - textbox "your@email.com" [ref=e275]
+            - button "Subscribe" [ref=e276] [cursor=pointer]
+      - generic [ref=e277]:
+        - paragraph [ref=e278]: © 2026 ChefWare Enterprise. All rights reserved.
+        - generic [ref=e279]:
+          - generic [ref=e280]: MTN MoMo
+          - generic [ref=e281]: ·
+          - generic [ref=e282]: Vodafone Cash
+          - generic [ref=e283]: ·
+          - generic [ref=e284]: AirtelTigo
+          - generic [ref=e285]: ·
+          - generic [ref=e286]: GCB Bank
+          - generic [ref=e287]: ·
+          - generic [ref=e288]: Stanbic
+  - link "Chat with us on WhatsApp" [ref=e289] [cursor=pointer]:
+    - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+    - img [ref=e291]

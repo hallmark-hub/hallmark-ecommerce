@@ -43,11 +43,11 @@ export default function AccountPage() {
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-container-max mx-auto px-gutter py-xl">
+      <div className="max-w-container-max mx-auto px-gutter py-section-mobile md:py-section">
         <div className="mb-xl">
-          <h1 className="text-h1 font-medium text-on-surface">Welcome back, Kwame</h1>
-          <p className="text-body text-secondary">Manage your orders and services</p>
-          <p className="text-label text-xs text-tertiary mt-xs font-semibold uppercase tracking-wide">Mock UI — real auth pending backend contract</p>
+          <h1 className="text-h1 text-on-surface">Welcome back, Kwame</h1>
+          <p className="text-body-lg text-secondary mt-1">Manage your orders and services</p>
+          <p className="text-label uppercase text-tertiary mt-xs">Mock UI — real auth pending backend contract</p>
         </div>
 
         {/* Stats */}
@@ -62,7 +62,7 @@ export default function AccountPage() {
             return (
               <div key={stat.label} className="bg-white rounded-xl border border-outline-variant p-md">
                 <Icon size={24} className={`${stat.color} mb-sm`} />
-                <p className="text-h2 font-bold text-on-surface">{stat.value}</p>
+                <p className="text-h1 text-on-surface">{stat.value}</p>
                 <p className="text-body-sm text-secondary">{stat.label}</p>
               </div>
             )
@@ -74,16 +74,16 @@ export default function AccountPage() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl border border-outline-variant overflow-hidden">
               <div className="px-md py-sm border-b border-outline-variant flex justify-between items-center">
-                <h2 className="text-h3 font-medium text-on-surface">Recent Orders</h2>
-                <Link to="/products" className="text-label text-xs text-primary hover:underline">Browse Catalog</Link>
+                <h2 className="text-h3 text-on-surface">Recent Orders</h2>
+                <Link to="/products" className="text-label uppercase text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">Browse Catalog</Link>
               </div>
               <table className="w-full">
                 <thead>
                   <tr className="bg-surface-container-low text-left">
-                    <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Order ID</th>
-                    <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Date</th>
-                    <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Status</th>
-                    <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Total</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Order ID</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Date</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Status</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Total</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant">
@@ -92,7 +92,7 @@ export default function AccountPage() {
                       <td className="px-md py-sm text-body-sm font-medium text-primary">{o.reference}</td>
                       <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.date)}</td>
                       <td className="px-md py-sm">
-                        <span className={`px-2 py-0.5 rounded-full text-label text-[11px] font-semibold capitalize ${STATUS_STYLES[o.status]}`}>{o.status}</span>
+                        <span className={`px-2 py-0.5 rounded-full text-label uppercase capitalize ${STATUS_STYLES[o.status]}`}>{o.status}</span>
                       </td>
                       <td className="px-md py-sm text-body-sm font-bold text-primary">{formatPrice(o.total_pesewas)}</td>
                     </tr>
@@ -103,10 +103,14 @@ export default function AccountPage() {
 
             {/* Quick procurement */}
             <div className="bg-white rounded-xl border border-outline-variant p-md mt-md">
-              <h3 className="text-h3 font-medium text-on-surface mb-md">Quick Procurement</h3>
+              <h3 className="text-h3 text-on-surface mb-md">Quick Procurement</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-sm">
                 {['Chef Uniforms', 'Equipment', 'Branding', 'Kitchen Setup', 'Embroidery', 'Pre-orders'].map(cat => (
-                  <Link key={cat} to="/products" className="flex items-center justify-between px-sm py-xs rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all text-body-sm text-on-surface cursor-pointer">
+                  <Link
+                    key={cat}
+                    to="/products"
+                    className="flex items-center justify-between px-3 py-2 rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all text-body-sm text-on-surface cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  >
                     {cat} <ArrowRight size={14} className="text-secondary" />
                   </Link>
                 ))}
@@ -117,25 +121,25 @@ export default function AccountPage() {
           {/* Order lookup */}
           <div>
             <div className="bg-white rounded-xl border border-outline-variant p-md mb-md">
-              <h3 className="text-h3 font-medium text-on-surface mb-md">Track an Order</h3>
+              <h3 className="text-h3 text-on-surface mb-md">Track an Order</h3>
               <form onSubmit={handleLookup} className="space-y-sm">
                 <input
                   type="text"
                   value={lookup.reference}
                   onChange={e => setLookup(p => ({ ...p, reference: e.target.value }))}
                   placeholder="Order reference (CW-...)"
-                  className="w-full px-sm py-xs border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <input
                   type="tel"
                   value={lookup.phone}
                   onChange={e => setLookup(p => ({ ...p, phone: e.target.value }))}
                   placeholder="Phone (+233...)"
-                  className="w-full px-sm py-xs border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {lookupError && <p className="text-body-sm text-error">{lookupError}</p>}
-                <Button type="submit" loading={lookupLoading} variant="primary" size="sm" className="w-full">
-                  <Search size={14} /> Track Order
+                <Button type="submit" loading={lookupLoading} variant="primary" size="sm" fullWidth iconLeft={<Search />}>
+                  Track Order
                 </Button>
               </form>
               {lookupResult && (
@@ -149,15 +153,17 @@ export default function AccountPage() {
 
             {/* Promo cards */}
             <div className="bg-primary-container rounded-xl p-md text-white mb-md">
-              <h3 className="text-h3 font-medium mb-xs">Kitchen Audit</h3>
+              <h3 className="text-h3 mb-xs">Kitchen Audit</h3>
               <p className="text-body-sm text-on-primary-container mb-sm">Free audit of your current kitchen setup by our experts.</p>
-              <Link to="/quote"><Button variant="cta" size="sm">Book Audit</Button></Link>
+              <Button as={Link} to="/quote" variant="gold" size="sm">Book Audit</Button>
             </div>
             <div className="bg-surface-container-highest rounded-xl p-md">
-              <p className="text-label text-xs uppercase tracking-wide text-secondary mb-xs">New Arrival</p>
-              <h3 className="text-h3 font-medium text-on-surface mb-xs">Heritage Collection</h3>
+              <p className="text-label uppercase text-secondary mb-xs">New Arrival</p>
+              <h3 className="text-h3 text-on-surface mb-xs">Heritage Collection</h3>
               <p className="text-body-sm text-secondary mb-sm">Explore our new line of premium forest green uniforms.</p>
-              <Link to="/products?category=chef-uniforms"><Button variant="ghost" size="sm">View Collection <ArrowRight size={14} /></Button></Link>
+              <Button as={Link} to="/products?category=chef-uniforms" variant="ghost" size="sm" iconRight={<ArrowRight />}>
+                View Collection
+              </Button>
             </div>
           </div>
         </div>
