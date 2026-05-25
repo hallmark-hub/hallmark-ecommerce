@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - ChefWare Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary": "#005127",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#89d89c",
+                        "surface-dim": "#d1dbec",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-primary-container": "#99e9ab",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "inverse-surface": "#27313e",
+                        "on-secondary-container": "#616363",
+                        "tertiary": "#5c4200",
+                        "primary-fixed": "#a4f4b6",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed": "#261900",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "secondary": "#5d5f5f",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-low": "#eef4ff",
+                        "surface-tint": "#1b6c3b",
+                        "on-primary-fixed-variant": "#005228",
+                        "on-primary-fixed": "#00210c",
+                        "tertiary-fixed": "#ffdea5",
+                        "outline": "#707a6f",
+                        "on-surface": "#121c28",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#121c28",
+                        "surface-variant": "#d9e3f4",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bfc9bd",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "surface-container-high": "#dfe9fa",
+                        "on-tertiary-container": "#ffd17a",
+                        "primary-container": "#1a6b3a",
+                        "on-surface-variant": "#404940",
+                        "tertiary-container": "#7a5800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h2-mobile": ["Inter"],
+                        "price-lg": ["Inter"],
+                        "h1-mobile": ["Inter"],
+                        "h1": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h2-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "price-lg": ["24px", { "lineHeight": "1", "fontWeight": "700" }],
+                        "h1-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "body": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #EAF3DE; } /* From Brand Guidance Level 0 */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .input-focus-ring:focus {
+            box-shadow: 0 0 0 2px rgba(0, 81, 39, 0.2);
+            border-color: #005127;
+        }
+        .stepper-line {
+            height: 2px;
+            background: #bfc9bd;
+            flex-grow: 1;
+            margin: 0 12px;
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 w-full z-50 h-20">
+<div class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-md">
+<span class="font-h2 text-h2 font-bold text-primary">ChefWare Enterprise</span>
+</div>
+<nav class="hidden md:flex gap-md items-center">
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Uniforms</a>
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Equipment</a>
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Services</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="p-base hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="p-base hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-xl px-gutter max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- Left Column: Checkout Form -->
+<div class="lg:col-span-8 space-y-md">
+<!-- Stepper -->
+<div class="flex items-center mb-lg">
+<div class="flex items-center text-primary">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">1</div>
+<span class="ml-sm font-label text-label uppercase">Contact &amp; Delivery</span>
+</div>
+<div class="stepper-line"></div>
+<div class="flex items-center text-secondary">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant flex items-center justify-center font-bold">2</div>
+<span class="ml-sm font-label text-label uppercase">Payment</span>
+</div>
+<div class="stepper-line"></div>
+<div class="flex items-center text-secondary">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant flex items-center justify-center font-bold">3</div>
+<span class="ml-sm font-label text-label uppercase">Review</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-sm">
+<h1 class="font-h2 text-h2 text-primary mb-md">Contact Information</h1>
+<form class="space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="full_name">FULL NAME</label>
+<input class="w-full h-12 px-base rounded-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body" id="full_name" placeholder="Kwame Mensah" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="email">EMAIL ADDRESS</label>
+<input class="w-full h-12 px-base rounded-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body" id="email" placeholder="kwame@example.gh" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="phone">PHONE NUMBER</label>
+<div class="flex">
+<span class="h-12 px-base flex items-center bg-surface-container-high border border-r-0 border-outline-variant rounded-l-lg font-body text-on-surface-variant">+233</span>
+<input class="w-full h-12 px-base rounded-r-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body" id="phone" placeholder="24 123 4567" type="tel"/>
+</div>
+</div>
+<div class="pt-base">
+<h2 class="font-h3 text-h3 text-primary mb-md">Delivery Details</h2>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="address">DELIVERY ADDRESS</label>
+<input class="w-full h-12 px-base rounded-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body" id="address" placeholder="No. 12 Independence Avenue" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="region">REGION</label>
+<select class="w-full h-12 px-base rounded-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20stroke%3D%22%236b7280%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%221.5%22%20d%3D%22m6%208%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-right-[8px] bg-no-repeat" id="region">
+<option value="">Select Region</option>
+<option value="accra">Greater Accra</option>
+<option value="ashanti">Ashanti</option>
+<option value="western">Western</option>
+<option value="central">Central</option>
+<option value="volta">Volta</option>
+<option value="eastern">Eastern</option>
+<option value="northern">Northern</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-on-surface-variant" for="city">CITY / DISTRICT</label>
+<input class="w-full h-12 px-base rounded-lg border border-outline-variant bg-surface input-focus-ring outline-none transition-all font-body" id="city" placeholder="Accra Central" type="text"/>
+</div>
+</div>
+<div class="flex items-start gap-sm pt-sm">
+<input class="mt-xs rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" id="save_info" type="checkbox"/>
+<label class="text-body-sm text-secondary" for="save_info">Save this information for faster checkout next time.</label>
+</div>
+</form>
+</div>
+<div class="flex justify-end pt-md">
+<button class="bg-primary text-on-primary px-xl h-14 rounded-lg font-h3 hover:opacity-90 transition-all flex items-center gap-sm">
+                        Continue to Payment
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Order Summary -->
+<aside class="lg:col-span-4 sticky top-28">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-sm">
+<h2 class="font-h3 text-h3 text-primary mb-md border-b border-outline-variant pb-base">Order Summary</h2>
+<div class="space-y-base mb-md">
+<!-- Product Item 1 -->
+<div class="flex gap-sm">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-high border border-outline-variant flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional heavy-duty commercial blender in a high-end restaurant kitchen. The appliance is polished stainless steel, reflecting soft industrial lighting. It sits on a clean white countertop with fresh ingredients nearby, embodying a premium, enterprise-grade hospitality supplier aesthetic with deep green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwXOxPLjduBvURrJicmjUUxK_as_4oPWU2qRLz289kd9sg4Xfio2Y5b7vpEnpqcrh87LuKHbcXD3fkxTpb6Td0QtOuH6F85GWo9Fb63QCzFGv6Bwjyg2B2sAGb6ma9aF20uu3BAPlsZ0pTeoUy9aSpG8QY6iLwIQxrVlBbfryGXaph3xr5d2BxReemoXazMzal2v7kzMJaOEGMnbvlbLjDrQed0hd_Jzsi0xyG22vKuRxt7F9hZHf_R0bpPC5Lg13_dlOa4EVSbnWz"/>
+</div>
+<div class="flex-grow">
+<p class="font-label text-label text-on-surface">Industrial Blender Pro-X</p>
+<p class="text-body-sm text-secondary">Qty: 2</p>
+<p class="font-body-sm text-primary font-bold">GH₵ 4,200.00</p>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="flex gap-sm">
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container-high border border-outline-variant flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A set of premium executive chef whites including a jacket and hat, displayed neatly against a neutral studio background. The fabric is bright white with meticulous stitching, representing the high-quality industrial kitchen apparel offered by ChefWare. Soft lighting creates a clean, authoritative professional tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEnC9mUkTx1DjwFZq3-lXa-beb3eGi06Ctn40KIFDte2GjMyD5wb6qaxOTyWsZMFR74HykOt894sXFFq4rqkny_Z7eTOQXiukRFSFxGbzIiG29PPaqhNeUrBx7eyI2km7V2XeL8OL21bpEPNlZLF6VO3z9jkBg8xJJ6tZ96-ZTGmTaa7BZBbCjGf42UlLFaE707ruslUqAfYicf92JwPEKz8Q9BroK0er26H3k6oFoazgFFrAkNcJ2CrwMtRWOXBrLXH8lyv0dp4NQ"/>
+</div>
+<div class="flex-grow">
+<p class="font-label text-label text-on-surface">Premium Chef Uniform Set</p>
+<p class="text-body-sm text-secondary">Qty: 5</p>
+<p class="font-body-sm text-primary font-bold">GH₵ 1,850.00</p>
+</div>
+</div>
+</div>
+<div class="space-y-sm border-t border-outline-variant pt-md">
+<div class="flex justify-between text-body">
+<span class="text-secondary">Subtotal</span>
+<span class="text-on-surface">GH₵ 6,050.00</span>
+</div>
+<div class="flex justify-between text-body">
+<span class="text-secondary">Delivery (Greater Accra)</span>
+<span class="text-on-surface">GH₵ 45.00</span>
+</div>
+<div class="flex justify-between text-body">
+<span class="text-secondary">Estimated Tax</span>
+<span class="text-on-surface">GH₵ 120.00</span>
+</div>
+<div class="flex justify-between pt-base border-t border-outline-variant">
+<span class="font-h3 text-h3 text-on-surface">Total</span>
+<span class="font-price-lg text-price-lg text-primary">GH₵ 6,215.00</span>
+</div>
+</div>
+<div class="mt-lg p-base bg-surface-container-low rounded-lg border-l-4 border-primary">
+<p class="text-body-sm text-on-surface-variant flex gap-xs items-start">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="info">info</span>
+                            Orders placed before 2 PM are eligible for same-day dispatch within Accra.
+                        </p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-on-surface text-on-primary mt-xl py-xl px-gutter">
+<div class="w-full max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-md">
+<div>
+<span class="font-h3 text-h3 font-bold text-surface mb-md block">ChefWare Enterprise</span>
+<p class="font-body-sm text-secondary-fixed text-sm">Premium Ghanaian Hospitality Supplies. Equipping the nation's finest kitchens with excellence.</p>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-sm uppercase tracking-wider">Our Offices</h4>
+<ul class="space-y-xs text-body-sm text-secondary-fixed">
+<li>Accra Office: Ridge Towers</li>
+<li>Kumasi: Airport Residential</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-sm uppercase tracking-wider">Payment Partners</h4>
+<ul class="space-y-xs text-body-sm text-secondary-fixed">
+<li>MTN MoMo Accepted</li>
+<li>Visa / Mastercard</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-sm uppercase tracking-wider">Policy</h4>
+<ul class="space-y-xs text-body-sm text-secondary-fixed">
+<li class="hover:text-on-primary cursor-pointer transition-colors">Terms of Service</li>
+<li class="hover:text-on-primary cursor-pointer transition-colors">Privacy Policy</li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto border-t border-outline mt-lg pt-md">
+<p class="font-label text-label text-secondary-fixed text-center">© 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.</p>
+</div>
+</footer>
+<script>
+        // Simple Interaction for UI responsiveness
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('focus', () => {
+                element.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            element.addEventListener('blur', () => {
+                element.parentElement.querySelector('label').classList.remove('text-primary');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orders Management | ChefWare Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#454747",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "primary": "#005127",
+                    "surface-bright": "#f8f9ff",
+                    "primary-fixed-dim": "#89d89c",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#89d89c",
+                    "surface-dim": "#d1dbec",
+                    "surface": "#f8f9ff",
+                    "background": "#f8f9ff",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "on-primary-container": "#99e9ab",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "inverse-surface": "#27313e",
+                    "on-secondary-container": "#616363",
+                    "tertiary": "#5c4200",
+                    "primary-fixed": "#a4f4b6",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-fixed": "#261900",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d9e3f4",
+                    "secondary": "#5d5f5f",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#dfe0e0",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-low": "#eef4ff",
+                    "surface-tint": "#1b6c3b",
+                    "on-primary-fixed-variant": "#005228",
+                    "on-primary-fixed": "#00210c",
+                    "tertiary-fixed": "#ffdea5",
+                    "outline": "#707a6f",
+                    "on-surface": "#121c28",
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#121c28",
+                    "surface-variant": "#d9e3f4",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#bfc9bd",
+                    "tertiary-fixed-dim": "#f7bd44",
+                    "surface-container-high": "#dfe9fa",
+                    "on-tertiary-container": "#ffd17a",
+                    "primary-container": "#1a6b3a",
+                    "on-surface-variant": "#404940",
+                    "tertiary-container": "#7a5800"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "xs": "4px",
+                    "sm": "12px",
+                    "md": "24px",
+                    "base": "8px",
+                    "xl": "64px",
+                    "gutter": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "h3": ["Inter"], "h2": ["Inter"], "body-sm": ["Inter"], "h2-mobile": ["Inter"], "price-lg": ["Inter"], "h1-mobile": ["Inter"], "h1": ["Inter"], "body": ["Inter"], "label": ["Inter"]
+            },
+            "fontSize": {
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                    "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #EAF3DE; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bfc9bd; border-radius: 10px; }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full py-md px-base sticky top-0 bg-surface-container-lowest dark:bg-on-surface border-r border-outline-variant dark:border-outline w-64 shrink-0 h-screen">
+<div class="mb-xl px-sm">
+<h1 class="font-h3 text-h3 font-black text-primary dark:text-inverse-primary uppercase tracking-tighter">ChefWare Admin</h1>
+<p class="font-label text-label text-on-surface-variant opacity-70">Enterprise Portal</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="font-label text-label">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-base bg-primary-container text-on-primary-container font-bold rounded-lg scale-95 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label text-label">Orders</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">inventory_2</span>
+<span class="font-label text-label">Inventory</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">restaurant_menu</span>
+<span class="font-label text-label">Kitchen Services</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">rebase_edit</span>
+<span class="font-label text-label">Branding</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="font-label text-label">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant/30">
+<div class="flex items-center gap-sm mb-md px-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHUAsGBPA8sufqgq3G9tw2VBmh8GagKM3sXrRRMeidS6LsRXFq0Omo2rNyW0POqsIRHzgDrDLUrN7Ck924llcZrnwW5sSmt654ufZUIhg2oZsKjcdSXwFHL9E_boY_3K6pPzYrbkiqKlJor6mxahag-HSd2cZNkfRhy66ss8k06W7bO44OWCh6xN_poF87HoUiN-E2psfFuS-iQsmW4G6nE1RNmCtTVhS7o2AuN-Vqz6YxEMXy3XU2EjUxPkEMJvTm2grf-q1h7hoJ"/>
+</div>
+<div>
+<p class="font-label text-label text-on-surface font-bold">Kofi Mensah</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Operations Head</p>
+</div>
+</div>
+<button class="w-full py-base bg-tertiary-container text-on-tertiary-container font-label text-label rounded-lg hover:bg-tertiary transition-all">
+                Request Quote
+            </button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-surface border-b border-outline-variant dark:border-outline h-20 flex sticky top-0 z-30">
+<div class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-md">
+<h2 class="font-h3 text-h3 text-primary dark:text-inverse-primary font-bold">Orders Management</h2>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-xl pr-md py-xs rounded-lg border border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary transition-all text-body-sm w-64" placeholder="Global search..." type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-base rounded-full hover:bg-surface-container-low transition-colors text-secondary dark:text-secondary-fixed-dim relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<button class="p-base rounded-full hover:bg-surface-container-low transition-colors text-secondary dark:text-secondary-fixed-dim">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="p-base rounded-full hover:bg-surface-container-low transition-colors text-secondary dark:text-secondary-fixed-dim">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<section class="p-gutter max-w-container-max mx-auto w-full">
+<!-- Filter Bar -->
+<div class="bg-white p-base rounded-xl border border-outline-variant mb-md flex flex-wrap gap-base items-center shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+<div class="flex flex-1 min-w-[280px] gap-base">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-base">calendar_today</span>
+<select class="pl-xl pr-md py-base w-full rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:ring-2 focus:ring-primary appearance-none">
+<option>Last 30 Days</option>
+<option>This Month</option>
+<option>Last Quarter</option>
+<option>Custom Range</option>
+</select>
+</div>
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-base">filter_list</span>
+<select class="pl-xl pr-md py-base w-full rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:ring-2 focus:ring-primary appearance-none">
+<option>All Statuses</option>
+<option>Processing</option>
+<option>Shipped</option>
+<option>Delivered</option>
+<option>Cancelled</option>
+</select>
+</div>
+</div>
+<div class="flex gap-base">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-base">payments</span>
+<select class="pl-xl pr-md py-base rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:ring-2 focus:ring-primary appearance-none w-48">
+<option>Payment: All</option>
+<option>MTN MoMo</option>
+<option>Bank Transfer</option>
+<option>Card</option>
+</select>
+</div>
+<button class="bg-primary hover:opacity-90 text-white font-label text-label px-md py-base rounded-lg flex items-center gap-xs transition-opacity shadow-sm">
+<span class="material-symbols-outlined text-base">download</span>
+                        Export CSV
+                    </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.05)]">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="p-md w-12 border-b border-outline-variant">
+<input class="rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Order ID</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Customer</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Date</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Items</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Payment</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider">Total</th>
+<th class="p-md border-b border-outline-variant font-label text-label text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Order Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md">
+<input class="rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-md font-label text-label text-primary font-bold">#ORD-9012</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">AK</div>
+<div>
+<p class="font-body-sm text-body-sm font-medium">Akosua K. Boateng</p>
+<p class="text-[10px] text-on-surface-variant">Labadi Beach Hotel</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-sm">Oct 24, 2023</td>
+<td class="p-md text-body-sm">12x Professional Cookware</td>
+<td class="p-md">
+<div class="flex items-center gap-xs text-body-sm">
+<span class="material-symbols-outlined text-base text-primary">phone_iphone</span>
+                                        MTN MoMo
+                                    </div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center px-sm py-[2px] rounded-full bg-primary-fixed-dim/20 text-on-primary-fixed-variant text-[10px] font-bold uppercase tracking-wider border border-primary-fixed-dim/40">
+                                        Processing
+                                    </span>
+</td>
+<td class="p-md font-price-lg text-body-sm">GH₵ 4,250.00</td>
+<td class="p-md text-right">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 2 -->
+<tr class="bg-primary/5 hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md">
+<input class="rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-md font-label text-label text-primary font-bold">#ORD-8994</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">JS</div>
+<div>
+<p class="font-body-sm text-body-sm font-medium">John S. Mensah</p>
+<p class="text-[10px] text-on-surface-variant">Skyline Bistro</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-sm">Oct 23, 2023</td>
+<td class="p-md text-body-sm">2x Industrial Oven GT5</td>
+<td class="p-md">
+<div class="flex items-center gap-xs text-body-sm">
+<span class="material-symbols-outlined text-base text-on-surface-variant">account_balance</span>
+                                        Bank Transfer
+                                    </div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center px-sm py-[2px] rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-wider border border-outline-variant">
+                                        Shipped
+                                    </span>
+</td>
+<td class="p-md font-price-lg text-body-sm">GH₵ 18,700.00</td>
+<td class="p-md text-right">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md">
+<input class="rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-md font-label text-label text-primary font-bold">#ORD-8851</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">EK</div>
+<div>
+<p class="font-body-sm text-body-sm font-medium">Esi Koomson</p>
+<p class="text-[10px] text-on-surface-variant">Global Catering Ltd.</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-sm">Oct 22, 2023</td>
+<td class="p-md text-body-sm">45x Chef Uniforms (Pro)</td>
+<td class="p-md">
+<div class="flex items-center gap-xs text-body-sm">
+<span class="material-symbols-outlined text-base text-primary">credit_card</span>
+                                        Card
+                                    </div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center px-sm py-[2px] rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold uppercase tracking-wider border border-primary">
+                                        Delivered
+                                    </span>
+</td>
+<td class="p-md font-price-lg text-body-sm">GH₵ 6,800.00</td>
+<td class="p-md text-right">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</td>
+</tr>
+<!-- Order Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-md">
+<input class="rounded border-outline text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="p-md font-label text-label text-primary font-bold">#ORD-8810</td>
+<td class="p-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">AD</div>
+<div>
+<p class="font-body-sm text-body-sm font-medium">Ama Dankwa</p>
+<p class="text-[10px] text-on-surface-variant">Private Client</p>
+</div>
+</div>
+</td>
+<td class="p-md text-body-sm">Oct 21, 2023</td>
+<td class="p-md text-body-sm">1x Commercial Freezer</td>
+<td class="p-md">
+<div class="flex items-center gap-xs text-body-sm">
+<span class="material-symbols-outlined text-base text-primary">phone_iphone</span>
+                                        MTN MoMo
+                                    </div>
+</td>
+<td class="p-md">
+<span class="inline-flex items-center px-sm py-[2px] rounded-full bg-error-container text-on-error-container text-[10px] font-bold uppercase tracking-wider border border-error/20">
+                                        Cancelled
+                                    </span>
+</td>
+<td class="p-md font-price-lg text-body-sm">GH₵ 12,400.00</td>
+<td class="p-md text-right">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant group-hover:text-primary">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-md border-t border-outline-variant flex items-center justify-between bg-surface-container-low/30">
+<p class="text-body-sm text-on-surface-variant">Showing <span class="font-bold">1 to 10</span> of 248 orders</p>
+<div class="flex items-center gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white transition-all disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-base">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white font-label text-label">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white font-label text-label transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white font-label text-label transition-all">3</button>
+<span class="mx-xs">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white font-label text-label transition-all">25</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-white transition-all">
+<span class="material-symbols-outlined text-base">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dashboard Stats Preview -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mt-xl">
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">trending_up</span>
+</div>
+<div>
+<p class="font-label text-label text-on-surface-variant uppercase">Today's Revenue</p>
+<p class="font-price-lg text-price-lg text-on-surface">GH₵ 42,910.00</p>
+</div>
+</div>
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-2xl">pending_actions</span>
+</div>
+<div>
+<p class="font-label text-label text-on-surface-variant uppercase">Pending Orders</p>
+<p class="font-price-lg text-price-lg text-on-surface">14 Items</p>
+</div>
+</div>
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-sm flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-2xl">local_shipping</span>
+</div>
+<div>
+<p class="font-label text-label text-on-surface-variant uppercase">Shipped Today</p>
+<p class="font-price-lg text-price-lg text-on-surface">08 Shipments</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-md max-w-container-max mx-auto bg-on-surface dark:bg-surface-dim mt-xl">
+<div class="md:col-span-2">
+<h3 class="font-h3 text-h3 font-bold text-surface dark:text-on-surface mb-sm">ChefWare Enterprise</h3>
+<p class="font-body-sm text-body-sm text-secondary-fixed opacity-70 mb-md max-w-sm">Premium Ghanaian Hospitality Supplies. Serving the finest hotels, restaurants, and catering professionals since 2012.</p>
+<p class="font-label text-label text-secondary-fixed">© 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.</p>
+</div>
+<div>
+<h4 class="font-label text-label text-surface mb-sm uppercase tracking-widest">Office</h4>
+<p class="font-body-sm text-body-sm text-secondary-fixed">Accra Office, Airport Residential Area</p>
+<p class="font-body-sm text-body-sm text-secondary-fixed">Ghana, West Africa</p>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label text-label text-surface mb-sm uppercase tracking-widest">Legal</h4>
+<a class="font-body-sm text-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">MTN MoMo Support</a>
+<a class="font-body-sm text-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+</footer>
+</main>
+<!-- Mobile BottomNavBar -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center h-16 px-gutter z-50">
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label text-[10px]">Orders</span>
+</a>
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center -mt-8 border-4 border-surface shadow-lg text-white">
+<span class="material-symbols-outlined">add</span>
+</div>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label text-[10px]">Stock</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label text-[10px]">Profile</span>
+</a>
+</div>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', (e) => {
+                if(e.target.type !== 'checkbox' && !e.target.closest('button')) {
+                    const checkbox = row.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+            });
+        });
+
+        // Simple filter select interaction simulation
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => {
+                select.classList.add('border-primary');
+                setTimeout(() => select.classList.remove('border-primary'), 1000);
+            });
+        });
+    </script>
+</body></html>

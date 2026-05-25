@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=375, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#121c28",
+                    "secondary": "#5d5f5f",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#1a6b3a",
+                    "on-tertiary-fixed": "#261900",
+                    "inverse-surface": "#27313e",
+                    "secondary-fixed": "#e2e2e2",
+                    "tertiary-container": "#7a5800",
+                    "inverse-primary": "#89d89c",
+                    "primary": "#005127",
+                    "on-secondary-fixed-variant": "#454747",
+                    "tertiary-fixed": "#ffdea5",
+                    "on-secondary-container": "#616363",
+                    "surface": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "surface-container-high": "#dfe9fa",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#89d89c",
+                    "on-tertiary-container": "#ffd17a",
+                    "surface-tint": "#1b6c3b",
+                    "primary-fixed": "#a4f4b6",
+                    "outline": "#707a6f",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#f7bd44",
+                    "on-primary-fixed": "#00210c",
+                    "on-background": "#121c28",
+                    "outline-variant": "#bfc9bd",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#dfe0e0",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#404940",
+                    "surface-container-highest": "#d9e3f4",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#eef4ff",
+                    "tertiary": "#5c4200",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-primary-container": "#99e9ab",
+                    "surface-dim": "#d1dbec",
+                    "on-primary-fixed-variant": "#005228",
+                    "surface-variant": "#d9e3f4",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "base": "8px",
+                    "sm": "12px",
+                    "md": "24px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "h2-mobile": ["Inter"],
+                    "h1-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label": ["Inter"],
+                    "h3": ["Inter"],
+                    "h1": ["Inter"],
+                    "price-lg": ["Inter"],
+                    "body": ["Inter"]
+            },
+            "fontSize": {
+                    "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            width: 375px;
+            margin: 0 auto;
+            background-color: #EAF3DE;
+            color: #121c28;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background">
+<!-- Top Navigation Bar -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant flex justify-between items-center px-4 w-full h-20">
+<div class="flex flex-col">
+<span class="font-h3 text-h3 font-bold text-primary">ChefWare</span>
+<span class="text-[10px] tracking-widest uppercase text-secondary font-label">Enterprise Ghana</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<div class="relative">
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<span class="absolute -top-1 -right-1 bg-error text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+</div>
+</div>
+</header>
+<!-- Sticky Filter Bar -->
+<nav class="sticky top-20 z-40 bg-surface/95 backdrop-blur-md border-b border-outline-variant py-3 px-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2 overflow-x-auto hide-scrollbar">
+<button class="bg-primary text-white px-4 py-1.5 rounded-full font-label text-label whitespace-nowrap">All Items</button>
+<button class="bg-surface-container border border-outline-variant text-on-surface-variant px-4 py-1.5 rounded-full font-label text-label whitespace-nowrap">Equipment</button>
+<button class="bg-surface-container border border-outline-variant text-on-surface-variant px-4 py-1.5 rounded-full font-label text-label whitespace-nowrap">Uniforms</button>
+<button class="bg-surface-container border border-outline-variant text-on-surface-variant px-4 py-1.5 rounded-full font-label text-label whitespace-nowrap">Utensils</button>
+</div>
+<button class="ml-4 flex items-center gap-1 text-primary font-label text-label">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+            Filter
+        </button>
+</nav>
+<!-- Main Content Grid -->
+<main class="p-4 bg-background">
+<div class="mb-6">
+<h1 class="font-h1-mobile text-h1-mobile text-on-surface mb-1">Premium Catalog</h1>
+<p class="font-body-sm text-body-sm text-secondary">Industrial Grade Ghana Hospitality Supplies</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col group active:scale-95 transition-transform duration-150">
+<div class="relative aspect-square p-1 bg-white">
+<img alt="Industrial Oven" class="w-full h-full object-cover rounded-lg" data-alt="A professional heavy-duty stainless steel industrial convection oven in a high-end commercial kitchen. The lighting is bright and clean, reflecting off the metallic surfaces to emphasize professional grade reliability. The background is a minimalist professional environment with a focus on forest green accents consistent with the ChefWare brand. The image is captured in a high-key, modern architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNF9GmE0GVwXrftQM1-ke4IpkfG0KM3LejRxfLxC7LiABfYmkyKLwA_25O9g2TkPNXNI9rY-xdMM4y0zKdodtP4iMlv6t4cTNK_UNovLuxVQhsP2ZeHRxXVLGfncgjLmr8CUcsjU2qRZSatL92TZIIgRmsaMbVmikxQ9cDbNNLCWs40MLC14e4g0mOA0MpzJOhDMLmY9dGM6FKRpEePlIEXM_wgBIWCNgPIX1qDtNoOMWGPeldGSdjY5G3dY-mxWY10S0zmQUxp2W-"/>
+<span class="absolute top-2 left-2 bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded border border-primary/20">NEW</span>
+</div>
+<div class="p-3 flex flex-col flex-grow">
+<span class="font-label text-label text-secondary mb-1">EQUIPMENT</span>
+<h3 class="font-body text-body font-semibold text-on-surface line-clamp-1">Heavy-Duty Range</h3>
+<p class="font-price-lg text-price-lg text-primary mt-2">GH₵ 12,450</p>
+<button class="mt-4 w-full bg-primary text-white py-2 rounded-lg font-label text-label">View Specs</button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col group active:scale-95 transition-transform duration-150">
+<div class="relative aspect-square p-1 bg-white">
+<img alt="Chef Uniform" class="w-full h-full object-cover rounded-lg" data-alt="A premium executive chef's double-breasted white jacket made of high-quality durable fabric. The uniform is neatly presented against a neutral grey background with soft studio lighting that highlights the texture of the cotton and the precision of the stitching. Forest green details and logo embroidery are visible, reinforcing the authoritative yet welcoming Ghanaian hospitality brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKdz60xmECsGulKxVF2clGYv46IT0E0Rvco3DRPSSw2twYIJpeBHzGamou1kPD9vwhp-H8DrSKCZ9a99FmrkIulMNEIWneJdQK6z3vOqRuQupuocdqAfHi1GyUHW1ff8qx3lgu3ybwafdP7vmH3OYRW92EmzdhM19wolPAkO_NnPNpB03hzvTt125B_3aOrS6ri3OkAxqKtrUyJAWHbMhESitBF1Dz5Ec2FPRUVn7-oEvVIMXa669IXcYA5y-qQ2BOtzqM1CtnwP1E"/>
+<span class="absolute top-2 left-2 bg-primary-fixed text-on-primary-fixed text-[10px] font-bold px-2 py-0.5 rounded">IN STOCK</span>
+</div>
+<div class="p-3 flex flex-col flex-grow">
+<span class="font-label text-label text-secondary mb-1">UNIFORMS</span>
+<h3 class="font-body text-body font-semibold text-on-surface line-clamp-1">Executive Chef Coat</h3>
+<p class="font-price-lg text-price-lg text-primary mt-2">GH₵ 450</p>
+<button class="mt-4 w-full border border-outline-variant text-primary py-2 rounded-lg font-label text-label hover:bg-surface-container-low">View Specs</button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col group active:scale-95 transition-transform duration-150">
+<div class="relative aspect-square p-1 bg-white">
+<img alt="Kitchen Knives" class="w-full h-full object-cover rounded-lg" data-alt="A professional set of forged high-carbon steel chef knives arranged artistically on a dark magnetic strip. The lighting is dramatic, casting sharp glints off the polished blades to symbolize precision and industrial excellence. The overall composition is clean and minimalist, reflecting a premium editorial aesthetic suitable for an enterprise supplier in Accra." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4Ue_NJEsrCeYJpHGGaeTwvb7k58qDAL23Bn2YgrRcFoa4jTAbNeLvHL_f5Ueo9uJGHGaE4Iuu4DA1Csm1A3V6nYkqZwFoTPcYz0Zgm0MZWouRz_TNOLqyUp1rn6Snwdy-4vjDmHEhwTHmDZIAyYxXJZ526hIO5gSjUlTnF6X17ad9pzej8vRl79Ffu2EK8QkBFOSuFTuhB3oB2XXF6C8C6t_ylnf86-YIz3debCJyVwU-j_3pqxjis0f5glpJE8uWX-G0XynMLz44"/>
+</div>
+<div class="p-3 flex flex-col flex-grow">
+<span class="font-label text-label text-secondary mb-1">SERVICES</span>
+<h3 class="font-body text-body font-semibold text-on-surface line-clamp-1">Pro Knife Set (12pc)</h3>
+<p class="font-price-lg text-price-lg text-primary mt-2">GH₵ 3,200</p>
+<button class="mt-4 w-full bg-primary text-white py-2 rounded-lg font-label text-label">View Specs</button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm flex flex-col group active:scale-95 transition-transform duration-150">
+<div class="relative aspect-square p-1 bg-white">
+<img alt="Industrial Mixer" class="w-full h-full object-cover rounded-lg" data-alt="A large-capacity industrial planetary mixer in a bright, modern commercial kitchen. The stainless steel bowl and attachment are shown in high detail, conveying durability and high performance. The lighting is soft and natural, emphasizing the professional environment and the premium quality of ChefWare Enterprise equipment. Subtle green tones are integrated into the surrounding decor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB02G6Qpw8OmviKATnlPxFco_TvlxF32AKiKfkeQtMTnWD37qQgEcyxNxEgWEwbmhuOWQOIp73Fk05lcgA0Qpr77D7r4sxDzovXF1mRAnjreIQtCoKhEaIzCkGJIwiamDfhbggIPc9gMGmctIgE7m7m5VL4VlRY4BJPdNARBVyHNpCEoPKfRNijlfRfrgNLcVTWgjteY8L9mOQqKxVwNsfdPHC7KYAkgxHYIdGKO4aaMmpMoaZV13RUsvi6Ra3Kr7qvH32AsfbAbqbO"/>
+<span class="absolute top-2 left-2 bg-secondary-container text-secondary text-[10px] font-bold px-2 py-0.5 rounded">RESTOCKING</span>
+</div>
+<div class="p-3 flex flex-col flex-grow">
+<span class="font-label text-label text-secondary mb-1">EQUIPMENT</span>
+<h3 class="font-body text-body font-semibold text-on-surface line-clamp-1">Planetary Mixer</h3>
+<p class="font-price-lg text-price-lg text-primary mt-2">GH₵ 8,900</p>
+<button class="mt-4 w-full border border-outline-variant text-primary py-2 rounded-lg font-label text-label hover:bg-surface-container-low">View Specs</button>
+</div>
+</div>
+</div>
+<!-- Catalog Pagination / Load More -->
+<div class="mt-8 flex flex-col items-center gap-4">
+<button class="w-full py-4 border-2 border-dashed border-outline-variant rounded-xl font-label text-label text-secondary hover:border-primary hover:text-primary transition-all">
+                Load More Products
+            </button>
+<p class="font-label text-[10px] text-secondary-fixed-dim">Showing 4 of 248 items</p>
+</div>
+</main>
+<!-- Footer Space for Mobile Shell -->
+<footer class="bg-on-surface text-surface py-10 px-6 mt-10">
+<h2 class="font-h3 text-h3 font-bold mb-4">ChefWare Enterprise</h2>
+<div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-8">
+<a class="font-label text-label text-secondary-fixed hover:text-white transition-colors" href="#">Accra Office</a>
+<a class="font-label text-label text-secondary-fixed hover:text-white transition-colors" href="#">MTN MoMo</a>
+<a class="font-label text-label text-secondary-fixed hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="font-label text-label text-secondary-fixed hover:text-white transition-colors" href="#">Privacy Policy</a>
+</div>
+<p class="font-label text-[10px] text-outline leading-relaxed">
+            © 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies for the West African Industry.
+        </p>
+</footer>
+<!-- Bottom Navigation Bar (Mobile Destination Rule) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-surface/90 backdrop-blur-lg border-t border-outline-variant flex justify-around items-center h-16 px-2 z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label text-[10px]">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-[10px]">Catalog</span>
+</a>
+<div class="relative -top-4">
+<button class="bg-tertiary-container text-on-tertiary-container w-14 h-14 rounded-full shadow-lg flex items-center justify-center border-4 border-background active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-[10px]">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-secondary" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label text-[10px]">Profile</span>
+</a>
+</nav>
+<!-- Floating Action Button for Contact (Contextual) -->
+<div class="fixed bottom-20 right-4 z-50">
+<button class="bg-[#C9951A] text-white p-4 rounded-full shadow-xl flex items-center justify-center active:rotate-12 transition-transform">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+</div>
+<script>
+        // Micro-interaction for scroll effects
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Simple cart counter interaction
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText === 'View Specs') {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const ripple = document.createElement('div');
+                    ripple.className = 'fixed inset-0 bg-primary/10 pointer-events-none transition-opacity duration-300 opacity-0';
+                    document.body.appendChild(ripple);
+                    setTimeout(() => ripple.classList.add('opacity-100'), 0);
+                    setTimeout(() => ripple.classList.remove('opacity-100'), 200);
+                    setTimeout(() => ripple.remove(), 500);
+                });
+            }
+        });
+    </script>
+</body></html>

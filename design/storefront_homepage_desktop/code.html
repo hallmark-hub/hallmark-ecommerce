@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#121c28",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a6b3a",
+                        "on-tertiary-fixed": "#261900",
+                        "inverse-surface": "#27313e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-container": "#7a5800",
+                        "inverse-primary": "#89d89c",
+                        "primary": "#005127",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed": "#ffdea5",
+                        "on-secondary-container": "#616363",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-high": "#dfe9fa",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-tertiary-container": "#ffd17a",
+                        "surface-tint": "#1b6c3b",
+                        "primary-fixed": "#a4f4b6",
+                        "outline": "#707a6f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "on-primary-fixed": "#00210c",
+                        "on-background": "#121c28",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#404940",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary": "#5c4200",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-container": "#99e9ab",
+                        "surface-dim": "#d1dbec",
+                        "on-primary-fixed-variant": "#005228",
+                        "surface-variant": "#d9e3f4",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h2-mobile": ["Inter"],
+                        "h1-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "price-lg": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+<div class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-20">
+<!-- Brand Logo -->
+<div class="font-h2 text-h2 font-bold text-primary">
+                ChefWare Enterprise
+            </div>
+<!-- Search Bar (on_left logic applied) -->
+<div class="hidden lg:flex items-center flex-1 max-w-md mx-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border border-outline-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Search equipment..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-md">
+<a class="font-label text-label text-primary border-b-2 border-primary pb-1" href="#">Uniforms</a>
+<a class="font-label text-label text-secondary hover:text-primary hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Equipment</a>
+<a class="font-label text-label text-secondary hover:text-primary hover:bg-surface-container-low transition-colors px-2 py-1 rounded" href="#">Services</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-sm ml-md">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[600px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A high-end industrial kitchen in Accra featuring professional chefs wearing premium forest green chef jackets. The scene is illuminated by soft, warm light reflecting off polished stainless steel kitchen equipment and ovens. The mood is authoritative and efficient, capturing the essence of premium Ghanaian hospitality service with a sophisticated and modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbBkkZEotupZUZEIA-foCs6OuMz7cyoDhYycZb3-HpKit6Oaee5pX-36l7r8QfuIz0kvpbY2iXxEAJLECrlasOa9z_E612doRB9CF0k-q4pA6aJIaG6akxdKeurQDhcwGMYf83JwYPOQGEGIa-q71-FTI_tZjEikhjAgAbj_BfcE2ngEyNH1RBuH0mciZYQBw4J9yaZJ1dP1qSkDrx3qDqNDIaqrUEbPlB51_WsZFA2ZgPENA-hdCNZAHcCBG4s6AG_tia1KHwaspz"/>
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-gutter text-on-tertiary">
+<div class="max-w-2xl">
+<span class="bg-[#C9951A] text-on-tertiary-fixed font-label text-label px-3 py-1 rounded-full mb-base inline-block">Accra-based Premium Supplier</span>
+<h1 class="font-h1 text-h1 mb-md leading-tight">Premium Hospitality Supplies for Ghana's Finest Kitchens.</h1>
+<p class="font-body text-body mb-lg text-surface-container-high">Equipping the nation's leading hotels and restaurants with industrial-grade equipment and bespoke uniforms that reflect professional excellence.</p>
+<div class="flex flex-wrap gap-md">
+<button class="bg-[#1A6B3A] text-white px-xl py-base font-label text-label rounded-lg hover:bg-primary transition-all flex items-center gap-2">
+                            Explore Catalog <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="bg-[#C9951A] text-on-tertiary-fixed px-xl py-base font-label text-label rounded-lg hover:brightness-110 transition-all">
+                            Request Quote
+                        </button>
+</div>
+<div class="mt-xl flex items-center gap-base">
+<span class="material-symbols-outlined text-tertiary-fixed">local_shipping</span>
+<p class="font-label text-label text-tertiary-fixed">GHS 250+ Orders Ship Free Across Accra</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Categories - Bento Grid -->
+<section class="py-xl px-gutter max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-lg">
+<div>
+<h2 class="font-h2 text-h2 text-primary">Featured Categories</h2>
+<p class="font-body text-secondary mt-2">Specialized solutions for every hospitality need.</p>
+</div>
+<button class="text-primary font-label text-label flex items-center gap-1 hover:underline">
+                    View All Categories <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md h-[500px]">
+<!-- Chef Uniforms -->
+<div class="md:col-span-8 group relative rounded-xl overflow-hidden border border-outline-variant bg-white">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A detailed shot of a forest green chef uniform with high-quality embroidery detail. The fabric texture is visible, set against a clean, minimalist white background. Soft studio lighting highlights the professional stitching and buttons, reflecting a modern and industrial reliability suited for high-end hospitality in Ghana." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDugPWPS6GGF6iabdJiuuFPs7Gw0hNbJDBGQEkQn2994gqkpILZaMCSTJF_Ka0Wi9_O4Z6JiFMjTDZjmjTNN9b4sKnY9TEKgM2BU6Sg6vNpIrrary1JDwLmA-Mk3U0w8jHe4TXV5prbHpJg2mypZseQ_8ExBo91c0op-hMuMZS1XoH9YgBxHaoS0erty7FI94QjBIM5rRi6C6v_MD3OYJwSMRSIkegLjiePwXDKSX9bOzkHsIkQtRBYdp-ZS8xqcn9d4mYKcgikn2p0"/>
+<div class="absolute bottom-0 left-0 right-0 p-lg bg-gradient-to-t from-black/80 to-transparent">
+<h3 class="font-h2 text-h2 text-white">Chef Uniforms</h3>
+<p class="text-surface-container-highest mb-base">Durable, elegant forest green jackets and aprons.</p>
+<button class="text-white border border-white px-base py-xs rounded-lg font-label text-label hover:bg-white hover:text-primary transition-colors">Shop Collection</button>
+</div>
+</div>
+<!-- Industrial Equipment -->
+<div class="md:col-span-4 group relative rounded-xl overflow-hidden border border-outline-variant bg-white">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Professional grade stainless steel kitchen equipment, including a high-end commercial oven and prep station. The lighting is bright and clean, emphasizing the industrial durability and professional excellence of the machinery. The setting is a clean, modern commercial kitchen environment with a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcOKZUD254XOs5dAawlM-uJ48dLtPyrfRXHvjcn77rZflzTt6ah-1roIB8MGnIO7HBIho_s35Sb5C2YNL2SVHgP6RuV3fZPWjMHC5Kzxl4ZxV_8ah1Zyud4bk4x0NgNN34lW-RXHF9HdbGSubElU_wzoO4-8XosVlFYsvuOJWGKScugNFrhQdIIscGxvxxoP6uzF1DB4JKKuqrX3ilcFZEz3SsK9DMl7NhSnh0z4ZuinsjdrLiWjagXIHm4FNjivGbv_mgEDG4R0yh"/>
+<div class="absolute bottom-0 left-0 right-0 p-lg bg-gradient-to-t from-black/80 to-transparent">
+<h3 class="font-h3 text-h3 text-white">Industrial Equipment</h3>
+<button class="text-white font-label text-label mt-base underline">Browse Machines</button>
+</div>
+</div>
+<!-- Branding Services -->
+<div class="hidden md:block md:col-span-12 group relative rounded-xl overflow-hidden border border-outline-variant h-40">
+<div class="absolute inset-0 bg-primary-container opacity-90"></div>
+<div class="relative z-10 flex items-center justify-between h-full px-xl">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="rebase_edit">rebase_edit</span>
+<div>
+<h3 class="font-h3 text-h3 text-white">Branding Services</h3>
+<p class="text-on-primary-container font-body-sm">Custom logo embroidery and uniform personalization for your staff.</p>
+</div>
+</div>
+<button class="bg-[#C9951A] text-on-tertiary-fixed px-lg py-base font-label text-label rounded-lg shadow-lg">Start Customizing</button>
+</div>
+</div>
+</div>
+</section>
+<!-- New Arrivals / Products -->
+<section class="py-xl bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="mb-lg">
+<h2 class="font-h2 text-h2 text-on-surface">Top Ghanaian Essentials</h2>
+<p class="font-body text-secondary">High-quality equipment priced in GHS.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+<!-- Product Card 1 -->
+<div class="bg-white rounded-xl border border-outline-variant p-base group hover:shadow-md transition-shadow">
+<div class="aspect-square rounded-lg bg-surface-container overflow-hidden mb-sm p-1">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A professional-grade stainless steel stock pot sitting on an industrial burner. The image is captured with sharp focus and high contrast, highlighting the metallic sheen and robust build quality. The background is a clean kitchen space, maintaining the premium brand identity of professional excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZKt9-q_K7eFcNiZOxJv1mdnaz0AVmrXKInAee_zqFDH5XJnmTxThBQOGjVP8gWwx4LRbXCckvN7iWaLssp6_Wp2wfi1_zDBIw5Iwk62SRWhKL-ASVgQbxK-GhU_eTHN7z-eIwPPKalewExZnnnYGemlJ7ifI9tP95l0W3HrCwi1uh8ewsMhc8cyTwxvGmJKxOubX_D_65rOFQBIr0MjvyNn2Imfo_TTkkiksOLcAoL5yGqJfmer2m_g5ZxvuXkjSL8Dlfh0n6eeCy"/>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider text-primary bg-primary-fixed-dim/20 px-2 py-0.5 rounded-full mb-xs inline-block">Equipment</span>
+<h4 class="font-h3 text-h3 text-on-surface line-clamp-1">Industrial Stock Pot 50L</h4>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-price-lg text-price-lg text-primary">GH₵ 1,250.00</span>
+<button class="p-2 bg-surface-container hover:bg-primary-container hover:text-white rounded-full transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white rounded-xl border border-outline-variant p-base group hover:shadow-md transition-shadow">
+<div class="aspect-square rounded-lg bg-surface-container overflow-hidden mb-sm p-1">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A premium forest green executive chef's jacket with double-breasted buttons and high collar. The jacket is presented on a minimalist mannequin against a soft gray background. The lighting highlights the fine weave of the industrial-strength cotton-poly blend, conveying professional warmth and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR1NqMVGT9IRv8koFFbIlb-mgOIzV5rW1kp-aI-0KMT3Ue4sQVca2W88qJ8y9HQyr9etCSyTqISi8NEeF7-x59QuebK6Hry7i0zj4_6b9Ws9CojRJxX_t-lssD5bJWGTFiLv-QC4_N0HCNTNzWnJ64AwProY_lCj2bk_HgjBk4m5KTQQ5SrIg8nce_CtLT2gDUKP9PnF7ttEiPqoDU4Vnwlf3ZEpFe99zISC-2nX6TeT-7bvsdefGuueAbNvsLRKMQ0NEaBFrqim5V"/>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider text-primary bg-primary-fixed-dim/20 px-2 py-0.5 rounded-full mb-xs inline-block">Uniforms</span>
+<h4 class="font-h3 text-h3 text-on-surface line-clamp-1">Forest Green Exec Jacket</h4>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-price-lg text-price-lg text-primary">GH₵ 450.00</span>
+<button class="p-2 bg-surface-container hover:bg-primary-container hover:text-white rounded-full transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-white rounded-xl border border-outline-variant p-base group hover:shadow-md transition-shadow">
+<div class="aspect-square rounded-lg bg-surface-container overflow-hidden mb-sm p-1">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A professional sharp chef's knife made of high-carbon steel with an ergonomic handle. The knife is placed on a rustic wooden cutting board, with warm, localized lighting creating a sharp focus on the blade's edge. The overall mood is one of precision and high-value professional service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOG6_I1wS-no-ifkYMecgQMmHzPBgtE5iI1b22onOzvUkqZTdT3ZKReLSFJyPoD-tZc4nOQbofOOUiKIpWrw5zGHL4qpV6hw0o4zfDUrt2c-skKWffHNQwuSySoZm765YnqWGaI6nnxI3FTXnPxjU7GL-S4smQE40ZX2x-AsrCrMuvldFDauTnyfYv2cnXe7BbsSV2WK5RJVcS2hNduJuzNZfYv4ZMaFJvFYV9888R7w5645BeeNuZTO6_jzn2fHLzir9slms-Luyp"/>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider text-primary bg-primary-fixed-dim/20 px-2 py-0.5 rounded-full mb-xs inline-block">Cutlery</span>
+<h4 class="font-h3 text-h3 text-on-surface line-clamp-1">Signature 8" Chef Knife</h4>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-price-lg text-price-lg text-primary">GH₵ 890.00</span>
+<button class="p-2 bg-surface-container hover:bg-primary-container hover:text-white rounded-full transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-white rounded-xl border border-outline-variant p-base group hover:shadow-md transition-shadow">
+<div class="aspect-square rounded-lg bg-surface-container overflow-hidden mb-sm p-1">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105" data-alt="A commercial kitchen prep table with various stainless steel mixing bowls and kitchen tools. The image is bright and airy, with high-key lighting that emphasizes the cleanliness and professional environment. The focus is sharp on the quality of the industrial equipment, reflecting growth and professional excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSGEqpM1tcJ8QcU4-t64lXfCpaoe6grgYCN7pBa-48Lsxl-BdwZj8-Fg5y9Ch37m4PtL1OMAqECYDglMVmo3KH60w_GwAUa-2hMx83QtDQz09wB3TXuidDsLCOXj_gc4d041yeW4ZUZBM6aKqB6SqcGLis7gbD7JmJOZgBcgiTsTqjLACJ5SdPGH912xDavxjE0kb9vjSLJ0KpFlsgC33eU9LKK2s0dXVPF-qvwGKGE9kpe7rqAySMnflvkVOIELseBprd7UzaX8OC"/>
+</div>
+<span class="font-label text-[10px] uppercase tracking-wider text-primary bg-primary-fixed-dim/20 px-2 py-0.5 rounded-full mb-xs inline-block">Furniture</span>
+<h4 class="font-h3 text-h3 text-on-surface line-clamp-1">SS Prep Table 1.5m</h4>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-price-lg text-price-lg text-primary">GH₵ 2,100.00</span>
+<button class="p-2 bg-surface-container hover:bg-primary-container hover:text-white rounded-full transition-colors">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Signals Section -->
+<section class="py-xl bg-primary text-on-primary">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="flex items-start gap-md">
+<div class="bg-primary-container p-sm rounded-lg">
+<span class="material-symbols-outlined text-4xl text-on-primary-container">location_on</span>
+</div>
+<div>
+<h4 class="font-h3 text-h3 mb-2">Accra-based Support</h4>
+<p class="font-body-sm opacity-80">Localized logistics and on-site consultations for Ghanaian hospitality businesses.</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="bg-primary-container p-sm rounded-lg">
+<span class="material-symbols-outlined text-4xl text-on-primary-container">local_shipping</span>
+</div>
+<div>
+<h4 class="font-h3 text-h3 mb-2">Free Delivery</h4>
+<p class="font-body-sm opacity-80">Complimentary shipping on all orders over GH₵ 250 within Greater Accra.</p>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="bg-primary-container p-sm rounded-lg">
+<span class="material-symbols-outlined text-4xl text-on-primary-container">verified_user</span>
+</div>
+<div>
+<h4 class="font-h3 text-h3 mb-2">Premium Warranty</h4>
+<p class="font-body-sm opacity-80">12-month standard warranty on all industrial kitchen equipment.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-surface text-secondary-fixed">
+<div class="w-full py-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-md max-w-container-max mx-auto">
+<div class="md:col-span-1">
+<div class="font-h3 text-h3 font-bold text-surface mb-md">ChefWare Enterprise</div>
+<p class="font-body-sm text-secondary-fixed mb-md">Premium Ghanaian hospitality supplies since 2012. Providing the tools for West Africa's culinary masters.</p>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-surface">social_leaderboard</span>
+<span class="material-symbols-outlined text-surface">retweet</span>
+</div>
+</div>
+<div>
+<h5 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Office Location</h5>
+<p class="font-body-sm text-secondary-fixed mb-2">Accra Office, Osu - Oxford Street</p>
+<p class="font-body-sm text-secondary-fixed mb-2">+233 302 000 000</p>
+<a class="font-label text-label text-primary-fixed hover:underline" href="#">View Map</a>
+</div>
+<div>
+<h5 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Customer Support</h5>
+<nav class="flex flex-col gap-2">
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">MTN MoMo Payments</a>
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Returns &amp; Shipping</a>
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Request Catalog</a>
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Track Order</a>
+</nav>
+</div>
+<div>
+<h5 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Legal &amp; Privacy</h5>
+<nav class="flex flex-col gap-2">
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-secondary-fixed hover:text-on-primary transition-colors" href="#">Wholesale Program</a>
+</nav>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter border-t border-outline/20 py-md flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+<p class="font-body-sm text-secondary-fixed opacity-60">© 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.</p>
+<div class="flex items-center gap-sm mt-md md:mt-0">
+<img alt="MTN MoMo" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCku1XdpJIRJqefJzrMkLXWoFzum7AMo1hbwIb9V_52JT6spihpgf8nGXXZ8Myt0eWbMSLXEiPx8c1eEznuI-WVDNMHVj1MniwIHpCT1SZw0Jj1e8DSjJ3Kx87NNU7visJUPineVUBdhfRNFytjsCVavj6A6Y9xtE2D_IrVcWlYwEc0B6Wl3nU-j3On-PMcpL8a3-9tph7UVMbfkPmc2v5wZ2xyAIhzM4PxqFV7XIzWG9tdqSpB40YxDKXm0ocBwIcm1TkTeQrNveyc"/>
+<img alt="Visa" class="h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZorbWLuo-glQO_KXzQZE5qBPrleg5JHlCauToR_UDjodKlGA37I6CHkgnsGQJesF4yAwE5tuaBE26YEOVo0Q6xTEBlJQsdZj2VERqaXGDF8AyjdHBWDmzaJRYiUUhuJtI8z2vcvs8PtPBwlVylaS6vULi4NFmU6V4Y1xDVkB4v8F6gqRXEAhtzDtqVUAtHCmnyIkbATTxSE3AQciXHJGM7zSH1isgnhk2tyrW_78u7_5QLEWvYcVzSh2eBXsdpbxxngsRmthr9d5i"/>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md', 'h-16');
+                header.classList.remove('h-20');
+            } else {
+                header.classList.remove('shadow-md', 'h-16');
+                header.classList.add('h-20');
+            }
+        });
+
+        // Search Bar Focus Effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary');
+        });
+    </script>
+</body></html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kitchen Services | ChefWare Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#121c28",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a6b3a",
+                        "on-tertiary-fixed": "#261900",
+                        "inverse-surface": "#27313e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-container": "#7a5800",
+                        "inverse-primary": "#89d89c",
+                        "primary": "#005127",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed": "#ffdea5",
+                        "on-secondary-container": "#616363",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-high": "#dfe9fa",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-tertiary-container": "#ffd17a",
+                        "surface-tint": "#1b6c3b",
+                        "primary-fixed": "#a4f4b6",
+                        "outline": "#707a6f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "on-primary-fixed": "#00210c",
+                        "on-background": "#121c28",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#404940",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary": "#5c4200",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-container": "#99e9ab",
+                        "surface-dim": "#d1dbec",
+                        "on-primary-fixed-variant": "#005228",
+                        "surface-variant": "#d9e3f4",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"], "h2-mobile": ["Inter"], "h1-mobile": ["Inter"], "body-sm": ["Inter"], "label": ["Inter"], "h3": ["Inter"], "h1": ["Inter"], "price-lg": ["Inter"], "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { background-color: #EAF3DE; }
+        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)); }
+    </style>
+</head>
+<body class="font-body text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-on-surface border-b border-outline-variant dark:border-outline docked full-width top-0 z-50">
+<nav class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-20">
+<div class="font-h2 text-h2 font-bold text-primary dark:text-inverse-primary">ChefWare Enterprise</div>
+<div class="hidden md:flex gap-md">
+<a class="font-label text-label text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Uniforms</a>
+<a class="font-label text-label text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Equipment</a>
+<a class="font-label text-label text-primary dark:text-inverse-primary border-b-2 border-primary pb-1" href="#">Services</a>
+</div>
+<div class="flex items-center gap-base">
+<button class="material-symbols-outlined p-base rounded-full hover:bg-surface-container-low transition-colors text-primary" data-icon="shopping_cart">shopping_cart</button>
+<button class="material-symbols-outlined p-base rounded-full hover:bg-surface-container-low transition-colors text-primary" data-icon="person">person</button>
+</div>
+</nav>
+</header>
+<div class="flex max-w-[1440px] mx-auto min-h-screen relative">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-screen py-md px-base sticky top-20 w-64 bg-surface-container-lowest dark:bg-on-surface border-r border-outline-variant dark:border-outline shrink-0">
+<div class="mb-lg">
+<div class="font-h3 text-h3 font-black text-primary dark:text-inverse-primary mb-xs">ChefWare Admin</div>
+<div class="font-label text-label text-secondary">Enterprise Portal</div>
+</div>
+<nav class="flex flex-col gap-xs flex-grow">
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-label">Orders</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label">Inventory</span>
+</a>
+<a class="flex items-center gap-sm p-sm bg-primary-container text-on-primary-container font-bold rounded-lg scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-label text-label">Kitchen Services</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="rebase_edit">rebase_edit</span>
+<span class="font-label text-label">Branding</span>
+</a>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label text-label">Settings</span>
+</a>
+</nav>
+<button class="mt-auto bg-[#C9951A] text-white py-sm rounded-lg font-label text-label font-bold hover:shadow-lg transition-all uppercase tracking-wider">
+                Request Quote
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-grow w-full">
+<!-- Hero Section -->
+<section class="relative h-[500px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 hero-gradient z-10"></div>
+<img alt="Industrial Kitchen Design" class="absolute inset-0 w-full h-full object-cover" data-alt="A professional high-end industrial kitchen in Accra featuring gleaming stainless steel workstations, heavy-duty gas ranges, and commercial ventilation hoods. The lighting is warm and cinematic, highlighting the pristine environment and the scale of the facility. The overall mood is authoritative and professional, reflecting premium Ghanaian hospitality standards with a Forest Green and Gold color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzdMYnoJRTEN5vilsuOFER8l_2msoqVRA3WGzhpmn6xLJTvnqPIoZnjUzDj3lH3Hmvt6_ZIrKkRhp4e3iQB-F2Nb7Aew6Qo8Xah2Y4F6d1HPmBwTZi4luWr-rnHo0OzG7Fsc0oAHOGel8g8OjKiV_yEnzDRTyOTx-vQ8cPGYEL4MdwAPeqDbc_nibKw7GjKDVwpHKAHub-oQ-FSmLPnIENc66Xic5xqCfdJjFIkcpyp-sQpd7Zp5hQ6BrQ7aTRRukhZPDl9iCwF-tA"/>
+<div class="relative z-20 text-center px-gutter max-w-3xl">
+<h1 class="font-h1 text-h1 text-white mb-md">World-Class Industrial Kitchen Design &amp; Installation</h1>
+<p class="font-body text-white/90 text-lg mb-lg">From architectural planning to final commissioning, we build the engines of Ghana's finest restaurants and hotels.</p>
+<div class="flex flex-wrap gap-md justify-center">
+<a class="bg-[#1A6B3A] text-white px-xl py-sm rounded-lg font-h3 hover:opacity-90 transition-all" href="#quote-form">Book Site Visit</a>
+<a class="border-2 border-white text-white px-xl py-sm rounded-lg font-h3 hover:bg-white/10 transition-all" href="#">View Our Portfolio</a>
+</div>
+</div>
+</section>
+<!-- Services Grid (Bento Style) -->
+<section class="p-gutter max-w-container-max mx-auto py-xl">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md auto-rows-[280px]">
+<!-- Full Kitchen Installation -->
+<div class="md:col-span-8 md:row-span-2 bg-white rounded-xl border border-outline-variant overflow-hidden group shadow-sm flex flex-col">
+<div class="relative h-2/3 overflow-hidden">
+<img alt="Full Kitchen Installation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A detailed wide shot of a completed industrial kitchen installation in a premium Accra hotel. Stainless steel surfaces are polished to a mirror finish, with industrial refrigerators and prep stations perfectly aligned under bright, clean white lighting. The design reflects mathematical precision and extreme cleanliness in a professional corporate hospitality setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAebkdVEciJqEnIeWp2TLa0r9nylLiLk02WBLS4rxjCtiRTTk7krKzRhaHkCi8HG7fWlQJMQhZbMhIFSB8I06VShfXYHNVKtH1epOWaqd7p5a4jySMUTrO7vUut1ZHdChbIt2oBsdOwIdYHukiDlgBzbj3WPWAfcjKoj1EctP_3169uF77Pqpdsob9rFZw8BOdricRSpauPxUMDZ5OJZa2JSI6H_BMnaM6PWwlO4ycB7PbwV46-DYVpxWYBNK9zSN0Z1Q412-AopX4n"/>
+<div class="absolute top-md left-md bg-[#1A6B3A] text-white px-sm py-xs rounded-full font-label text-label">FEATURED SERVICE</div>
+</div>
+<div class="p-md flex-grow">
+<h2 class="font-h2 text-h2 text-primary mb-xs">Full Kitchen Installation</h2>
+<p class="font-body text-secondary max-w-xl">Comprehensive turnkey solutions including layout optimization, gas piping, ventilation systems, and specialized equipment mounting for industrial-scale operations.</p>
+</div>
+</div>
+<!-- Garment Branding -->
+<div class="md:col-span-4 md:row-span-1 bg-white rounded-xl border border-outline-variant overflow-hidden p-md flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-primary mb-sm text-4xl" data-icon="rebase_edit">rebase_edit</span>
+<h3 class="font-h3 text-h3 text-primary mb-xs">Garment Branding</h3>
+<p class="font-body-sm text-secondary">Premium embroidery and heat-press branding for chef jackets, aprons, and hospitality uniforms.</p>
+</div>
+<button class="text-[#1A6B3A] font-label text-label text-left hover:underline">LEARN MORE →</button>
+</div>
+<!-- Preventive Maintenance -->
+<div class="md:col-span-4 md:row-span-1 bg-surface-container text-on-surface rounded-xl p-md flex flex-col justify-center border border-outline-variant">
+<h3 class="font-h3 text-h3 mb-sm">24/7 Support</h3>
+<p class="font-body-sm mb-md">Our Accra-based technicians provide round-the-clock maintenance to ensure your kitchen never stops running.</p>
+<div class="flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label text-label uppercase tracking-widest text-primary">On-Call Technicians Available</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Image Gallery Accra Projects -->
+<section class="bg-on-surface py-xl px-gutter overflow-hidden">
+<div class="max-w-container-max mx-auto">
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h2 class="font-h2 text-h2 text-white mb-xs">Recent Accra Projects</h2>
+<p class="text-secondary-fixed">Delivering excellence across Ghana's hospitality sector.</p>
+</div>
+<div class="flex gap-sm">
+<button class="p-base border border-secondary text-white rounded-full hover:bg-white/10 transition-colors material-symbols-outlined" data-icon="arrow_back">arrow_back</button>
+<button class="p-base border border-secondary text-white rounded-full hover:bg-white/10 transition-colors material-symbols-outlined" data-icon="arrow_forward">arrow_forward</button>
+</div>
+</div>
+<div class="flex gap-md overflow-x-auto pb-md no-scrollbar">
+<div class="min-w-[400px] bg-white/5 rounded-xl overflow-hidden group">
+<img alt="Accra Restaurant Project" class="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A high-end kitchen island in a boutique Accra restaurant, showcasing custom cabinetry and heavy-duty appliances. The space is flooded with soft daylight and accented with warm wood textures, creating a welcoming yet industrial atmosphere. The style is modern corporate with a focus on high-quality tactile materials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiatKyP7LozRuTLeRD7RxMJfa2chj-w-2OWnfJrQmkK5pcIoqkZYP_Si_iF6d3IDnuikSQkRrZfUG0z1u76AieJxIfeJLQ8uM50_Ra7QCz2xgF6Zw9P6ENKyXlKnZQQRZ2yaPz9V9HxGlKOaY47j5d53-PI5-38KcL9q3jOCyhlapXf_oH5fOOqfvLXxO8O9gwxZpwuZ8dUuuRUfVLWhMIGca-FyJv8aIdVkc1N4UEL70bOEiA0wFr4XxZ9LhiJpRcDW2a-wkYQtEl"/>
+<div class="p-md">
+<span class="font-label text-label text-primary-fixed">LABONE, ACCRA</span>
+<h4 class="text-white font-h3 mt-xs">Heritage Bistro Kitchen</h4>
+</div>
+</div>
+<div class="min-w-[400px] bg-white/5 rounded-xl overflow-hidden group">
+<img alt="Catering Facility Project" class="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A commercial kitchen prep area in an industrial catering facility in Ghana. Stainless steel tables are organized for efficiency under bright LED lighting. The image emphasizes high-volume capacity and hygiene standards, utilizing a clean light-mode aesthetic with Forest Green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB20CFjwHvsL9OCc7RJ4MOWEXjFpa0IEAU7T_6MLeg-EVytZ8s2X16pK5OyVBC1HITnjnoIVt9CxCUBCw8r51so2sK0Z0mVtY9Oxtz54sOvtUbjz4WlvYkBboGMUXnlh3noSy1tRuk-AzJbmE3x2HiSC1r-9SMWhZPmHBLocDQ0AV_Th9xkBKPso_Qr4MSegsr14wuXU-UemKNaZC0yx9KmZwikllbJ0h1hjS-0kS4wODJ8NjvzGUR0HErCYioA9WUZ2xWeKqilX440"/>
+<div class="p-md">
+<span class="font-label text-label text-primary-fixed">TEMA INDUSTRIAL AREA</span>
+<h4 class="text-white font-h3 mt-xs">Aero-Catering Hub</h4>
+</div>
+</div>
+<div class="min-w-[400px] bg-white/5 rounded-xl overflow-hidden group">
+<img alt="Branding Project" class="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A chef in a branded white jacket featuring high-quality green embroidery of a restaurant logo. The chef is working in a modern commercial kitchen in Accra, with the focus on the sharp detail of the embroidery. The scene is brightly lit, professional, and captures the premium branding service offered." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDWOWuQvsOVljap5k8Z5i8Tg_rm7-PUAMKXHfWuYxPl7yTHjAMiPmxtbsdiffXMBlI0NRCNp4_r8UujduAThTOKt4QCffpOSdCAJbG85A9kyvCEZpx8yNcC2NVzKlaIA1tFJjtw_-soWPpAoipsLzV3wsu2XaYYK4kJRx8jfk_VBGJ0i944PTogL2nqAn8LjHThxqm42JYa3OWgHjhjwIWiLLZ3WQhEXAeOuRZYUXDbLnM5Hb9g9MA_xURAkJM-Ye7pT4rp7XFALAg"/>
+<div class="p-md">
+<span class="font-label text-label text-primary-fixed">AIRPORT RESIDENTIAL</span>
+<h4 class="text-white font-h3 mt-xs">Skyline Hotel Uniforms</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Request Site Visit Form Section -->
+<section class="py-xl px-gutter max-w-container-max mx-auto grid md:grid-cols-2 gap-xl items-center" id="quote-form">
+<div>
+<h2 class="font-h1 text-h1 text-primary mb-md">Request a Professional Site Visit</h2>
+<p class="font-body text-secondary text-lg mb-lg">Our expert engineers will visit your location to provide a technical assessment and a comprehensive quote for your industrial kitchen needs.</p>
+<ul class="space-y-md">
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary bg-primary-container/10 p-xs rounded-full" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body text-on-surface">Detailed Floor Plan Analysis</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary bg-primary-container/10 p-xs rounded-full" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body text-on-surface">Gas &amp; Power Load Assessment</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary bg-primary-container/10 p-xs rounded-full" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body text-on-surface">Maintenance Schedule Recommendation</span>
+</li>
+</ul>
+</div>
+<div class="bg-white p-lg rounded-xl border border-outline-variant shadow-lg">
+<form class="space-y-md">
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-secondary">FULL NAME</label>
+<input class="p-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Kofi Mensah" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-secondary">ESTABLISHMENT</label>
+<input class="p-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Grand Accra Hotel" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-secondary">CONTACT NUMBER</label>
+<div class="flex">
+<span class="bg-surface-container border border-outline-variant border-r-0 px-sm flex items-center rounded-l-lg font-body">+233</span>
+<input class="w-full p-sm border border-outline-variant rounded-r-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="024 123 4567" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-secondary">SERVICE REQUIRED</label>
+<select class="p-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white">
+<option>Full Kitchen Installation</option>
+<option>Equipment Maintenance</option>
+<option>Garment Branding (Embroidery)</option>
+<option>Gas System Setup</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label text-label text-secondary">MESSAGE (OPTIONAL)</label>
+<textarea class="p-sm border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Tell us about your project..." rows="3"></textarea>
+</div>
+<button class="w-full bg-[#1A6B3A] text-white py-md rounded-lg font-h3 font-bold hover:shadow-xl hover:translate-y-[-2px] transition-all" type="submit">
+                            Schedule Visit
+                        </button>
+</form>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-on-surface dark:bg-surface-dim mt-xl">
+<div class="w-full py-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-md max-w-container-max mx-auto">
+<div class="col-span-1">
+<div class="font-h3 text-h3 font-bold text-surface dark:text-on-surface mb-md">ChefWare Enterprise</div>
+<p class="font-body-sm text-secondary-fixed mb-md">Premium Ghanaian hospitality supplies and industrial kitchen solutions.</p>
+<div class="flex gap-base">
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer hover:text-primary-fixed" data-icon="facebook">social_leaderboard</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer hover:text-primary-fixed" data-icon="instagram">retweet</span>
+<span class="material-symbols-outlined text-secondary-fixed cursor-pointer hover:text-primary-fixed" data-icon="linkedin">link</span>
+</div>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Office</h4>
+<p class="font-body-sm text-secondary-fixed">Accra Office</p>
+<p class="font-body-sm text-secondary-fixed mt-xs">12 Giffard Road, East Cantonments</p>
+<p class="font-body-sm text-secondary-fixed mt-xs">Accra, Ghana</p>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Payments</h4>
+<p class="font-body-sm text-secondary-fixed">MTN MoMo</p>
+<p class="font-body-sm text-secondary-fixed mt-xs">Bank Wire Transfer</p>
+<p class="font-body-sm text-secondary-fixed mt-xs">Card Payment on Site</p>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase tracking-widest">Legal</h4>
+<ul class="space-y-sm">
+<li><a class="font-body-sm text-secondary-fixed hover:text-on-primary" href="#">Terms of Service</a></li>
+<li><a class="font-body-sm text-secondary-fixed hover:text-on-primary" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter py-md border-t border-white/10">
+<p class="font-label text-label text-secondary-fixed text-center">© 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Sending...';
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Request Sent!';
+                btn.classList.remove('bg-[#1A6B3A]');
+                btn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'bg-green-600');
+                    btn.classList.add('bg-[#1A6B3A]');
+                    e.target.reset();
+                }, 3000);
+            }, 1500);
+        });
+
+        // Horizontal scroll button logic
+        const scrollContainer = document.querySelector('.no-scrollbar');
+        document.querySelectorAll('.material-symbols-outlined').forEach(btn => {
+            if(btn.innerText === 'arrow_forward') {
+                btn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: 400, behavior: 'smooth' });
+                });
+            }
+            if(btn.innerText === 'arrow_back') {
+                btn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: -400, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body></html>

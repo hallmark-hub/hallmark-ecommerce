@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChefWare Enterprise Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#121c28",
+                    "secondary": "#5d5f5f",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#1a6b3a",
+                    "on-tertiary-fixed": "#261900",
+                    "inverse-surface": "#27313e",
+                    "secondary-fixed": "#e2e2e2",
+                    "tertiary-container": "#7a5800",
+                    "inverse-primary": "#89d89c",
+                    "primary": "#005127",
+                    "on-secondary-fixed-variant": "#454747",
+                    "tertiary-fixed": "#ffdea5",
+                    "on-secondary-container": "#616363",
+                    "surface": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "surface-container-high": "#dfe9fa",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed-dim": "#89d89c",
+                    "on-tertiary-container": "#ffd17a",
+                    "surface-tint": "#1b6c3b",
+                    "primary-fixed": "#a4f4b6",
+                    "outline": "#707a6f",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#f7bd44",
+                    "on-primary-fixed": "#00210c",
+                    "on-background": "#121c28",
+                    "outline-variant": "#bfc9bd",
+                    "on-tertiary-fixed-variant": "#5d4200",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#dfe0e0",
+                    "error": "#ba1a1a",
+                    "on-surface-variant": "#404940",
+                    "surface-container-highest": "#d9e3f4",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#eef4ff",
+                    "tertiary": "#5c4200",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-primary-container": "#99e9ab",
+                    "surface-dim": "#d1dbec",
+                    "on-primary-fixed-variant": "#005228",
+                    "surface-variant": "#d9e3f4",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "base": "8px",
+                    "sm": "12px",
+                    "md": "24px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xl": "64px"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "h2-mobile": ["Inter"],
+                    "h1-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label": ["Inter"],
+                    "h3": ["Inter"],
+                    "h1": ["Inter"],
+                    "price-lg": ["Inter"],
+                    "body": ["Inter"]
+            },
+            "fontSize": {
+                    "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                    "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #EAF3DE; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .table-stripe tr:nth-child(even) { background-color: rgba(0, 81, 39, 0.05); }
+    </style>
+</head>
+<body class="text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-lowest dark:bg-on-surface border-r border-outline-variant dark:border-outline flex flex-col h-full py-md px-base sticky top-0 w-64 min-h-screen">
+<div class="mb-xl px-xs">
+<h1 class="font-h3 text-h3 font-black text-primary dark:text-inverse-primary">ChefWare Admin</h1>
+<p class="font-label text-label text-secondary mt-1">Enterprise Portal</p>
+</div>
+<nav class="flex-1 space-y-base">
+<!-- Dashboard Active -->
+<a class="bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center gap-sm px-md py-sm scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label">Dashboard</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high flex items-center gap-sm px-md py-sm rounded-lg transition-all hover:bg-secondary-container" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-label">Orders</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high flex items-center gap-sm px-md py-sm rounded-lg transition-all hover:bg-secondary-container" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label">Inventory</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high flex items-center gap-sm px-md py-sm rounded-lg transition-all hover:bg-secondary-container" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-label text-label">Kitchen Services</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high flex items-center gap-sm px-md py-sm rounded-lg transition-all hover:bg-secondary-container" href="#">
+<span class="material-symbols-outlined" data-icon="rebase_edit">rebase_edit</span>
+<span class="font-label text-label">Branding</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high flex items-center gap-sm px-md py-sm rounded-lg transition-all hover:bg-secondary-container" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label text-label">Settings</span>
+</a>
+</nav>
+<div class="mt-xl space-y-md">
+<button class="w-full bg-[#C9951A] text-on-tertiary font-label text-label py-sm px-md rounded-lg shadow-sm hover:opacity-90 transition-opacity uppercase tracking-wider">
+                    Request Quote
+                </button>
+<div class="flex items-center gap-sm px-xs pt-md border-t border-outline-variant">
+<img alt="Admin User Profile" class="w-10 h-10 rounded-full border border-outline" data-alt="A professional headshot of a middle-aged Ghanaian business professional with a warm, authoritative expression. He is wearing a sharp charcoal suit in a high-end corporate office setting with soft, warm lighting. The image should convey trust and executive leadership with a clean, light-mode corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABcFEuhgqudslhBPuqN8hbS5j801lF-0lV39symvi9-tJgL0Dt1USCL7uo4wgqsIIncKcBYF8rYqwfQoE-ISmMpMPyqGcYhwPtL2u0ESz3oNSdrjATa1CbsR3wlSQE9owGl4rOA1DUUrI4cD30skZ_5eXYXhUIYDKdVaAgvglPPtwIKtkkNwBLKS8zFFdbHEhQmIziqAGnUtB4sxroBFJ8DiA941qvWfCIguzqTVF87bF-KJbYzRsUNlODXqy5LfV6uOdvMhvAbqPp"/>
+<div>
+<p class="font-label text-label text-on-surface font-bold">Kofi Mensah</p>
+<p class="text-[10px] text-secondary">Chief Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-lg max-w-container-max mx-auto">
+<!-- Header Section -->
+<header class="mb-xl flex justify-between items-end">
+<div>
+<h2 class="font-h1 text-h1 text-primary">Enterprise Overview</h2>
+<p class="font-body text-body text-secondary">Real-time performance monitoring for Ghana's hospitality supply chain.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-white border border-outline-variant rounded-lg text-primary font-label text-label transition-all hover:shadow-md">
+<span class="material-symbols-outlined" style="font-size: 18px;">calendar_today</span>
+                        This Month
+                    </button>
+<button class="flex items-center gap-xs px-md py-sm bg-white border border-outline-variant rounded-lg text-primary font-label text-label transition-all hover:shadow-md">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                        Export PDF
+                    </button>
+</div>
+</header>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-xl">
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-primary bg-primary-container/10 p-base rounded-full" data-icon="shopping_bag">shopping_bag</span>
+<span class="text-primary font-label text-label bg-primary/10 px-xs py-1 rounded">+12.5%</span>
+</div>
+<p class="font-label text-label text-secondary mb-xs">Total Orders</p>
+<h3 class="font-price-lg text-price-lg text-on-surface">1,248</h3>
+</div>
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-[#C9951A] bg-[#C9951A]/10 p-base rounded-full" data-icon="payments">payments</span>
+<span class="text-[#C9951A] font-label text-label bg-[#C9951A]/10 px-xs py-1 rounded">+8.2%</span>
+</div>
+<p class="font-label text-label text-secondary mb-xs">Revenue (GHS)</p>
+<h3 class="font-price-lg text-price-lg text-on-surface">GH₵ 482,900</h3>
+</div>
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-sm">
+<span class="material-symbols-outlined text-primary bg-primary-container/10 p-base rounded-full" data-icon="manufacturing">manufacturing</span>
+<span class="text-primary font-label text-label bg-primary/10 px-xs py-1 rounded">Active</span>
+</div>
+<p class="font-label text-label text-secondary mb-xs">Active Services</p>
+<h3 class="font-price-lg text-price-lg text-on-surface">24 Contracts</h3>
+</div>
+</div>
+<!-- Main Dashboard Layout: Table & Alerts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<!-- Recent Orders Table -->
+<div class="lg:col-span-2 bg-white rounded-xl border border-outline-variant shadow-[0px_2px_4px_rgba(0,0,0,0.05)] overflow-hidden">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-h3 text-h3 text-on-surface">Recent Orders</h4>
+<a class="text-primary font-label text-label hover:underline" href="#">View All</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left table-stripe">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-md py-sm font-label text-label text-secondary">ORDER ID</th>
+<th class="px-md py-sm font-label text-label text-secondary">CLIENT</th>
+<th class="px-md py-sm font-label text-label text-secondary">AMOUNT</th>
+<th class="px-md py-sm font-label text-label text-secondary">STATUS</th>
+<th class="px-md py-sm font-label text-label text-secondary">ACTION</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr>
+<td class="px-md py-md font-bold text-on-surface">#CW-9021</td>
+<td class="px-md py-md">Labadi Beach Hotel</td>
+<td class="px-md py-md font-bold">GH₵ 12,450</td>
+<td class="px-md py-md">
+<span class="bg-green-100 text-green-800 px-xs py-1 rounded-full text-[10px] font-bold uppercase">Delivered</span>
+</td>
+<td class="px-md py-md">
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors"><span class="material-symbols-outlined" style="font-size: 18px;">visibility</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-md py-md font-bold text-on-surface">#CW-9022</td>
+<td class="px-md py-md">Mövenpick Accra</td>
+<td class="px-md py-md font-bold">GH₵ 8,120</td>
+<td class="px-md py-md">
+<span class="bg-amber-100 text-amber-800 px-xs py-1 rounded-full text-[10px] font-bold uppercase">Processing</span>
+</td>
+<td class="px-md py-md">
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors"><span class="material-symbols-outlined" style="font-size: 18px;">visibility</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-md py-md font-bold text-on-surface">#CW-9023</td>
+<td class="px-md py-md">Kempinski Gold Coast</td>
+<td class="px-md py-md font-bold">GH₵ 25,600</td>
+<td class="px-md py-md">
+<span class="bg-blue-100 text-blue-800 px-xs py-1 rounded-full text-[10px] font-bold uppercase">Pending</span>
+</td>
+<td class="px-md py-md">
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors"><span class="material-symbols-outlined" style="font-size: 18px;">visibility</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-md py-md font-bold text-on-surface">#CW-9024</td>
+<td class="px-md py-md">Skybar 25</td>
+<td class="px-md py-md font-bold">GH₵ 4,200</td>
+<td class="px-md py-md">
+<span class="bg-amber-100 text-amber-800 px-xs py-1 rounded-full text-[10px] font-bold uppercase">Processing</span>
+</td>
+<td class="px-md py-md">
+<button class="text-primary hover:bg-primary/10 p-xs rounded transition-colors"><span class="material-symbols-outlined" style="font-size: 18px;">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Inventory Alerts -->
+<div class="space-y-md">
+<div class="bg-white p-md rounded-xl border border-outline-variant shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-sm mb-md text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<h4 class="font-h3 text-h3">Inventory Alerts</h4>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center gap-sm p-sm bg-surface rounded-lg border border-outline-variant">
+<img alt="Chef Coat Alert" class="w-12 h-12 rounded bg-white object-cover border border-outline-variant" data-alt="A macro photograph of professional heavy-duty white cotton chef coats stacked neatly. The lighting is bright and clean, emphasizing the high-quality industrial fabric texture. The image is framed within a corporate e-commerce context, showing premium hospitality workwear in a modern warehouse environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuUVtLZLKp26AZTxeGKh0sqrZsoyQUmKVZAUgpPrR4sTCxPr0JeMFf2moNNyypD_CVERizkQzJQx3yPPYExx-O4WsBQveZWkaft2XXFjJ-v-_SauwA-3fkGw2lJf-SVe-C3nXl7jvvE8XCJDR-DE-ztSrXxX_Ps6VB5Molm17Fjs_G4GrSln5Pg3ITotmT8PBZG8DiruZBEpoOBQvJYLCsLotj_roKp6rMsAO7SmcGekA74evDMITX6k_ToLL2-CX4MJVRgtaZkyeZ"/>
+<div class="flex-1">
+<p class="font-label text-label text-on-surface">Chef Coats (Size L)</p>
+<p class="text-[10px] text-error font-bold uppercase">Critical: 5 Left</p>
+</div>
+<button class="text-primary"><span class="material-symbols-outlined">add_box</span></button>
+</div>
+<div class="flex items-center gap-sm p-sm bg-surface rounded-lg border border-outline-variant">
+<img alt="Apron Alert" class="w-12 h-12 rounded bg-white object-cover border border-outline-variant" data-alt="Close-up of premium black canvas kitchen aprons with leather straps, hanging on industrial hooks. The visual style is modern, professional, and tactile, focusing on the durable materials used in high-end culinary environments. Soft gallery lighting highlights the premium construction." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxk72O6bxvtliE5QJenVDIJxpJpnXcjMHEPArKBWkXM5xuSN276SXV8FNRJptmdVkZ8aNCjIISafyPrYaB099NV-WTzcFIq1jC1vlFxPr7ZsPNzhRTV_Is4wXsA3P9J-HmRgQXbcJXhXOhZqbz8SWRxZQcPVZSKQELOeFuU22tAtTnMVumtKEEGQqbp1DN1IJPefQxZeSlR7ykX0MmEq83h9hfgmpscm-vXCufOCvvbEgqjwk8nz2xLLo0cEFRsXqwjryWojvq6tMv"/>
+<div class="flex-1">
+<p class="font-label text-label text-on-surface">Black Bistro Aprons</p>
+<p class="text-[10px] text-secondary-fixed-dim font-bold uppercase">Low: 15 Left</p>
+</div>
+<button class="text-primary"><span class="material-symbols-outlined">add_box</span></button>
+</div>
+</div>
+<button class="w-full mt-md bg-primary text-white font-label text-label py-base rounded-lg transition-all hover:bg-primary-container">
+                            Reorder All Low Stock
+                        </button>
+</div>
+<!-- Quick Action Card -->
+<div class="bg-primary text-on-primary p-md rounded-xl shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-h3 text-h3 mb-xs">New Quote Request</h4>
+<p class="font-body-sm text-body-sm mb-md opacity-90">Kiki's Kitchen requires 50 sets of branding embroidery.</p>
+<button class="bg-[#C9951A] text-white font-label text-label py-base px-md rounded-lg shadow-md hover:scale-105 transition-transform">
+                                Respond Now
+                            </button>
+</div>
+<!-- Abstract geometric pattern overlay for enterprise feel -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-white/10 -mr-8 -mt-8 rounded-full blur-2xl"></div>
+<div class="absolute bottom-0 left-0 w-16 h-16 bg-white/5 -ml-4 -mb-4 rounded-full blur-xl"></div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-xl pt-lg border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-body-sm text-body-sm text-secondary">© 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.</p>
+<div class="flex gap-md">
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Accra Office</a>
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">MTN MoMo</a>
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label text-label text-secondary hover:text-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+</footer>
+</main>
+</div>
+<!-- Micro-interaction for hover effects -->
+<script>
+        document.querySelectorAll('a, button').forEach(elem => {
+            elem.addEventListener('mousedown', () => {
+                elem.style.transform = 'scale(0.98)';
+            });
+            elem.addEventListener('mouseup', () => {
+                elem.style.transform = '';
+            });
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = '';
+            });
+        });
+
+        // Simple simulated inventory alert pulse
+        const alertBox = document.querySelector('.text-error');
+        if(alertBox) {
+            setInterval(() => {
+                alertBox.style.opacity = alertBox.style.opacity === '0.5' ? '1' : '0.5';
+                alertBox.style.transition = 'opacity 0.8s ease-in-out';
+            }, 1000);
+        }
+    </script>
+</body></html>

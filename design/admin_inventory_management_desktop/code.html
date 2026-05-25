@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChefWare Admin - Inventory Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #bfc9bd;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "primary": "#005127",
+                        "surface-bright": "#f8f9ff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#89d89c",
+                        "surface-dim": "#d1dbec",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "on-primary-container": "#99e9ab",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "inverse-surface": "#27313e",
+                        "on-secondary-container": "#616363",
+                        "tertiary": "#5c4200",
+                        "primary-fixed": "#a4f4b6",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed": "#261900",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "secondary": "#5d5f5f",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-low": "#eef4ff",
+                        "surface-tint": "#1b6c3b",
+                        "on-primary-fixed-variant": "#005228",
+                        "on-primary-fixed": "#00210c",
+                        "tertiary-fixed": "#ffdea5",
+                        "outline": "#707a6f",
+                        "on-surface": "#121c28",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#121c28",
+                        "surface-variant": "#d9e3f4",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bfc9bd",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "surface-container-high": "#dfe9fa",
+                        "on-tertiary-container": "#ffd17a",
+                        "primary-container": "#1a6b3a",
+                        "on-surface-variant": "#404940",
+                        "tertiary-container": "#7a5800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "base": "8px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h2-mobile": ["Inter"],
+                        "price-lg": ["Inter"],
+                        "h1-mobile": ["Inter"],
+                        "h1": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="flex flex-col h-full py-md px-base sticky top-0 bg-surface-container-lowest border-r border-outline-variant w-64 shrink-0 hidden md:flex">
+<div class="mb-xl px-sm">
+<h1 class="font-h3 text-h3 font-black text-primary">ChefWare Admin</h1>
+<p class="font-label text-label text-on-surface-variant opacity-70">Enterprise Portal</p>
+</div>
+<nav class="flex-1 space-y-base overflow-y-auto custom-scrollbar">
+<!-- Dashboard -->
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label text-label">Dashboard</span>
+</a>
+<!-- Orders -->
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-label">Orders</span>
+</a>
+<!-- Inventory (ACTIVE) -->
+<a class="flex items-center gap-sm px-sm py-base bg-primary-container text-on-primary-container font-bold rounded-lg scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-label">Inventory</span>
+</a>
+<!-- Kitchen Services -->
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-label text-label">Kitchen Services</span>
+</a>
+<!-- Branding -->
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="rebase_edit">rebase_edit</span>
+<span class="font-label text-label">Branding</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-sm px-sm py-base text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label text-label">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant space-y-md px-sm">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD5ECr5sgfyvv9aJhTTRmUWmptmKvPo2kcSr_zGPODK07R_XH4r8A66OVIJQ7TyD4hm5pUWOLO8nAOcUQnb_YLWyk5pYLstX6NwSu5a5sV67IXBDBPqSXVKfA5HvzlBX7Uwi18jGw56nn-_Pv1HWIh4KBrcGVTcE8ahSXMr7WV_WBlJaiKxmv4d3B-lTrJyynWciyb4x5OdlVMxi-kPKrDGvCedxuFEG6zHPn34SAfaNFqs3D9NWnA0XTfObYQsLKr914UFFvaMd0R"/>
+</div>
+<div>
+<p class="font-label text-label font-bold text-on-surface">Kojo Mensah</p>
+<p class="text-[10px] text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+<button class="w-full py-base bg-tertiary-container text-on-tertiary-container font-label text-label rounded-lg font-bold hover:bg-secondary transition-all">
+                Request Quote
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 max-h-screen overflow-hidden">
+<!-- TopAppBar Anchor -->
+<header class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-20 shrink-0 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<h2 class="font-h2 text-h2 font-bold text-primary">Inventory Management</h2>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex bg-surface-container-low border border-outline-variant rounded-full px-base py-xs items-center gap-sm w-80">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none outline-none text-body-sm w-full focus:ring-0" placeholder="Search SKU or Product..." type="text"/>
+</div>
+<div class="flex items-center gap-base">
+<button class="p-base hover:bg-surface-container-low transition-colors rounded-full relative">
+<span class="material-symbols-outlined text-secondary" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-base hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined text-secondary" data-icon="help">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-gutter space-y-md">
+<!-- Summary Stats / Alerts (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-md">
+<!-- Primary Alert Card -->
+<div class="md:col-span-8 bg-error-container text-on-error-container p-md rounded-xl flex items-center justify-between border border-error/20">
+<div class="flex items-center gap-md">
+<div class="p-base bg-error text-on-error rounded-lg">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3">Low Stock Alerts</h3>
+<p class="font-body-sm text-body-sm opacity-80">14 items are currently below the critical threshold for Accra Warehouse.</p>
+</div>
+</div>
+<button class="hidden lg:block bg-error text-on-error px-md py-base rounded-lg font-label text-label font-bold hover:shadow-lg transition-all">
+                        Restock Now
+                    </button>
+</div>
+<!-- Secondary Quick Action Card -->
+<div class="md:col-span-4 bg-primary text-on-primary p-md rounded-xl flex flex-col justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="font-h3 text-h3">Bulk Update</h3>
+<p class="font-body-sm text-body-sm opacity-80">Upload CSV for mass inventory adjustments.</p>
+</div>
+<button class="mt-base bg-primary-fixed text-on-primary-fixed px-md py-base rounded-lg font-label text-label font-bold relative z-10 hover:bg-white hover:text-primary transition-all self-start">
+                        Upload Data
+                    </button>
+<!-- Background Decoration -->
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 rotate-12 group-hover:rotate-0 transition-transform duration-500" data-icon="upload_file">upload_file</span>
+</div>
+</section>
+<!-- Filters and Actions Row -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm">
+<div class="flex gap-base flex-wrap">
+<button class="px-md py-base border border-outline-variant bg-white rounded-lg font-label text-label text-on-surface-variant flex items-center gap-xs hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        All Categories
+                    </button>
+<button class="px-md py-base border border-outline-variant bg-white rounded-lg font-label text-label text-on-surface-variant flex items-center gap-xs hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+                        Stock: High to Low
+                    </button>
+</div>
+<div class="flex gap-base">
+<button class="px-md py-base bg-on-surface text-surface rounded-lg font-label text-label font-bold hover:opacity-90 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        New Product
+                    </button>
+</div>
+</div>
+<!-- Inventory Table -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="px-md py-md font-label text-label text-on-surface-variant">Product</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">SKU</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">Category</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">Current Stock</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">Reorder Level</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">Status</th>
+<th class="px-md py-md font-label text-label text-on-surface-variant">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: OK -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container-high rounded border border-outline-variant overflow-hidden p-1">
+<img class="w-full h-full object-cover rounded-sm" data-alt="Close-up of a high-end industrial stainless steel heavy-duty stock pot for commercial kitchens. The lighting is crisp and professional, highlighting the brushed metal texture and sturdy riveted handles. The background is a clean, bright, industrial kitchen setting reflecting the premium enterprise hospitality brand. The image conveys absolute reliability and industrial excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBpfLtmEG5or1AWj4h5q9KA8EEcjCnMeDkAlhkCHno9QR66Up2sZTQQeFmGzset7BrMUdq18WgTbFN5eWtL46UC60XF_McV8i_9OCxJGbBBuh2vHPIDZ8-78eGuXz4-24eKLxARNSRfPIi677i_RJruufYvBPf-PjvRXNB0e-bc8tyxFIBv7wcQ7vq9kL-BVEDYRZ-7Lrf2JNW0rxY7_2l43KK7dAvkEOuyQRri1aHyRDEtlSi8GEB_L-MQr0bv5KcPSBukH0EVisF"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Industrial Stock Pot 50L</p>
+<p class="text-[10px] text-on-surface-variant">Stainless Steel Grade 304</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md font-label text-label text-secondary">CW-SP-001</td>
+<td class="px-md py-md">
+<span class="px-base py-xs bg-surface-container-high text-on-surface-variant rounded-full text-[10px] font-bold">Equipment</span>
+</td>
+<td class="px-md py-md font-body text-body font-bold text-on-surface">142 units</td>
+<td class="px-md py-md font-body-sm text-body-sm text-secondary">25</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center gap-xs px-base py-xs bg-primary-fixed-dim/20 text-primary font-label text-[10px] rounded-full border border-primary/10">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> OK
+                                    </span>
+</td>
+<td class="px-md py-md">
+<button class="p-base hover:bg-surface-container-highest rounded-lg transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Low Stock -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container-high rounded border border-outline-variant overflow-hidden p-1">
+<img class="w-full h-full object-cover rounded-sm" data-alt="A neatly folded pile of professional chef whites and aprons made from premium durable fabric. The textiles are crisp and white, set against a warm, light green background that reflects West African hospitality colors. Soft, even lighting emphasizes the quality of the fabric weave and the precision of the stitching, suggesting authoritative yet welcoming service gear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKXUCISz40B2s4tpKZ04-gRPHL4U0eXlCYYtiCeHUDT37rhP4jKw01gwim2JcWlcUl4U9yv1m58q3_UfQRR0W5OgkLxMkKcOt1r22wK7sTYyg2pMIF2LVUBAvrwWna4QCXHpzkgj0sCcL477woSlcTBYua-hhbiJdNnJnuUNGDgzZ1TGJ00_kKti8TYjrmpESlBS35WweNhse2sNKq4V9NuQcgxHyfH1C_is82TauhkEVYbvCU52nGC7w0JkWcdgs9AxlqK1Uvwwv-"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Executive Chef Jacket</p>
+<p class="text-[10px] text-on-surface-variant">Size: Large / White</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md font-label text-label text-secondary">CW-UF-402</td>
+<td class="px-md py-md">
+<span class="px-base py-xs bg-surface-container-high text-on-surface-variant rounded-full text-[10px] font-bold">Uniforms</span>
+</td>
+<td class="px-md py-md font-body text-body font-bold text-error">8 units</td>
+<td class="px-md py-md font-body-sm text-body-sm text-secondary">15</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center gap-xs px-base py-xs bg-tertiary-fixed/30 text-tertiary font-label text-[10px] rounded-full border border-tertiary/10">
+<span class="w-1.5 h-1.5 bg-tertiary rounded-full animate-pulse"></span> LOW
+                                    </span>
+</td>
+<td class="px-md py-md">
+<button class="p-base hover:bg-surface-container-highest rounded-lg transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Out of Stock -->
+<tr class="hover:bg-surface-container-low transition-colors group bg-error/5">
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container-high rounded border border-outline-variant overflow-hidden p-1 opacity-50">
+<img class="w-full h-full object-cover rounded-sm" data-alt="A high-performance commercial planetary mixer in a professional kitchen environment. The machine is polished stainless steel with heavy-duty attachments. The lighting is bright and industrial, emphasizing the machinery's power and value. The scene is clean and organized, conveying a sense of premium Ghanaian hospitality service and industrial reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkzbKT-xePqcFZFhtMNNKK_qohFP18psG6beZ6gIQkSKms45E3H6l2fJy7wHQndtjm6uh4F6-ePEBVh9UmMnQCBi41RAH6HgsnBjgVCD3WvUZcUw_cIhQBKNNvguELFL2U2hN5cbvYD6Prd9uAXHCU2bZt8tgf1POO3A6Ilzhd6pnEY6FL9P9qy2OC81xzXar4KeNvx8OlU-vtW9t0KQ34tYkm52Mx9R1WAKtppUZhAq7n65dXXohWfjg_Ec2UCcKSJh3kN1EebJbv"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Planetary Mixer 20L</p>
+<p class="text-[10px] text-on-surface-variant">Industrial Series B</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md font-label text-label text-secondary">CW-EQ-912</td>
+<td class="px-md py-md">
+<span class="px-base py-xs bg-surface-container-high text-on-surface-variant rounded-full text-[10px] font-bold">Equipment</span>
+</td>
+<td class="px-md py-md font-body text-body font-bold text-error">0 units</td>
+<td class="px-md py-md font-body-sm text-body-sm text-secondary">2</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center gap-xs px-base py-xs bg-error-container text-error font-label text-[10px] rounded-full border border-error/20">
+<span class="w-1.5 h-1.5 bg-error rounded-full"></span> OUT
+                                    </span>
+</td>
+<td class="px-md py-md">
+<button class="p-base hover:bg-surface-container-highest rounded-lg transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: OK -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-md py-md">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container-high rounded border border-outline-variant overflow-hidden p-1">
+<img class="w-full h-full object-cover rounded-sm" data-alt="Modern stainless steel shelving unit filled with organized kitchen storage containers. The aesthetic is extremely clean and editorial, using a light green and white palette. High-key lighting makes the surfaces shimmer, reflecting a sense of professional organization and growth-oriented enterprise scale. The atmosphere is serene, efficient, and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALFC36BVhfgFwfLrCmS-lTjQG2mTOWE-sDvBOSsoLtIhQys317XZ0BS4KE5910e58aCTNunnI7wDUufuI2cro5WwOZgd8N5VzTTIfbOK2zrRepTVVC5yKl0-0Dbmzx175arQv7zP0FWjBXXpnNluW3I4wRfnvb8sPnmifGKc9YmoTtds6jHGXMSg_4IMbrE5GRlNerTrNuBSP8_jk9heSAR-4YsAO2WSwryckG9vlPECCLYbn2Ma9KNYhwsJnIwc0UMc_lJL9JJq5i"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm font-bold text-on-surface">Modular Shelving Unit</p>
+<p class="text-[10px] text-on-surface-variant">Cold Storage Ready</p>
+</div>
+</div>
+</td>
+<td class="px-md py-md font-label text-label text-secondary">CW-MS-221</td>
+<td class="px-md py-md">
+<span class="px-base py-xs bg-surface-container-high text-on-surface-variant rounded-full text-[10px] font-bold">Storage</span>
+</td>
+<td class="px-md py-md font-body text-body font-bold text-on-surface">45 units</td>
+<td class="px-md py-md font-body-sm text-body-sm text-secondary">10</td>
+<td class="px-md py-md">
+<span class="inline-flex items-center gap-xs px-base py-xs bg-primary-fixed-dim/20 text-primary font-label text-[10px] rounded-full border border-primary/10">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span> OK
+                                    </span>
+</td>
+<td class="px-md py-md">
+<button class="p-base hover:bg-surface-container-highest rounded-lg transition-colors">
+<span class="material-symbols-outlined text-secondary" data-icon="edit">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination/Footer Anchor -->
+<div class="p-md bg-surface-container-low flex justify-between items-center border-t border-outline-variant">
+<p class="font-label text-label text-on-surface-variant">Showing 1-10 of 422 Items</p>
+<div class="flex gap-base">
+<button class="p-base border border-outline-variant rounded-lg hover:bg-white transition-all disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-base border border-outline-variant rounded-lg hover:bg-white transition-all">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Anchor -->
+<footer class="w-full py-md px-gutter bg-on-surface text-on-primary">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col items-center md:items-start">
+<h4 class="font-h3 text-h3 font-bold text-surface">ChefWare Enterprise</h4>
+<p class="font-body-sm text-body-sm opacity-60">Premium Ghanaian Hospitality Supplies.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label text-label text-secondary-fixed hover:text-on-primary transition-colors" href="#">Accra Office</a>
+<a class="font-label text-label text-secondary-fixed hover:text-on-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label text-label text-secondary-fixed hover:text-on-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+<p class="font-label text-label text-secondary-fixed">© 2024 ChefWare Enterprise</p>
+</div>
+</footer>
+</main>
+<!-- Floating Action Button (FAB) - Highly Contextual for Inventory Add -->
+<button class="fixed bottom-gutter right-gutter w-16 h-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform md:hidden">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+                row.style.transition = 'transform 0.2s ease-out';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0px)';
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[placeholder="Search SKU or Product..."]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary', 'border-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary', 'border-primary');
+        });
+    </script>
+</body></html>

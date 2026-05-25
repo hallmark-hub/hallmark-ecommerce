@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | ChefWare Enterprise</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#121c28",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a6b3a",
+                        "on-tertiary-fixed": "#261900",
+                        "inverse-surface": "#27313e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-container": "#7a5800",
+                        "inverse-primary": "#89d89c",
+                        "primary": "#005127",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed": "#ffdea5",
+                        "on-secondary-container": "#616363",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-high": "#dfe9fa",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-tertiary-container": "#ffd17a",
+                        "surface-tint": "#1b6c3b",
+                        "primary-fixed": "#a4f4b6",
+                        "outline": "#707a6f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "on-primary-fixed": "#00210c",
+                        "on-background": "#121c28",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#404940",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary": "#5c4200",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-container": "#99e9ab",
+                        "surface-dim": "#d1dbec",
+                        "on-primary-fixed-variant": "#005228",
+                        "surface-variant": "#d9e3f4",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h2-mobile": ["Inter"],
+                        "h1-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "price-lg": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #EAF3DE; } /* From Brand Guidelines Level 0 */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .payment-radio:checked + div {
+            border-color: #005127;
+            background-color: #f0fdf4;
+            box-shadow: 0 0 0 1px #005127;
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 left-0 right-0 z-50 h-20">
+<div class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-md">
+<a class="font-h2 text-h2 font-bold text-primary" href="#">ChefWare Enterprise</a>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs px-sm py-xs text-secondary-fixed-dim">
+<span class="material-symbols-outlined">lock</span>
+<span class="font-label text-label uppercase tracking-widest">Secure Checkout</span>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-xl px-gutter max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Column: Shipping & Payment -->
+<div class="lg:col-span-8 space-y-md">
+<!-- Section: Shipping Address -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<h2 class="font-h3 text-h3">Shipping Information</h2>
+</div>
+<button class="text-primary font-label text-label hover:underline">Change</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<div>
+<p class="font-label text-label text-secondary mb-xs">Recipient</p>
+<p class="font-body font-bold">Chef Kwesi Appiah</p>
+<p class="font-body-sm text-secondary">Heritage Restaurant &amp; Grill</p>
+</div>
+<div>
+<p class="font-label text-label text-secondary mb-xs">Address</p>
+<p class="font-body">No. 12 Independence Avenue</p>
+<p class="font-body">Airport Residential Area, Accra</p>
+<p class="font-body">Greater Accra Region, Ghana</p>
+</div>
+</div>
+</section>
+<!-- Section: Payment Methods -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+<h2 class="font-h3 text-h3">Payment Method</h2>
+</div>
+<div class="space-y-sm">
+<!-- MTN MoMo -->
+<label class="block cursor-pointer">
+<input checked="" class="hidden payment-radio" name="payment" type="radio" value="momo"/>
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg transition-all hover:bg-surface-container-low">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-[#FFCC00] rounded-lg flex items-center justify-center p-xs overflow-hidden">
+<img alt="MTN Logo" class="w-full h-auto" data-alt="A clean, flat vector-style logo of MTN MoMo service, predominantly vibrant yellow with the iconic blue and red corporate shapes. The background is a crisp white tile, highlighting the brand's association with mobile financial accessibility in the modern Ghanaian economy. Professional studio lighting with no shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmobjYFQzG__MgfO-aVVU8p8L6hqgJCL7oTPTXnPLC4GppVqyOJmAFB08LcMQWTcRJuFSSs6CxrGDSBuMNOioS4RNCFhs5gfFr3be5VJMP1uqvQWaptv_F--aVdlAsq6IEDUI8dXWC-EiVaiavJ0nsTjV4RkfHanh7MQKUWfldTgyTuS8vC-ydPoVL21rFT6o3DyftnCKfh4jEXf4GZYh1Yq6hYMJnKIwvC529fIrRWnuPea_FDoIxJFgQGywM-rT-2Y2GYmbGwl4M"/>
+</div>
+<div>
+<p class="font-body font-bold">MTN MoMo</p>
+<p class="font-body-sm text-secondary">Pay securely via your MTN mobile wallet</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary" data-weight="fill">check_circle</span>
+</div>
+</label>
+<!-- Vodafone Cash -->
+<label class="block cursor-pointer">
+<input class="hidden payment-radio" name="payment" type="radio" value="voda"/>
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg transition-all hover:bg-surface-container-low">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-[#E60000] rounded-lg flex items-center justify-center p-xs overflow-hidden">
+<img alt="Vodafone Logo" class="w-full h-auto" data-alt="A high-resolution corporate logo of Vodafone Cash featuring the white speech mark symbol on a bold circular red background. The image is rendered as a clean digital badge with sharp edges and a slight glossy finish, reflecting the premium nature of the hospitality supplier's enterprise payment gateway." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCl_n_gWsO_7uzNq3e3Org9T7HlydFy-QiEHUbJwJHDge6fs7T4GRn3NbtkjazouJ_50i_Yq11oh5GtIwcno-oWeTV6H6LdcgR_hcf9O1bto3b1Vqwxd9iEeIRAIrfx-4Sue9ju9BoOC_wlvgHkfH3J1lKAEhVnnY76xPbiiQBMFeyOeBUhkvJKIi0MLa4JT_OgAGIGzVNl06WkcGnHBWQ8hlacmVk-OPKDraxpnw1KAz_8t87SZ1AybrrN-sWCNKMbBVJabKNnk7s"/>
+</div>
+<div>
+<p class="font-body font-bold">Vodafone Cash</p>
+<p class="font-body-sm text-secondary">Instant payment using Vodafone wallet</p>
+</div>
+</div>
+<div class="w-6 h-6 border-2 border-outline-variant rounded-full"></div>
+</div>
+</label>
+<!-- Bank Transfer -->
+<label class="block cursor-pointer">
+<input class="hidden payment-radio" name="payment" type="radio" value="bank"/>
+<div class="flex items-center justify-between p-md border border-outline-variant rounded-lg transition-all hover:bg-surface-container-low">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-3xl">account_balance</span>
+</div>
+<div>
+<p class="font-body font-bold">Bank Transfer</p>
+<p class="font-body-sm text-secondary">GCB, Ecobank, or Stanbic Direct Transfer</p>
+</div>
+</div>
+<div class="w-6 h-6 border-2 border-outline-variant rounded-full"></div>
+</div>
+</label>
+</div>
+<!-- Payment Micro-interaction Script -->
+<script>
+                        document.querySelectorAll('.payment-radio').forEach(radio => {
+                            radio.addEventListener('change', (e) => {
+                                document.querySelectorAll('.payment-radio').forEach(r => {
+                                    const container = r.nextElementSibling;
+                                    const iconContainer = container.querySelector('div:last-child');
+                                    if (r.checked) {
+                                        iconContainer.innerHTML = '<span class="material-symbols-outlined text-primary" style="font-variation-settings: \'FILL\' 1;">check_circle</span>';
+                                        iconContainer.className = "flex items-center justify-center";
+                                    } else {
+                                        iconContainer.innerHTML = '';
+                                        iconContainer.className = "w-6 h-6 border-2 border-outline-variant rounded-full";
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+</section>
+</div>
+<!-- Right Column: Order Summary -->
+<div class="lg:col-span-4">
+<aside class="sticky top-32 space-y-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<h2 class="font-h3 text-h3 mb-md pb-base border-b border-outline-variant">Order Summary</h2>
+<!-- Product List -->
+<div class="space-y-sm mb-md">
+<div class="flex gap-sm">
+<div class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant overflow-hidden flex-shrink-0">
+<img alt="Industrial Oven" class="w-full h-full object-cover" data-alt="A professional-grade stainless steel industrial convection oven used in high-end commercial kitchens. The appliance is shown in a bright, clean industrial environment with soft cinematic lighting that accentuates its metallic textures and precision controls. The overall aesthetic is one of durability, efficiency, and professional hospitality excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlYLuF7OqXuuhqm8wfemToQfWsAkvcTP9BVQPlBD9xQFG9VwNiPVYljBNCMGYxHl-m99vzNNLmeRzemPCEL-AtsghOsj96QyIZlYTRURG41A3BNOVRZMw6AB7lukWBXckeIaqwJdKbqdrszxnjvc49Q47W-wtEF--0YVbYE_djxBGkdYNPBxtZBb-MKYpTtsvEGn7Qb_ITG-DYAFgLDnniG80hBQocZ7AY7yTHRycSHSp8a-aWiTKtdXkR8sjSZ20AaHVSR5C25Foy"/>
+</div>
+<div class="flex-grow">
+<p class="font-body-sm font-bold truncate">Premium Convection Oven</p>
+<p class="font-label text-label text-secondary">Qty: 01</p>
+<p class="font-body-sm text-primary font-bold">GH₵ 12,500.00</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<div class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant overflow-hidden flex-shrink-0">
+<img alt="Chef Whites" class="w-full h-full object-cover" data-alt="A high-quality, crisp white professional chef's jacket with black buttons and reinforced stitching. The fabric texture is visible, suggesting premium breathable material. It is presented against a neutral studio background with soft top lighting, evoking a sense of cleanliness, tradition, and professional pride in Ghanaian hospitality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0hRtj5TsdSdWzeaH5e_kzaVcGfwiup_smOjiTMZv2JtqyTe4SRnwq4S4uhCJJLvpKZYUoZdCPhbOtOF7oprPZmX5GaA5BhgSBSY3e25ykGX6EK4cqLrM5l4IEmClbblL-xpxDK_zSAK5qlVOcLxnw3P5JrofJbV1zSZ1V75LDJViG1wK_YaN7pH4_Wt-VXpCHr4JNfo6KZr1CkukibaPcA-d3AH1HrUdwBWjAn5DwfSZivYQGA3MS7vvR4lk_ApIhp72Z36GIxzmU"/>
+</div>
+<div class="flex-grow">
+<p class="font-body-sm font-bold truncate">Executive Chef Uniform Set</p>
+<p class="font-label text-label text-secondary">Qty: 05</p>
+<p class="font-body-sm text-primary font-bold">GH₵ 2,250.00</p>
+</div>
+</div>
+</div>
+<!-- Price Breakdown -->
+<div class="space-y-xs pt-base border-t border-outline-variant mb-md">
+<div class="flex justify-between font-body-sm text-secondary">
+<span>Subtotal</span>
+<span>GH₵ 14,750.00</span>
+</div>
+<div class="flex justify-between font-body-sm text-secondary">
+<span>Shipping (Accra Central)</span>
+<span>GH₵ 150.00</span>
+</div>
+<div class="flex justify-between font-body-sm text-secondary">
+<span>VAT (15%)</span>
+<span>GH₵ 2,235.00</span>
+</div>
+</div>
+<div class="flex justify-between items-end pt-md mb-xl">
+<span class="font-body font-bold text-on-surface">Total Amount</span>
+<span class="font-price-lg text-price-lg text-primary">GH₵ 17,135.00</span>
+</div>
+<button class="w-full py-md bg-primary text-on-primary font-body font-bold rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-sm active:scale-[0.98]">
+<span class="material-symbols-outlined">verified_user</span>
+                            Complete Purchase
+                        </button>
+<div class="mt-md flex items-center justify-center gap-xs text-secondary-fixed-dim">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span class="font-label text-label uppercase">Encrypted Transaction</span>
+</div>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-sm flex items-start gap-sm">
+<span class="material-symbols-outlined text-tertiary-container">info</span>
+<p class="font-body-sm text-secondary">Delivery estimated within 48 hours for Accra residences. Our team will contact you to confirm the installation schedule for industrial equipment.</p>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-on-surface mt-xl w-full">
+<div class="w-full py-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-md max-w-container-max mx-auto text-on-primary">
+<div class="col-span-1 md:col-span-1">
+<p class="font-h3 text-h3 font-bold text-surface mb-sm">ChefWare</p>
+<p class="font-body-sm text-secondary-fixed">Premium Ghanaian Hospitality Supplies. Serving the finest establishments since 2015.</p>
+</div>
+<div class="space-y-xs">
+<p class="font-label text-label text-secondary-fixed-dim uppercase mb-sm">Company</p>
+<a class="block font-body-sm text-secondary-fixed hover:text-surface" href="#">Accra Office</a>
+<a class="block font-body-sm text-secondary-fixed hover:text-surface" href="#">Terms of Service</a>
+<a class="block font-body-sm text-secondary-fixed hover:text-surface" href="#">Privacy Policy</a>
+</div>
+<div class="space-y-xs">
+<p class="font-label text-label text-secondary-fixed-dim uppercase mb-sm">Payments</p>
+<div class="flex gap-sm items-center opacity-70">
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center px-1">
+<img alt="MTN MoMo" class="max-w-full grayscale brightness-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPpzc7PkWIq63bVku6JSV1Rkcr2XuIFRIk2T5Ic9Ac4_fdWjPw8Dkf7_YpQlSu8VjnnAcHuroIGen3ioABZY9glqtX9MJPQtCKVR0MH9U4UBPeH0tU8G7KGrUg0wG_IvQzo1epM6tkO5Ezjq42jb4jQg3NpppXlP8OLJfM0x8IARX-IyG4TO060CCx7CCu2i7MqnIxbA8l4e4r2GtEjWRJsSYrrPqfXztPY86rDvALoMT98YK7twlTZm24fbEW2Q3a0kJNmHrzOdeL"/>
+</div>
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center px-1">
+<img alt="Vodafone Cash" class="max-w-full grayscale brightness-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0-kDOypmndU8PsZ3UaERYOkvn1DVR2xtZbMQLDCbhZsukeX0546GG_4GKKJeVrQORTK60dWb72tW_MMzFxOFdB-_Ce_xUD21yOt74uJbbh1ClxkYbHOeV5vBpnax99l3C89vNmOoTY4dZOJ84Ni7pd_i5hBzagGa3BCTh0O-H3VfwiY2ql6ijNxI4vy8QoJsvtenNihLrDIgiSZePUe-FCrEBHWiSTSfsVJtgo8i2bGX6qO_vbq6Yv00hBKqZs_0dK4IDotI-vNMi"/>
+</div>
+<span class="material-symbols-outlined text-surface">payments</span>
+</div>
+</div>
+<div class="col-span-1">
+<p class="font-label text-label text-secondary-fixed-dim uppercase mb-sm">Support</p>
+<p class="font-body-sm text-secondary-fixed">24/7 Enterprise Helpline:</p>
+<p class="font-body font-bold text-primary-fixed">+233 24 000 0000</p>
+</div>
+</div>
+<div class="w-full py-md px-gutter border-t border-outline text-center text-secondary-fixed-dim font-label text-label">
+            © 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.
+        </div>
+</footer>
+</body></html>

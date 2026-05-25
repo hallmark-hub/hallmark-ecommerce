@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChefWare Enterprise | Industrial Gas Range</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#121c28",
+                        "secondary": "#5d5f5f",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a6b3a",
+                        "on-tertiary-fixed": "#261900",
+                        "inverse-surface": "#27313e",
+                        "secondary-fixed": "#e2e2e2",
+                        "tertiary-container": "#7a5800",
+                        "inverse-primary": "#89d89c",
+                        "primary": "#005127",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed": "#ffdea5",
+                        "on-secondary-container": "#616363",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-container-high": "#dfe9fa",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#89d89c",
+                        "on-tertiary-container": "#ffd17a",
+                        "surface-tint": "#1b6c3b",
+                        "primary-fixed": "#a4f4b6",
+                        "outline": "#707a6f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#f7bd44",
+                        "on-primary-fixed": "#00210c",
+                        "on-background": "#121c28",
+                        "outline-variant": "#bfc9bd",
+                        "on-tertiary-fixed-variant": "#5d4200",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#dfe0e0",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#404940",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary": "#5c4200",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "on-primary-container": "#99e9ab",
+                        "surface-dim": "#d1dbec",
+                        "on-primary-fixed-variant": "#005228",
+                        "surface-variant": "#d9e3f4",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "xl": "64px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h2-mobile": ["Inter"],
+                        "h1-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "price-lg": ["Inter"],
+                        "body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h2": ["28px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h2-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "h1-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "h1": ["36px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "price-lg": ["24px", {"lineHeight": "1", "fontWeight": "700"}],
+                        "body": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #EAF3DE;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .product-card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-on-surface border-b border-outline-variant dark:border-outline sticky top-0 z-50">
+<div class="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-20">
+<div class="font-h2 text-h2 font-bold text-primary dark:text-inverse-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+                ChefWare Enterprise
+            </div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-label text-label text-primary dark:text-inverse-primary border-b-2 border-primary pb-1" href="#">Uniforms</a>
+<a class="font-label text-label text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Equipment</a>
+<a class="font-label text-label text-secondary dark:text-secondary-fixed-dim hover:text-primary transition-colors" href="#">Services</a>
+</nav>
+<div class="flex items-center gap-md">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container border border-outline-variant rounded-lg px-md py-2 w-64 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Search industrial gear..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-secondary">search</span>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-gutter py-xl">
+<!-- Product Detail Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl items-start">
+<!-- Left: Image Gallery -->
+<div class="lg:col-span-7 grid grid-cols-12 gap-md">
+<div class="col-span-2 space-y-md">
+<div class="aspect-square border-2 border-primary rounded-lg overflow-hidden cursor-pointer bg-white">
+<img class="w-full h-full object-cover" data-alt="A macro studio shot of a high-end industrial gas range burner dial made of polished stainless steel, highlighting the precision engineering. The lighting is bright and clean, emphasizing the metallic textures and corporate green accents in the background. The overall aesthetic is professional, clean, and representative of Ghanaian industrial excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfBZQrBvAeGjglDjxj1HQzu9KvyzEhpFHlVmE8sXp6CUwCDwPiIaZ7Rl2_yU4QUIXY3J9wp_MIUnRY_pMIYqb4j9msV7eJVgh9Ithg1t1rD_QpCjHEzTL_y20_UKGG5QQlsQBJlCZ2LETYZIFJzTLDWqN-pT9qeKdisCt1U_YBIPCV1M_80ZWSdswkBBOGJv7kyFB37YhpcdcabERKOW0rZYcOlll4IxAMZXhq8B6_iJlLjaBPJXO7Atrwrr-3Vuq56C-Hkp8i5YRv"/>
+</div>
+<div class="aspect-square border border-outline-variant rounded-lg overflow-hidden cursor-pointer bg-white hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Detailed view of heavy-duty cast iron grates on a commercial gas range, showcasing the rugged durability required for industrial kitchens. The image features soft, high-key lighting that creates a bright and airy atmosphere, consistent with a premium hospitality supplier's catalog. Subtle green highlights in the shadows tie back to the Forest Green brand theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzpVNMOtWtfir2QzCQTkeTpqw6e2wSLMZFscMytp7GLvA9HTPHjS76BVNr4rmc8OWjt3dF5FyfNSzIRWUBJV1SgauAcZZMo5wLcbDiOB8S5CXUaFp25WvAFqpBkaNls0jaFlilkwBq32czA5mU91cD3uHnRALIyTFy555D6JQimv1KD9a2_C7zjFKA9ib5BCabMrrRcY9Fm9Qc7kO8DAX0h7e8EU_zqaBstR5utG6XmHGgnvd3m_QNbm9KeBXQZM0wzEM8kU7_xOm9"/>
+</div>
+<div class="aspect-square border border-outline-variant rounded-lg overflow-hidden cursor-pointer bg-white hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Side profile of a large 6-burner industrial stove in a pristine, modern kitchen setting with white tile walls and stainless steel surfaces. The lighting is warm yet professional, evoking the heat and productivity of a busy hotel kitchen. The composition is clean and focused, using tonal layering to create depth and authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWM53aRHJuCBA57z02PjEj2SIQVnq00Owfo6bPztX2-rh-TufkrC2A8ySpb1re7SKpZI8jAMe1BQIvC2rblzThxHqF_Mh-EHvPl1S9wOYATzb5kD9ERLp_4YhJiingSaiohrmJohcpfb9x74ns2tRbru1gNyguLwIoYQ6YE_1FB0LHzo4u4VfGfAK18rIeLIQmvb48d_oWhnx0TkoB92mwWutBYPVv0YVDVfS76gK5rA3hg7G5uzJmUtzc3Iq6UgVOWfnxMNfmcgTs"/>
+</div>
+</div>
+<div class="col-span-10 bg-white border border-outline-variant rounded-xl overflow-hidden p-base">
+<img class="w-full h-auto object-cover rounded-lg" data-alt="A wide-angle professional photograph of a premium 6-burner industrial gas range with a built-in convection oven, constructed from high-grade stainless steel. The stove is set against a clean, neutral background that highlights its robust industrial design. Bright, balanced lighting emphasizes the craftsmanship, while the color palette remains focused on white, silver, and the corporate forest green of the brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgc4v8Zh-haRX-bu2SH_PU32jUwMJZ5Xh4ckeDgajkELC1JyMyqFZTNV9rpBAYPQWY-ibq5HE7a6wYBdTtQRv6CgsAUTI-UuKz0L0Z4uQfFNoovxOrGOYGXKR-6Qsd8la1EIKpJ0H1E7aTC6VsbnOuAJd6IrMc_AvfR5OfO1tqJXYPEap7UjFJ-OrbsgWT_cKa_BSEJAQP79MP9RQ3RpvT5jXzylPZ-aTlMlUgwhlV2IIFw4XhAR0wde-HJnxmlp0k_YFRanFbFjfl"/>
+</div>
+</div>
+<!-- Right: Product Info & Actions -->
+<div class="lg:col-span-5 space-y-md">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label font-label">IN STOCK</span>
+<span class="text-secondary text-label font-label">REF: CW-782-XLT</span>
+</div>
+<h1 class="font-h1 text-h1 text-on-surface mb-2">Pro-Series 6-Burner Industrial Gas Range</h1>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined">star_half</span>
+<span class="font-label text-label text-secondary ml-2">(24 Reviews)</span>
+</div>
+</div>
+<div class="py-md border-y border-outline-variant">
+<p class="font-price-lg text-price-lg text-primary mb-1">GH₵ 12,500.00</p>
+<p class="font-body-sm text-body-sm text-secondary">Prices include VAT and delivery within Greater Accra Region.</p>
+</div>
+<div class="space-y-base">
+<p class="font-label text-label uppercase text-secondary">Key Specifications</p>
+<ul class="space-y-sm">
+<li class="flex items-center gap-3 font-body text-body">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                            Heavy-duty cast iron removable grates
+                        </li>
+<li class="flex items-center gap-3 font-body text-body">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                            30,000 BTU high-performance burners
+                        </li>
+<li class="flex items-center gap-3 font-body text-body">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+                            Full-size convection oven base
+                        </li>
+</ul>
+</div>
+<div class="space-y-md pt-md">
+<div class="flex flex-col gap-sm">
+<button class="bg-[#C9951A] text-white py-4 rounded-lg font-h3 text-h3 font-bold hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-md">
+<span class="material-symbols-outlined">shopping_cart</span>
+                            Add to Cart
+                        </button>
+<button class="border-2 border-primary text-primary py-4 rounded-lg font-h3 text-h3 font-bold hover:bg-primary/5 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">engineering</span>
+                            Request Professional Installation
+                        </button>
+</div>
+<div class="bg-surface-container rounded-xl p-md flex items-start gap-md border border-outline-variant">
+<span class="material-symbols-outlined text-primary scale-125">local_shipping</span>
+<div>
+<p class="font-body text-body font-bold">Free Next-Day Delivery</p>
+<p class="font-body-sm text-body-sm text-secondary">Available for Accra, Tema, and Kasoa. Flat rates apply for other regions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Specifications Table Section -->
+<section class="mt-xl">
+<h2 class="font-h2 text-h2 mb-md">Technical Details</h2>
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<table class="w-full border-collapse">
+<tbody>
+<tr class="border-b border-outline-variant hover:bg-primary/5 transition-colors">
+<td class="p-md font-label text-label text-secondary w-1/3">Dimensions (WxDxH)</td>
+<td class="p-md font-body text-body">36" x 31.5" x 37"</td>
+</tr>
+<tr class="border-b border-outline-variant bg-primary/5 hover:bg-primary/10 transition-colors">
+<td class="p-md font-label text-label text-secondary">Fuel Type</td>
+<td class="p-md font-body text-body">Liquefied Petroleum Gas (LPG) / Natural Gas Conversion Kit Incl.</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-primary/5 transition-colors">
+<td class="p-md font-label text-label text-secondary">Material</td>
+<td class="p-md font-body text-body">Food-grade 304 Stainless Steel</td>
+</tr>
+<tr class="border-b border-outline-variant bg-primary/5 hover:bg-primary/10 transition-colors">
+<td class="p-md font-label text-label text-secondary">Warranty</td>
+<td class="p-md font-body text-body">24 Months Parts &amp; Labor (ChefWare Enterprise Shield)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Related Products Section -->
+<section class="mt-xl">
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-h2 text-h2">Complete Your Kitchen</h2>
+<a class="text-primary font-label text-label hover:underline" href="#">View All Equipment</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<!-- Related 1 -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden product-card-hover group">
+<div class="aspect-square p-base">
+<img class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" data-alt="A high-performance commercial range hood extractor in polished chrome finish, mounted against a clean subway tile backsplash. The lighting is crisp and cool, highlighting the modern lines and industrial build quality of the ventilation system. The scene is bright and professional, adhering to the brand's aesthetic of Ghanaian hospitality excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6UmNHXUvb-SyLpXW4hiceS0QrAGCwqntRDxC1JjYlPlLqZOx1UUsu7wnLxQWe6nm8J0X_wbMBB60CzA1M4OHgRc3nv4V1o6SQ7JxAS9YySd9L_lmA4u7arDzxTzOkJO3TduSaRrbO7R3ltMpMoalXZ8KD_9_yI2DAUq982w3-cevU0VQGNsin2sx9tNJhT_uMDrXib5r-9vAQYc5xMPysTOetDr0DDVk5cf_xBQtxm7uE-7ZG4UCydlxDOLpWH-EN548a_pvX3WB-"/>
+</div>
+<div class="p-md pt-0">
+<p class="font-label text-label text-secondary mb-1">VENTILATION</p>
+<h3 class="font-h3 text-h3 text-on-surface mb-2 truncate">Industrial Range Hood XL</h3>
+<p class="font-price-lg text-price-lg text-primary">GH₵ 4,200.00</p>
+</div>
+</div>
+<!-- Related 2 -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden product-card-hover group">
+<div class="aspect-square p-base">
+<img class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" data-alt="A professional heavy-duty stainless steel prep table with a bottom shelf, positioned in a spacious, sun-drenched industrial kitchen environment. The light-mode aesthetic is achieved through soft natural lighting and white reflective surfaces. The focus is on the solid construction and clean, hygienic finish required for premium food preparation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjtUkrDPGTqyEIRbOtsDsnst-ipl0iMYwcJjMktdpFHnwpdsMdHxy5tn8HMtFQTToPGfJHJBDwqfZIFZRJ2DJBZnMm1jBIOQEVqvBzLZMxt5WX_CTTZIXkFClnWNWJRmMewfk7wDtFOnXNdt89cVq_qjKi2XqxuSng1FDLePZcQ0XWgqZPNOQX6pGuiwBd0GL99PupgU5qYgIrSAw9nu5ekcdlSqxIF6SURX6p2mtjJfX8mIzscbpq6rq5FKxsXfpr2mEJM_9KYW_k"/>
+</div>
+<div class="p-md pt-0">
+<p class="font-label text-label text-secondary mb-1">PREPWARE</p>
+<h3 class="font-h3 text-h3 text-on-surface mb-2 truncate">Stainless Steel Prep Table</h3>
+<p class="font-price-lg text-price-lg text-primary">GH₵ 2,850.00</p>
+</div>
+</div>
+<!-- Related 3 -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden product-card-hover group">
+<div class="aspect-square p-base">
+<img class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" data-alt="A stack of high-quality heavy-bottomed commercial stock pots and pans, arranged neatly in a bright kitchen showroom. The lighting is warm and inviting, highlighting the brushed metal textures and robust handles. The palette is dominated by professional steel tones and subtle green branding elements in the background environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqcUYpcbWOvEKSZDfmQ_yI83v-1qjQ40wtkzktKHf4TuAEqmv3FcfRDRdhhgJjLeIjRzlk5vo_EX8v8v2sGcfMuvyY967RAkea6oUpcbYmOF8gPErCFG_Nom0v-BTlYBYrqD-ptH5wQuX47_6miGT4lO4ZNPx7lPmE-2ffDZJAFFKSFGo3vSmB-dCKbZLoYvQeLXCcBT5zrTO2wRZrb_ZNdqkDn8i_nTipsAIyDvIrfJJTNxY6c75GNQEyM4-8LweXttTuDOGZPuef"/>
+</div>
+<div class="p-md pt-0">
+<p class="font-label text-label text-secondary mb-1">COOKWARE</p>
+<h3 class="font-h3 text-h3 text-on-surface mb-2 truncate">24-Piece Commercial Set</h3>
+<p class="font-price-lg text-price-lg text-primary">GH₵ 8,900.00</p>
+</div>
+</div>
+<!-- Related 4 -->
+<div class="bg-white rounded-xl border border-outline-variant overflow-hidden product-card-hover group">
+<div class="aspect-square p-base">
+<img class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" data-alt="A large industrial-scale reach-in refrigerator with glass doors, displaying fresh ingredients in a professional kitchen setting. The image is captured with high-key lighting, emphasizing cleanliness and reliable refrigeration technology. The composition is sleek and modern, fitting for a top-tier Ghanaian hospitality supply enterprise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV1JjdslSLgnVT19jvuTHu-2w-KePVP7myz3O_1jBywLO7OAOBxBwXeXv2Qsi3F1k7x3_wn77nXKc1kvRnuuiLuoIEdCTzjtRqbw1vkkkJNHkrkukgJATGSQNSoTqEayehFCEUgPOlnOp2j3Lmc2w8s6oWsCECcAx_mlq44QktJloVl5nvpn65hGgqkxVO3TGI2ERKYAHnownLI0oAF82nj0_ouz0XsQSX4mvAxp4cBGq1u83Eu5dUml47MQ2okKjfludlmLkxp7Ub"/>
+</div>
+<div class="p-md pt-0">
+<p class="font-label text-label text-secondary mb-1">COLD STORAGE</p>
+<h3 class="font-h3 text-h3 text-on-surface mb-2 truncate">Reach-In Refrigerator</h3>
+<p class="font-price-lg text-price-lg text-primary">GH₵ 18,500.00</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-on-surface dark:bg-surface-dim text-on-primary">
+<div class="w-full py-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-md max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-h3 text-h3 font-bold text-surface mb-md">ChefWare Enterprise</div>
+<p class="font-body-sm text-body-sm text-secondary-fixed mb-md">Premium Ghanaian hospitality and industrial kitchen supplies since 2012. Building excellence in every kitchen.</p>
+<div class="flex gap-md">
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary-fixed transition-colors">social_leaderboard</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary-fixed transition-colors">alternate_email</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-tertiary-fixed transition-colors">share</span>
+</div>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase">Contact Us</h4>
+<ul class="space-y-sm font-body-sm text-body-sm">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">location_on</span> Accra Office, Osu</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">phone_iphone</span> MTN MoMo: 0244 123 456</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">mail</span> sales@chefware.com.gh</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase">Support</h4>
+<ul class="space-y-sm font-body-sm text-body-sm">
+<li><a class="text-secondary-fixed hover:text-on-primary" href="#">Terms of Service</a></li>
+<li><a class="text-secondary-fixed hover:text-on-primary" href="#">Privacy Policy</a></li>
+<li><a class="text-secondary-fixed hover:text-on-primary" href="#">Shipping Information</a></li>
+<li><a class="text-secondary-fixed hover:text-on-primary" href="#">Returns &amp; Refunds</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label text-label text-primary-fixed mb-md uppercase">Newsletter</h4>
+<p class="font-body-sm text-body-sm text-secondary-fixed mb-sm">Subscribe for enterprise deals and restock alerts.</p>
+<div class="flex gap-2">
+<input class="bg-surface-container-highest border-none rounded px-sm py-2 text-on-surface w-full focus:ring-2 focus:ring-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary-fixed text-on-primary-fixed px-base rounded font-label text-label hover:bg-primary-fixed-dim transition-colors">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-gutter py-md border-t border-white/10 text-center font-label text-label text-secondary-fixed">
+            © 2024 ChefWare Enterprise. Premium Ghanaian Hospitality Supplies.
+        </div>
+</footer>
+<script>
+        // Micro-interaction for gallery images
+        const thumbnails = document.querySelectorAll('.grid.grid-cols-12 .col-span-2 > div');
+        const mainImage = document.querySelector('.lg:col-span-7 .col-span-10 img');
+
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                const newSrc = thumb.querySelector('img').src;
+                const newAlt = thumb.querySelector('img').dataset.alt;
+                
+                // Active state styling
+                thumbnails.forEach(t => t.classList.remove('border-primary'));
+                thumbnails.forEach(t => t.classList.add('border-outline-variant'));
+                thumb.classList.add('border-primary');
+                thumb.classList.remove('border-outline-variant');
+
+                // Image swap animation
+                mainImage.style.opacity = '0';
+                setTimeout(() => {
+                    mainImage.src = newSrc;
+                    mainImage.dataset.alt = newAlt;
+                    mainImage.style.opacity = '1';
+                }, 150);
+            });
+        });
+    </script>
+</body></html>
