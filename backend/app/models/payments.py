@@ -19,6 +19,13 @@ class InitializePaystackRequest(BaseModel):
     order_id: UUID
 
 
+class BankTransferRequest(BaseModel):
+    """Manual bank transfer request."""
+
+    order_id: UUID
+    bank: BankCode
+
+
 class InitializePaystackResponse(BaseModel):
     """Paystack initialization response."""
 
@@ -33,3 +40,15 @@ class VerifyPaystackResponse(BaseModel):
     reference: str
     payment_status: PaymentStatus
     order_id: UUID
+
+
+class BankTransferResponse(BaseModel):
+    """Manual bank transfer response."""
+
+    reference: str
+    bank_name: str
+    branch: str
+    account_name: str
+    account_number: str
+    amount_pesewas: int
+    instructions: str

@@ -67,7 +67,7 @@ Status key:
 - `[x]` Add `POST /api/v1/payments/paystack/webhook`.
 - `[x]` Validate Paystack webhook signatures before processing.
 - `[x]` Persist validated Paystack webhook events to order/payment records.
-- `[ ]` Add `POST /api/v1/payments/bank-transfer`.
+- `[x]` Add `POST /api/v1/payments/bank-transfer`.
 - `[!]` Confirm official GCB and Stanbic bank details before enabling production bank transfer instructions.
 
 ## Supabase Integration

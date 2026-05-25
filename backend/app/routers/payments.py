@@ -3,7 +3,12 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
 
 from app.core.responses import ok
-from app.models.payments import InitializePaystackRequest
+from app.models.payments import BankTransferRequest, InitializePaystackRequest
+from app.services.bank_transfer_service import (
+    BankTransferService,
+    BankTransferValidationError,
+    get_bank_transfer_service,
+)
 from app.services.paystack_service import (
     PaymentValidationError,
     PaystackService,
@@ -57,3 +62,16 @@ async def paystack_webhook(
     except PaymentValidationError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return ok(result, "Paystack webhook processed")
+
+
+@router.post("/payments/bank-transfer")
+async def create_bank_transfer(
+    request: BankTransferRequest,
+    service: Annotated[BankTransferService, Depends(get_bank_transfer_service)],
+) -> dict[str, object]:
+    """Return manual bank transfer instructions for an order."""
+    try:
+        payment = service.create_bank_transfer(str(request.order_id), request.bank)
+    except BankTransferValidationError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return ok(payment.model_dump(mode="json"), "Bank transfer instructions retrieved")
