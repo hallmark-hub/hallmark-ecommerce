@@ -9,7 +9,7 @@ import Button from '../components/Button'
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80'
 const CAT_IMAGES = {
   'chef-uniforms': 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=80',
-  'kitchen-equipment-tools': 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=900&q=80',
+  'kitchen-equipment-tools': 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=900&q=80',
   'staff-uniforms': 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80',
 }
 
