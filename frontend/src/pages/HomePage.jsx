@@ -61,7 +61,7 @@ export default function HomePage() {
       <section className="relative h-[640px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src={HERO_IMAGE} alt="Premium industrial kitchen in Accra" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-black/60" />
         </div>
         <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter flex flex-col items-center text-center">
           <span className="bg-gold/90 backdrop-blur-sm text-white text-xs font-bold px-4 py-1.5 rounded-full mb-5 uppercase tracking-widest inline-block">
