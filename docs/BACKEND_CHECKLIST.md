@@ -42,22 +42,22 @@ Status key:
 
 ## Orders
 
-- `[ ]` Add `POST /api/v1/orders`.
-- `[ ]` Validate Ghana phone numbers as `+233XXXXXXXXX`.
-- `[ ]` Require `accepted_returns_policy: true`.
-- `[ ]` Reject quote-only products from direct orders.
-- `[ ]` Calculate totals in pesewas.
-- `[ ]` Generate order references.
-- `[ ]` Add `GET /api/v1/orders/lookup` using `reference` plus `phone`.
-- `[ ]` Include returns policy text in order responses.
+- `[x]` Add `POST /api/v1/orders`.
+- `[x]` Validate Ghana phone numbers as `+233XXXXXXXXX`.
+- `[x]` Require `accepted_returns_policy: true`.
+- `[x]` Reject quote-only products from direct orders.
+- `[x]` Calculate totals in pesewas.
+- `[x]` Generate order references.
+- `[x]` Add `GET /api/v1/orders/lookup` using `reference` plus `phone`.
+- `[x]` Include returns policy text in order responses.
 
 ## Quote Requests
 
-- `[ ]` Add `POST /api/v1/quote-requests`.
-- `[ ]` Generate quote references.
-- `[ ]` Validate quote category/product usage.
-- `[ ]` Gate admin notifications by environment and configured credentials.
-- `[ ]` Ensure local tests/dev never send real SMS.
+- `[x]` Add `POST /api/v1/quote-requests`.
+- `[x]` Generate quote references.
+- `[x]` Validate quote category/product usage.
+- `[x]` Gate admin notifications by environment and configured credentials.
+- `[x]` Ensure local tests/dev never send real SMS.
 
 ## Payments
 
@@ -76,8 +76,8 @@ Status key:
 - `[x]` Add manual SQL migrations under `backend/migrations/`.
 - `[~]` Define table access layer through services only.
 - `[~]` Replace in-memory catalog data with Supabase reads.
-- `[ ]` Replace in-memory order writes with Supabase writes.
-- `[ ]` Replace in-memory quote request writes with Supabase writes.
+- `[~]` Replace in-memory order writes with Supabase writes.
+- `[~]` Replace in-memory quote request writes with Supabase writes.
 - `[ ]` Replace in-memory payment status updates with Supabase writes.
 - `[!]` Confirm schema before any migration or database-changing action.
 
@@ -96,9 +96,9 @@ Status key:
 - `[x]` Add response envelope tests.
 - `[x]` Add validation error envelope tests.
 - `[x]` Add category/product endpoint tests.
-- `[ ]` Add order creation tests.
-- `[ ]` Add order lookup security tests.
-- `[ ]` Add quote request tests.
+- `[x]` Add order creation tests.
+- `[x]` Add order lookup security tests.
+- `[x]` Add quote request tests.
 - `[ ]` Add payment initialization tests with mocked Paystack.
 - `[ ]` Add webhook signature tests.
 - `[x]` Add migration file structure tests.

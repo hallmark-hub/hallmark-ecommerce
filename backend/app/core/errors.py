@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -22,7 +23,7 @@ def register_exception_handlers(app: FastAPI) -> None:
         """Return framework validation errors in the standard envelope."""
         return JSONResponse(
             status_code=422,
-            content=fail("Validation failed", {"errors": exc.errors()}),
+            content=fail("Validation failed", {"errors": jsonable_encoder(exc.errors())}),
         )
 
     @app.exception_handler(StarletteHTTPException)

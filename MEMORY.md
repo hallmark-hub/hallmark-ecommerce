@@ -44,6 +44,16 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Production should read catalog data from Supabase, but local tests and development still need to run without real database credentials or external calls.
 **What was rejected:** Removing seed fallback immediately, because it would make local verification depend on a configured remote Supabase project.
 
+## 2026-05-25, Orders API repository pattern
+**What was decided:** Implement orders through router -> service -> repository, using Supabase when configured and an in-memory repository for local tests/dev.
+**Why:** Checkout needs order creation and secure lookup now, while local verification must remain independent of Supabase credentials.
+**What was rejected:** Writing order logic directly in routers or requiring Supabase for tests, because that would violate the project structure and slow local verification.
+
+## 2026-05-25, Quote requests with notification gating
+**What was decided:** Implement quote requests through router -> service -> repository, with Supabase when configured, local fallback for tests/dev, and a no-op environment gate for admin SMS notifications.
+**Why:** Quote-only categories need backend support now, but local/dev/test must never send real SMS and Africa's Talking integration can be added after credentials and production messaging rules are confirmed.
+**What was rejected:** Calling Africa's Talking from the first quote request slice, because that would introduce external side effects before credentials and operational rules are confirmed.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

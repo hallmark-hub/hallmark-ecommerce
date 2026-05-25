@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     supabase_url: str = Field(default="", alias="SUPABASE_URL")
     supabase_anon_key: str = Field(default="", alias="SUPABASE_ANON_KEY")
     supabase_service_role_key: str = Field(default="", alias="SUPABASE_SERVICE_ROLE_KEY")
+    at_api_key: str = Field(default="", alias="AT_API_KEY")
+    at_username: str = Field(default="", alias="AT_USERNAME")
+    at_sender_id: str = Field(default="", alias="AT_SENDER_ID")
+    admin_notification_phone: str = Field(default="", alias="ADMIN_NOTIFICATION_PHONE")
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
