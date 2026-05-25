@@ -8,6 +8,7 @@ Supabase SQL Editor in filename order:
 1. `001_initial_schema.sql`
 2. `002_seed_categories.sql`
 3. `003_seed_sample_products.sql`
+4. `004_payment_event_deduplication.sql`
 
 Each file is written to be safe to run more than once where PostgreSQL supports
 that cleanly. Do not edit an already-applied migration. Add a new numbered file

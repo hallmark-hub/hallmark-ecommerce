@@ -67,6 +67,7 @@ Status key:
 - `[x]` Add `POST /api/v1/payments/paystack/webhook`.
 - `[x]` Validate Paystack webhook signatures before processing.
 - `[x]` Persist validated Paystack webhook events to order/payment records.
+- `[x]` Deduplicate repeated Paystack webhook events.
 - `[x]` Make Paystack initialization idempotent.
 - `[x]` Verify Paystack amounts before marking payments paid.
 - `[x]` Prevent paid Paystack payments from being downgraded by late failed signals.
@@ -107,6 +108,7 @@ Status key:
 - `[x]` Add webhook signature tests.
 - `[x]` Add Paystack reliability tests for idempotency, amount checks, and status transitions.
 - `[x]` Add Paystack gateway error wrapping tests.
+- `[x]` Add Paystack webhook duplicate detection tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.

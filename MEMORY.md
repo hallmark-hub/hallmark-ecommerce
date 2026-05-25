@@ -79,6 +79,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** API clients should receive stable envelope-wrapped errors instead of raw `httpx` exceptions or internal parsing failures.
 **What was rejected:** Letting gateway exceptions bubble out of services, because that would produce inconsistent error responses.
 
+## 2026-05-25, Paystack webhook deduplication
+**What was decided:** Add `event_key`-based Paystack webhook deduplication with a manual migration and service-level duplicate skip.
+**Why:** Paystack may retry webhook delivery, and duplicate events must not reapply payment transitions or create repeated audit rows.
+**What was rejected:** Ignoring duplicate protection until later, because webhook retries are normal payment-provider behavior.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

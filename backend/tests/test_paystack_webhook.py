@@ -75,6 +75,7 @@ def test_handle_webhook_updates_payment_and_order_status(monkeypatch) -> None:
     assert payment["status"] == "paid"
     assert orders.get_order_by_id(str(payment["order_id"]))["payment_status"] == "paid"
     assert payments.payment_events[0]["signature_valid"] is True
+    assert payments.payment_events[0]["event_key"] == f"charge.success:{reference}"
 
     get_settings.cache_clear()
 
@@ -130,5 +131,29 @@ def test_handle_webhook_does_not_downgrade_paid_payment(monkeypatch) -> None:
     service.handle_webhook(failed_body, failed_signature, failed_payload)
 
     assert payments.get_payment_by_reference(reference)["status"] == "paid"
+
+    get_settings.cache_clear()
+
+
+def test_handle_webhook_skips_duplicate_event(monkeypatch) -> None:
+    monkeypatch.setenv("PAYSTACK_SECRET_KEY", "secret")
+    get_settings.cache_clear()
+    service, reference, _, payments = create_initialized_service()
+    payload = {
+        "event": "charge.success",
+        "data": {
+            "id": 12345,
+            "reference": reference,
+            "status": "success",
+            "amount": 30000,
+        },
+    }
+    raw_body, signature = signed_body(payload, "secret")
+
+    service.handle_webhook(raw_body, signature, payload)
+    service.handle_webhook(raw_body, signature, payload)
+
+    assert len(payments.payment_events) == 1
+    assert payments.payment_events[0]["event_key"] == "charge.success:12345"
 
     get_settings.cache_clear()

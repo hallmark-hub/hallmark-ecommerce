@@ -208,6 +208,10 @@ class PaystackService:
         event_type = str(payload.get("event", ""))
         data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
         reference = str(data.get("reference", ""))
+        event_key = _paystack_event_key(event_type, data)
+        if self.payments.payment_event_exists(PaymentMethod.paystack.value, event_key):
+            return {"received": True}
+
         payment = self.payments.get_payment_by_reference(reference) if reference else None
 
         payment_status = _payment_status_from_webhook(event_type, data)
@@ -229,6 +233,7 @@ class PaystackService:
                 "payment_id": payment.get("id") if payment is not None else None,
                 "order_id": payment.get("order_id") if payment is not None else None,
                 "provider": PaymentMethod.paystack.value,
+                "event_key": event_key,
                 "event_type": event_type,
                 "reference": reference or None,
                 "payload": payload,
@@ -264,6 +269,14 @@ def _payment_status_from_webhook(
     if event_type != "charge.success":
         return None
     return PaymentStatus.paid if data.get("status") == "success" else PaymentStatus.failed
+
+
+def _paystack_event_key(event_type: str, data: dict[str, Any]) -> str:
+    event_id = data.get("id")
+    reference = data.get("reference")
+    if event_id is not None:
+        return f"{event_type}:{event_id}"
+    return f"{event_type}:{reference}"
 
 
 def _validate_payment_amount(payment: dict[str, Any], amount: object) -> None:

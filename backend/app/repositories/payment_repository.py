@@ -27,6 +27,9 @@ class PaymentRepository(Protocol):
     def create_payment_event(self, event: dict[str, Any]) -> dict[str, Any]:
         """Persist a payment provider event."""
 
+    def payment_event_exists(self, provider: str, event_key: str) -> bool:
+        """Return whether a provider event was already stored."""
+
 
 class InMemoryPaymentRepository:
     """Local payment repository for tests/dev without Supabase credentials."""
@@ -64,9 +67,27 @@ class InMemoryPaymentRepository:
 
     def create_payment_event(self, event: dict[str, Any]) -> dict[str, Any]:
         """Store a payment event in memory."""
+        event_key = event.get("event_key")
+        if isinstance(event_key, str) and self.payment_event_exists(
+            event["provider"],
+            event_key,
+        ):
+            return next(
+                stored
+                for stored in self.payment_events
+                if stored.get("provider") == event["provider"]
+                and stored.get("event_key") == event_key
+            )
         event = {**event, "id": str(uuid4()), "created_at": datetime.now(UTC)}
         self.payment_events.append(event)
         return event
+
+    def payment_event_exists(self, provider: str, event_key: str) -> bool:
+        """Return whether an in-memory provider event was already stored."""
+        return any(
+            event.get("provider") == provider and event.get("event_key") == event_key
+            for event in self.payment_events
+        )
 
 
 class SupabasePaymentRepository:
@@ -118,6 +139,18 @@ class SupabasePaymentRepository:
         response = self.client.table("payment_events").insert(event).execute()
         rows = response_data(response)
         return rows[0]
+
+    def payment_event_exists(self, provider: str, event_key: str) -> bool:
+        """Return whether a provider event was already stored."""
+        response = (
+            self.client.table("payment_events")
+            .select("id")
+            .eq("provider", provider)
+            .eq("event_key", event_key)
+            .limit(1)
+            .execute()
+        )
+        return bool(response_data(response))
 
 
 _IN_MEMORY_REPOSITORY = InMemoryPaymentRepository()

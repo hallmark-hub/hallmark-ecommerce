@@ -13,6 +13,7 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "001_initial_schema.sql",
         "002_seed_categories.sql",
         "003_seed_sample_products.sql",
+        "004_payment_event_deduplication.sql",
     ]
 
 
@@ -52,3 +53,10 @@ def test_category_seed_matches_api_contract_slugs() -> None:
         assert slug in seed
 
     assert "on conflict (slug) do update" in seed
+
+
+def test_payment_event_deduplication_migration_adds_event_key() -> None:
+    migration = (MIGRATIONS_DIR / "004_payment_event_deduplication.sql").read_text()
+
+    assert "add column if not exists event_key text" in migration
+    assert "idx_payment_events_provider_event_key" in migration
