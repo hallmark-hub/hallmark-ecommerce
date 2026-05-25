@@ -72,8 +72,7 @@ Status key:
 - `[x]` Verify Paystack amounts before marking payments paid.
 - `[x]` Prevent paid Paystack payments from being downgraded by late failed signals.
 - `[x]` Wrap Paystack API/network failures in stable API errors.
-- `[x]` Add `POST /api/v1/payments/bank-transfer`.
-- `[!]` Confirm official GCB and Stanbic bank details before enabling production bank transfer instructions.
+- `[x]` Remove manual bank transfer endpoint; bank rails are handled through Paystack.
 
 ## Supabase Integration
 
@@ -91,7 +90,7 @@ Status key:
 - `[x]` Define admin authentication approach.
 - `[x]` Add product management endpoints.
 - `[x]` Add order management endpoints.
-- `[ ]` Add manual bank transfer confirmation endpoint.
+- `[-]` Manual bank transfer confirmation endpoint removed; not needed with Paystack-only checkout.
 - `[x]` Add basic analytics endpoints.
 - `[x]` Add inventory update endpoints.
 
@@ -115,7 +114,7 @@ Status key:
 
 ## Documentation
 
-- `[ ]` Keep `docs/API_CONTRACT.md` synchronized with implemented routes.
+- `[x]` Keep `docs/API_CONTRACT.md` synchronized with implemented routes.
 - `[x]` Document required backend environment variables.
 - `[x]` Document local backend startup command.
 - `[x]` Document manual migration execution order.

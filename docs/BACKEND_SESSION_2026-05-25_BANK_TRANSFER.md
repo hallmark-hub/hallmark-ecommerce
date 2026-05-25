@@ -2,6 +2,11 @@
 
 Date: 2026-05-25
 
+Superseded by
+`docs/BACKEND_SESSION_2026-05-25_REMOVE_MANUAL_BANK_TRANSFER.md`. Manual bank
+transfer is no longer part of checkout; bank rails are handled through
+Paystack.
+
 ## Scope
 
 Implemented manual bank transfer endpoint:

@@ -48,6 +48,7 @@ manually in Supabase SQL Editor, in order:
 2. `backend/migrations/002_seed_categories.sql`
 3. `backend/migrations/003_seed_sample_products.sql`
 4. `backend/migrations/004_payment_event_deduplication.sql`
+5. `backend/migrations/005_remove_manual_bank_transfer.sql`
 
 After applying, verify:
 
@@ -78,9 +79,7 @@ The backend already expects frontend requests from `FRONTEND_URL` through CORS.
 
 ## Known Blockers
 
-- Official GCB and Stanbic account details are still `TBC`.
 - Admin authentication is API-key based; rotate `ADMIN_API_KEY` if exposed.
-- Bank transfer confirmation is not implemented yet, and official bank details remain `TBC`.
 - Africa's Talking notification sending is gated and not integrated with real sends yet.
 
 ## Verification Before Launch

@@ -37,7 +37,7 @@
 - [ ] `api/categories.js` — `getCategories()` → `GET /api/v1/categories`
 - [ ] `api/products.js` — `getProducts(params)` → `GET /api/v1/products`, `getProduct(slug)` → `GET /api/v1/products/{slug}`
 - [ ] `api/orders.js` — `createOrder(payload)` → `POST /api/v1/orders`, `lookupOrder(reference, phone)` → `GET /api/v1/orders/lookup`
-- [ ] `api/payments.js` — `initializePaystack(orderId)` → `POST /api/v1/payments/paystack/initialize`, `verifyPaystack(reference)` → `GET /api/v1/payments/paystack/verify/{reference}`, `bankTransfer(orderId, bank)` → `POST /api/v1/payments/bank-transfer`
+- [ ] `api/payments.js` — `initializePaystack(orderId)` → `POST /api/v1/payments/paystack/initialize`, `verifyPaystack(reference)` → `GET /api/v1/payments/paystack/verify/{reference}`
 - [ ] `api/quotes.js` — `submitQuote(payload)` → `POST /api/v1/quote-requests`
 - [ ] All mocks return correct shape from API contract
 - [ ] Swap flag: single `VITE_API_URL` change switches mock → real
@@ -106,12 +106,12 @@
 
 ### Checkout
 - [ ] Step 1: Shipping Information — name, company, address, Accra delivery note, phone (`+233XXXXXXXXX`)
-- [ ] Step 2: Payment Method — show MTN MoMo, Vodafone Cash, Bank Transfer as UI options; MoMo and Vodafone Cash both send `payment_method: "paystack"` in the order payload; Bank Transfer sends `payment_method: "bank_transfer"`
+- [ ] Step 2: Payment Method — show Paystack-backed payment options; all checkout payments send `payment_method: "paystack"` in the order payload
 - [ ] Order Summary sidebar — items, subtotal, delivery; do NOT calculate or display VAT until client confirms whether prices are VAT-inclusive or VAT-added
 - [ ] Returns policy notice — "No refunds. Exchange only within 3 days of purchase." must be visible and acknowledged before submit
 - [ ] `accepted_returns_policy: true` sent to `POST /api/v1/orders`
 - [ ] Paystack redirect flow — call `POST /api/v1/payments/paystack/initialize`, redirect to `authorization_url`
-- [ ] Bank transfer flow — show bank details returned by backend (do NOT hardcode GCB/Stanbic account numbers — render from API response only)
+- [-] Bank transfer flow — removed; bank rails are handled inside Paystack
 - [ ] Phone number validation — `+233XXXXXXXXX`
 
 ### Post-Paystack Return (`/payment/verify`)
@@ -203,7 +203,7 @@
 - [ ] All prices display as `GH₵ X,XXX.XX` (symbol, not ISO code)
 - [ ] Phone inputs enforce `+233XXXXXXXXX`
 - [ ] Returns policy visible and required before checkout submits
-- [ ] Bank details rendered from API response only — no hardcoded account numbers
+- [-] Bank details rendered from API response only — removed with manual bank transfer flow
 - [ ] Mobile: homepage + catalog match design screens
 - [ ] Paystack redirect → verify → confirmation flow works end-to-end (once backend live)
 
@@ -212,4 +212,4 @@
 ## Pending Client Confirmations (blocks specific checklist items)
 
 - `[ ]` **VAT** — are prices VAT-inclusive or VAT-added? Blocks order summary totals.
-- `[ ]` **Bank details** — confirm GCB and Stanbic account numbers are correct. Blocks bank transfer UI (backend will surface these; just needs confirmation before go-live).
+- `[-]` **Bank details** — no longer needed; bank settlement is configured in Paystack.

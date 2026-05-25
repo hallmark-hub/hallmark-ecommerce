@@ -108,3 +108,8 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.
 **What was rejected:** Starting with only a few pages — the full checklist was completed in one session because the mock layer makes every page immediately runnable without a backend.
+
+## 2026-05-25, Paystack-only checkout payments
+**What was decided:** Remove the manual bank transfer checkout path; bank rails will be connected inside Paystack and the app will submit orders with `payment_method: "paystack"`.
+**Why:** Paystack can handle card, MoMo, and bank settlement without exposing manual account details or requiring manual bank-transfer confirmation in the e-commerce backend.
+**What was rejected:** Keeping placeholder GCB/Stanbic instructions and a separate manual transfer confirmation flow, because it adds operational risk and is no longer needed for checkout.

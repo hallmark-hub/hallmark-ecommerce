@@ -217,7 +217,9 @@ Creates an order. Call this before initializing payment.
 }
 ```
 
-`payment_method` values: `paystack` | `bank_transfer`
+`payment_method` values: `paystack`
+
+Paystack covers the configured payment channels, including MoMo, cards, and bank rails connected inside Paystack.
 
 `accepted_returns_policy` must be `true`. Checkout UI must show: "No refunds. Exchange only within 3 days of purchase."
 
@@ -318,37 +320,6 @@ Frontend calls this after customer returns from Paystack checkout to confirm pay
   "order_id": "uuid"
 }
 ```
-
-#### `POST /api/v1/payments/bank-transfer`
-
-Returns bank details and unique reference for manual transfer.
-
-**Request body:**
-```json
-{
-  "order_id": "uuid",
-  "bank": "gcb"
-}
-```
-
-`bank` values: `gcb` | `stanbic`
-
-**Response `data`:**
-```json
-{
-  "reference": "CW-20260525-0042",
-  "bank_name": "GCB Bank",
-  "branch": "TBC",
-  "account_name": "TBC",
-  "account_number": "TBC",
-  "amount_pesewas": 30000,
-  "instructions": "Transfer exactly GHS 300.00 and use reference CW-20260525-0042 as payment narration."
-}
-```
-
-Bank account details are placeholders until the client confirms the official GCB and Stanbic accounts.
-
----
 
 ## HTTP Status Codes
 

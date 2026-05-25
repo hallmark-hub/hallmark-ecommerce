@@ -29,7 +29,7 @@ All mocks return exact shapes from `docs/API_CONTRACT.md`.
 | `categories.js` | `GET /api/v1/categories` — all 8 seeded categories |
 | `products.js` | `GET /api/v1/products`, `GET /api/v1/products/{slug}` — 12 mock products |
 | `orders.js` | `POST /api/v1/orders`, `GET /api/v1/orders/lookup` |
-| `payments.js` | Paystack initialize/verify, bank transfer |
+| `payments.js` | Paystack initialize/verify |
 | `quotes.js` | `POST /api/v1/quote-requests` |
 
 **To go live:** set `VITE_API_URL=https://api.chefware.com` and set `USE_MOCK = false` in each service file.
@@ -68,7 +68,7 @@ All mocks return exact shapes from `docs/API_CONTRACT.md`.
 | Route | Page | Notes |
 |---|---|---|
 | `/admin` | `AdminDashboardPage` | Stats, recent orders, inventory alerts, quote requests |
-| `/admin/orders` | `AdminOrdersPage` | Full table, status dropdown, bank transfer confirm action |
+| `/admin/orders` | `AdminOrdersPage` | Full table, status dropdown |
 | `/admin/inventory` | `AdminInventoryPage` | Stock table, low-stock alert banner, +10 / −1 controls |
 
 Admin sidebar via `AdminLayout`. Access by logging in as `admin@chefware.com`.
@@ -94,7 +94,7 @@ All items from `docs/FRONTEND_CHECKLIST.md` are complete. Key compliance:
 - ✅ All prices formatted as `GH₵ X,XXX.XX`
 - ✅ Phone inputs enforce `+233XXXXXXXXX`
 - ✅ Returns policy visible and required at checkout (checkbox acknowledgement)
-- ✅ No hardcoded bank account numbers — bank transfer details rendered from API response only
+- ✅ No hardcoded bank account numbers — manual bank transfer flow removed; bank rails go through Paystack
 - ✅ Cart persists on refresh (Zustand localStorage persist)
 - ✅ Quote-type categories show "Request a Quote" flow, never cart
 - ✅ Notifications phrased as "We'll send updates to [phone]" not "You will receive an SMS"
@@ -105,7 +105,6 @@ All items from `docs/FRONTEND_CHECKLIST.md` are complete. Key compliance:
 
 ## Pending Client Confirmations (blocks go-live items)
 - **VAT** — Are prices VAT-inclusive or VAT-added? Order summary shows "VAT treatment TBC."
-- **Bank account details** — GCB and Stanbic account numbers. Backend will surface these; frontend renders them from API response.
 
 ---
 

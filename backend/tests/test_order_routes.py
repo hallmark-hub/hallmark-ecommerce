@@ -60,6 +60,16 @@ def test_create_order_requires_returns_policy_acceptance() -> None:
     assert response.json()["message"] == "Validation failed"
 
 
+def test_create_order_rejects_manual_bank_transfer_method() -> None:
+    payload = valid_order_payload()
+    payload["payment_method"] = "bank_transfer"
+
+    response = request("POST", "/api/v1/orders", json=payload)
+
+    assert response.status_code == 422
+    assert response.json()["message"] == "Validation failed"
+
+
 def test_create_order_rejects_quote_only_product() -> None:
     payload = valid_order_payload()
     payload["items"] = [

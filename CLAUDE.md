@@ -119,7 +119,7 @@ Keep it short. This is a status update, not a recap.
 | Frontend | React.js + Vite |
 | Backend | FastAPI (Python 3.11+) |
 | Database | Supabase (PostgreSQL via supabase-py) |
-| Payments | Paystack (MoMo, card) + manual bank transfer |
+| Payments | Paystack (MoMo, card, bank rails configured in Paystack) |
 | AI Chatbot | OpenAI GPT API |
 | Notifications | Africa's Talking (SMS + email) |
 | Media Storage | Cloudinary |
@@ -215,7 +215,7 @@ chefware/
 
 - All prices: Ghana Cedis (GHS). Store as integers (pesewas). Display formatted: `GH₵ 250.00` (symbol, not ISO code)
 - Phone numbers: validate and store as `+233XXXXXXXXX`
-- Payment methods: MTN MoMo, Vodafone Cash, AirtelTigo Money (via Paystack), GCB Bank transfer, Stanbic Bank transfer
+- Payment methods: MTN MoMo, Vodafone Cash, AirtelTigo Money, card, and bank rails via Paystack
 - Delivery: 24 hours after full payment confirmed; 6–8 weeks for preorders
 - Returns policy: **No refunds. Exchange only within 3 days of purchase.** This must appear at checkout and in order confirmation.
 - SMS notifications target Ghanaian numbers via Africa's Talking
@@ -241,8 +241,7 @@ chefware/
 
 ## Payment Integration Notes
 
-- Paystack handles: MTN MoMo, Vodafone Cash, AirtelTigo Money, card
-- Bank transfers (GCB + Stanbic): generate unique reference code, show instructions, mark as "pending" until manually confirmed by admin
+- Paystack handles: MTN MoMo, Vodafone Cash, AirtelTigo Money, card, and bank rails configured inside Paystack
 - Never store full payment credentials — only store Paystack transaction references and status
 - Webhook verification: always validate Paystack webhook signature before processing
 
@@ -258,7 +257,7 @@ chefware/
 
 ## Admin Dashboard Scope
 - Product management (CRUD, images via Cloudinary)
-- Order management (status updates, manual bank transfer confirmation)
+- Order management (status updates)
 - Inventory tracking
 - Discount/promo code management
 - Basic analytics (revenue, orders by category)

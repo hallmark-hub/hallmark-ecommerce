@@ -12,7 +12,7 @@ end $$;
 
 do $$
 begin
-    create type payment_method as enum ('paystack', 'bank_transfer');
+    create type payment_method as enum ('paystack');
 exception
     when duplicate_object then null;
 end $$;
@@ -34,13 +34,6 @@ end $$;
 do $$
 begin
     create type quote_status as enum ('received', 'contacted', 'quoted', 'closed');
-exception
-    when duplicate_object then null;
-end $$;
-
-do $$
-begin
-    create type bank_code as enum ('gcb', 'stanbic');
 exception
     when duplicate_object then null;
 end $$;
@@ -153,7 +146,6 @@ create table if not exists payments (
     amount_pesewas integer not null,
     provider_access_code text,
     provider_authorization_url text,
-    bank bank_code,
     raw_response jsonb,
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),

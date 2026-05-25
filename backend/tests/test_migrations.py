@@ -14,6 +14,7 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "002_seed_categories.sql",
         "003_seed_sample_products.sql",
         "004_payment_event_deduplication.sql",
+        "005_remove_manual_bank_transfer.sql",
     ]
 
 
@@ -35,6 +36,8 @@ def test_initial_schema_contains_contract_tables_and_constraints() -> None:
     assert "orders_phone_ghana" in schema
     assert "orders_returns_policy_accepted" in schema
     assert "products_direct_price_required" in schema
+    assert "'bank_transfer'" not in schema
+    assert "bank_code" not in schema
 
 
 def test_category_seed_matches_api_contract_slugs() -> None:
@@ -60,3 +63,10 @@ def test_payment_event_deduplication_migration_adds_event_key() -> None:
 
     assert "add column if not exists event_key text" in migration
     assert "idx_payment_events_provider_event_key" in migration
+
+
+def test_manual_bank_transfer_cleanup_migration_drops_bank_storage() -> None:
+    migration = (MIGRATIONS_DIR / "005_remove_manual_bank_transfer.sql").read_text()
+
+    assert "drop column if exists bank" in migration
+    assert "drop type if exists bank_code" in migration
