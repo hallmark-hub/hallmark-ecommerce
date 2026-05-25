@@ -117,9 +117,9 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:h-[500px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-5 md:h-[500px]">
           {/* Chef Uniforms — hero card */}
-          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden min-h-[300px] cursor-pointer">
+          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[320px] md:h-auto cursor-pointer">
             <img src={CAT_IMAGES['chef-uniforms']} alt="Chef Uniforms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -134,7 +134,7 @@ export default function HomePage() {
 
           <div className="md:col-span-5 grid grid-rows-2 gap-5">
             {/* Industrial Equipment */}
-            <div className="group relative rounded-2xl overflow-hidden cursor-pointer min-h-[160px]">
+            <div className="group relative rounded-2xl overflow-hidden cursor-pointer h-[200px] md:h-auto">
               <img src={CAT_IMAGES['kitchen-equipment-tools']} alt="Kitchen Equipment" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -144,7 +144,7 @@ export default function HomePage() {
             </div>
 
             {/* Services Strip */}
-            <div className="group relative rounded-2xl overflow-hidden bg-primary-container cursor-pointer min-h-[160px]">
+            <div className="group relative rounded-2xl overflow-hidden bg-primary-container cursor-pointer h-[200px] md:h-auto">
               <img src={CAT_IMAGES['staff-uniforms']} alt="Staff Uniforms" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex flex-col justify-end p-6">
                 <p className="text-xs font-bold uppercase tracking-wider text-gold mb-1">All Services</p>
