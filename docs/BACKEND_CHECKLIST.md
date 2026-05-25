@@ -92,7 +92,7 @@ Status key:
 - `[x]` Add product management endpoints.
 - `[x]` Add order management endpoints.
 - `[ ]` Add manual bank transfer confirmation endpoint.
-- `[ ]` Add basic analytics endpoints.
+- `[x]` Add basic analytics endpoints.
 - `[x]` Add inventory update endpoints.
 
 ## Testing

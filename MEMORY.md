@@ -99,6 +99,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Admin product and inventory operations are needed for the dashboard, and the smallest useful surface can reuse the current catalog schema.
 **What was rejected:** Building bulk imports, media upload workflows, or complex product lifecycle states, because those would expand scope beyond the current admin baseline.
 
+## 2026-05-25, Minimal admin analytics
+**What was decided:** Add a basic admin analytics summary endpoint aggregating recent orders in application code.
+**Why:** The admin dashboard needs simple order/revenue counts, and this avoids adding SQL views or migrations for the first version.
+**What was rejected:** Building a full reporting subsystem, because current needs are limited to dashboard summary metrics.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

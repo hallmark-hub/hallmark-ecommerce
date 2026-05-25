@@ -80,7 +80,7 @@ The backend already expects frontend requests from `FRONTEND_URL` through CORS.
 
 - Official GCB and Stanbic account details are still `TBC`.
 - Admin authentication is API-key based; rotate `ADMIN_API_KEY` if exposed.
-- Admin analytics endpoints are not implemented yet.
+- Bank transfer confirmation is not implemented yet, and official bank details remain `TBC`.
 - Africa's Talking notification sending is gated and not integrated with real sends yet.
 
 ## Verification Before Launch
