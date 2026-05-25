@@ -95,10 +95,30 @@ export default function CheckoutPage() {
 
   if (items.length === 0 && !bankDetails) {
     return (
-      <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-h3 font-medium text-on-surface mb-4">Your cart is empty</p>
-          <Button onClick={() => navigate('/products')}>Continue Shopping</Button>
+      <main className="pt-20 min-h-screen bg-surface">
+        <div className="max-w-2xl mx-auto px-gutter py-20 text-center">
+          <div className="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-secondary">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-on-surface mb-2">Your cart is empty</h1>
+          <p className="text-secondary text-sm mb-8 max-w-sm mx-auto">Looks like you haven't added anything yet. Browse our catalog to get started.</p>
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            <Button onClick={() => navigate('/products')} variant="primary" size="lg">Browse Products</Button>
+            <Button onClick={() => navigate('/quote')} variant="cta" size="lg">Request a Quote</Button>
+          </div>
+          <div className="grid grid-cols-3 gap-4 text-center border-t border-outline-variant pt-8">
+            {[
+              { label: 'Chef Uniforms', to: '/products?category=chef-uniforms' },
+              { label: 'Kitchen Equipment', to: '/products?category=kitchen-equipment-tools' },
+              { label: 'Staff Uniforms', to: '/products?category=staff-uniforms-branding' },
+            ].map(c => (
+              <button key={c.label} onClick={() => navigate(c.to)} className="py-3 px-2 rounded-xl border border-outline-variant text-body-sm text-secondary hover:border-primary hover:text-primary transition-colors cursor-pointer">
+                {c.label}
+              </button>
+            ))}
+          </div>
         </div>
       </main>
     )

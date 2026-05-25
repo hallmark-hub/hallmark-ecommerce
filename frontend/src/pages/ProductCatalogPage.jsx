@@ -66,40 +66,50 @@ export default function ProductCatalogPage() {
   return (
     <main className="pt-20 min-h-screen flex max-w-[1440px] mx-auto">
       {/* Sidebar */}
-      <aside className="w-64 hidden md:flex flex-col h-[calc(100vh-80px)] py-md px-base sticky top-20 border-r border-outline-variant bg-surface-container-lowest overflow-y-auto shrink-0">
-        <div className="mb-lg">
-          <h3 className="text-label text-secondary uppercase tracking-widest mb-md">Category</h3>
-          <div className="space-y-base">
-            <label className="flex items-center gap-sm cursor-pointer group">
-              <input
-                type="radio"
-                name="cat"
-                checked={!category}
-                onChange={() => setParam('category', '')}
-                className="accent-primary"
-              />
-              <span className="text-body text-sm group-hover:text-primary">All Products</span>
-            </label>
-            {categories.map(c => (
-              <label key={c.id} className="flex items-center gap-sm cursor-pointer group">
-                <input
-                  type="radio"
-                  name="cat"
-                  checked={category === c.slug}
-                  onChange={() => setParam('category', c.slug)}
-                  className="accent-primary"
-                />
-                <span className="text-body text-sm group-hover:text-primary">{c.name}</span>
+      <aside className="w-60 hidden md:flex flex-col h-[calc(100vh-80px)] py-md sticky top-20 border-r border-outline-variant bg-surface-container-lowest overflow-y-auto shrink-0">
+
+        {/* All Products */}
+        <div className="px-md mb-sm">
+          <label className="flex items-center gap-sm cursor-pointer group py-1.5">
+            <input type="radio" name="cat" checked={!category} onChange={() => setParam('category', '')} className="accent-primary" />
+            <span className="text-body-sm font-medium group-hover:text-primary text-on-surface">All Products</span>
+          </label>
+        </div>
+
+        {/* Uniforms group */}
+        <div className="px-md mb-md">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">Uniforms</p>
+          <div className="space-y-1">
+            {categories.filter(c => c.checkout_type === 'direct' && c.slug.includes('uniform') || c.slug === 'chef-uniforms' || c.slug === 'staff-uniforms-branding').map(c => (
+              <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
+                <input type="radio" name="cat" checked={category === c.slug} onChange={() => setParam('category', c.slug)} className="accent-primary" />
+                <span className="text-body-sm group-hover:text-primary text-on-surface-variant">{c.name}</span>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="mt-auto pt-lg">
-          <Link to="/quote">
-            <Button variant="cta" className="w-full">
-              <FileText size={16} /> Request Quote
-            </Button>
+        {/* Equipment group */}
+        <div className="px-md mb-md">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-secondary mb-2">Equipment</p>
+          <div className="space-y-1">
+            {categories.filter(c => c.slug === 'kitchen-equipment-tools').map(c => (
+              <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
+                <input type="radio" name="cat" checked={category === c.slug} onChange={() => setParam('category', c.slug)} className="accent-primary" />
+                <span className="text-body-sm group-hover:text-primary text-on-surface-variant">{c.name}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Services — not filterable, redirect to quote */}
+        <div className="mx-md mt-auto mb-md rounded-xl bg-primary/5 border border-primary/20 p-md">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Services</p>
+          <p className="text-[11px] text-secondary leading-snug mb-3">
+            Embroidery, logo printing, kitchen setup and machine customization require a custom quote.
+          </p>
+          <Link to="/quote" className="flex items-center justify-center gap-1.5 w-full py-2 bg-gold hover:bg-gold/90 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer">
+            <FileText size={13} /> Request a Quote
           </Link>
         </div>
       </aside>
@@ -127,10 +137,10 @@ export default function ProductCatalogPage() {
           </div>
         </div>
 
-        {/* Mobile category chips */}
+        {/* Mobile category chips — direct checkout only */}
         <div className="md:hidden flex gap-2 flex-wrap mb-md">
           <button onClick={() => setParam('category', '')} className={`px-3 py-1 rounded-full text-label text-xs border cursor-pointer ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}>All</button>
-          {categories.map(c => (
+          {categories.filter(c => c.checkout_type === 'direct').map(c => (
             <button key={c.id} onClick={() => setParam('category', c.slug)} className={`px-3 py-1 rounded-full text-label text-xs border cursor-pointer ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}>{c.name}</button>
           ))}
         </div>

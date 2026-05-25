@@ -11,8 +11,10 @@ import OrderConfirmationPage from './pages/OrderConfirmationPage'
 import QuoteRequestPage from './pages/QuoteRequestPage'
 import AccountPage from './pages/AccountPage'
 import AuthPage from './pages/AuthPage'
+import ServicesPage from './pages/ServicesPage'
 import NotFoundPage from './pages/NotFoundPage'
 
+import WhatsAppButton from './components/WhatsAppButton'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminOrdersPage from './pages/admin/AdminOrdersPage'
@@ -24,6 +26,7 @@ function StorefrontLayout({ children }) {
       <Navbar />
       {children}
       <Footer />
+      <WhatsAppButton />
     </>
   )
 }
@@ -38,6 +41,7 @@ export default function App() {
         <Route path="/checkout" element={<StorefrontLayout><CheckoutPage /></StorefrontLayout>} />
         <Route path="/payment/verify" element={<StorefrontLayout><PaymentVerifyPage /></StorefrontLayout>} />
         <Route path="/order-confirmation/:reference" element={<StorefrontLayout><OrderConfirmationPage /></StorefrontLayout>} />
+        <Route path="/services" element={<StorefrontLayout><ServicesPage /></StorefrontLayout>} />
         <Route path="/quote" element={<StorefrontLayout><QuoteRequestPage /></StorefrontLayout>} />
         <Route path="/account" element={<StorefrontLayout><AccountPage /></StorefrontLayout>} />
         <Route path="/login" element={<StorefrontLayout><AuthPage /></StorefrontLayout>} />
