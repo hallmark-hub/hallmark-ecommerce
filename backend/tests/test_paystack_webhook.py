@@ -63,7 +63,7 @@ def test_handle_webhook_updates_payment_and_order_status(monkeypatch) -> None:
     service, reference, orders, payments = create_initialized_service()
     payload = {
         "event": "charge.success",
-        "data": {"reference": reference, "status": "success"},
+        "data": {"reference": reference, "status": "success", "amount": 30000},
     }
     raw_body, signature = signed_body(payload, "secret")
 
@@ -91,5 +91,44 @@ def test_handle_webhook_rejects_invalid_signature(monkeypatch) -> None:
 
     with pytest.raises(PaymentValidationError, match="Invalid Paystack webhook signature"):
         service.handle_webhook(raw_body, "bad", payload)
+
+    get_settings.cache_clear()
+
+
+def test_handle_webhook_rejects_amount_mismatch(monkeypatch) -> None:
+    monkeypatch.setenv("PAYSTACK_SECRET_KEY", "secret")
+    get_settings.cache_clear()
+    service, reference, _, _ = create_initialized_service()
+    payload = {
+        "event": "charge.success",
+        "data": {"reference": reference, "status": "success", "amount": 1},
+    }
+    raw_body, signature = signed_body(payload, "secret")
+
+    with pytest.raises(PaymentValidationError, match="amount does not match"):
+        service.handle_webhook(raw_body, signature, payload)
+
+    get_settings.cache_clear()
+
+
+def test_handle_webhook_does_not_downgrade_paid_payment(monkeypatch) -> None:
+    monkeypatch.setenv("PAYSTACK_SECRET_KEY", "secret")
+    get_settings.cache_clear()
+    service, reference, _, payments = create_initialized_service()
+    success_payload = {
+        "event": "charge.success",
+        "data": {"reference": reference, "status": "success", "amount": 30000},
+    }
+    failed_payload = {
+        "event": "charge.success",
+        "data": {"reference": reference, "status": "failed", "amount": 30000},
+    }
+    success_body, success_signature = signed_body(success_payload, "secret")
+    failed_body, failed_signature = signed_body(failed_payload, "secret")
+
+    service.handle_webhook(success_body, success_signature, success_payload)
+    service.handle_webhook(failed_body, failed_signature, failed_payload)
+
+    assert payments.get_payment_by_reference(reference)["status"] == "paid"
 
     get_settings.cache_clear()

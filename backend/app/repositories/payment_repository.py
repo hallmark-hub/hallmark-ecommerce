@@ -37,6 +37,9 @@ class InMemoryPaymentRepository:
 
     def create_payment(self, payment: dict[str, Any]) -> dict[str, Any]:
         """Store a payment in memory."""
+        existing = self.payments.get(payment["reference"])
+        if existing is not None:
+            return existing
         payment = {**payment, "id": str(uuid4()), "created_at": datetime.now(UTC)}
         self.payments[payment["reference"]] = payment
         return payment
@@ -82,8 +85,10 @@ class SupabasePaymentRepository:
         """Return a payment by reference."""
         response = (
             self.client.table("payments")
-            .select("id,order_id,reference,status,amount_pesewas")
-            .eq("provider", "paystack")
+            .select(
+                "id,order_id,provider,reference,status,amount_pesewas,"
+                "provider_access_code,provider_authorization_url"
+            )
             .eq("reference", reference)
             .limit(1)
             .execute()

@@ -69,6 +69,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Frontend checkout can integrate the manual transfer flow now, while production bank account details remain unconfirmed.
 **What was rejected:** Hardcoding real-looking bank details, because official account information has not been confirmed and wrong payment instructions would be a production risk.
 
+## 2026-05-25, Paystack reliability hardening
+**What was decided:** Make Paystack initialization idempotent, verify Paystack amounts before marking payments paid, and prevent paid payments from being downgraded by later failed signals.
+**Why:** Payment endpoints can be retried by browsers, webhooks, and operators; retries and late events must not create duplicate records or corrupt paid order state.
+**What was rejected:** Trusting status alone from verify/webhook responses, because amount mismatches and late failed events are common payment integration risks.
+
 ## 2026-05-25, Frontend scaffold complete
 **What was decided:** Full React + Vite frontend scaffolded at `frontend/` with Heritage Industrial design tokens, mock API layer, Zustand state, and all pages from `docs/FRONTEND_CHECKLIST.md`. Build passes clean (1.83s). All mocks return correct API contract shapes. Single `VITE_API_URL` change switches mock → real.
 **Why:** Frontend must be fully buildable before the backend is live so Evans can demo and iterate on design without waiting.

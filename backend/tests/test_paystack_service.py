@@ -51,6 +51,19 @@ def test_paystack_initialize_and_verify_update_status() -> None:
     assert orders.get_order_by_id(order_id)["payment_status"] == "paid"
 
 
+def test_paystack_initialize_is_idempotent_for_existing_payment() -> None:
+    orders = InMemoryOrderRepository()
+    payments = InMemoryPaymentRepository()
+    order_id = create_order(orders)
+    service = PaystackService(orders, payments, LocalPaystackGateway())
+
+    first = service.initialize(order_id)
+    second = service.initialize(order_id)
+
+    assert first == second
+    assert len(payments.payments) == 1
+
+
 def test_paystack_initialize_rejects_missing_order() -> None:
     service = PaystackService(
         InMemoryOrderRepository(),
@@ -60,3 +73,40 @@ def test_paystack_initialize_rejects_missing_order() -> None:
 
     with pytest.raises(PaymentValidationError, match="Order not found"):
         service.initialize("missing-order")
+
+
+class AmountMismatchGateway(LocalPaystackGateway):
+    def verify(self, reference: str) -> dict[str, object]:
+        return {"reference": reference, "status": "success", "amount": 1}
+
+
+class FailedGateway(LocalPaystackGateway):
+    def verify(self, reference: str) -> dict[str, object]:
+        return {"reference": reference, "status": "failed", "amount": 30000}
+
+
+def test_paystack_verify_rejects_amount_mismatch() -> None:
+    orders = InMemoryOrderRepository()
+    payments = InMemoryPaymentRepository()
+    order_id = create_order(orders)
+    service = PaystackService(orders, payments, LocalPaystackGateway())
+    initialized = service.initialize(order_id)
+    mismatch_service = PaystackService(orders, payments, AmountMismatchGateway())
+
+    with pytest.raises(PaymentValidationError, match="amount does not match"):
+        mismatch_service.verify(initialized.reference)
+
+
+def test_paystack_verify_does_not_downgrade_paid_payment() -> None:
+    orders = InMemoryOrderRepository()
+    payments = InMemoryPaymentRepository()
+    order_id = create_order(orders)
+    service = PaystackService(orders, payments, LocalPaystackGateway())
+    initialized = service.initialize(order_id)
+    service.verify(initialized.reference)
+    failed_service = PaystackService(orders, payments, FailedGateway())
+
+    verified = failed_service.verify(initialized.reference)
+
+    assert verified.payment_status == "paid"
+    assert payments.get_payment_by_reference(initialized.reference)["status"] == "paid"
