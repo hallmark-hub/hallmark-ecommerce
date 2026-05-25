@@ -1,7 +1,7 @@
 # API Contract — ChefWare Enterprise
 
 **Version:** v1  
-**Base URL:** `https://api.chefware.com/api/v1` (prod) | `http://localhost:8000/api/v1` (local)  
+**Base URL:** `https://api.chefware.com` (prod) | `http://localhost:8000` (local)  
 **Last updated:** 2026-05-25  
 
 ---
@@ -26,6 +26,8 @@ On error:
   "message": "What went wrong"
 }
 ```
+
+Backend must wrap framework validation errors, including Pydantic `422` responses, in this envelope.
 
 ---
 
@@ -129,6 +131,7 @@ Returns all product categories.
       "category_slug": "chef-uniforms",
       "checkout_type": "direct",
       "price_pesewas": 15000,
+      "price_label": null,
       "images": ["https://res.cloudinary.com/...", "..."],
       "in_stock": true,
       "stock_qty": 50,
@@ -142,6 +145,8 @@ Returns all product categories.
   "pages": 3
 }
 ```
+
+For `checkout_type: quote` products, `price_pesewas` may be `null`. In that case, `price_label` should contain display text such as `"Request a quote"`.
 
 #### `GET /api/v1/products/{slug}`
 
@@ -183,7 +188,7 @@ Used for `checkout_type: quote` categories.
 }
 ```
 
-> Backend sends SMS notification to admin via Africa's Talking on receipt.
+> Backend sends an admin notification only when notification credentials are configured and the current environment allows external messaging. Local tests/dev must not send real SMS.
 
 ---
 
@@ -207,11 +212,14 @@ Creates an order. Call this before initializing payment.
       "quantity": 2
     }
   ],
-  "payment_method": "paystack"
+  "payment_method": "paystack",
+  "accepted_returns_policy": true
 }
 ```
 
 `payment_method` values: `paystack` | `bank_transfer`
+
+`accepted_returns_policy` must be `true`. Checkout UI must show: "No refunds. Exchange only within 3 days of purchase."
 
 **Response `data`:**
 ```json
@@ -223,13 +231,21 @@ Creates an order. Call this before initializing payment.
   "payment_method": "paystack",
   "payment_status": "pending",
   "order_status": "pending",
+  "returns_policy": "No refunds. Exchange only within 3 days of purchase.",
   "created_at": "2026-05-25T10:00:00Z"
 }
 ```
 
-#### `GET /api/v1/orders/{order_id}`
+#### `GET /api/v1/orders/lookup`
 
-Order status lookup (used by chatbot + customer order tracking).
+Order status lookup (used by chatbot + customer order tracking). Requires both order reference and customer phone number.
+
+**Query params:**
+
+| param | type | required | notes |
+|---|---|---|---|
+| `reference` | string | yes | order reference, e.g. `CW-20260525-0042` |
+| `phone` | string | yes | customer phone in `+233XXXXXXXXX` format |
 
 **Response `data`:**
 ```json
@@ -251,6 +267,7 @@ Order status lookup (used by chatbot + customer order tracking).
   "payment_method": "paystack",
   "payment_status": "pending",
   "order_status": "pending",
+  "returns_policy": "No refunds. Exchange only within 3 days of purchase.",
   "created_at": "2026-05-25T10:00:00Z"
 }
 ```
@@ -321,13 +338,15 @@ Returns bank details and unique reference for manual transfer.
 {
   "reference": "CW-20260525-0042",
   "bank_name": "GCB Bank",
-  "branch": "Nima",
-  "account_name": "Chefware Enterprises",
-  "account_number": "1481180001715",
+  "branch": "TBC",
+  "account_name": "TBC",
+  "account_number": "TBC",
   "amount_pesewas": 30000,
   "instructions": "Transfer exactly GHS 300.00 and use reference CW-20260525-0042 as payment narration."
 }
 ```
+
+Bank account details are placeholders until the client confirms the official GCB and Stanbic accounts.
 
 ---
 

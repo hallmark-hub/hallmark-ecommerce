@@ -5,10 +5,9 @@ Full e-commerce platform for ChefWare Enterprise, a Ghanaian hospitality supply
 business based in Accra. Sells chef uniforms, kitchen equipment, and embroidery/
 branding services. Brand colors: green and white.
 
-**Active development — 6-week timeline. GHS 8,000 project fee.**
-
 ---
 
+This is my desing mockup design/
 
 ## Behavioral Guidelines (Karpathy Rules — Always Active)
 
@@ -214,7 +213,7 @@ chefware/
 
 ## Domain Rules (Ghana-specific)
 
-- All prices: Ghana Cedis (GHS). Store as integers (pesewas). Display formatted: `GHS 250.00`
+- All prices: Ghana Cedis (GHS). Store as integers (pesewas). Display formatted: `GH₵ 250.00` (symbol, not ISO code)
 - Phone numbers: validate and store as `+233XXXXXXXXX`
 - Payment methods: MTN MoMo, Vodafone Cash, AirtelTigo Money (via Paystack), GCB Bank transfer, Stanbic Bank transfer
 - Delivery: 24 hours after full payment confirmed; 6–8 weeks for preorders

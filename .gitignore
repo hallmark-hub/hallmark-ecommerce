@@ -251,6 +251,21 @@ Desktop.ini
 # ─── IDE ──────────────────────────────────────────────────────────────────────
 .idea/
 .vscode/
+.cursor/
+.windsurf/
+
+# ─── AI coding tool configs (local only — not project artefacts) ──────────────
+.claude/
+.agent/
+.codebuddy/
+.codex
+.continue/
+.gemini/
+.kiro/
+.opencode/
+.qoder/
+.roo/
+.trae/
 
 # ─── Misc ─────────────────────────────────────────────────────────────────────
 *.db
