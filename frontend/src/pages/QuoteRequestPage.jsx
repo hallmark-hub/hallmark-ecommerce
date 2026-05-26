@@ -69,10 +69,10 @@ export default function QuoteRequestPage() {
     <main className="pt-20 min-h-screen bg-surface flex">
 
       {/* Full-height left image panel */}
-      <div className="hidden lg:block sticky top-20 h-[calc(100vh-80px)] self-start flex-none w-[400px] xl:w-[460px]">
+      <div className="hidden lg:block sticky top-20 h-[calc(100vh-80px)] self-start flex-none w-[45%]">
         <div className="relative w-full h-full">
           <img
-            src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=900&q=80"
+            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=1600&q=90"
             alt="Commercial kitchen equipment and machinery"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -88,7 +88,7 @@ export default function QuoteRequestPage() {
       </div>
 
       {/* Right scrollable content */}
-      <div className="flex-1 min-w-0 px-8 lg:px-16 py-10 md:py-14">
+      <div className="flex-1 min-w-0 px-8 lg:px-16 py-10 md:py-14 bg-surface">
         <div className="max-w-2xl mx-auto">
         <div className="mb-lg">
           <h1 className="text-h1 text-on-surface">Request a Quote</h1>

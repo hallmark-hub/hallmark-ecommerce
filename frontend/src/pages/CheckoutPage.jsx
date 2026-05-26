@@ -192,7 +192,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Right scrollable content */}
-      <div className="flex-1 min-w-0 px-8 lg:px-12 py-10 md:py-14">
+      <div className="flex-1 min-w-0 px-8 lg:px-12 py-10 md:py-14 bg-surface-container-low">
         <div className="max-w-2xl mx-auto lg:max-w-none">
 
         {/* Step Progress */}
