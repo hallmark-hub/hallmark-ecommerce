@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, FileText, ChevronLeft, Truck, RefreshCw, Star } from 'lucide-react'
+import { ShoppingCart, FileText, ChevronLeft, Truck, RefreshCw, Star, Send } from 'lucide-react'
 import { getProduct, getProducts } from '../api/products'
 import useCartStore from '../store/cartStore'
 import PriceDisplay from '../components/PriceDisplay'
@@ -18,6 +18,12 @@ export default function ProductDetailPage() {
   const [activeImg, setActiveImg] = useState(0)
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
+  const [reviews, setReviews] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(`chefware_reviews_${slug}`) || '[]') }
+    catch { return [] }
+  })
+  const [reviewForm, setReviewForm] = useState({ name: '', rating: 5, comment: '' })
+  const [reviewSubmitted, setReviewSubmitted] = useState(false)
 
   useEffect(() => {
     async function load() {
@@ -29,6 +35,8 @@ export default function ProductDetailPage() {
       const r = await getProducts({ category: res.data.category_slug, limit: 4 })
       setRelated((r.data?.items || []).filter(p => p.slug !== slug).slice(0, 4))
       setLoading(false)
+      try { setReviews(JSON.parse(localStorage.getItem(`chefware_reviews_${slug}`) || '[]')) } catch { setReviews([]) }
+      setReviewForm({ name: '', rating: 5, comment: '' })
     }
     load()
   }, [slug, navigate])
@@ -44,6 +52,20 @@ export default function ProductDetailPage() {
 
   const isQuote = product.checkout_type === 'quote'
   const images = product.images?.length ? product.images : ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800']
+  const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0
+  const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
+
+  function submitReview(e) {
+    e.preventDefault()
+    if (!reviewForm.name.trim() || !reviewForm.comment.trim()) return
+    const review = { id: Date.now(), date: new Date().toISOString(), ...reviewForm }
+    const next = [review, ...reviews]
+    setReviews(next)
+    try { localStorage.setItem(`chefware_reviews_${slug}`, JSON.stringify(next)) } catch {}
+    setReviewForm({ name: '', rating: 5, comment: '' })
+    setReviewSubmitted(true)
+    setTimeout(() => setReviewSubmitted(false), 3000)
+  }
 
   return (
     <main className="pt-20 bg-surface min-h-screen">
@@ -80,10 +102,13 @@ export default function ProductDetailPage() {
             <p className="text-label uppercase text-primary mb-xs">{product.category_slug?.replace(/-/g, ' ')}</p>
             <h1 className="text-h1 text-on-surface mb-sm">{product.name}</h1>
 
-            {/* Star rating placeholder */}
             <div className="flex items-center gap-1 mb-md">
-              {Array.from({ length: 5 }).map((_, i) => <Star key={i} size={16} className={i < 4 ? 'text-gold fill-gold' : 'text-outline-variant'} />)}
-              <span className="text-body-sm text-secondary ml-1">(12 reviews)</span>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={16} className={i < Math.round(avgRating) ? 'text-gold fill-gold' : 'text-outline-variant'} />
+              ))}
+              <span className="text-body-sm text-secondary ml-1">
+                {reviews.length ? `(${reviews.length} review${reviews.length !== 1 ? 's' : ''})` : 'No reviews yet'}
+              </span>
             </div>
 
             <PriceDisplay pesewas={product.price_pesewas} label={product.price_label} size="lg" className="mb-md" />
@@ -177,6 +202,99 @@ export default function ProductDetailPage() {
                 <span className="text-on-surface capitalize">{val}</span>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Reviews */}
+        <section className="mt-xl">
+          <div className="flex items-center justify-between mb-md">
+            <h2 className="text-h2 text-on-surface">Customer Reviews</h2>
+            {reviews.length > 0 && (
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={14} className={i < Math.round(avgRating) ? 'text-gold fill-gold' : 'text-outline-variant'} />
+                  ))}
+                </div>
+                <span className="text-body-sm text-secondary">{avgRating.toFixed(1)} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</span>
+              </div>
+            )}
+          </div>
+
+          {reviews.length === 0 ? (
+            <p className="text-body text-secondary mb-md">No reviews yet. Be the first to share your experience.</p>
+          ) : (
+            <div className="space-y-4 mb-xl">
+              {reviews.map(r => (
+                <div key={r.id} className="bg-white border border-outline-variant rounded-xl p-md">
+                  <div className="flex items-center justify-between mb-xs">
+                    <div>
+                      <p className="text-body-sm font-semibold text-on-surface">{r.name}</p>
+                      <p className="text-body-sm text-secondary">{new Date(r.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star key={i} size={13} className={i < r.rating ? 'text-gold fill-gold' : 'text-outline-variant'} />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-body text-on-surface-variant">{r.comment}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Write a review */}
+          <div className="bg-surface-container-low border border-outline-variant rounded-xl p-md">
+            <h3 className="text-h3 text-on-surface mb-md">Write a Review</h3>
+            {reviewSubmitted ? (
+              <p className="text-primary font-medium text-body">Thank you for your review!</p>
+            ) : (
+              <form onSubmit={submitReview} className="space-y-md">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-md">
+                  <div>
+                    <label className="text-body-sm font-medium text-on-surface block mb-1.5">Your Name</label>
+                    <input
+                      type="text"
+                      value={reviewForm.name}
+                      onChange={e => setReviewForm(f => ({ ...f, name: e.target.value }))}
+                      placeholder="e.g. Kwame Mensah"
+                      required
+                      className={inputCls}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-body-sm font-medium text-on-surface block mb-1.5">Rating</label>
+                    <div className="flex items-center gap-1 h-12">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setReviewForm(f => ({ ...f, rating: i + 1 }))}
+                          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                        >
+                          <Star size={28} className={i < reviewForm.rating ? 'text-gold fill-gold cursor-pointer' : 'text-outline-variant cursor-pointer hover:text-gold'} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-body-sm font-medium text-on-surface block mb-1.5">Your Review</label>
+                  <textarea
+                    value={reviewForm.comment}
+                    onChange={e => setReviewForm(f => ({ ...f, comment: e.target.value }))}
+                    placeholder="Share your experience with this product..."
+                    required
+                    rows={4}
+                    className="w-full px-4 py-3 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors resize-none"
+                  />
+                </div>
+                <Button type="submit" variant="primary" size="md" iconLeft={<Send size={16} />}>
+                  Submit Review
+                </Button>
+              </form>
+            )}
           </div>
         </section>
 

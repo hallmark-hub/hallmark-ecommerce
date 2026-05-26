@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { FileText, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChefHat, Users, Wrench, LayoutGrid, Building2, Package, Settings, Scissors, Printer } from 'lucide-react'
 import { getProducts } from '../api/products'
 import { getCategories } from '../api/categories'
 import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
 import Button from '../components/Button'
+
+const CAT_ICONS = {
+  'chef-uniforms': ChefHat,
+  'staff-uniforms-branding': Users,
+  'kitchen-equipment-tools': Wrench,
+  'kitchen-setup': Building2,
+  'machine-preorders': Package,
+  'machine-customization': Settings,
+  'embroidery': Scissors,
+  'logo-printing-branding': Printer,
+}
 
 const SORT_OPTIONS = [
   { value: '', label: 'Recommended' },
@@ -70,22 +81,33 @@ export default function ProductCatalogPage() {
 
         {/* All Products */}
         <div className="px-md mb-sm">
-          <label className="flex items-center gap-sm cursor-pointer group py-1.5">
-            <input type="radio" name="cat" checked={!category} onChange={() => setParam('category', '')} className="accent-primary" />
-            <span className="text-body-sm font-medium group-hover:text-primary text-on-surface">All Products</span>
-          </label>
+          <button
+            onClick={() => setParam('category', '')}
+            className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${!category ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'}`}
+          >
+            <LayoutGrid size={16} className="shrink-0" />
+            <span className="text-body-sm font-medium">All Products</span>
+          </button>
         </div>
 
         {/* Uniforms group */}
         <div className="px-md mb-md">
           <p className="text-label uppercase text-secondary mb-2">Uniforms</p>
           <div className="space-y-1">
-            {categories.filter(c => c.checkout_type === 'direct' && c.slug.includes('uniform') || c.slug === 'chef-uniforms' || c.slug === 'staff-uniforms-branding').map(c => (
-              <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
-                <input type="radio" name="cat" checked={category === c.slug} onChange={() => setParam('category', c.slug)} className="accent-primary" />
-                <span className="text-body-sm group-hover:text-primary text-on-surface-variant">{c.name}</span>
-              </label>
-            ))}
+            {categories.filter(c => c.checkout_type === 'direct' && c.slug.includes('uniform') || c.slug === 'chef-uniforms' || c.slug === 'staff-uniforms-branding').map(c => {
+              const Icon = CAT_ICONS[c.slug] || LayoutGrid
+              const active = category === c.slug
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setParam('category', c.slug)}
+                  className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${active ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'}`}
+                >
+                  <Icon size={16} className="shrink-0" />
+                  <span className="text-body-sm">{c.name}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -93,24 +115,42 @@ export default function ProductCatalogPage() {
         <div className="px-md mb-md">
           <p className="text-label uppercase text-secondary mb-2">Equipment</p>
           <div className="space-y-1">
-            {categories.filter(c => c.slug === 'kitchen-equipment-tools').map(c => (
-              <label key={c.id} className="flex items-center gap-sm cursor-pointer group py-1">
-                <input type="radio" name="cat" checked={category === c.slug} onChange={() => setParam('category', c.slug)} className="accent-primary" />
-                <span className="text-body-sm group-hover:text-primary text-on-surface-variant">{c.name}</span>
-              </label>
-            ))}
+            {categories.filter(c => c.slug === 'kitchen-equipment-tools').map(c => {
+              const Icon = CAT_ICONS[c.slug] || LayoutGrid
+              const active = category === c.slug
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setParam('category', c.slug)}
+                  className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${active ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'}`}
+                >
+                  <Icon size={16} className="shrink-0" />
+                  <span className="text-body-sm">{c.name}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
 
-        {/* Services — not filterable, redirect to quote */}
-        <div className="mx-md mt-auto mb-md rounded-xl bg-primary/5 border border-primary/20 p-md">
-          <p className="text-label uppercase text-primary mb-1">Services</p>
-          <p className="text-body-sm text-secondary leading-snug mb-3">
-            Embroidery, logo printing, kitchen setup and machine customization require a custom quote.
-          </p>
-          <Button as={Link} to="/quote" variant="gold" size="sm" fullWidth iconLeft={<FileText />}>
-            Request a Quote
-          </Button>
+        {/* Services group */}
+        <div className="px-md mb-md">
+          <p className="text-label uppercase text-secondary mb-2">Services</p>
+          <div className="space-y-1">
+            {categories.filter(c => c.checkout_type === 'quote').map(c => {
+              const Icon = CAT_ICONS[c.slug] || Settings
+              const active = category === c.slug
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setParam('category', c.slug)}
+                  className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${active ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'}`}
+                >
+                  <Icon size={16} className="shrink-0" />
+                  <span className="text-body-sm">{c.name}</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
       </aside>
 
