@@ -170,8 +170,29 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="pt-20 min-h-screen bg-surface-container-low">
-      <div className="max-w-container-max mx-auto px-gutter py-10 md:py-14">
+    <main className="pt-20 min-h-screen bg-surface-container-low flex">
+
+      {/* Full-height left image panel */}
+      <div className="hidden lg:block sticky top-20 h-[calc(100vh-80px)] self-start flex-none w-[400px] xl:w-[460px]">
+        <div className="relative w-full h-full">
+          <img
+            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=80"
+            alt="Professional chef in kitchen"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-10">
+            <p className="text-white text-h1 font-bold leading-tight mb-3">Accra's #1<br />Hospitality Supplier</p>
+            <div className="flex items-center gap-2 mt-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+              <p className="text-white/75 text-body-sm">Trusted by 500+ Hotels & Restaurants</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right scrollable content */}
+      <div className="flex-1 min-w-0 px-8 lg:px-12 py-10 md:py-14">
 
         {/* Step Progress */}
         <div className="flex items-center max-w-xs mb-10">
@@ -199,69 +220,49 @@ export default function CheckoutPage() {
 
             {step === STEP_SHIPPING && (
               <div className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-[300px,1fr]">
+                <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
+                  <h2 className="text-h2 text-on-surface">Shipping Information</h2>
+                  <p className="text-body-sm text-secondary mt-1">We deliver within Greater Accra in 24 hours after payment.</p>
+                </div>
+                <div className="px-8 py-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Full Name */}
+                    <div>
+                      <label className="block text-label uppercase text-secondary mb-2" htmlFor="name">Full Name <span className="text-error">*</span></label>
+                      <input id="name" type="text" value={shipping.name} onChange={e => updateShipping('name', e.target.value)} className={inputCls} placeholder="Kwame Asante" />
+                    </div>
 
-                  {/* Left image panel — hidden on mobile */}
-                  <div className="hidden md:block relative">
-                    <img
-                      src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=80"
-                      alt="Professional chef in uniform"
-                      className="absolute inset-0 w-full h-full object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
-                    <div className="absolute bottom-0 left-0 right-0 p-7">
-                      <p className="text-white font-bold text-body leading-snug mb-1">Trusted by Ghana's Finest Hotels & Restaurants</p>
-                      <p className="text-white/65 text-body-sm">Next-day delivery across Greater Accra</p>
+                    {/* Phone */}
+                    <div>
+                      <label className="block text-label uppercase text-secondary mb-2" htmlFor="phone">Phone Number <span className="text-error">*</span></label>
+                      <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className={inputCls} placeholder="+233244123456" />
+                      <p className="text-label uppercase text-secondary mt-2">Format: +233XXXXXXXXX</p>
+                    </div>
+
+                    {/* Company */}
+                    <div className="sm:col-span-2">
+                      <label className="block text-label uppercase text-secondary mb-2" htmlFor="company">Company / Restaurant <span className="text-secondary/60">(optional)</span></label>
+                      <input id="company" type="text" value={shipping.company} onChange={e => updateShipping('company', e.target.value)} className={inputCls} placeholder="Kempinski Hotel Accra" />
+                    </div>
+
+                    {/* Address */}
+                    <div className="sm:col-span-2">
+                      <label className="block text-label uppercase text-secondary mb-2" htmlFor="address">Delivery Address (Accra) <span className="text-error">*</span></label>
+                      <input id="address" type="text" value={shipping.address} onChange={e => updateShipping('address', e.target.value)} className={inputCls} placeholder="House 12, Osu Oxford Street, Accra" />
+                      <div className="flex items-center gap-1.5 mt-2">
+                        <Truck size={12} className="text-primary shrink-0" />
+                        <p className="text-label uppercase text-primary">Delivery within Greater Accra · 24 hrs after payment confirmed</p>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Right form panel */}
-                  <div className="flex flex-col">
-                    <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
-                      <h2 className="text-h2 text-on-surface">Shipping Information</h2>
-                      <p className="text-body-sm text-secondary mt-1">We deliver within Greater Accra in 24 hours after payment.</p>
-                    </div>
-                    <div className="px-8 py-8 flex-1">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Full Name */}
-                        <div>
-                          <label className="block text-label uppercase text-secondary mb-2" htmlFor="name">Full Name <span className="text-error">*</span></label>
-                          <input id="name" type="text" value={shipping.name} onChange={e => updateShipping('name', e.target.value)} className={inputCls} placeholder="Kwame Asante" />
-                        </div>
-
-                        {/* Phone */}
-                        <div>
-                          <label className="block text-label uppercase text-secondary mb-2" htmlFor="phone">Phone Number <span className="text-error">*</span></label>
-                          <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className={inputCls} placeholder="+233244123456" />
-                          <p className="text-label uppercase text-secondary mt-2">Format: +233XXXXXXXXX</p>
-                        </div>
-
-                        {/* Company */}
-                        <div className="sm:col-span-2">
-                          <label className="block text-label uppercase text-secondary mb-2" htmlFor="company">Company / Restaurant <span className="text-secondary/60">(optional)</span></label>
-                          <input id="company" type="text" value={shipping.company} onChange={e => updateShipping('company', e.target.value)} className={inputCls} placeholder="Kempinski Hotel Accra" />
-                        </div>
-
-                        {/* Address */}
-                        <div className="sm:col-span-2">
-                          <label className="block text-label uppercase text-secondary mb-2" htmlFor="address">Delivery Address (Accra) <span className="text-error">*</span></label>
-                          <input id="address" type="text" value={shipping.address} onChange={e => updateShipping('address', e.target.value)} className={inputCls} placeholder="House 12, Osu Oxford Street, Accra" />
-                          <div className="flex items-center gap-1.5 mt-2">
-                            <Truck size={12} className="text-primary shrink-0" />
-                            <p className="text-label uppercase text-primary">Delivery within Greater Accra · 24 hrs after payment confirmed</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="px-8 pb-8">
-                      <Button onClick={handleShippingNext} variant="primary" size="lg" fullWidth iconRight={<ChevronRight />}>
-                        Continue to Payment
-                      </Button>
-                      <div className="flex items-center justify-center gap-1.5 mt-4 text-secondary">
-                        <Lock size={12} />
-                        <span className="text-label uppercase">Secured with SSL encryption</span>
-                      </div>
-                    </div>
+                </div>
+                <div className="px-8 pb-8">
+                  <Button onClick={handleShippingNext} variant="primary" size="lg" fullWidth iconRight={<ChevronRight />}>
+                    Continue to Payment
+                  </Button>
+                  <div className="flex items-center justify-center gap-1.5 mt-4 text-secondary">
+                    <Lock size={12} />
+                    <span className="text-label uppercase">Secured with SSL encryption</span>
                   </div>
                 </div>
               </div>
