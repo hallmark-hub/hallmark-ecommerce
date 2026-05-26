@@ -1,0 +1,219 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]: chef pants checkered kitchen
+            - listbox
+          - button "Clear" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Visual search" [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Get Unsplash+" [ref=e60] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e61] [cursor=pointer]:
+            - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen
+        - button "Submit an image" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e70]:
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Photos 32":
+                - /url: /s/photos/chef-pants-checkered-kitchen
+                - img
+                - text: Photos
+                - generic: "32"
+            - listitem [ref=e73]:
+              - link "Illustrations 1" [ref=e74] [cursor=pointer]:
+                - /url: /s/illustrations/chef-pants-checkered-kitchen
+                - img [ref=e75]
+                - text: Illustrations
+                - generic [ref=e77]: "1"
+            - listitem [ref=e78]:
+              - button "More" [ref=e79] [cursor=pointer]
+          - button "Filters" [ref=e81] [cursor=pointer]:
+            - img [ref=e83]
+            - text: Filters
+        - generic [ref=e85]:
+          - heading "Chef pants checkered kitchen" [level=1] [ref=e87]
+          - generic [ref=e89]:
+            - button "scroll list to the right" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - generic [ref=e95]:
+              - link "chef" [ref=e97] [cursor=pointer]:
+                - /url: /s/photos/chef
+              - link "kitchen" [ref=e99] [cursor=pointer]:
+                - /url: /s/photos/kitchen
+              - link "food preparation" [ref=e101] [cursor=pointer]:
+                - /url: /s/photos/food-preparation
+              - link "culinary art" [ref=e103] [cursor=pointer]:
+                - /url: /s/photos/culinary-art
+              - link "cooking" [ref=e105] [cursor=pointer]:
+                - /url: /s/photos/cooking
+              - link "restaurant kitchen" [ref=e107] [cursor=pointer]:
+                - /url: /s/photos/restaurant-kitchen
+              - link "food service" [ref=e109] [cursor=pointer]:
+                - /url: /s/photos/food-service
+              - link "food industry" [ref=e111] [cursor=pointer]:
+                - /url: /s/photos/food-industry
+              - link "culinary" [ref=e113] [cursor=pointer]:
+                - /url: /s/photos/culinary
+              - link "gastronomy" [ref=e115] [cursor=pointer]:
+                - /url: /s/photos/gastronomy
+              - link "gourmet" [ref=e117] [cursor=pointer]:
+                - /url: /s/photos/gourmet
+              - link "food preparation technique" [ref=e119] [cursor=pointer]:
+                - /url: /s/photos/food-preparation-technique
+        - generic [ref=e121]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - figure [ref=e127]:
+                - generic [ref=e129]:
+                  - link "a woman in a kitchen slicing mushrooms on a cutting board" [ref=e130]:
+                    - /url: /photos/a-woman-in-a-kitchen-slicing-mushrooms-on-a-cutting-board-mIuDFzb-ueU
+                    - img "a woman in a kitchen slicing mushrooms on a cutting board" [ref=e131]
+                  - link [ref=e132] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fa-woman-in-a-kitchen-slicing-mushrooms-on-a-cutting-board-mIuDFzb-ueU
+                    - img [ref=e133]
+              - generic [ref=e135]:
+                - heading "Sponsored images" [level=4] [ref=e136]:
+                  - generic [ref=e137]: Sponsored images
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A85a07f1a-6442-4d8b-bd95-cb4e3df371d2&phrase=chef+pants+checkered+kitchen&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+                    - img [ref=e139]
+                - generic [ref=e141]:
+                  - link "Chef whites flat lay" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-whites-flat-lay-gm984746744-267205358?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A78d821f2-21bc-42a8-8bc3-3d66a54bc59e
+                    - img "Chef whites flat lay" [ref=e143]
+                  - link "Rear view asian chinese chef tying up apron getting read to work at commercial kitchen" [ref=e144] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/rear-view-asian-chinese-chef-tying-up-apron-getting-read-to-work-at-commercial-gm1417839947-464775561?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A97b9bdf5-c147-471a-aa59-176b4f10f440
+                    - img "Rear view asian chinese chef tying up apron getting read to work at commercial kitchen" [ref=e145]
+                  - link "Rear view of chef standing and looking away" [ref=e146] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/rear-view-of-chef-standing-and-looking-away-gm579123230-99544137?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A53454084-5c1e-4189-895f-83bd057c1aa6
+                    - img "Rear view of chef standing and looking away" [ref=e147]
+                  - link "Full length of happy chef in uniform on blue background." [ref=e148] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/full-length-of-happy-chef-in-uniform-on-blue-background-gm2222466388-638736443?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A5ca6489d-c501-4bff-a0ae-1e11be11ff81
+                    - img "Full length of happy chef in uniform on blue background." [ref=e149]
+                - link "Get 20% off with code UNSPLASH20" [ref=e150] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A85a07f1a-6442-4d8b-bd95-cb4e3df371d2&phrase=chef+pants+checkered+kitchen&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+              - figure [ref=e151]:
+                - generic [ref=e153]:
+                  - link "a man in an apron is cooking in a kitchen" [ref=e154]:
+                    - /url: /photos/a-man-in-an-apron-is-cooking-in-a-kitchen-iBA7nfNOW08
+                    - img "a man in an apron is cooking in a kitchen" [ref=e155]
+                  - link [ref=e156] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fa-man-in-an-apron-is-cooking-in-a-kitchen-iBA7nfNOW08
+                    - img [ref=e157]
+              - figure [ref=e159]:
+                - generic [ref=e161]:
+                  - link "A chef working in a commercial kitchen" [ref=e162]:
+                    - /url: /photos/a-chef-working-in-a-commercial-kitchen-ZceJY7Y8Qjc
+                    - img "A chef working in a commercial kitchen" [ref=e163]
+                  - link [ref=e164] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fa-chef-working-in-a-commercial-kitchen-ZceJY7Y8Qjc
+                    - img [ref=e165]
+            - generic [ref=e167]:
+              - figure [ref=e168]:
+                - link "a group of people stand in a kitchen" [ref=e171]:
+                  - /url: /photos/a-group-of-people-stand-in-a-kitchen-ibBDmt2uujA
+                  - img "a group of people stand in a kitchen" [ref=e172]
+              - figure [ref=e173]:
+                - link "A woman standing at a table with a glass in her hand" [ref=e176]:
+                  - /url: /photos/a-woman-standing-at-a-table-with-a-glass-in-her-hand-G7Enfn4zSTM
+                  - img "A woman standing at a table with a glass in her hand" [ref=e177]
+              - figure [ref=e178]:
+                - generic [ref=e180]:
+                  - link "Portrait of male chef cooking pho bo in studio, on black background" [ref=e181]:
+                    - /url: /photos/portrait-of-male-chef-cooking-pho-bo-in-studio-on-black-background-OQlOJ7ZilCY
+                    - img "Portrait of male chef cooking pho bo in studio, on black background" [ref=e182]
+                  - link [ref=e183] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fportrait-of-male-chef-cooking-pho-bo-in-studio-on-black-background-OQlOJ7ZilCY
+                    - img [ref=e184]
+            - generic [ref=e186]:
+              - contentinfo [ref=e191]:
+                - generic [ref=e197]: –– ––– ––– –– ––– – ––– ––– –––– – – –– ––– – – ––– –– –– –––– ––
+              - figure [ref=e199]:
+                - link "a chef is preparing food in a kitchen" [ref=e202]:
+                  - /url: /photos/a-chef-is-preparing-food-in-a-kitchen-VWnk-3Jd-rU
+                  - img "a chef is preparing food in a kitchen" [ref=e203]
+              - figure [ref=e204]:
+                - generic [ref=e206]:
+                  - link "Portrait of two man standing in the kitchen, cooking, making salad. One man is facing camera, another one turned his back" [ref=e207]:
+                    - /url: /photos/portrait-of-two-man-standing-in-the-kitchen-cooking-making-salad-one-man-is-facing-camera-another-one-turned-his-back-8WfqpVAkl-U
+                    - img "Portrait of two man standing in the kitchen, cooking, making salad. One man is facing camera, another one turned his back" [ref=e208]
+                  - link [ref=e209] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fportrait-of-two-man-standing-in-the-kitchen-cooking-making-salad-one-man-is-facing-camera-another-one-turned-his-back-8WfqpVAkl-U
+                    - img [ref=e210]
+          - generic [ref=e214]:
+            - heading "Browse premium images on iStock | Claim your discount now" [level=2] [ref=e215]:
+              - text: Browse premium images on iStock
+              - generic [ref=e216]: "| Claim your discount now"
+            - generic [ref=e218]:
+              - link "happy trainee chef" [ref=e219] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/happy-trainee-chef-gm181889080-23862178?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3Adc8b1f2a-b301-42f2-a9c3-29b9f651537c
+                - img "happy trainee chef" [ref=e220]
+              - link "Happy young Asian woman with stylish blue-green hair color smiling while holding and looking at a frying pan in a bright, modern white kitchen, ready to cook." [ref=e221] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/happy-young-asian-woman-with-stylish-blue-green-hair-color-smiling-while-holding-and-gm2242481496-656810599?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3Aef78850f-9fbb-46ba-8038-f215be5a6620
+                - img "Happy young Asian woman with stylish blue-green hair color smiling while holding and looking at a frying pan in a bright, modern white kitchen, ready to cook." [ref=e222]
+              - link "Full-length portrait of professional chef in uniform on white background" [ref=e223] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/full-length-portrait-of-professional-chef-in-uniform-on-white-background-gm2248930757-662745853?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A4d7facd4-2d40-45f2-85a3-fb32ee6fc219
+                - img "Full-length portrait of professional chef in uniform on white background" [ref=e224]
+              - link "Chef in commercial kitchen" [ref=e225] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-in-commercial-kitchen-gm2224289031-640434592?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3Ae6c77786-c0b6-432b-addd-ba396f43ed58
+                - img "Chef in commercial kitchen" [ref=e226]
+              - link "Sous Chef Drying Hands" [ref=e227] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/sous-chef-drying-hands-gm2163829006-584151600?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A05f736a1-2c2b-4735-9213-e3ed17a3fae9
+                - img "Sous Chef Drying Hands" [ref=e228]
+              - link "Smiling young woman standing in her kitchen" [ref=e229] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/smiling-young-woman-standing-in-her-kitchen-gm2233524778-649013470?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A62d65ebf-1409-48b8-a028-50aacbc7641f
+                - img "Smiling young woman standing in her kitchen" [ref=e230]
+              - link "Chef standing with arms crossed" [ref=e231] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-standing-with-arms-crossed-gm184328432-17416867?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3A62a182b2-3814-43c7-89a8-2deffa9b10b3
+                - img "Chef standing with arms crossed" [ref=e232]
+              - generic [ref=e233]:
+                - link "Male cook preparing food in deep fryer in the kitchen." [ref=e234] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/photo/male-cook-preparing-food-in-deep-fryer-in-the-kitchen-gm2156105494-576884147?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3Ada87b463-3582-4fa2-93f7-400ba1b50e31
+                  - img "Male cook preparing food in deep fryer in the kitchen." [ref=e235]
+                - link "View more on iStock ↗" [ref=e236] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-pants-checkered-kitchen&utm_term=chef+pants+checkered+kitchen%3A%3A%3A%3Aec72abfe-cc29-4dfa-a2d5-e81a45d90ed8&phrase=chef+pants+checkered+kitchen&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+          - button "Load more" [ref=e240] [cursor=pointer]
+          - generic [ref=e241]:
+            - link [ref=e242] [cursor=pointer]:
+              - /url: /
+              - img [ref=e243]
+            - paragraph [ref=e245]: Make something awesome
+    - generic:
+      - region "Notifications"

@@ -1,0 +1,267 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]: dark chef jacket
+            - listbox
+          - button "Clear" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Visual search" [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Get Unsplash+" [ref=e60] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e61] [cursor=pointer]:
+            - /url: /login?referrer=%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait
+        - button "Submit an image" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e70]:
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Photos 762":
+                - /url: /s/photos/dark-chef-jacket?orientation=portrait
+                - img
+                - text: Photos
+                - generic: "762"
+            - listitem [ref=e73]:
+              - link "Illustrations 1" [ref=e74] [cursor=pointer]:
+                - /url: /s/illustrations/dark-chef-jacket?orientation=portrait
+                - img [ref=e75]
+                - text: Illustrations
+                - generic [ref=e77]: "1"
+            - listitem [ref=e78]:
+              - button "More" [ref=e79] [cursor=pointer]
+          - button "Filters" [ref=e81] [cursor=pointer]:
+            - img [ref=e83]
+            - text: Filters
+        - generic [ref=e85]:
+          - heading "Dark chef jacket" [level=1] [ref=e87]
+          - generic [ref=e89]:
+            - button "scroll list to the right" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - generic [ref=e95]:
+              - link "chef" [ref=e97] [cursor=pointer]:
+                - /url: /s/photos/chef?orientation=portrait
+              - link "kitchen" [ref=e99] [cursor=pointer]:
+                - /url: /s/photos/kitchen?orientation=portrait
+              - link "food preparation" [ref=e101] [cursor=pointer]:
+                - /url: /s/photos/food-preparation?orientation=portrait
+              - link "culinary art" [ref=e103] [cursor=pointer]:
+                - /url: /s/photos/culinary-art?orientation=portrait
+              - link "professional chef" [ref=e105] [cursor=pointer]:
+                - /url: /s/photos/professional-chef?orientation=portrait
+              - link "one person" [ref=e107] [cursor=pointer]:
+                - /url: /s/photos/one-person?orientation=portrait
+              - link "culinary" [ref=e109] [cursor=pointer]:
+                - /url: /s/photos/culinary?orientation=portrait
+              - link "food industry" [ref=e111] [cursor=pointer]:
+                - /url: /s/photos/food-industry?orientation=portrait
+              - link "cooking" [ref=e113] [cursor=pointer]:
+                - /url: /s/photos/cooking?orientation=portrait
+              - link "dark" [ref=e115] [cursor=pointer]:
+                - /url: /s/photos/dark?orientation=portrait
+              - link "restaurant kitchen" [ref=e117] [cursor=pointer]:
+                - /url: /s/photos/restaurant-kitchen?orientation=portrait
+              - link "gastronomy" [ref=e119] [cursor=pointer]:
+                - /url: /s/photos/gastronomy?orientation=portrait
+        - generic [ref=e121]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - figure [ref=e127]:
+                - generic [ref=e129]:
+                  - link "Studio portrait of brutal chef preparing asian food, using chopsticks, dishes, fresh food" [ref=e130]:
+                    - /url: /photos/studio-portrait-of-brutal-chef-preparing-asian-food-using-chopsticks-dishes-fresh-food-HHSebR6FchE
+                    - img "Studio portrait of brutal chef preparing asian food, using chopsticks, dishes, fresh food" [ref=e131]
+                  - link [ref=e132] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fstudio-portrait-of-brutal-chef-preparing-asian-food-using-chopsticks-dishes-fresh-food-HHSebR6FchE
+                    - img [ref=e133]
+              - generic [ref=e135]:
+                - heading "Sponsored images" [level=4] [ref=e136]:
+                  - generic [ref=e137]: Sponsored images
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A3584b77f-d903-4740-8783-a985593b44a4&phrase=dark+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+                    - img [ref=e139]
+                - generic [ref=e141]:
+                  - link "Chef cook on a dark background" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-cook-on-a-dark-background-gm1328567890-412584475?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A141357ac-787e-4bae-b93d-1169defb1373
+                    - img "Chef cook on a dark background" [ref=e143]
+                  - link "Chef, kitchen and restaurant with hat tie and start dinner service at fine dining job with hospitality. Man, back and professional culinary artist with catering and food prep job with gourmet cooking" [ref=e144] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-kitchen-and-restaurant-with-hat-tie-and-start-dinner-service-at-fine-dining-job-gm2180491426-599588809?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Ab0e1f362-2e79-4f70-9154-eb0f3795fba1
+                    - img "Chef, kitchen and restaurant with hat tie and start dinner service at fine dining job with hospitality. Man, back and professional culinary artist with catering and food prep job with gourmet cooking" [ref=e145]
+                  - link "Chef with crossed hands isolated on white background." [ref=e146] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-with-crossed-hands-isolated-on-white-background-gm1340513070-420566970?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A944f8a2f-e118-4b21-9ac9-59940a525740
+                    - img "Chef with crossed hands isolated on white background." [ref=e147]
+                  - link "Middle Aged Chef Sitting for Portrait" [ref=e148] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/middle-aged-chef-sitting-for-portrait-gm2163829007-584151597?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A7726129f-a811-48d0-842a-09ea399ddf72
+                    - img "Middle Aged Chef Sitting for Portrait" [ref=e149]
+                - link "Get 20% off with code UNSPLASH20" [ref=e150] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A3584b77f-d903-4740-8783-a985593b44a4&phrase=dark+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+              - figure [ref=e151]:
+                - generic [ref=e153]:
+                  - link "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e154]:
+                    - /url: /photos/young-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e155]
+                  - link [ref=e156] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img [ref=e157]
+              - figure [ref=e159]:
+                - generic [ref=e161]:
+                  - link "Ready to cook. Vertical photo of young man in apron with tattoos on his arms sharpening a knife in a restaurant kitchen. Cooking concept" [ref=e162]:
+                    - /url: /photos/ready-to-cook-vertical-photo-of-young-man-in-apron-with-tattoos-on-his-arms-sharpening-a-knife-in-a-restaurant-kitchen-cooking-concept-67vnlCrBl64
+                    - img "Ready to cook. Vertical photo of young man in apron with tattoos on his arms sharpening a knife in a restaurant kitchen. Cooking concept" [ref=e163]
+                  - link [ref=e164] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fready-to-cook-vertical-photo-of-young-man-in-apron-with-tattoos-on-his-arms-sharpening-a-knife-in-a-restaurant-kitchen-cooking-concept-67vnlCrBl64
+                    - img [ref=e165]
+              - figure [ref=e167]:
+                - link "man in black dress shirt and black pants" [ref=e170]:
+                  - /url: /photos/man-in-black-dress-shirt-and-black-pants-epomvImeev4
+                  - img "man in black dress shirt and black pants" [ref=e171]
+              - figure [ref=e172]:
+                - link "a man standing in front of a graffiti covered wall" [ref=e175]:
+                  - /url: /photos/a-man-standing-in-front-of-a-graffiti-covered-wall-8M99nxsSAsI
+                  - img "a man standing in front of a graffiti covered wall" [ref=e176]
+              - figure [ref=e177]:
+                - link "a man sitting at a table with a candle" [ref=e180]:
+                  - /url: /photos/a-man-sitting-at-a-table-with-a-candle-TciDLrsStAw
+                  - img "a man sitting at a table with a candle" [ref=e181]
+            - generic [ref=e182]:
+              - figure [ref=e183]:
+                - link "a man in a chef's uniform is sprinkled with flour" [ref=e186]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-is-sprinkled-with-flour-XHGTrx2clAs
+                  - img "a man in a chef's uniform is sprinkled with flour" [ref=e187]
+              - figure [ref=e188]:
+                - link "man in white dress shirt" [ref=e191]:
+                  - /url: /photos/man-in-white-dress-shirt-okPdcD03F7g
+                  - img "man in white dress shirt" [ref=e192]
+              - figure [ref=e193]:
+                - link "woman in white button up long sleeve shirt standing beside white wall" [ref=e196]:
+                  - /url: /photos/woman-in-white-button-up-long-sleeve-shirt-standing-beside-white-wall-XA-d-UgI-Mw
+                  - img "woman in white button up long sleeve shirt standing beside white wall" [ref=e197]
+              - figure [ref=e198]:
+                - link "A man in a black shirt holding a white mug." [ref=e201]:
+                  - /url: /photos/a-man-in-a-black-shirt-holding-a-white-mug-MS0wES7057E
+                  - img "A man in a black shirt holding a white mug." [ref=e202]
+              - figure [ref=e203]:
+                - link "man in white button up t-shirt" [ref=e206]:
+                  - /url: /photos/man-in-white-button-up-t-shirt-SLUqLkFVwiY
+                  - img "man in white button up t-shirt" [ref=e207]
+              - figure [ref=e208]:
+                - link "A man holding a glass in front of a bar" [ref=e211]:
+                  - /url: /photos/a-man-holding-a-glass-in-front-of-a-bar-GDw70s8sA4c
+                  - img "A man holding a glass in front of a bar" [ref=e212]
+              - figure [ref=e213]:
+                - generic [ref=e215]:
+                  - link "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e216]:
+                    - /url: /photos/portrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                    - img "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e217]
+                  - link [ref=e218] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fportrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                    - img [ref=e219]
+              - figure [ref=e221]:
+                - link "a man in a black jacket looking up into the sky" [ref=e224]:
+                  - /url: /photos/a-man-in-a-black-jacket-looking-up-into-the-sky-zQXCEQpygKI
+                  - img "a man in a black jacket looking up into the sky" [ref=e225]
+            - generic [ref=e226]:
+              - contentinfo [ref=e231]:
+                - generic [ref=e237]: –– ––– ––– –– ––– – ––– ––– –––– – – –– ––– – – ––– –– –– –––– ––
+              - figure [ref=e239]:
+                - link "A man in a chef's uniform with orange beard." [ref=e242]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+                  - img "A man in a chef's uniform with orange beard." [ref=e243]
+              - figure [ref=e244]:
+                - link "a man with his hand on his face" [ref=e247]:
+                  - /url: /photos/a-man-with-his-hand-on-his-face-MhotuMtuI90
+                  - img "a man with his hand on his face" [ref=e248]
+              - figure [ref=e249]:
+                - link "man in black jacket and black pants standing" [ref=e252]:
+                  - /url: /photos/man-in-black-jacket-and-black-pants-standing-6z0eBU7er6I
+                  - img "man in black jacket and black pants standing" [ref=e253]
+              - figure [ref=e254]:
+                - generic [ref=e256]:
+                  - link "Mid age male chef using chopsticks, preparing asian food in studio" [ref=e257]:
+                    - /url: /photos/mid-age-male-chef-using-chopsticks-preparing-asian-food-in-studio-M7pNOo6-KQA
+                    - img "Mid age male chef using chopsticks, preparing asian food in studio" [ref=e258]
+                  - link [ref=e259] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fmid-age-male-chef-using-chopsticks-preparing-asian-food-in-studio-M7pNOo6-KQA
+                    - img [ref=e260]
+              - figure [ref=e262]:
+                - link "man in black dress shirt wearing black watch" [ref=e265]:
+                  - /url: /photos/man-in-black-dress-shirt-wearing-black-watch-idLxjZa2IsU
+                  - img "man in black dress shirt wearing black watch" [ref=e266]
+              - figure [ref=e267]:
+                - link "a man looking at his phone" [ref=e270]:
+                  - /url: /photos/a-man-looking-at-his-phone-vgT4fP62de4
+                  - img "a man looking at his phone" [ref=e271]
+          - generic [ref=e274]:
+            - heading "Browse premium images on iStock | Claim your discount now" [level=2] [ref=e275]:
+              - text: Browse premium images on iStock
+              - generic [ref=e276]: "| Claim your discount now"
+            - generic [ref=e278]:
+              - link "Young male chef putting on his uniform before preparing food" [ref=e279] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/young-male-chef-putting-on-his-uniform-before-preparing-food-gm1369383790-439155067?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Ae587649d-0f52-46ca-8283-32cfb93d7584
+                - img "Young male chef putting on his uniform before preparing food" [ref=e280]
+              - link "Smiling male cook on gray background" [ref=e281] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/smiling-male-cook-on-gray-background-gm1300835557-393037196?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Afcbed9cd-a8fc-4952-a95f-1e62f092add5
+                - img "Smiling male cook on gray background" [ref=e282]
+              - link "Chef team collaborating in a busy commercial ghost kitchen preparing food" [ref=e283] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-team-collaborating-in-a-busy-commercial-ghost-kitchen-preparing-food-gm2254730007-668030935?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Aef17186c-655b-4340-b818-64fd6efde89e
+                - img "Chef team collaborating in a busy commercial ghost kitchen preparing food" [ref=e284]
+              - link "African-American man putting on chef's whites" [ref=e285] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/african-american-man-putting-on-chefs-whites-gm2165396659-585597153?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Ab55cc633-2822-4e10-b809-2b44ecd850f8
+                - img "African-American man putting on chef's whites" [ref=e286]
+              - link "Chef standing with crossed arms in kitchen" [ref=e287] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-standing-with-crossed-arms-in-kitchen-gm2247012113-660936087?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3A4e44bc6e-78ed-4fb4-a333-388312d140d9
+                - img "Chef standing with crossed arms in kitchen" [ref=e288]
+              - link "Baker standing in front of shelves with bread" [ref=e289] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/baker-standing-in-front-of-shelves-with-bread-gm2272833175-685229155?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Ace9721ce-1154-4d94-9bb4-28035014e2c6
+                - img "Baker standing in front of shelves with bread" [ref=e290]
+              - link "male chef with a cap on his head and kitchenware light background" [ref=e291] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/male-chef-with-a-cap-on-his-head-and-kitchenware-light-background-gm2079517821-565129670?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Afda18306-b151-4cf0-9bcb-58cf4dbbe424
+                - img "male chef with a cap on his head and kitchenware light background" [ref=e292]
+              - generic [ref=e293]:
+                - link "Young adult man in black shirt looking away, standing in home interior, contemplating future plans" [ref=e294] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/photo/young-adult-man-in-black-shirt-looking-away-standing-in-home-interior-contemplating-gm2264436766-677155882?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Aaa25ef38-b764-46db-9b03-94097c6ba8ca
+                  - img "Young adult man in black shirt looking away, standing in home interior, contemplating future plans" [ref=e295]
+                - link "View more on iStock ↗" [ref=e296] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fdark-chef-jacket%3Forientation%3Dportrait&utm_term=dark+chef+jacket%3A%3A%3A%3Ae0ab356f-4076-4d4f-b631-5d8a09794b23&phrase=dark+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+          - button "Load more" [ref=e300] [cursor=pointer]
+          - generic [ref=e301]:
+            - link [ref=e302] [cursor=pointer]:
+              - /url: /
+              - img [ref=e303]
+            - paragraph [ref=e305]: Make something awesome
+    - generic:
+      - region "Notifications"

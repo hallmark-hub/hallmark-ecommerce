@@ -1,0 +1,267 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-uniform-cooking
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]: chef uniform cooking
+            - listbox
+          - button "Clear" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Visual search" [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Get Unsplash+" [ref=e60] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e61] [cursor=pointer]:
+            - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-uniform-cooking
+        - button "Submit an image" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e70]:
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Photos 164":
+                - /url: /s/photos/chef-uniform-cooking
+                - img
+                - text: Photos
+                - generic: "164"
+            - listitem [ref=e73]:
+              - link "Illustrations 27" [ref=e74] [cursor=pointer]:
+                - /url: /s/illustrations/chef-uniform-cooking
+                - img [ref=e75]
+                - text: Illustrations
+                - generic [ref=e77]: "27"
+            - listitem [ref=e78]:
+              - button "More" [ref=e79] [cursor=pointer]
+          - button "Filters" [ref=e81] [cursor=pointer]:
+            - img [ref=e83]
+            - text: Filters
+        - generic [ref=e85]:
+          - heading "Chef uniform cooking" [level=1] [ref=e87]
+          - generic [ref=e89]:
+            - button "scroll list to the right" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - generic [ref=e95]:
+              - link "chef" [ref=e97] [cursor=pointer]:
+                - /url: /s/photos/chef
+              - link "uniform" [ref=e99] [cursor=pointer]:
+                - /url: /s/photos/uniform
+              - link "food preparation" [ref=e101] [cursor=pointer]:
+                - /url: /s/photos/food-preparation
+              - link "culinary" [ref=e103] [cursor=pointer]:
+                - /url: /s/photos/culinary
+              - link "culinary art" [ref=e105] [cursor=pointer]:
+                - /url: /s/photos/culinary-art
+              - link "food service" [ref=e107] [cursor=pointer]:
+                - /url: /s/photos/food-service
+              - link "food industry" [ref=e109] [cursor=pointer]:
+                - /url: /s/photos/food-industry
+              - link "gourmet" [ref=e111] [cursor=pointer]:
+                - /url: /s/photos/gourmet
+              - link "gourmet food" [ref=e113] [cursor=pointer]:
+                - /url: /s/photos/gourmet-food
+              - link "food preparation technique" [ref=e115] [cursor=pointer]:
+                - /url: /s/photos/food-preparation-technique
+              - link "kitchen" [ref=e117] [cursor=pointer]:
+                - /url: /s/photos/kitchen
+              - link "food and beverage" [ref=e119] [cursor=pointer]:
+                - /url: /s/photos/food-and-beverage
+        - generic [ref=e121]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - figure [ref=e127]:
+                - generic [ref=e129]:
+                  - link "latin woman pastry chef wearing uniform holding a bowl preparing delicious sweets chocolates at kitchen in Mexico Latin America" [ref=e130]:
+                    - /url: /photos/latin-woman-pastry-chef-wearing-uniform-holding-a-bowl-preparing-delicious-sweets-chocolates-at-kitchen-in-mexico-latin-america-npMu3g4N6tY
+                    - img "latin woman pastry chef wearing uniform holding a bowl preparing delicious sweets chocolates at kitchen in Mexico Latin America" [ref=e131]
+                  - link [ref=e132] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Flatin-woman-pastry-chef-wearing-uniform-holding-a-bowl-preparing-delicious-sweets-chocolates-at-kitchen-in-mexico-latin-america-npMu3g4N6tY
+                    - img [ref=e133]
+              - generic [ref=e135]:
+                - heading "Sponsored images" [level=4] [ref=e136]:
+                  - generic [ref=e137]: Sponsored images
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3Abf02e1be-28f4-45ef-aafa-1fcb5d4be80e&phrase=chef+uniform+cooking&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+                    - img [ref=e139]
+                - generic [ref=e141]:
+                  - link "Chef in cooking class with a group of university students" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-in-cooking-class-with-a-group-of-university-students-gm2048176494-563119938?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A64ee7ccc-3fee-4df6-a1c2-a1f380a30575
+                    - img "Chef in cooking class with a group of university students" [ref=e143]
+                  - link "young beautiful smiling woman chef with arms crossed at kitchen" [ref=e144] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/young-beautiful-smiling-woman-chef-with-arms-crossed-at-kitchen-gm1298088270-391025991?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A520134d3-0778-4e69-86be-cd1ffa12ddca
+                    - img "young beautiful smiling woman chef with arms crossed at kitchen" [ref=e145]
+                  - link "Happy chef leading a group of cooks at a restaurant" [ref=e146] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/happy-chef-leading-a-group-of-cooks-at-a-restaurant-gm2213060209-629960730?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A296931b1-ea7e-4e4b-a922-b2f1c7c0540e
+                    - img "Happy chef leading a group of cooks at a restaurant" [ref=e147]
+                  - link "Chef cooking at a restaurant and flaming the food" [ref=e148] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-cooking-at-a-restaurant-and-flaming-the-food-gm1409730005-460179327?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A40086ce5-a205-46df-bf7c-d37a23079a4a
+                    - img "Chef cooking at a restaurant and flaming the food" [ref=e149]
+                - link "Get 20% off with code UNSPLASH20" [ref=e150] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3Abf02e1be-28f4-45ef-aafa-1fcb5d4be80e&phrase=chef+uniform+cooking&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+              - figure [ref=e151]:
+                - generic [ref=e153]:
+                  - link "latin woman pastry chef wearing uniform holding a bowl preparing delicious sweets chocolates at kitchen in Mexico Latin America" [ref=e154]:
+                    - /url: /photos/latin-woman-pastry-chef-wearing-uniform-holding-a-bowl-preparing-delicious-sweets-chocolates-at-kitchen-in-mexico-latin-america-KufmIFdcA4M
+                    - img "latin woman pastry chef wearing uniform holding a bowl preparing delicious sweets chocolates at kitchen in Mexico Latin America" [ref=e155]
+                  - link [ref=e156] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Flatin-woman-pastry-chef-wearing-uniform-holding-a-bowl-preparing-delicious-sweets-chocolates-at-kitchen-in-mexico-latin-america-KufmIFdcA4M
+                    - img [ref=e157]
+              - figure [ref=e159]:
+                - link "A chef in a white uniform and hat" [ref=e162]:
+                  - /url: /photos/a-chef-in-a-white-uniform-and-hat-v2uSGD98qRo
+                  - img "A chef in a white uniform and hat" [ref=e163]
+              - figure [ref=e164]:
+                - link "People working in a commercial kitchen" [ref=e167]:
+                  - /url: /photos/people-working-in-a-commercial-kitchen-YFK5dBI6Ftc
+                  - img "People working in a commercial kitchen" [ref=e168]
+              - figure [ref=e169]:
+                - link "Chef preparing food in a doorway" [ref=e172]:
+                  - /url: /photos/chef-preparing-food-in-a-doorway-xmdQ-PYSS_c
+                  - img "Chef preparing food in a doorway" [ref=e173]
+              - figure [ref=e174]:
+                - link "A chef in a white uniform with a tall hat." [ref=e177]:
+                  - /url: /photos/a-chef-in-a-white-uniform-with-a-tall-hat-b9BVeBMTqqA
+                  - img "A chef in a white uniform with a tall hat." [ref=e178]
+            - generic [ref=e179]:
+              - figure [ref=e180]:
+                - link "man wearing blue and white pinstripe apron slicing meat in kitchen" [ref=e183]:
+                  - /url: /photos/man-wearing-blue-and-white-pinstripe-apron-slicing-meat-in-kitchen-x5NGqt2hdrE
+                  - img "man wearing blue and white pinstripe apron slicing meat in kitchen" [ref=e184]
+              - figure [ref=e185]:
+                - link "A person in a black t-shirt and cap working." [ref=e188]:
+                  - /url: /photos/a-person-in-a-black-t-shirt-and-cap-working-D60qtJNkHfo
+                  - img "A person in a black t-shirt and cap working." [ref=e189]
+              - figure [ref=e190]:
+                - link "Two chefs preparing food in a kitchen." [ref=e193]:
+                  - /url: /photos/two-chefs-preparing-food-in-a-kitchen-t1YbYcjW57o
+                  - img "Two chefs preparing food in a kitchen." [ref=e194]
+              - figure [ref=e195]:
+                - link "Person in traditional japanese attire with lanterns" [ref=e198]:
+                  - /url: /photos/person-in-traditional-japanese-attire-with-lanterns-imdcmkPAW4M
+                  - img "Person in traditional japanese attire with lanterns" [ref=e199]
+              - figure [ref=e200]:
+                - generic [ref=e202]:
+                  - link "People in white uniform cooking food at kitchen together. Busy day at work." [ref=e203]:
+                    - /url: /photos/people-in-white-uniform-cooking-food-at-kitchen-together-busy-day-at-work-cNOBjBsNNUU
+                    - img "People in white uniform cooking food at kitchen together. Busy day at work." [ref=e204]
+                  - link [ref=e205] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fpeople-in-white-uniform-cooking-food-at-kitchen-together-busy-day-at-work-cNOBjBsNNUU
+                    - img [ref=e206]
+              - figure [ref=e208]:
+                - link "People working behind a counter in a restaurant." [ref=e211]:
+                  - /url: /photos/people-working-behind-a-counter-in-a-restaurant-w6v9UDCTD0c
+                  - img "People working behind a counter in a restaurant." [ref=e212]
+              - figure [ref=e213]:
+                - link "A man in a chef's uniform with orange beard." [ref=e216]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+                  - img "A man in a chef's uniform with orange beard." [ref=e217]
+            - generic [ref=e218]:
+              - contentinfo [ref=e223]:
+                - generic [ref=e229]: –– ––– ––– –– ––– – ––– ––– –––– – – –– ––– – – ––– –– –– –––– ––
+              - figure [ref=e231]:
+                - link "Chefs working in a busy restaurant kitchen" [ref=e234]:
+                  - /url: /photos/chefs-working-in-a-busy-restaurant-kitchen-dAGv2gGGj-4
+                  - img "Chefs working in a busy restaurant kitchen" [ref=e235]
+              - figure [ref=e236]:
+                - link "Young chef in white uniform smiles while cooking" [ref=e239]:
+                  - /url: /photos/young-chef-in-white-uniform-smiles-while-cooking-hgc1apUBXYM
+                  - img "Young chef in white uniform smiles while cooking" [ref=e240]
+              - figure [ref=e241]:
+                - generic [ref=e243]:
+                  - link "Chef in restaurant kitchen holding plate with italian meal spaghetti bolognese." [ref=e244]:
+                    - /url: /photos/chef-in-restaurant-kitchen-holding-plate-with-italian-meal-spaghetti-bolognese-tTvrZ4G3VI4
+                    - img "Chef in restaurant kitchen holding plate with italian meal spaghetti bolognese." [ref=e245]
+                  - link [ref=e246] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fchef-in-restaurant-kitchen-holding-plate-with-italian-meal-spaghetti-bolognese-tTvrZ4G3VI4
+                    - img [ref=e247]
+              - figure [ref=e249]:
+                - link "Chef working in a brightly lit kitchen at night" [ref=e252]:
+                  - /url: /photos/chef-working-in-a-brightly-lit-kitchen-at-night-2NnnIxX2ec4
+                  - img "Chef working in a brightly lit kitchen at night" [ref=e253]
+              - figure [ref=e254]:
+                - link "Chef working in a warm-lit kitchen through a window." [ref=e257]:
+                  - /url: /photos/chef-working-in-a-warm-lit-kitchen-through-a-window-0EGgDzBQHT8
+                  - img "Chef working in a warm-lit kitchen through a window." [ref=e258]
+              - figure [ref=e259]:
+                - generic [ref=e261]:
+                  - link "Uses frying pan. Chef in white uniform cooking food at kitchen. Busy day at work." [ref=e262]:
+                    - /url: /photos/uses-frying-pan-chef-in-white-uniform-cooking-food-at-kitchen-busy-day-at-work-VfP1_oydREI
+                    - img "Uses frying pan. Chef in white uniform cooking food at kitchen. Busy day at work." [ref=e263]
+                  - link [ref=e264] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fuses-frying-pan-chef-in-white-uniform-cooking-food-at-kitchen-busy-day-at-work-VfP1_oydREI
+                    - img [ref=e265]
+              - figure [ref=e267]:
+                - link "Two smiling chefs in white uniforms pose together." [ref=e270]:
+                  - /url: /photos/two-smiling-chefs-in-white-uniforms-pose-together-jznqNAxGDko
+                  - img "Two smiling chefs in white uniforms pose together." [ref=e271]
+          - generic [ref=e274]:
+            - heading "Browse premium images on iStock | Claim your discount now" [level=2] [ref=e275]:
+              - text: Browse premium images on iStock
+              - generic [ref=e276]: "| Claim your discount now"
+            - generic [ref=e278]:
+              - link "Chefs cooking in restaurant kitchen" [ref=e279] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chefs-cooking-in-restaurant-kitchen-gm164850564-164850564?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A10fb971a-3511-4e50-8742-e05c9b70eb33
+                - img "Chefs cooking in restaurant kitchen" [ref=e280]
+              - link "Happy black female chef preparing food in frying pan at restaurant kitchen." [ref=e281] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/happy-black-female-chef-preparing-food-in-frying-pan-at-restaurant-kitchen-gm1394055240-449679919?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A21111b90-3896-4ab4-a4c7-224c49612de0
+                - img "Happy black female chef preparing food in frying pan at restaurant kitchen." [ref=e282]
+              - link "Little boy chef tasting soup." [ref=e283] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/little-boy-chef-tasting-soup-gm587539440-100862675?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A8fdb7c44-bc2a-48f8-8f45-4f1b6786ee6f
+                - img "Little boy chef tasting soup." [ref=e284]
+              - link "Chefs are preparing salads" [ref=e285] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chefs-are-preparing-salads-gm623489638-109369861?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A8a712f84-5bfc-44e1-8493-1175bdb26887
+                - img "Chefs are preparing salads" [ref=e286]
+              - link "Chef whites flat lay" [ref=e287] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-whites-flat-lay-gm984746744-267205358?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3Ae5b33ec1-5268-4090-a785-5fe6f916d2e4
+                - img "Chef whites flat lay" [ref=e288]
+              - link "Chef young man making fries on a commercial kitchen" [ref=e289] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-young-man-making-fries-on-a-commercial-kitchen-gm1668004035-535578452?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A11f3f692-fa5f-467d-808f-888fd24a7e29
+                - img "Chef young man making fries on a commercial kitchen" [ref=e290]
+              - link "Chef cooking a traditional meal" [ref=e291] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/chef-cooking-a-traditional-meal-gm1288463201-384407908?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3Acaf2f694-dee0-42d4-84e2-f5142d70f50c
+                - img "Chef cooking a traditional meal" [ref=e292]
+              - generic [ref=e293]:
+                - link "Happy black cook serving a meal in the kitchen in restaurant and looking at camera." [ref=e294] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/photo/happy-black-cook-serving-a-meal-in-the-kitchen-in-restaurant-and-looking-at-camera-gm2030133420-561987779?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A71ae590b-26f2-421f-a91c-b35cbe20751c
+                  - img "Happy black cook serving a meal in the kitchen in restaurant and looking at camera." [ref=e295]
+                - link "View more on iStock ↗" [ref=e296] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-uniform-cooking&utm_term=chef+uniform+cooking%3A%3A%3A%3A2ec42f59-e89a-4fb7-9bc5-5e8e35439ed5&phrase=chef+uniform+cooking&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+          - button "Load more" [ref=e300] [cursor=pointer]
+          - generic [ref=e301]:
+            - link [ref=e302] [cursor=pointer]:
+              - /url: /
+              - img [ref=e303]
+            - paragraph [ref=e305]: Make something awesome
+    - generic:
+      - region "Notifications"

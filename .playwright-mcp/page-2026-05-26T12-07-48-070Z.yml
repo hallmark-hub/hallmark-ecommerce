@@ -1,0 +1,339 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]
+            - listbox
+          - button "Visual search" [ref=e52] [cursor=pointer]:
+            - img [ref=e53]
+        - generic [ref=e55]:
+          - link "Get Unsplash+" [ref=e56] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e57] [cursor=pointer]:
+            - /url: /login?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+        - button "Submit an image" [ref=e59] [cursor=pointer]
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - banner [ref=e63]:
+            - generic [ref=e65]:
+              - link [ref=e66] [cursor=pointer]:
+                - /url: /@gettyimages
+              - generic [ref=e69]:
+                - link "Getty Images" [ref=e70] [cursor=pointer]:
+                  - /url: /@gettyimages
+                - generic [ref=e71]:
+                  - text: For
+                  - link "Unsplash+" [ref=e72] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+            - generic [ref=e73]:
+              - button "Bookmark" [ref=e74] [cursor=pointer]:
+                - img [ref=e75]
+              - button "Add to Collection" [ref=e77] [cursor=pointer]:
+                - img [ref=e78]
+              - button "Edit image" [ref=e80] [cursor=pointer]:
+                - text: Edit image
+                - img [ref=e81]
+              - button "Download" [ref=e84] [cursor=pointer]:
+                - img [ref=e85]
+                - text: Download
+          - button "Zoom in on this image" [ref=e90]:
+            - img "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e91]
+            - generic:
+              - generic:
+                - img
+          - generic [ref=e92]:
+            - generic [ref=e94]:
+              - button "Share this image" [ref=e95] [cursor=pointer]:
+                - img [ref=e96]
+                - generic [ref=e98]: Share
+              - button "More Actions" [ref=e99] [cursor=pointer]:
+                - img [ref=e100]
+            - generic [ref=e103]:
+              - heading "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [level=1] [ref=e105]
+              - paragraph [ref=e109]: Download this HD photo of food, kitchen, adult, and cooking by Getty Images (@gettyimages)
+              - generic [ref=e111]:
+                - generic [ref=e112]:
+                  - img [ref=e113]
+                  - generic [ref=e116]:
+                    - text: Published on
+                    - time [ref=e117]: September 27, 2022
+                - generic [ref=e118]:
+                  - img [ref=e119]
+                  - generic [ref=e121]:
+                    - text: Licensed under the
+                    - link "Unsplash+ License" [ref=e122] [cursor=pointer]:
+                      - /url: /plus/license
+            - generic [ref=e124]:
+              - link "food" [ref=e125] [cursor=pointer]:
+                - /url: /s/photos/food
+              - link "kitchen" [ref=e126] [cursor=pointer]:
+                - /url: /s/photos/kitchen
+              - link "adult" [ref=e127] [cursor=pointer]:
+                - /url: /s/photos/adult
+              - link "cooking" [ref=e128] [cursor=pointer]:
+                - /url: /s/photos/cooking
+              - link "chef" [ref=e129] [cursor=pointer]:
+                - /url: /s/photos/chef
+              - link "mushrooms" [ref=e130] [cursor=pointer]:
+                - /url: /s/photos/mushrooms
+              - link "smiling" [ref=e131] [cursor=pointer]:
+                - /url: /s/photos/smiling
+              - link "restaurant kitchen" [ref=e132] [cursor=pointer]:
+                - /url: /s/photos/restaurant-kitchen
+              - link "ingredients" [ref=e133] [cursor=pointer]:
+                - /url: /s/photos/ingredients
+              - link "equipment" [ref=e134] [cursor=pointer]:
+                - /url: /s/photos/equipment
+              - link "one person" [ref=e135] [cursor=pointer]:
+                - /url: /s/photos/one-person
+              - link "commercial kitchen" [ref=e136] [cursor=pointer]:
+                - /url: /s/photos/commercial-kitchen
+              - link "culinary" [ref=e137] [cursor=pointer]:
+                - /url: /s/photos/culinary
+              - link "preparation" [ref=e138] [cursor=pointer]:
+                - /url: /s/photos/preparation
+              - link "food industry" [ref=e139] [cursor=pointer]:
+                - /url: /s/photos/food-industry
+              - link "food preparation" [ref=e140] [cursor=pointer]:
+                - /url: /s/photos/food-preparation
+              - link "real people" [ref=e141] [cursor=pointer]:
+                - /url: /s/photos/real-people
+              - link "gourmet" [ref=e142] [cursor=pointer]:
+                - /url: /s/photos/gourmet
+              - link "food science" [ref=e143] [cursor=pointer]:
+                - /url: /s/photos/food-science
+              - link "food business" [ref=e144] [cursor=pointer]:
+                - /url: /s/photos/food-business
+        - generic [ref=e147]:
+          - generic [ref=e148]:
+            - paragraph [ref=e150]: From this series
+            - generic [ref=e153]:
+              - generic [ref=e154]:
+                - link [ref=e155] [cursor=pointer]:
+                  - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-in-uniform-bending-by-kitchen-table-and-putting-boiled-mussels-on-plate-while-taking-them-out-of-metallic-pan-before-serving-XNY_X-cP8ew
+                  - img [ref=e156]
+                - link "Young male chef in uniform bending by kitchen table and putting boiled mussels on plate while taking them out of metallic pan before serving" [ref=e158]:
+                  - /url: /photos/young-male-chef-in-uniform-bending-by-kitchen-table-and-putting-boiled-mussels-on-plate-while-taking-them-out-of-metallic-pan-before-serving-XNY_X-cP8ew
+                  - img "Young male chef in uniform bending by kitchen table and putting boiled mussels on plate while taking them out of metallic pan before serving" [ref=e159]
+              - generic [ref=e160]:
+                - link [ref=e161] [cursor=pointer]:
+                  - /url: /plus?referrer=%2Fphotos%2Fyoung-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                  - img [ref=e162]
+                - link "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e164]:
+                  - /url: /photos/young-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                  - img "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e165]
+              - generic [ref=e166]:
+                - link [ref=e167] [cursor=pointer]:
+                  - /url: /plus?referrer=%2Fphotos%2Fhands-of-young-chef-grating-fresh-cheese-into-ceramic-bowl-containing-salad-consisting-of-ruccola-boiled-shrimps-and-other-ingredients-JH4TkG4EaoI
+                  - img [ref=e168]
+                - link "Hands of young chef grating fresh cheese into ceramic bowl containing salad consisting of ruccola, boiled shrimps and other ingredients" [ref=e170]:
+                  - /url: /photos/hands-of-young-chef-grating-fresh-cheese-into-ceramic-bowl-containing-salad-consisting-of-ruccola-boiled-shrimps-and-other-ingredients-JH4TkG4EaoI
+                  - img "Hands of young chef grating fresh cheese into ceramic bowl containing salad consisting of ruccola, boiled shrimps and other ingredients" [ref=e171]
+              - generic [ref=e172]:
+                - link [ref=e173] [cursor=pointer]:
+                  - /url: /plus?referrer=%2Fphotos%2Fgloved-hand-of-contemporary-chef-of-restaurant-mixing-chopped-ruccola-and-beans-in-metallic-bowl-before-putting-the-mixture-into-garnish-9RcBE2Vw5kk
+                  - img [ref=e174]
+                - link "Gloved hand of contemporary chef of restaurant mixing chopped ruccola and beans in metallic bowl before putting the mixture into garnish" [ref=e176]:
+                  - /url: /photos/gloved-hand-of-contemporary-chef-of-restaurant-mixing-chopped-ruccola-and-beans-in-metallic-bowl-before-putting-the-mixture-into-garnish-9RcBE2Vw5kk
+                  - img "Gloved hand of contemporary chef of restaurant mixing chopped ruccola and beans in metallic bowl before putting the mixture into garnish" [ref=e177]
+          - generic [ref=e178]:
+            - heading "Related images" [level=4] [ref=e180]
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - figure [ref=e186]:
+                  - generic [ref=e188]:
+                    - link "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e189]:
+                      - /url: /photos/young-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                      - img "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e190]
+                    - link [ref=e191] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fyoung-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                      - img [ref=e192]
+                - figure [ref=e194]:
+                  - generic [ref=e196]:
+                    - link "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e197]:
+                      - /url: /photos/professional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-rcvprAd6N60
+                      - img "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e198]
+                    - link [ref=e199] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fprofessional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-rcvprAd6N60
+                      - img [ref=e200]
+                - figure [ref=e202]:
+                  - generic [ref=e204]:
+                    - link "a man holding a plate of food in a kitchen" [ref=e205]:
+                      - /url: /photos/a-man-holding-a-plate-of-food-in-a-kitchen-tUCyUtRset4
+                      - img "a man holding a plate of food in a kitchen" [ref=e206]
+                    - link [ref=e207] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-holding-a-plate-of-food-in-a-kitchen-tUCyUtRset4
+                      - img [ref=e208]
+                - figure [ref=e210]:
+                  - generic [ref=e212]:
+                    - link "Croissants with sugar. Dark-haired baker in white jacket decorating croissants with sugar powder" [ref=e213]:
+                      - /url: /photos/croissants-with-sugar-dark-haired-baker-in-white-jacket-decorating-croissants-with-sugar-powder-JGwWaBOwFC8
+                      - img "Croissants with sugar. Dark-haired baker in white jacket decorating croissants with sugar powder" [ref=e214]
+                    - link [ref=e215] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fcroissants-with-sugar-dark-haired-baker-in-white-jacket-decorating-croissants-with-sugar-powder-JGwWaBOwFC8
+                      - img [ref=e216]
+                - figure [ref=e218]:
+                  - generic [ref=e220]:
+                    - link "a man is preparing food in a kitchen" [ref=e221]:
+                      - /url: /photos/a-man-is-preparing-food-in-a-kitchen-GviTWayysgQ
+                      - img "a man is preparing food in a kitchen" [ref=e222]
+                    - link [ref=e223] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-is-preparing-food-in-a-kitchen-GviTWayysgQ
+                      - img [ref=e224]
+                - figure [ref=e226]:
+                  - generic [ref=e228]:
+                    - link "a man in a kitchen preparing food on a plate" [ref=e229]:
+                      - /url: /photos/a-man-in-a-kitchen-preparing-food-on-a-plate-vODFjFr_trY
+                      - img "a man in a kitchen preparing food on a plate" [ref=e230]
+                    - link [ref=e231] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-in-a-kitchen-preparing-food-on-a-plate-vODFjFr_trY
+                      - img [ref=e232]
+              - generic [ref=e234]:
+                - figure [ref=e235]:
+                  - generic [ref=e237]:
+                    - link "Contemporary young professional male chef bending over kitchen table while choosing green dill or parsley for decorating vegetables or meat" [ref=e238]:
+                      - /url: /photos/contemporary-young-professional-male-chef-bending-over-kitchen-table-while-choosing-green-dill-or-parsley-for-decorating-vegetables-or-meat-6vxWh3S-2pA
+                      - img "Contemporary young professional male chef bending over kitchen table while choosing green dill or parsley for decorating vegetables or meat" [ref=e239]
+                    - link [ref=e240] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fcontemporary-young-professional-male-chef-bending-over-kitchen-table-while-choosing-green-dill-or-parsley-for-decorating-vegetables-or-meat-6vxWh3S-2pA
+                      - img [ref=e241]
+                - figure [ref=e243]:
+                  - generic [ref=e245]:
+                    - link "Inspiration in cooking. Young male chef with several tattoos on his arms is garnishing italian pasta in a restaurant kitchen. Food decoration" [ref=e246]:
+                      - /url: /photos/inspiration-in-cooking-young-male-chef-with-several-tattoos-on-his-arms-is-garnishing-italian-pasta-in-a-restaurant-kitchen-food-decoration-98XNcnV12Cw
+                      - img "Inspiration in cooking. Young male chef with several tattoos on his arms is garnishing italian pasta in a restaurant kitchen. Food decoration" [ref=e247]
+                    - link [ref=e248] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Finspiration-in-cooking-young-male-chef-with-several-tattoos-on-his-arms-is-garnishing-italian-pasta-in-a-restaurant-kitchen-food-decoration-98XNcnV12Cw
+                      - img [ref=e249]
+                - figure [ref=e251]:
+                  - generic [ref=e253]:
+                    - link "Young male chef in uniform bending by kitchen table and putting boiled mussels on plate while taking them out of metallic pan before serving" [ref=e254]:
+                      - /url: /photos/young-male-chef-in-uniform-bending-by-kitchen-table-and-putting-boiled-mussels-on-plate-while-taking-them-out-of-metallic-pan-before-serving-XNY_X-cP8ew
+                      - img "Young male chef in uniform bending by kitchen table and putting boiled mussels on plate while taking them out of metallic pan before serving" [ref=e255]
+                    - link [ref=e256] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-in-uniform-bending-by-kitchen-table-and-putting-boiled-mussels-on-plate-while-taking-them-out-of-metallic-pan-before-serving-XNY_X-cP8ew
+                      - img [ref=e257]
+                - figure [ref=e259]:
+                  - generic [ref=e261]:
+                    - link "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e262]:
+                      - /url: /photos/portrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                      - img "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e263]
+                    - link [ref=e264] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fportrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                      - img [ref=e265]
+                - figure [ref=e267]:
+                  - generic [ref=e269]:
+                    - link "a man in an apron cutting meat on a cutting board" [ref=e270]:
+                      - /url: /photos/a-man-in-an-apron-cutting-meat-on-a-cutting-board-a9jPHNzeR6U
+                      - img "a man in an apron cutting meat on a cutting board" [ref=e271]
+                    - link [ref=e272] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-in-an-apron-cutting-meat-on-a-cutting-board-a9jPHNzeR6U
+                      - img [ref=e273]
+                - figure [ref=e275]:
+                  - generic [ref=e277]:
+                    - link "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e278]:
+                      - /url: /photos/professional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-xXtjPS6F7-I
+                      - img "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e279]
+                    - link [ref=e280] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fprofessional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-xXtjPS6F7-I
+                      - img [ref=e281]
+                - figure [ref=e283]:
+                  - generic [ref=e285]:
+                    - link "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e286]:
+                      - /url: /photos/professional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-2VDsE45M7V4
+                      - img "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e287]
+                    - link [ref=e288] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fprofessional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-2VDsE45M7V4
+                      - img [ref=e289]
+              - generic [ref=e291]:
+                - figure [ref=e292]:
+                  - generic [ref=e294]:
+                    - link "a man in a kitchen preparing food in a frying pan" [ref=e295]:
+                      - /url: /photos/a-man-in-a-kitchen-preparing-food-in-a-frying-pan-yjWJ6fkggnk
+                      - img "a man in a kitchen preparing food in a frying pan" [ref=e296]
+                    - link [ref=e297] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-in-a-kitchen-preparing-food-in-a-frying-pan-yjWJ6fkggnk
+                      - img [ref=e298]
+                - figure [ref=e300]:
+                  - generic [ref=e302]:
+                    - link "Slow motion. Handsome restaurant chef in apron and with tattoos on his arms adding his famous sauce to the dish. Cooking process" [ref=e303]:
+                      - /url: /photos/slow-motion-handsome-restaurant-chef-in-apron-and-with-tattoos-on-his-arms-adding-his-famous-sauce-to-the-dish-cooking-process-Jy96Q8DGPgc
+                      - img "Slow motion. Handsome restaurant chef in apron and with tattoos on his arms adding his famous sauce to the dish. Cooking process" [ref=e304]
+                    - link [ref=e305] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fslow-motion-handsome-restaurant-chef-in-apron-and-with-tattoos-on-his-arms-adding-his-famous-sauce-to-the-dish-cooking-process-Jy96Q8DGPgc
+                      - img [ref=e306]
+                - figure [ref=e308]:
+                  - generic [ref=e310]:
+                    - link "a man standing in a kitchen preparing food" [ref=e311]:
+                      - /url: /photos/a-man-standing-in-a-kitchen-preparing-food-lwssD_YxMnA
+                      - img "a man standing in a kitchen preparing food" [ref=e312]
+                    - link [ref=e313] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-standing-in-a-kitchen-preparing-food-lwssD_YxMnA
+                      - img [ref=e314]
+                - figure [ref=e316]:
+                  - generic [ref=e318]:
+                    - link "a man standing in a kitchen preparing food" [ref=e319]:
+                      - /url: /photos/a-man-standing-in-a-kitchen-preparing-food-c3Kon5vybZ0
+                      - img "a man standing in a kitchen preparing food" [ref=e320]
+                    - link [ref=e321] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-standing-in-a-kitchen-preparing-food-c3Kon5vybZ0
+                      - img [ref=e322]
+                - figure [ref=e324]:
+                  - generic [ref=e326]:
+                    - link "a man in a kitchen preparing food on a cutting board" [ref=e327]:
+                      - /url: /photos/a-man-in-a-kitchen-preparing-food-on-a-cutting-board-5SlCp_WEeTw
+                      - img "a man in a kitchen preparing food on a cutting board" [ref=e328]
+                    - link [ref=e329] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-in-a-kitchen-preparing-food-on-a-cutting-board-5SlCp_WEeTw
+                      - img [ref=e330]
+                - figure [ref=e332]:
+                  - generic [ref=e334]:
+                    - link "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e335]:
+                      - /url: /photos/professional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-jnVQH3LiIQE
+                      - img "Professional military base chef or cook preparing delicious tasty meal with fresh salmon fish and salad." [ref=e336]
+                    - link [ref=e337] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fprofessional-military-base-chef-or-cook-preparing-delicious-tasty-meal-with-fresh-salmon-fish-and-salad-jnVQH3LiIQE
+                      - img [ref=e338]
+                - figure [ref=e340]:
+                  - generic [ref=e342]:
+                    - link "Some spices and dish is ready" [ref=e343]:
+                      - /url: /photos/some-spices-and-dish-is-ready-PA-Xo2eF1cs
+                      - img "Some spices and dish is ready" [ref=e344]
+                    - link [ref=e345] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fsome-spices-and-dish-is-ready-PA-Xo2eF1cs
+                      - img [ref=e346]
+    - generic:
+      - region "Notifications"

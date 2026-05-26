@@ -1,0 +1,267 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-black-coat-uniform
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]: chef black coat uniform
+            - listbox
+          - button "Clear" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Visual search" [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Get Unsplash+" [ref=e60] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e61] [cursor=pointer]:
+            - /url: /login?referrer=%2Fs%2Fphotos%2Fchef-black-coat-uniform
+        - button "Submit an image" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e70]:
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Photos 280":
+                - /url: /s/photos/chef-black-coat-uniform
+                - img
+                - text: Photos
+                - generic: "280"
+            - listitem [ref=e73]:
+              - link "Illustrations 13" [ref=e74] [cursor=pointer]:
+                - /url: /s/illustrations/chef-black-coat-uniform
+                - img [ref=e75]
+                - text: Illustrations
+                - generic [ref=e77]: "13"
+            - listitem [ref=e78]:
+              - button "More" [ref=e79] [cursor=pointer]
+          - button "Filters" [ref=e81] [cursor=pointer]:
+            - img [ref=e83]
+            - text: Filters
+        - generic [ref=e85]:
+          - heading "Chef black coat uniform" [level=1] [ref=e87]
+          - generic [ref=e89]:
+            - button "scroll list to the right" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - generic [ref=e95]:
+              - link "chef" [ref=e97] [cursor=pointer]:
+                - /url: /s/photos/chef
+              - link "food preparation" [ref=e99] [cursor=pointer]:
+                - /url: /s/photos/food-preparation
+              - link "culinary art" [ref=e101] [cursor=pointer]:
+                - /url: /s/photos/culinary-art
+              - link "ingredient" [ref=e103] [cursor=pointer]:
+                - /url: /s/photos/ingredient
+              - link "cooking" [ref=e105] [cursor=pointer]:
+                - /url: /s/photos/cooking
+              - link "kitchen" [ref=e107] [cursor=pointer]:
+                - /url: /s/photos/kitchen
+              - link "culinary" [ref=e109] [cursor=pointer]:
+                - /url: /s/photos/culinary
+              - link "professional chef" [ref=e111] [cursor=pointer]:
+                - /url: /s/photos/professional-chef
+              - link "food industry" [ref=e113] [cursor=pointer]:
+                - /url: /s/photos/food-industry
+              - link "one person" [ref=e115] [cursor=pointer]:
+                - /url: /s/photos/one-person
+              - link "gourmet" [ref=e117] [cursor=pointer]:
+                - /url: /s/photos/gourmet
+              - link "culinary expertise" [ref=e119] [cursor=pointer]:
+                - /url: /s/photos/culinary-expertise
+        - generic [ref=e121]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - figure [ref=e127]:
+                - generic [ref=e129]:
+                  - link "a woman in a kitchen slicing mushrooms on a cutting board" [ref=e130]:
+                    - /url: /photos/a-woman-in-a-kitchen-slicing-mushrooms-on-a-cutting-board-mIuDFzb-ueU
+                    - img "a woman in a kitchen slicing mushrooms on a cutting board" [ref=e131]
+                  - link [ref=e132] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fa-woman-in-a-kitchen-slicing-mushrooms-on-a-cutting-board-mIuDFzb-ueU
+                    - img [ref=e133]
+              - generic [ref=e135]:
+                - heading "Sponsored images" [level=4] [ref=e136]:
+                  - generic [ref=e137]: Sponsored images
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Acc9a7153-e5e4-4c94-9e53-da9503299e60&phrase=chef+black+coat+uniform&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+                    - img [ref=e139]
+                - generic [ref=e141]:
+                  - link "adult red cat sits on a table where a cook in a black uniform prepares food" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/adult-red-cat-sits-on-a-table-where-a-cook-in-a-black-uniform-prepares-food-gm1213344220-352599438?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A93f698dd-79c4-4770-846a-36edf47d146d
+                    - img "adult red cat sits on a table where a cook in a black uniform prepares food" [ref=e143]
+                  - link "Portrait of beautiful woman, chef posing with hands on waist over white background" [ref=e144] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/portrait-of-beautiful-woman-chef-posing-with-hands-on-waist-over-white-background-gm1353821380-428810617?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A102b9399-93f1-4b3d-9e48-47e1de4b3894
+                    - img "Portrait of beautiful woman, chef posing with hands on waist over white background" [ref=e145]
+                  - link "Rear view asian chinese chef tying up apron getting read to work at commercial kitchen" [ref=e146] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/rear-view-asian-chinese-chef-tying-up-apron-getting-read-to-work-at-commercial-gm1417839947-464775561?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A092da404-263d-4b4b-80ce-89733bde2149
+                    - img "Rear view asian chinese chef tying up apron getting read to work at commercial kitchen" [ref=e147]
+                  - link "Fullbody portrait of Afro American professional cook isolated." [ref=e148] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/fullbody-portrait-of-afro-american-professional-cook-isolated-gm512894626-87362981?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A21436ab0-36c3-49d7-bd57-96f828905d57
+                    - img "Fullbody portrait of Afro American professional cook isolated." [ref=e149]
+                - link "Get 20% off with code UNSPLASH20" [ref=e150] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Acc9a7153-e5e4-4c94-9e53-da9503299e60&phrase=chef+black+coat+uniform&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+              - figure [ref=e151]:
+                - link "A chef in a white uniform and hat" [ref=e154]:
+                  - /url: /photos/a-chef-in-a-white-uniform-and-hat-v2uSGD98qRo
+                  - img "A chef in a white uniform and hat" [ref=e155]
+              - figure [ref=e156]:
+                - link "man in white dress shirt" [ref=e159]:
+                  - /url: /photos/man-in-white-dress-shirt-okPdcD03F7g
+                  - img "man in white dress shirt" [ref=e160]
+              - figure [ref=e161]:
+                - link "A chef prepares vegetables for a pizza." [ref=e164]:
+                  - /url: /photos/a-chef-prepares-vegetables-for-a-pizza-0lK5KjAQXUU
+                  - img "A chef prepares vegetables for a pizza." [ref=e165]
+              - figure [ref=e166]:
+                - link "Young chef in white uniform smiles while cooking" [ref=e169]:
+                  - /url: /photos/young-chef-in-white-uniform-smiles-while-cooking-hgc1apUBXYM
+                  - img "Young chef in white uniform smiles while cooking" [ref=e170]
+              - figure [ref=e171]:
+                - link "Young chef in uniform holding a pan and spatula" [ref=e174]:
+                  - /url: /photos/young-chef-in-uniform-holding-a-pan-and-spatula-RJR2SCm4SOY
+                  - img "Young chef in uniform holding a pan and spatula" [ref=e175]
+            - generic [ref=e176]:
+              - figure [ref=e177]:
+                - link "a man in a chef's uniform is sprinkled with flour" [ref=e180]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-is-sprinkled-with-flour-XHGTrx2clAs
+                  - img "a man in a chef's uniform is sprinkled with flour" [ref=e181]
+              - figure [ref=e182]:
+                - link "A man in a chef's uniform with orange beard." [ref=e185]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+                  - img "A man in a chef's uniform with orange beard." [ref=e186]
+              - figure [ref=e187]:
+                - link "A chef in a white uniform with a tall hat." [ref=e190]:
+                  - /url: /photos/a-chef-in-a-white-uniform-with-a-tall-hat-b9BVeBMTqqA
+                  - img "A chef in a white uniform with a tall hat." [ref=e191]
+              - figure [ref=e192]:
+                - generic [ref=e194]:
+                  - link "Ready to cook. Vertical photo of young man in apron with tattoos on his arms sharpening a knife in a restaurant kitchen. Cooking concept" [ref=e195]:
+                    - /url: /photos/ready-to-cook-vertical-photo-of-young-man-in-apron-with-tattoos-on-his-arms-sharpening-a-knife-in-a-restaurant-kitchen-cooking-concept-67vnlCrBl64
+                    - img "Ready to cook. Vertical photo of young man in apron with tattoos on his arms sharpening a knife in a restaurant kitchen. Cooking concept" [ref=e196]
+                  - link [ref=e197] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fready-to-cook-vertical-photo-of-young-man-in-apron-with-tattoos-on-his-arms-sharpening-a-knife-in-a-restaurant-kitchen-cooking-concept-67vnlCrBl64
+                    - img [ref=e198]
+              - figure [ref=e200]:
+                - link "man in black t-shirt holding a cup" [ref=e203]:
+                  - /url: /photos/man-in-black-t-shirt-holding-a-cup-3fZGScw-WMQ
+                  - img "man in black t-shirt holding a cup" [ref=e204]
+              - figure [ref=e205]:
+                - link "a chef writing on a clipboard in a kitchen" [ref=e208]:
+                  - /url: /photos/a-chef-writing-on-a-clipboard-in-a-kitchen-bRO-a4CiMFQ
+                  - img "a chef writing on a clipboard in a kitchen" [ref=e209]
+              - figure [ref=e210]:
+                - generic [ref=e212]:
+                  - link "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e213]:
+                    - /url: /photos/portrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                    - img "Portrait of male chef cooking pho bo in studio, cutting spicy red pepper on the board, on black background" [ref=e214]
+                  - link [ref=e215] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fportrait-of-male-chef-cooking-pho-bo-in-studio-cutting-spicy-red-pepper-on-the-board-on-black-background-oszkrABtl6M
+                    - img [ref=e216]
+              - figure [ref=e218]:
+                - link "A woman in an apron standing in a kitchen" [ref=e221]:
+                  - /url: /photos/a-woman-in-an-apron-standing-in-a-kitchen-9CEsgroCdBo
+                  - img "A woman in an apron standing in a kitchen" [ref=e222]
+            - generic [ref=e223]:
+              - contentinfo [ref=e228]:
+                - generic [ref=e234]: –– ––– ––– –– ––– – ––– ––– –––– – – –– ––– – – ––– –– –– –––– ––
+              - figure [ref=e236]:
+                - link "A chef poses with arms crossed." [ref=e239]:
+                  - /url: /photos/a-chef-poses-with-arms-crossed-gF8crZ-ZK-A
+                  - img "A chef poses with arms crossed." [ref=e240]
+              - figure [ref=e241]:
+                - generic [ref=e243]:
+                  - link "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e244]:
+                    - /url: /photos/young-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e245]
+                  - link [ref=e246] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img [ref=e247]
+              - figure [ref=e249]:
+                - link "a chef is preparing food in a kitchen" [ref=e252]:
+                  - /url: /photos/a-chef-is-preparing-food-in-a-kitchen-VWnk-3Jd-rU
+                  - img "a chef is preparing food in a kitchen" [ref=e253]
+              - figure [ref=e254]:
+                - generic [ref=e256]:
+                  - link "Mid age male chef using chopsticks, preparing asian food in studio" [ref=e257]:
+                    - /url: /photos/mid-age-male-chef-using-chopsticks-preparing-asian-food-in-studio-M7pNOo6-KQA
+                    - img "Mid age male chef using chopsticks, preparing asian food in studio" [ref=e258]
+                  - link [ref=e259] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fmid-age-male-chef-using-chopsticks-preparing-asian-food-in-studio-M7pNOo6-KQA
+                    - img [ref=e260]
+              - figure [ref=e262]:
+                - link "A man standing in a kitchen preparing food" [ref=e265]:
+                  - /url: /photos/a-man-standing-in-a-kitchen-preparing-food-n_fXYMGtALw
+                  - img "A man standing in a kitchen preparing food" [ref=e266]
+              - figure [ref=e267]:
+                - link "Two smiling chefs in white uniforms pose together." [ref=e270]:
+                  - /url: /photos/two-smiling-chefs-in-white-uniforms-pose-together-jznqNAxGDko
+                  - img "Two smiling chefs in white uniforms pose together." [ref=e271]
+          - generic [ref=e274]:
+            - heading "Browse premium images on iStock | Claim your discount now" [level=2] [ref=e275]:
+              - text: Browse premium images on iStock
+              - generic [ref=e276]: "| Claim your discount now"
+            - generic [ref=e278]:
+              - link "Happy male cook on gray background" [ref=e279] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/happy-male-cook-on-gray-background-gm1300835456-393037198?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Afa28731b-314a-4025-bc19-9675ff7f87c8
+                - img "Happy male cook on gray background" [ref=e280]
+              - link "Young black cook wearing chef hat with crossed arms confident and happy with a big natural smile laughing" [ref=e281] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/young-black-cook-wearing-chef-hat-with-crossed-arms-confident-and-happy-with-a-big-gm1097585774-294749577?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Afb543794-9a2b-4bf4-8015-2181049688b4
+                - img "Young black cook wearing chef hat with crossed arms confident and happy with a big natural smile laughing" [ref=e282]
+              - 'link "Protected Hands: Asian Chef Gets Ready to Cook" [ref=e283] [cursor=pointer]':
+                - /url: https://www.istockphoto.com/photo/asian-chef-gets-ready-to-cook-gm1741732607-542811118?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A84d710b1-7c60-4c7f-af34-9e599e7dd322
+                - 'img "Protected Hands: Asian Chef Gets Ready to Cook" [ref=e284]'
+              - link "Two chefs wearing gloves and aprons getting ready in restaurant kitchen" [ref=e285] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/two-chefs-wearing-gloves-and-aprons-getting-ready-in-restaurant-kitchen-gm2200713365-618406854?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Aad190038-2dc3-45ec-96c8-a52b477bb3a8
+                - img "Two chefs wearing gloves and aprons getting ready in restaurant kitchen" [ref=e286]
+              - link "Cook measuring fresh fish for healthy meal in professional kitchen" [ref=e287] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/cook-measuring-fresh-fish-for-healthy-meal-in-professional-kitchen-gm2247011904-660935944?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Aeec5499a-8872-4175-9ffe-18042ffc64df
+                - img "Cook measuring fresh fish for healthy meal in professional kitchen" [ref=e288]
+              - link "portrait of young handsome pizza baker chef" [ref=e289] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/portrait-of-young-handsome-pizza-baker-chef-gm2156742921-577485127?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A487a950d-1513-4ffb-90e7-a211eba41a47
+                - img "portrait of young handsome pizza baker chef" [ref=e290]
+              - link "3D Illustration of Professional Male Chef. A male chef stands holding a fork with a tomato on it, while giving an \"OK\" gesture with his other hand. Cartoon" [ref=e291] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/3d-illustration-of-professional-male-chef-a-male-chef-stands-holding-a-fork-with-a-gm2170613082-590524866?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3Adf149baa-0d5c-4081-a5d5-2c687505dfee
+                - img "3D Illustration of Professional Male Chef. A male chef stands holding a fork with a tomato on it, while giving an \"OK\" gesture with his other hand. Cartoon" [ref=e292]
+              - generic [ref=e293]:
+                - link "Black cat in a white collar with a black tie looks at the camera. Close-up on a white background." [ref=e294] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/photo/black-cat-in-a-white-collar-with-a-black-tie-looks-at-the-camera-close-up-on-a-white-gm2248709642-662541301?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A7e3331a0-963c-4b31-a2e3-bd28aef35833
+                  - img "Black cat in a white collar with a black tie looks at the camera. Close-up on a white background." [ref=e295]
+                - link "View more on iStock ↗" [ref=e296] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fchef-black-coat-uniform&utm_term=chef+black+coat+uniform%3A%3A%3A%3A6c593707-1038-4235-97c5-c67a76af557a&phrase=chef+black+coat+uniform&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+          - button "Load more" [ref=e300] [cursor=pointer]
+          - generic [ref=e301]:
+            - link [ref=e302] [cursor=pointer]:
+              - /url: /
+              - img [ref=e303]
+            - paragraph [ref=e305]: Make something awesome
+    - generic:
+      - region "Notifications"

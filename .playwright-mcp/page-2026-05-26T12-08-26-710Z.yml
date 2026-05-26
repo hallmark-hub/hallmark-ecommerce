@@ -1,0 +1,267 @@
+- generic [ref=e5]:
+  - navigation [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - link "Unsplash Home" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e10]
+        - link "Photos" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - img [ref=e13]
+        - link "Illustrations" [ref=e15] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e16]
+      - generic [ref=e18]:
+        - button "Explore" [ref=e19] [cursor=pointer]:
+          - img [ref=e20]
+        - button "Collections" [ref=e22] [cursor=pointer]:
+          - img [ref=e23]
+        - button "Download History" [ref=e25] [cursor=pointer]:
+          - img [ref=e26]
+      - button "Bookmarks" [ref=e29] [cursor=pointer]:
+        - img [ref=e30]
+    - generic [ref=e32]:
+      - link "Log in / Sign up" [ref=e33] [cursor=pointer]:
+        - /url: /login?referrer=%2Fphotos%2Fa-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+        - img [ref=e34]
+      - button "Language" [ref=e36] [cursor=pointer]:
+        - img [ref=e37]
+      - button "Menu" [ref=e39] [cursor=pointer]:
+        - img [ref=e40]
+  - generic [ref=e42]:
+    - generic [ref=e43]:
+      - navigation [ref=e44]:
+        - search "Find visuals sitewide" [ref=e46]:
+          - button "Search Unsplash" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - combobox [ref=e50]:
+            - searchbox "Search Unsplash" [ref=e51]
+            - listbox
+          - button "Visual search" [ref=e53] [cursor=pointer]:
+            - img [ref=e54]
+        - generic [ref=e56]:
+          - link "Get Unsplash+" [ref=e57] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e58] [cursor=pointer]:
+            - /url: /login?referrer=%2Fphotos%2Fa-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+        - button "Submit an image" [ref=e60] [cursor=pointer]
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - banner [ref=e64]:
+            - generic [ref=e66]:
+              - link [ref=e67] [cursor=pointer]:
+                - /url: /@zayed_ahmed_zadu
+              - generic [ref=e70]:
+                - link "Zayed Ahmed Zadu" [ref=e71] [cursor=pointer]:
+                  - /url: /@zayed_ahmed_zadu
+                - link "Available for hire" [ref=e73] [cursor=pointer]:
+                  - /url: /@zayed_ahmed_zadu
+                  - text: Available for hire
+                  - img [ref=e74]
+            - generic [ref=e76]:
+              - button "Bookmark" [ref=e77] [cursor=pointer]:
+                - img [ref=e78]
+              - button "Add to Collection" [ref=e80] [cursor=pointer]:
+                - img [ref=e81]
+              - button "Edit image" [ref=e83] [cursor=pointer]:
+                - text: Edit image
+                - img [ref=e84]
+              - generic [ref=e87]:
+                - link "Download free" [ref=e88] [cursor=pointer]:
+                  - /url: https://unsplash.com/photos/k4ZgYQ-Bji4/download?force=true
+                - button "Choose download size" [ref=e90] [cursor=pointer]:
+                  - img [ref=e91]
+          - button "Zoom in on this image" [ref=e96]:
+            - img "A man in a chef's uniform with orange beard." [ref=e97]
+            - generic:
+              - generic:
+                - img
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - generic [ref=e100]:
+                - generic [ref=e101]:
+                  - heading "Views" [level=3] [ref=e102]
+                  - text: 42,886
+                - generic [ref=e103]:
+                  - heading "Downloads" [level=3] [ref=e104]
+                  - text: "562"
+              - generic [ref=e105]:
+                - button "Share this image" [ref=e106] [cursor=pointer]:
+                  - img [ref=e107]
+                  - generic [ref=e109]: Share
+                - button "Stats about this image" [ref=e110] [cursor=pointer]:
+                  - img [ref=e111]
+                  - generic [ref=e113]: Info
+                - button "More Actions" [ref=e114] [cursor=pointer]:
+                  - img [ref=e115]
+            - generic [ref=e118]:
+              - heading "A man in a chef's uniform with orange beard." [level=1] [ref=e120]
+              - paragraph [ref=e124]: Man in a white chef’s uniform and tall chef hat poses against a black background, with an orange beard and serious expression, representing a professional culinary appearance.
+              - generic [ref=e126]:
+                - generic [ref=e127]:
+                  - img [ref=e128]
+                  - generic [ref=e131]:
+                    - text: Published on
+                    - time [ref=e132]: October 3, 2025
+                - generic [ref=e133]:
+                  - img [ref=e134]
+                  - button "Canon, EOS 750D" [ref=e137] [cursor=pointer]
+                - generic [ref=e138]:
+                  - img [ref=e139]
+                  - generic [ref=e141]:
+                    - text: Free to use under the
+                    - link "Unsplash License" [ref=e142] [cursor=pointer]:
+                      - /url: /license
+            - generic [ref=e144]:
+              - link "portrait" [ref=e145] [cursor=pointer]:
+                - /url: /s/photos/portrait
+              - link "green" [ref=e146] [cursor=pointer]:
+                - /url: /s/photos/green
+              - link "male" [ref=e147] [cursor=pointer]:
+                - /url: /s/photos/male
+              - link "chef" [ref=e148] [cursor=pointer]:
+                - /url: /s/photos/chef
+              - link "fine dining" [ref=e149] [cursor=pointer]:
+                - /url: /s/photos/fine-dining
+              - link "food and drink" [ref=e150] [cursor=pointer]:
+                - /url: /s/photos/food-and-drink
+              - link "cook" [ref=e151] [cursor=pointer]:
+                - /url: /s/photos/cook
+              - link "gastronomy" [ref=e152] [cursor=pointer]:
+                - /url: /s/photos/gastronomy
+              - link "food presentation" [ref=e153] [cursor=pointer]:
+                - /url: /s/photos/food-presentation
+              - link "uniform" [ref=e154] [cursor=pointer]:
+                - /url: /s/photos/uniform
+              - link "culinary" [ref=e155] [cursor=pointer]:
+                - /url: /s/photos/culinary
+              - link "food industry" [ref=e156] [cursor=pointer]:
+                - /url: /s/photos/food-industry
+              - link "food and beverage" [ref=e157] [cursor=pointer]:
+                - /url: /s/photos/food-and-beverage
+              - link "food preparation" [ref=e158] [cursor=pointer]:
+                - /url: /s/photos/food-preparation
+              - link "gourmet food" [ref=e159] [cursor=pointer]:
+                - /url: /s/photos/gourmet-food
+              - link "cuisine" [ref=e160] [cursor=pointer]:
+                - /url: /s/photos/cuisine
+              - link "food service" [ref=e161] [cursor=pointer]:
+                - /url: /s/photos/food-service
+              - link "serious" [ref=e162] [cursor=pointer]:
+                - /url: /s/photos/serious
+              - link "chef hat" [ref=e163] [cursor=pointer]:
+                - /url: /s/photos/chef-hat
+              - link "kitchen staff" [ref=e164] [cursor=pointer]:
+                - /url: /s/photos/kitchen-staff
+              - link "Free pictures" [ref=e165] [cursor=pointer]:
+                - /url: /explore
+        - generic [ref=e168]:
+          - paragraph [ref=e171]: Browse premium related images on iStock | Save 20% with code UNSPLASH20
+          - generic [ref=e182]:
+            - heading "Related images" [level=4] [ref=e184]
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - figure [ref=e190]:
+                  - link "A chef in a white uniform and hat" [ref=e193]:
+                    - /url: /photos/a-chef-in-a-white-uniform-and-hat-v2uSGD98qRo
+                    - img "A chef in a white uniform and hat" [ref=e194]
+                - figure [ref=e195]:
+                  - link "a man wearing a chef's hat and standing in front of a yellow background" [ref=e198]:
+                    - /url: /photos/a-man-wearing-a-chefs-hat-and-standing-in-front-of-a-yellow-background-TatpkrN4bHo
+                    - img "a man wearing a chef's hat and standing in front of a yellow background" [ref=e199]
+                - figure [ref=e200]:
+                  - link "a person wearing a chef's hat and holding a plate" [ref=e203]:
+                    - /url: /photos/a-person-wearing-a-chefs-hat-and-holding-a-plate-_383vqSfG6c
+                    - img "a person wearing a chef's hat and holding a plate" [ref=e204]
+                - figure [ref=e205]:
+                  - generic [ref=e207]:
+                    - link "a man wearing a chef's hat and holding a leaf" [ref=e208]:
+                      - /url: /photos/a-man-wearing-a-chefs-hat-and-holding-a-leaf-J8SCT2bs5U4
+                      - img "a man wearing a chef's hat and holding a leaf" [ref=e209]
+                    - link [ref=e210] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fa-man-wearing-a-chefs-hat-and-holding-a-leaf-J8SCT2bs5U4
+                      - img [ref=e211]
+                - figure [ref=e213]:
+                  - generic [ref=e215]:
+                    - link "portrait of brutal male chef holding a dish with freshly made food in bowl" [ref=e216]:
+                      - /url: /photos/portrait-of-brutal-male-chef-holding-a-dish-with-freshly-made-food-in-bowl-chSuAZqOnLA
+                      - img "portrait of brutal male chef holding a dish with freshly made food in bowl" [ref=e217]
+                    - link [ref=e218] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fportrait-of-brutal-male-chef-holding-a-dish-with-freshly-made-food-in-bowl-chSuAZqOnLA
+                      - img [ref=e219]
+                - figure [ref=e221]:
+                  - generic [ref=e223]:
+                    - link "Close up of chef's hands holding dish with freshly made asian food, offering it towards camera" [ref=e224]:
+                      - /url: /photos/close-up-of-chefs-hands-holding-dish-with-freshly-made-asian-food-offering-it-towards-camera-auZu0V3sCc8
+                      - img "Close up of chef's hands holding dish with freshly made asian food, offering it towards camera" [ref=e225]
+                    - link [ref=e226] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fclose-up-of-chefs-hands-holding-dish-with-freshly-made-asian-food-offering-it-towards-camera-auZu0V3sCc8
+                      - img [ref=e227]
+                - figure [ref=e229]:
+                  - generic [ref=e231]:
+                    - link "Chef cutting fresh and delicious vegetables for cooking" [ref=e232]:
+                      - /url: /photos/chef-cutting-fresh-and-delicious-vegetables-for-cooking-pSpL2BRgNpM
+                      - img "Chef cutting fresh and delicious vegetables for cooking" [ref=e233]
+                    - link [ref=e234] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fchef-cutting-fresh-and-delicious-vegetables-for-cooking-pSpL2BRgNpM
+                      - img [ref=e235]
+              - generic [ref=e237]:
+                - figure [ref=e238]:
+                  - link "A chef in a white uniform with a tall hat." [ref=e241]:
+                    - /url: /photos/a-chef-in-a-white-uniform-with-a-tall-hat-b9BVeBMTqqA
+                    - img "A chef in a white uniform with a tall hat." [ref=e242]
+                - figure [ref=e243]:
+                  - generic [ref=e245]:
+                    - link "Portrait of male chef cooking pho bo in studio, on black background" [ref=e246]:
+                      - /url: /photos/portrait-of-male-chef-cooking-pho-bo-in-studio-on-black-background-OQlOJ7ZilCY
+                      - img "Portrait of male chef cooking pho bo in studio, on black background" [ref=e247]
+                    - link [ref=e248] [cursor=pointer]:
+                      - /url: /plus?referrer=%2Fphotos%2Fportrait-of-male-chef-cooking-pho-bo-in-studio-on-black-background-OQlOJ7ZilCY
+                      - img [ref=e249]
+                - figure [ref=e251]:
+                  - link "a person in a white shirt" [ref=e254]:
+                    - /url: /photos/a-person-in-a-white-shirt-2QRk56RJJN8
+                    - img "a person in a white shirt" [ref=e255]
+                - figure [ref=e256]:
+                  - link "man in white and black adidas zip up jacket" [ref=e259]:
+                    - /url: /photos/man-in-white-and-black-adidas-zip-up-jacket-Sz7dC_76FvU
+                    - img "man in white and black adidas zip up jacket" [ref=e260]
+                - figure [ref=e261]:
+                  - link "a man wearing a white coat" [ref=e264]:
+                    - /url: /photos/a-man-wearing-a-white-coat-iGhhoBypMY4
+                    - img "a man wearing a white coat" [ref=e265]
+                - figure [ref=e266]:
+                  - link "man in white dress shirt smiling" [ref=e269]:
+                    - /url: /photos/man-in-white-dress-shirt-smiling--o2o_PClkZo
+                    - img "man in white dress shirt smiling" [ref=e270]
+              - generic [ref=e271]:
+                - figure [ref=e272]:
+                  - link "man in white dress shirt" [ref=e275]:
+                    - /url: /photos/man-in-white-dress-shirt-okPdcD03F7g
+                    - img "man in white dress shirt" [ref=e276]
+                - figure [ref=e277]:
+                  - link "a man holding a trophy" [ref=e280]:
+                    - /url: /photos/a-man-holding-a-trophy-7L4niJ9GORU
+                    - img "a man holding a trophy" [ref=e281]
+                - figure [ref=e282]:
+                  - link "A man in a chef's outfit standing in front of a counter" [ref=e285]:
+                    - /url: /photos/a-man-in-a-chefs-outfit-standing-in-front-of-a-counter-nWgMeK5X_l8
+                    - img "A man in a chef's outfit standing in front of a counter" [ref=e286]
+                - figure [ref=e287]:
+                  - link "a man holding a trophy" [ref=e290]:
+                    - /url: /photos/a-man-holding-a-trophy-vTDDuwbTxxk
+                    - img "a man holding a trophy" [ref=e291]
+                - figure [ref=e292]:
+                  - link "a man wearing a chef's hat and holding a plate" [ref=e295]:
+                    - /url: /photos/a-man-wearing-a-chefs-hat-and-holding-a-plate-txCS7koRY3Q
+                    - img "a man wearing a chef's hat and holding a plate" [ref=e296]
+                - figure [ref=e297]:
+                  - link "a man in a chef's uniform is sprinkled with flour" [ref=e300]:
+                    - /url: /photos/a-man-in-a-chefs-uniform-is-sprinkled-with-flour-XHGTrx2clAs
+                    - img "a man in a chef's uniform is sprinkled with flour" [ref=e301]
+                - figure [ref=e302]:
+                  - link "a man wearing a chef's hat and holding his hands up" [ref=e305]:
+                    - /url: /photos/a-man-wearing-a-chefs-hat-and-holding-his-hands-up-p7HvrfF-o7U
+                    - img "a man wearing a chef's hat and holding his hands up" [ref=e306]
+    - generic:
+      - region "Notifications"

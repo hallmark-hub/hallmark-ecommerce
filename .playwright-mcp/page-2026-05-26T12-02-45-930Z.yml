@@ -1,0 +1,274 @@
+- generic [ref=e4]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - link "Unsplash Home" [ref=e8] [cursor=pointer]:
+          - /url: /
+          - img "Unsplash Home" [ref=e9]
+        - link "Photos" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+        - link "Illustrations" [ref=e14] [cursor=pointer]:
+          - /url: /illustrations
+          - img [ref=e15]
+      - generic [ref=e17]:
+        - button "Explore" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button "Collections" [ref=e21] [cursor=pointer]:
+          - img [ref=e22]
+        - button "Download History" [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+      - button "Bookmarks" [ref=e28] [cursor=pointer]:
+        - img [ref=e29]
+    - generic [ref=e31]:
+      - link "Log in / Sign up" [ref=e32] [cursor=pointer]:
+        - /url: /login?referrer=%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait
+        - img [ref=e33]
+      - button "Language" [ref=e35] [cursor=pointer]:
+        - img [ref=e36]
+      - button "Menu" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+  - generic [ref=e41]:
+    - generic [ref=e42]:
+      - navigation [ref=e43]:
+        - search "Find visuals sitewide" [ref=e45]:
+          - button "Search Unsplash" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+          - combobox [ref=e49]:
+            - searchbox "Search Unsplash" [ref=e50]: white chef jacket
+            - listbox
+          - button "Clear" [ref=e51] [cursor=pointer]:
+            - img [ref=e52]
+          - button "Visual search" [ref=e56] [cursor=pointer]:
+            - img [ref=e57]
+        - generic [ref=e59]:
+          - link "Get Unsplash+" [ref=e60] [cursor=pointer]:
+            - /url: /plus
+          - link "Log in" [ref=e61] [cursor=pointer]:
+            - /url: /login?referrer=%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait
+        - button "Submit an image" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - generic [ref=e70]:
+          - list [ref=e71]:
+            - listitem [ref=e72]:
+              - link "Photos 212":
+                - /url: /s/photos/white-chef-jacket?orientation=portrait
+                - img
+                - text: Photos
+                - generic: "212"
+            - listitem [ref=e73]:
+              - link "Illustrations 1" [ref=e74] [cursor=pointer]:
+                - /url: /s/illustrations/white-chef-jacket?orientation=portrait
+                - img [ref=e75]
+                - text: Illustrations
+                - generic [ref=e77]: "1"
+            - listitem [ref=e78]:
+              - button "More" [ref=e79] [cursor=pointer]
+          - button "Filters" [ref=e81] [cursor=pointer]:
+            - img [ref=e83]
+            - text: Filters
+        - generic [ref=e85]:
+          - heading "White chef jacket" [level=1] [ref=e87]
+          - generic [ref=e89]:
+            - button "scroll list to the right" [ref=e91] [cursor=pointer]:
+              - img [ref=e92]
+            - generic [ref=e95]:
+              - link "chef" [ref=e97] [cursor=pointer]:
+                - /url: /s/photos/chef?orientation=portrait
+              - link "professional chef" [ref=e99] [cursor=pointer]:
+                - /url: /s/photos/professional-chef?orientation=portrait
+              - link "culinary" [ref=e101] [cursor=pointer]:
+                - /url: /s/photos/culinary?orientation=portrait
+              - link "food preparation" [ref=e103] [cursor=pointer]:
+                - /url: /s/photos/food-preparation?orientation=portrait
+              - link "culinary art" [ref=e105] [cursor=pointer]:
+                - /url: /s/photos/culinary-art?orientation=portrait
+              - link "food industry" [ref=e107] [cursor=pointer]:
+                - /url: /s/photos/food-industry?orientation=portrait
+              - link "kitchen" [ref=e109] [cursor=pointer]:
+                - /url: /s/photos/kitchen?orientation=portrait
+              - link "grey" [ref=e111] [cursor=pointer]:
+                - /url: /s/photos/grey?orientation=portrait
+              - link "person" [ref=e113] [cursor=pointer]:
+                - /url: /s/photos/person?orientation=portrait
+              - link "clothing" [ref=e115] [cursor=pointer]:
+                - /url: /s/photos/clothing?orientation=portrait
+              - link "human" [ref=e117] [cursor=pointer]:
+                - /url: /s/photos/human?orientation=portrait
+              - link "sleeve" [ref=e119] [cursor=pointer]:
+                - /url: /s/photos/sleeve?orientation=portrait
+        - generic [ref=e121]:
+          - generic [ref=e125]:
+            - generic [ref=e126]:
+              - figure [ref=e127]:
+                - generic [ref=e129]:
+                  - link "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e130]:
+                    - /url: /photos/young-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img "Young male chef of modern restaurant in white uniform chopping mushrooms for vegetable garnish while standing by table in the kitchen" [ref=e131]
+                  - link [ref=e132] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-male-chef-of-modern-restaurant-in-white-uniform-chopping-mushrooms-for-vegetable-garnish-while-standing-by-table-in-the-kitchen-AqO3P-0aBuU
+                    - img [ref=e133]
+              - generic [ref=e135]:
+                - heading "Sponsored images" [level=4] [ref=e136]:
+                  - generic [ref=e137]: Sponsored images
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A5db218fe-04fc-489a-b2e9-43bbe36483c4&phrase=white+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+                    - img [ref=e139]
+                - generic [ref=e141]:
+                  - link "Chef Holding Wood Utensils" [ref=e142] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/chef-holding-wood-utensils-gm508510289-45514414?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A777805ba-06f0-4b2d-b516-042814101210
+                    - img "Chef Holding Wood Utensils" [ref=e143]
+                  - link "White chef cook's jacket with orange edges, isolated over white background" [ref=e144] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/white-chef-cooks-jacket-with-orange-edges-isolated-over-white-background-gm811419678-131286719?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A3caaa3ad-b900-49fb-ab94-ab27e6928165
+                    - img "White chef cook's jacket with orange edges, isolated over white background" [ref=e145]
+                  - link "Blank white chef jacket, apron, hat and oven mitt mockup," [ref=e146] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/blank-white-chef-jacket-apron-hat-and-oven-mitt-mockup-gm1423167204-468227243?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A4a7c4ce1-4270-43ba-8865-b438e3aa0fa3
+                    - img "Blank white chef jacket, apron, hat and oven mitt mockup," [ref=e147]
+                  - link "African-American man putting on chef's whites" [ref=e148] [cursor=pointer]:
+                    - /url: https://www.istockphoto.com/photo/african-american-man-putting-on-chefs-whites-gm2165396659-585597153?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A71936077-47fb-4f24-ada7-d04fb4bd2542
+                    - img "African-American man putting on chef's whites" [ref=e149]
+                - link "Get 20% off with code UNSPLASH20" [ref=e150] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A5db218fe-04fc-489a-b2e9-43bbe36483c4&phrase=white+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+              - figure [ref=e151]:
+                - generic [ref=e153]:
+                  - link "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e154]:
+                    - /url: /photos/young-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                    - img "Young chef in uniform looking through list of ingredients for vegetable salad while holding paper over chopped onion on wooden board" [ref=e155]
+                  - link [ref=e156] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-chef-in-uniform-looking-through-list-of-ingredients-for-vegetable-salad-while-holding-paper-over-chopped-onion-on-wooden-board-YkzHFkA9O3I
+                    - img [ref=e157]
+              - figure [ref=e159]:
+                - generic [ref=e161]:
+                  - link "a man holding a plate of food in a kitchen" [ref=e162]:
+                    - /url: /photos/a-man-holding-a-plate-of-food-in-a-kitchen-tUCyUtRset4
+                    - img "a man holding a plate of food in a kitchen" [ref=e163]
+                  - link [ref=e164] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fa-man-holding-a-plate-of-food-in-a-kitchen-tUCyUtRset4
+                    - img [ref=e165]
+              - figure [ref=e167]:
+                - link "A woman in white shirt looks pensively upward." [ref=e170]:
+                  - /url: /photos/a-woman-in-white-shirt-looks-pensively-upward-26PcmKZQ1Gs
+                  - img "A woman in white shirt looks pensively upward." [ref=e171]
+              - figure [ref=e172]:
+                - link "A smiling man in a white lab coat stands confidently." [ref=e175]:
+                  - /url: /photos/a-smiling-man-in-a-white-lab-coat-stands-confidently-vIE7XtQ_5ek
+                  - img "A smiling man in a white lab coat stands confidently." [ref=e176]
+              - figure [ref=e177]:
+                - link "a man with a headband on smiling at the camera" [ref=e180]:
+                  - /url: /photos/a-man-with-a-headband-on-smiling-at-the-camera-4X-zGgWgiy0
+                  - img "a man with a headband on smiling at the camera" [ref=e181]
+            - generic [ref=e182]:
+              - figure [ref=e183]:
+                - link "man in white dress shirt" [ref=e186]:
+                  - /url: /photos/man-in-white-dress-shirt-okPdcD03F7g
+                  - img "man in white dress shirt" [ref=e187]
+              - figure [ref=e188]:
+                - link "A man in a chef's uniform with orange beard." [ref=e191]:
+                  - /url: /photos/a-man-in-a-chefs-uniform-with-orange-beard-k4ZgYQ-Bji4
+                  - img "A man in a chef's uniform with orange beard." [ref=e192]
+              - figure [ref=e193]:
+                - link "Man in white lab coat smiles confidently" [ref=e196]:
+                  - /url: /photos/man-in-white-lab-coat-smiles-confidently-CORK6SU1a_w
+                  - img "Man in white lab coat smiles confidently" [ref=e197]
+              - figure [ref=e198]:
+                - link "woman in white long sleeve shirt standing" [ref=e201]:
+                  - /url: /photos/woman-in-white-long-sleeve-shirt-standing-j893KVq9xK0
+                  - img "woman in white long sleeve shirt standing" [ref=e202]
+              - figure [ref=e203]:
+                - generic [ref=e205]:
+                  - link "mexican woman chef cooking chiles en nogada recipe with Poblano chili and ingredients, traditional dish in Puebla Mexico" [ref=e206]:
+                    - /url: /photos/mexican-woman-chef-cooking-chiles-en-nogada-recipe-with-poblano-chili-and-ingredients-traditional-dish-in-puebla-mexico-1n74zFmRMF8
+                    - img "mexican woman chef cooking chiles en nogada recipe with Poblano chili and ingredients, traditional dish in Puebla Mexico" [ref=e207]
+                  - link [ref=e208] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fmexican-woman-chef-cooking-chiles-en-nogada-recipe-with-poblano-chili-and-ingredients-traditional-dish-in-puebla-mexico-1n74zFmRMF8
+                    - img [ref=e209]
+              - figure [ref=e211]:
+                - link "a black and white photo of a man standing in front of a building" [ref=e214]:
+                  - /url: /photos/a-black-and-white-photo-of-a-man-standing-in-front-of-a-building-zT9weTiXB5E
+                  - img "a black and white photo of a man standing in front of a building" [ref=e215]
+              - figure [ref=e216]:
+                - link "A man in a chef's outfit standing in front of a counter" [ref=e219]:
+                  - /url: /photos/a-man-in-a-chefs-outfit-standing-in-front-of-a-counter-nWgMeK5X_l8
+                  - img "A man in a chef's outfit standing in front of a counter" [ref=e220]
+            - generic [ref=e221]:
+              - link "On-brand and on budget images for your next campaign Learn More" [ref=e224] [cursor=pointer]:
+                - /url: https://e-10457.adzerk.net/r?e=eyJ2IjoiMS4xNCIsImF2Ijo4MjM1NTIsImF0Ijo1LCJidCI6MCwiY20iOjk0ODU5NTcsImNoIjo0NTE2MywiY2siOnt9LCJjciI6MzY0NTc4NzUxLCJkaSI6IjkxYjgzOTY2YjAwMjRiNzE4YjdkMTAyMGExNjg2NmJkIiwiZGoiOjAsImlpIjoiM2FjYjc5ZjIxMWQzNDk4NDkzNzE2ZmI0YTJjNDUxZTMiLCJkbSI6MywiZmMiOjUzOTcxNjg1MywiZmwiOjU1ODQ4Njg0LCJpcCI6IjE1NC4xNjEuMTYwLjE2NyIsIm53IjoxMDQ1NywicGMiOjAsIm9wIjowLCJtcCI6MCwiZWMiOjAsImdtIjowLCJlcCI6bnVsbCwicHIiOjIwODI4MywicnQiOjEsInJzIjo1MDAsInNhIjoiOTYiLCJzYiI6ImktMDNkNTY4Yjk0NTIxNjFlNDciLCJzcCI6NjI5Njk5LCJzdCI6MTEyMTk1NCwidWsiOiJmY2I2YTRkZS1hODE1LTQyMGYtODM3MS02MjM1MDZjNmI1ZGYiLCJ6biI6MjQxMzQ4LCJ6bSI6WzI0MTM0OF0sInRzIjoxNzc5Nzk2OTYyODMxLCJwbiI6InNlYXJjaC1pbi1mZWVkIiwiZ3IiOnRydWUsImdjIjp0cnVlLCJnQyI6dHJ1ZSwiZ3MiOiJub25lIiwidHoiOiJBbWVyaWNhL05ld19Zb3JrIiwidXIiOiJodHRwczovL3Vuc3BsYXNoLmNvbS9zdHVkaW8ifQ&s=6y6_1Mc7vLi3rVAByU7VSVYJsl8
+                - generic [ref=e225]:
+                  - img [ref=e227]
+                  - contentinfo [ref=e228]:
+                    - generic [ref=e229]:
+                      - img [ref=e231]
+                      - generic [ref=e235]: On-brand and on budget images for your next campaign
+                    - generic [ref=e236]: Learn More
+              - figure [ref=e237]:
+                - link "man in white button up t-shirt" [ref=e240]:
+                  - /url: /photos/man-in-white-button-up-t-shirt-SLUqLkFVwiY
+                  - img "man in white button up t-shirt" [ref=e241]
+              - figure [ref=e242]:
+                - link "woman in white button up long sleeve shirt standing beside white wall" [ref=e245]:
+                  - /url: /photos/woman-in-white-button-up-long-sleeve-shirt-standing-beside-white-wall-XA-d-UgI-Mw
+                  - img "woman in white button up long sleeve shirt standing beside white wall" [ref=e246]
+              - figure [ref=e247]:
+                - link "A smiling man in a white lab coat" [ref=e250]:
+                  - /url: /photos/a-smiling-man-in-a-white-lab-coat-no7wWT_g9OA
+                  - img "A smiling man in a white lab coat" [ref=e251]
+              - figure [ref=e252]:
+                - link "A woman in a white jacket and blue pants" [ref=e255]:
+                  - /url: /photos/a-woman-in-a-white-jacket-and-blue-pants-BlC6IhA2eis
+                  - img "A woman in a white jacket and blue pants" [ref=e256]
+              - figure [ref=e257]:
+                - link "man in white and black adidas zip up jacket" [ref=e260]:
+                  - /url: /photos/man-in-white-and-black-adidas-zip-up-jacket-Sz7dC_76FvU
+                  - img "man in white and black adidas zip up jacket" [ref=e261]
+              - figure [ref=e262]:
+                - generic [ref=e264]:
+                  - link "Young professional male chef with knife peeling avocado while his female trainee cutting fresh zucchini on wooden board in the kitchen" [ref=e265]:
+                    - /url: /photos/young-professional-male-chef-with-knife-peeling-avocado-while-his-female-trainee-cutting-fresh-zucchini-on-wooden-board-in-the-kitchen-hh0Agl-6ZzU
+                    - img "Young professional male chef with knife peeling avocado while his female trainee cutting fresh zucchini on wooden board in the kitchen" [ref=e266]
+                  - link [ref=e267] [cursor=pointer]:
+                    - /url: /plus?referrer=%2Fphotos%2Fyoung-professional-male-chef-with-knife-peeling-avocado-while-his-female-trainee-cutting-fresh-zucchini-on-wooden-board-in-the-kitchen-hh0Agl-6ZzU
+                    - img [ref=e268]
+              - figure [ref=e270]:
+                - link "man in white dress shirt smiling" [ref=e273]:
+                  - /url: /photos/man-in-white-dress-shirt-smiling--o2o_PClkZo
+                  - img "man in white dress shirt smiling" [ref=e274]
+          - generic [ref=e277]:
+            - heading "Browse premium images on iStock | Claim your discount now" [level=2] [ref=e278]:
+              - text: Browse premium images on iStock
+              - generic [ref=e279]: "| Claim your discount now"
+            - generic [ref=e281]:
+              - link "Professional Chefs In A Modern Kitchen Preparing Fresh Food And Chopping Ingredients" [ref=e282] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/professional-chefs-in-a-modern-kitchen-preparing-fresh-food-and-chopping-ingredients-gm2243295846-657483299?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A9a586583-cf0a-45db-9f16-52f6b8cd605b
+                - img "Professional Chefs In A Modern Kitchen Preparing Fresh Food And Chopping Ingredients" [ref=e283]
+              - link "Asian chef holding an apple" [ref=e284] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/asian-chef-holding-an-apple-gm2183324013-602217833?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A4e132c8e-af52-4960-9c02-1d34558a650f
+                - img "Asian chef holding an apple" [ref=e285]
+              - link "Portrait of chef, empty plate and smile, presenting menu special promo deal or restaurant product placement" [ref=e286] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/portrait-of-chef-empty-plate-and-smile-presenting-menu-special-promo-deal-or-gm2222466362-638736417?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A1465370e-a1d0-4323-bcf5-d188b9841f02
+                - img "Portrait of chef, empty plate and smile, presenting menu special promo deal or restaurant product placement" [ref=e287]
+              - link "Proud chef" [ref=e288] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/proud-chef-gm1440345111-480359707?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A94142212-8727-4a9e-8496-d9981669547b
+                - img "Proud chef" [ref=e289]
+              - link "Three professional chefs in a commercial kitchen collaborate over a dish, wearing uniforms and hats at a stainless steel range beneath an industrial vent hood." [ref=e290] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/three-professional-chefs-in-a-commercial-kitchen-collaborate-over-a-dish-wearing-gm2243918185-658030410?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A97c96809-ef35-4e7d-a5ec-ef8bbc051e12
+                - img "Three professional chefs in a commercial kitchen collaborate over a dish, wearing uniforms and hats at a stainless steel range beneath an industrial vent hood." [ref=e291]
+              - link "Occupation Group, Variety of Multi-Ethnic Diversity Workers and Professions" [ref=e292] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/occupation-group-variety-of-multi-ethnic-diversity-workers-and-professions-gm157437492-10393883?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A7c39e6fc-f7b3-4499-95f4-50b87d92057f
+                - img "Occupation Group, Variety of Multi-Ethnic Diversity Workers and Professions" [ref=e293]
+              - link "Blank white chef jacket with buttons mockup, front view" [ref=e294] [cursor=pointer]:
+                - /url: https://www.istockphoto.com/photo/blank-white-chef-jacket-with-buttons-mockup-front-view-gm1209943236-350322757?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A7ea9d917-8baa-469c-b537-3b1df360438b
+                - img "Blank white chef jacket with buttons mockup, front view" [ref=e295]
+              - generic [ref=e296]:
+                - link "Male chef incorporates new ideas in his gourmet creations" [ref=e297] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/photo/male-chef-incorporates-new-ideas-in-his-gourmet-creations-gm1468911887-500306933?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3Af7aef0d2-264f-487b-876b-8a38b974d378
+                  - img "Male chef incorporates new ideas in his gourmet creations" [ref=e298]
+                - link "View more on iStock ↗" [ref=e299] [cursor=pointer]:
+                  - /url: https://www.istockphoto.com/search/2/image?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwhite-chef-jacket%3Forientation%3Dportrait&utm_term=white+chef+jacket%3A%3A%3A%3A01ca71d7-b165-4d74-b0b6-2277600e272a&phrase=white+chef+jacket&alloweduse=availableforalluses&excludenudity=true&sort=best&mediatype=photography
+          - button "Load more" [ref=e303] [cursor=pointer]
+          - generic [ref=e304]:
+            - link [ref=e305] [cursor=pointer]:
+              - /url: /
+              - img [ref=e306]
+            - paragraph [ref=e308]: Make something awesome
+    - generic:
+      - region "Notifications"
