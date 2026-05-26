@@ -66,8 +66,30 @@ export default function QuoteRequestPage() {
   }
 
   return (
-    <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section">
+    <main className="pt-20 min-h-screen bg-surface flex">
+
+      {/* Full-height left image panel */}
+      <div className="hidden lg:block sticky top-20 h-[calc(100vh-80px)] self-start flex-none w-[400px] xl:w-[460px]">
+        <div className="relative w-full h-full">
+          <img
+            src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=900&q=80"
+            alt="Commercial kitchen equipment and machinery"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-10">
+            <p className="text-white text-h1 font-bold leading-tight mb-3">Custom Equipment<br />& Kitchen Services</p>
+            <div className="flex items-center gap-2 mt-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+              <p className="text-white/75 text-body-sm">Custom quote prepared within 24 hours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right scrollable content */}
+      <div className="flex-1 min-w-0 px-8 lg:px-16 py-10 md:py-14">
+        <div className="max-w-2xl mx-auto">
         <div className="mb-lg">
           <h1 className="text-h1 text-on-surface">Request a Quote</h1>
           <p className="text-body-lg text-secondary mt-2">Tell us about your requirements and we'll prepare a custom quote within 24 hours.</p>
@@ -116,6 +138,7 @@ export default function QuoteRequestPage() {
               Submit Quote Request
             </Button>
           </form>
+        </div>
         </div>
       </div>
     </main>
