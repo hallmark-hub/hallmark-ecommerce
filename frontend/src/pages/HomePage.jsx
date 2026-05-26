@@ -58,12 +58,12 @@ export default function HomePage() {
   return (
     <main className="pt-20">
       {/* Hero */}
-      <section className="relative min-h-[560px] flex items-center overflow-hidden">
+      <section className="relative min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={HERO_IMAGE} alt="Premium industrial kitchen in Accra" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60" />
+          <img src={HERO_IMAGE} alt="Premium industrial kitchen in Accra" className="w-full h-full object-cover object-top" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/65 to-black/90" />
         </div>
-        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter py-section-mobile md:py-section flex flex-col items-center text-center">
+        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter pb-14 md:pb-20 flex flex-col items-center text-center">
           <span className="bg-gold/90 backdrop-blur-sm text-white text-label uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
             Accra's #1 Hospitality Supplier
           </span>

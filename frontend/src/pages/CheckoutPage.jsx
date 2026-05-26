@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Smartphone, Building2, ChevronRight, AlertTriangle } from 'lucide-react'
+import { Smartphone, Building2, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } from 'lucide-react'
 import useCartStore from '../store/cartStore'
 import { createOrder } from '../api/orders'
 import { initializePaystack, bankTransfer } from '../api/payments'
@@ -17,6 +17,8 @@ const PAYMENT_METHODS = [
   { id: 'bank_gcb', label: 'GCB Bank Transfer', desc: 'Manual bank transfer — GCB Bank', icon: Building2, apiValue: 'bank_transfer', bank: 'gcb' },
   { id: 'bank_stanbic', label: 'Stanbic Bank Transfer', desc: 'Manual bank transfer — Stanbic Bank', icon: Building2, apiValue: 'bank_transfer', bank: 'stanbic' },
 ]
+
+const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
 
 export default function CheckoutPage() {
   const items = useCartStore(s => s.items)
@@ -95,15 +97,15 @@ export default function CheckoutPage() {
 
   if (items.length === 0 && !bankDetails) {
     return (
-      <main className="pt-20 min-h-screen bg-surface">
+      <main className="pt-20 min-h-screen bg-surface-container-low">
         <div className="max-w-2xl mx-auto px-gutter py-20 text-center">
-          <div className="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-card">
             <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-secondary">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
           </div>
           <h1 className="text-h2 text-on-surface mb-2">Your cart is empty</h1>
-          <p className="text-body text-secondary mb-8 max-w-sm mx-auto">Looks like you haven't added anything yet. Browse our catalog to get started.</p>
+          <p className="text-body text-secondary mb-8 max-w-sm mx-auto">Browse our catalog to get started.</p>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             <Button onClick={() => navigate('/products')} variant="primary" size="lg">Browse Products</Button>
             <Button onClick={() => navigate('/quote')} variant="gold" size="lg">Request a Quote</Button>
@@ -130,19 +132,34 @@ export default function CheckoutPage() {
 
   if (bankDetails) {
     return (
-      <main className="pt-20 min-h-screen bg-surface">
+      <main className="pt-20 min-h-screen bg-surface-container-low">
         <div className="max-w-lg mx-auto px-gutter py-xl text-center">
-          <div className="bg-white rounded-xl border border-outline-variant p-xl">
-            <Building2 size={48} className="text-primary mx-auto mb-md" />
+          <div className="bg-white rounded-2xl border border-outline-variant shadow-card p-xl">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-md">
+              <Building2 size={32} className="text-primary" />
+            </div>
             <h1 className="text-h2 text-on-surface mb-sm">Bank Transfer Instructions</h1>
             <p className="text-body text-secondary mb-md">{bankDetails.instructions}</p>
-            <div className="text-left space-y-sm bg-surface-container-low rounded-lg p-md mb-md">
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Bank</span><span className="font-medium">{bankDetails.bank_name}</span></div>
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Account Name</span><span className="font-medium">{bankDetails.account_name}</span></div>
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Account Number</span><span className="font-medium">{bankDetails.account_number}</span></div>
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Branch</span><span className="font-medium">{bankDetails.branch}</span></div>
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Reference</span><span className="font-bold text-primary">{bankDetails.reference}</span></div>
-              <div className="flex justify-between text-body-sm"><span className="text-secondary">Amount</span><span className="font-bold text-primary">{formatPrice(bankDetails.amount_pesewas)}</span></div>
+            <div className="text-left space-y-sm bg-surface-container-low rounded-xl p-md mb-md">
+              {[
+                ['Bank', bankDetails.bank_name],
+                ['Account Name', bankDetails.account_name],
+                ['Account Number', bankDetails.account_number],
+                ['Branch', bankDetails.branch],
+              ].map(([label, value]) => (
+                <div key={label} className="flex justify-between text-body-sm">
+                  <span className="text-secondary">{label}</span>
+                  <span className="font-medium text-on-surface">{value}</span>
+                </div>
+              ))}
+              <div className="flex justify-between text-body-sm pt-sm border-t border-outline-variant">
+                <span className="text-secondary">Reference</span>
+                <span className="font-bold text-primary">{bankDetails.reference}</span>
+              </div>
+              <div className="flex justify-between text-body-sm">
+                <span className="text-secondary">Amount</span>
+                <span className="font-bold text-primary">{formatPrice(bankDetails.amount_pesewas)}</span>
+              </div>
             </div>
             <p className="text-body-sm text-error font-medium mb-md">Use the reference number exactly as shown above.</p>
             <Button onClick={() => navigate('/')} variant="primary" size="lg" fullWidth>Back to Home</Button>
@@ -153,138 +170,192 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-container-max mx-auto px-gutter py-xl">
-        {/* Step indicator */}
-        <div className="flex items-center gap-2 mb-xl">
-          <div className={`flex items-center gap-2 text-body-sm font-medium ${step >= STEP_SHIPPING ? 'text-primary' : 'text-secondary'}`}>
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= STEP_SHIPPING ? 'bg-primary text-white' : 'bg-secondary-container text-secondary'}`}>1</span>
-            Shipping
+    <main className="pt-20 min-h-screen bg-surface-container-low">
+      <div className="max-w-container-max mx-auto px-gutter py-10 md:py-14">
+
+        {/* Step Progress */}
+        <div className="flex items-center max-w-xs mb-10">
+          <div className={`flex items-center gap-2.5 ${step >= STEP_SHIPPING ? 'text-primary' : 'text-secondary'}`}>
+            <span className={`w-8 h-8 rounded-full flex items-center justify-center text-body-sm font-bold shrink-0 ${step >= STEP_SHIPPING ? 'bg-primary text-white' : 'bg-white border-2 border-outline-variant text-secondary'}`}>1</span>
+            <span className="text-body-sm font-semibold">Shipping</span>
           </div>
-          <ChevronRight size={16} className="text-outline-variant" />
-          <div className={`flex items-center gap-2 text-body-sm font-medium ${step >= STEP_PAYMENT ? 'text-primary' : 'text-secondary'}`}>
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${step >= STEP_PAYMENT ? 'bg-primary text-white' : 'bg-secondary-container text-secondary'}`}>2</span>
-            Payment
+          <div className={`flex-1 h-0.5 mx-3 rounded-full ${step >= STEP_PAYMENT ? 'bg-primary' : 'bg-outline-variant'}`} />
+          <div className={`flex items-center gap-2.5 ${step >= STEP_PAYMENT ? 'text-primary' : 'text-secondary'}`}>
+            <span className={`w-8 h-8 rounded-full flex items-center justify-center text-body-sm font-bold shrink-0 ${step >= STEP_PAYMENT ? 'bg-primary text-white' : 'bg-white border-2 border-outline-variant text-secondary'}`}>2</span>
+            <span className="text-body-sm font-semibold">Payment</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-xl">
-          {/* Form */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+
+          {/* ── Form Panel ── */}
+          <div className="lg:col-span-2 space-y-4">
             {error && (
-              <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
-                <AlertTriangle size={16} className="shrink-0" />
+              <div className="flex items-center gap-3 bg-error-container border border-error/30 text-on-error-container px-4 py-3 rounded-xl">
+                <AlertTriangle size={16} className="shrink-0 text-error" />
                 <p className="text-body-sm">{error}</p>
               </div>
             )}
 
             {step === STEP_SHIPPING && (
-              <div className="bg-white rounded-xl border border-outline-variant p-xl">
-                <h2 className="text-h2 text-on-surface mb-md">Shipping Information</h2>
-                <div className="space-y-md">
+              <div className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden">
+                <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
+                  <h2 className="text-h2 text-on-surface">Shipping Information</h2>
+                  <p className="text-body-sm text-secondary mt-1">We deliver within Greater Accra in 24 hours after payment.</p>
+                </div>
+                <div className="px-8 py-8 space-y-6">
                   <div>
-                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="name">Full Name *</label>
-                    <input id="name" type="text" value={shipping.name} onChange={e => updateShipping('name', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kwame Asante" />
+                    <label className="block text-label uppercase text-secondary mb-2" htmlFor="name">Full Name <span className="text-error">*</span></label>
+                    <input id="name" type="text" value={shipping.name} onChange={e => updateShipping('name', e.target.value)} className={inputCls} placeholder="Kwame Asante" />
                   </div>
                   <div>
-                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="company">Company / Restaurant (optional)</label>
-                    <input id="company" type="text" value={shipping.company} onChange={e => updateShipping('company', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Kempinski Hotel Accra" />
+                    <label className="block text-label uppercase text-secondary mb-2" htmlFor="company">Company / Restaurant <span className="text-secondary/60">(optional)</span></label>
+                    <input id="company" type="text" value={shipping.company} onChange={e => updateShipping('company', e.target.value)} className={inputCls} placeholder="Kempinski Hotel Accra" />
                   </div>
                   <div>
-                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="address">Delivery Address (Accra) *</label>
-                    <input id="address" type="text" value={shipping.address} onChange={e => updateShipping('address', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="House 12, Osu Oxford Street, Accra" />
-                    <p className="text-label uppercase text-secondary mt-xs">Delivery within Greater Accra. 24 hours after payment confirmed.</p>
+                    <label className="block text-label uppercase text-secondary mb-2" htmlFor="address">Delivery Address (Accra) <span className="text-error">*</span></label>
+                    <input id="address" type="text" value={shipping.address} onChange={e => updateShipping('address', e.target.value)} className={inputCls} placeholder="House 12, Osu Oxford Street, Accra" />
+                    <div className="flex items-center gap-1.5 mt-2">
+                      <Truck size={12} className="text-primary shrink-0" />
+                      <p className="text-label uppercase text-primary">Delivery within Greater Accra · 24 hrs after payment confirmed</p>
+                    </div>
                   </div>
                   <div>
-                    <label className="block text-label uppercase text-secondary mb-xs" htmlFor="phone">Phone Number *</label>
-                    <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+233244123456" />
-                    <p className="text-label uppercase text-secondary mt-xs">Format: +233XXXXXXXXX</p>
+                    <label className="block text-label uppercase text-secondary mb-2" htmlFor="phone">Phone Number <span className="text-error">*</span></label>
+                    <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className={inputCls} placeholder="+233244123456" />
+                    <p className="text-label uppercase text-secondary mt-2">Format: +233XXXXXXXXX</p>
                   </div>
                 </div>
-                <Button
-                  onClick={handleShippingNext}
-                  variant="primary"
-                  size="lg"
-                  fullWidth
-                  iconRight={<ChevronRight />}
-                  className="mt-xl"
-                >
-                  Continue to Payment
-                </Button>
+                <div className="px-8 pb-8">
+                  <Button onClick={handleShippingNext} variant="primary" size="lg" fullWidth iconRight={<ChevronRight />}>
+                    Continue to Payment
+                  </Button>
+                  <div className="flex items-center justify-center gap-1.5 mt-4 text-secondary">
+                    <Lock size={12} />
+                    <span className="text-label uppercase">Secured with SSL encryption</span>
+                  </div>
+                </div>
               </div>
             )}
 
             {step === STEP_PAYMENT && (
-              <div className="bg-white rounded-xl border border-outline-variant p-xl">
-                <button
-                  onClick={() => setStep(STEP_SHIPPING)}
-                  className="text-secondary hover:text-primary text-body-sm mb-md flex items-center gap-1 cursor-pointer focus:outline-none focus-visible:underline rounded"
-                >
-                  ← Back to Shipping
-                </button>
-                <h2 className="text-h2 text-on-surface mb-md">Payment Method</h2>
-                <div className="space-y-sm mb-md">
+              <div className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden">
+                <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
+                  <button
+                    onClick={() => setStep(STEP_SHIPPING)}
+                    className="flex items-center gap-1 text-body-sm text-secondary hover:text-primary mb-3 transition-colors focus:outline-none focus-visible:underline"
+                  >
+                    ← Back to Shipping
+                  </button>
+                  <h2 className="text-h2 text-on-surface">Payment Method</h2>
+                  <p className="text-body-sm text-secondary mt-1">All transactions are secured and encrypted.</p>
+                </div>
+
+                <div className="px-8 py-8 space-y-3">
                   {PAYMENT_METHODS.map(m => {
                     const Icon = m.icon
+                    const active = paymentMethod === m.id
                     return (
-                      <label key={m.id} className={`flex items-center gap-md p-md rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === m.id ? 'border-primary bg-surface-container-low' : 'border-outline-variant hover:border-primary/50'}`}>
-                        <input type="radio" name="payment" value={m.id} checked={paymentMethod === m.id} onChange={() => setPaymentMethod(m.id)} className="accent-primary" />
-                        <Icon size={24} className={paymentMethod === m.id ? 'text-primary' : 'text-secondary'} />
-                        <div>
-                          <p className="text-body font-medium text-on-surface">{m.label}</p>
+                      <label
+                        key={m.id}
+                        className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                          active ? 'border-primary bg-primary/5 shadow-sm' : 'border-outline-variant hover:border-primary/40 hover:bg-surface-container-lowest'
+                        }`}
+                      >
+                        <input type="radio" name="payment" value={m.id} checked={active} onChange={() => setPaymentMethod(m.id)} className="sr-only" />
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-primary text-white' : 'bg-surface-container text-secondary'}`}>
+                          <Icon size={22} />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-body font-semibold text-on-surface">{m.label}</p>
                           <p className="text-body-sm text-secondary">{m.desc}</p>
+                        </div>
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${active ? 'border-primary' : 'border-outline-variant'}`}>
+                          {active && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
                         </div>
                       </label>
                     )
                   })}
                 </div>
 
-                {/* Returns policy */}
-                <div className="bg-error-container/30 border border-error/30 rounded-lg p-md mb-md">
-                  <p className="text-body-sm text-on-surface font-medium mb-sm">Returns Policy</p>
-                  <p className="text-body-sm text-error font-semibold">No refunds. Exchange only within 3 days of purchase.</p>
-                </div>
-                <label className="flex items-start gap-sm cursor-pointer mb-md">
-                  <input type="checkbox" checked={acceptedPolicy} onChange={e => setAcceptedPolicy(e.target.checked)} className="mt-0.5 accent-primary" />
-                  <span className="text-body-sm text-on-surface">I have read and accept the returns policy — No refunds. Exchange only within 3 days of purchase.</span>
-                </label>
+                {/* Returns Policy */}
+                <div className="px-8 pb-8 space-y-5">
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                    <p className="text-body-sm font-semibold text-amber-900 mb-1">Returns Policy</p>
+                    <p className="text-body-sm text-amber-800">No refunds. Exchange only within 3 days of purchase. Ensure items are correct before placing your order.</p>
+                  </div>
 
-                <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" fullWidth>
-                  Place Order
-                </Button>
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${acceptedPolicy ? 'bg-primary border-primary' : 'border-outline-variant group-hover:border-primary'}`}>
+                      {acceptedPolicy && (
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                          <path d="M1 4l3 3 5-6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <input type="checkbox" checked={acceptedPolicy} onChange={e => setAcceptedPolicy(e.target.checked)} className="sr-only" />
+                    <span className="text-body-sm text-on-surface leading-relaxed">
+                      I have read and accept the returns policy — <span className="font-semibold">No refunds. Exchange only within 3 days of purchase.</span>
+                    </span>
+                  </label>
+
+                  <div>
+                    <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" fullWidth iconRight={<ShieldCheck />}>
+                      Place Order
+                    </Button>
+                    <div className="flex items-center justify-center gap-1.5 mt-4 text-secondary">
+                      <Lock size={12} />
+                      <span className="text-label uppercase">Secured with SSL encryption</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Order summary sidebar */}
-          <aside className="bg-white rounded-xl border border-outline-variant p-xl h-fit">
-            <h2 className="text-h3 text-on-surface mb-md">Order Summary</h2>
-            <div className="divide-y divide-outline-variant mb-md">
+          {/* ── Order Summary Sidebar ── */}
+          <aside className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden lg:sticky lg:top-28">
+            <div className="px-6 py-5 border-b border-outline-variant bg-surface-container-lowest">
+              <h2 className="text-h3 text-on-surface">Order Summary</h2>
+              <p className="text-body-sm text-secondary mt-0.5">{items.length} item{items.length !== 1 ? 's' : ''}</p>
+            </div>
+
+            <div className="px-6 py-2 divide-y divide-outline-variant/60">
               {items.map(item => (
-                <div key={item.id} className="py-sm flex gap-sm">
-                  <img src={item.images?.[0]} alt={item.name} className="w-12 h-12 rounded-lg object-cover bg-surface-container" />
+                <div key={item.id} className="py-4 flex gap-3 items-start">
+                  <img src={item.images?.[0]} alt={item.name} className="w-14 h-14 rounded-xl object-cover bg-surface-container shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-body-sm font-medium line-clamp-1">{item.name}</p>
-                    <p className="text-body-sm text-secondary">Qty: {item.quantity}</p>
+                    <p className="text-body-sm font-medium text-on-surface line-clamp-2 leading-snug">{item.name}</p>
+                    <p className="text-body-sm text-secondary mt-1">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-body-sm font-bold text-primary shrink-0 whitespace-nowrap">{formatPrice(item.price_pesewas * item.quantity)}</p>
                 </div>
               ))}
             </div>
-            <div className="space-y-2">
+
+            <div className="px-6 py-5 border-t border-outline-variant space-y-3">
               <div className="flex justify-between text-body text-secondary">
-                <span>Subtotal</span><span>{formatPrice(total)}</span>
+                <span>Subtotal</span><span className="text-on-surface">{formatPrice(total)}</span>
               </div>
-              <div className="flex justify-between text-body text-secondary">
-                <span>Delivery</span><span className="text-primary font-semibold">Free (Accra)</span>
+              <div className="flex justify-between text-body">
+                <span className="text-secondary">Delivery</span>
+                <span className="text-primary font-semibold">Free (Accra)</span>
               </div>
-              <div className="flex justify-between items-baseline pt-sm border-t border-outline-variant">
+              <div className="flex justify-between items-center pt-3 border-t border-outline-variant">
                 <span className="text-h3 text-on-surface">Total</span>
                 <span className="text-price text-primary whitespace-nowrap">{formatPrice(total)}</span>
               </div>
             </div>
-            <p className="text-label uppercase text-secondary mt-md">VAT treatment TBC. Prices shown inclusive.</p>
+
+            <div className="px-6 pb-5 space-y-2">
+              <p className="text-label uppercase text-secondary">VAT treatment TBC. Prices shown inclusive.</p>
+              <div className="flex items-center gap-2 pt-2">
+                <Truck size={14} className="text-primary shrink-0" />
+                <p className="text-label uppercase text-primary">Free delivery · Greater Accra · 24hrs</p>
+              </div>
+            </div>
           </aside>
+
         </div>
       </div>
     </main>
