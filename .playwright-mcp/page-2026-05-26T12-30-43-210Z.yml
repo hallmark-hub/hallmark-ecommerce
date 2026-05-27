@@ -1,0 +1,133 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ChefWare" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e6]:
+        - button "Open cart" [ref=e7] [cursor=pointer]:
+          - img [ref=e8]
+        - link "My account" [ref=e12] [cursor=pointer]:
+          - /url: /account
+          - img [ref=e13]
+        - button "Toggle menu" [ref=e16] [cursor=pointer]:
+          - img [ref=e17]
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - heading "Your Cart (0)" [level=2] [ref=e20]
+      - button "Close cart" [ref=e21] [cursor=pointer]:
+        - img [ref=e22]
+    - generic [ref=e25]:
+      - img [ref=e26]
+      - paragraph [ref=e29]: Your cart is empty
+      - paragraph [ref=e30]: Add products to get started.
+      - button "Continue Shopping" [ref=e31] [cursor=pointer]
+  - main [ref=e32]:
+    - generic [ref=e34]:
+      - generic [ref=e35]:
+        - heading "Request a Quote" [level=1] [ref=e36]
+        - paragraph [ref=e37]: Tell us about your requirements and we'll prepare a custom quote within 24 hours.
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - generic [ref=e42]: Full Name *
+            - textbox "Full Name *" [ref=e43]:
+              - /placeholder: Kwame Asante
+          - generic [ref=e44]:
+            - generic [ref=e45]: Email Address *
+            - textbox "Email Address *" [ref=e46]:
+              - /placeholder: kwame@example.com
+        - generic [ref=e47]:
+          - generic [ref=e48]: Phone Number *
+          - textbox "Phone Number *" [ref=e49]:
+            - /placeholder: "+233244123456"
+          - paragraph [ref=e50]: "Format: +233XXXXXXXXX"
+        - generic [ref=e51]:
+          - generic [ref=e52]: Service Category *
+          - combobox "Service Category *" [ref=e53] [cursor=pointer]:
+            - option "Select a category..." [selected]
+            - option "Industrial Kitchen Setup"
+            - option "Customized Machine Pre-Orders"
+            - option "Machine Customization"
+            - option "Embroidery Services"
+            - option "Logo Printing & Garment Branding"
+        - generic [ref=e54]:
+          - generic [ref=e55]: Requirements *
+          - textbox "Requirements *" [ref=e56]:
+            - /placeholder: Describe your needs — e.g. 'We need a full kitchen setup for a 60-seat restaurant, including industrial ovens and prep stations.'
+        - button "Submit Quote Request" [ref=e57] [cursor=pointer]
+  - contentinfo [ref=e58]:
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]: ChefWare Enterprise
+          - paragraph [ref=e63]: Accra's premier supplier of industrial kitchen equipment, chef uniforms, and hospitality branding services since 2015.
+          - generic [ref=e64]:
+            - link "WhatsApp" [ref=e65] [cursor=pointer]:
+              - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+              - img [ref=e66]
+            - link "Instagram" [ref=e68] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e69]
+            - link "Facebook" [ref=e71] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e72]
+          - generic [ref=e74]:
+            - paragraph [ref=e75]: Osu — Oxford Street, Accra
+            - paragraph [ref=e76]: +233 302 000 000
+            - paragraph [ref=e77]: info@chefware.com.gh
+        - generic [ref=e78]:
+          - heading "Shop" [level=5] [ref=e79]
+          - navigation [ref=e80]:
+            - link "Chef Uniforms" [ref=e81] [cursor=pointer]:
+              - /url: /products?category=chef-uniforms
+            - link "Staff Uniforms" [ref=e82] [cursor=pointer]:
+              - /url: /products?category=staff-uniforms-branding
+            - link "Kitchen Equipment" [ref=e83] [cursor=pointer]:
+              - /url: /products?category=kitchen-equipment-tools
+            - link "All Products" [ref=e84] [cursor=pointer]:
+              - /url: /products
+        - generic [ref=e85]:
+          - heading "Services" [level=5] [ref=e86]
+          - navigation [ref=e87]:
+            - link "All Services" [ref=e88] [cursor=pointer]:
+              - /url: /services
+            - link "Embroidery" [ref=e89] [cursor=pointer]:
+              - /url: /services
+            - link "Logo Printing" [ref=e90] [cursor=pointer]:
+              - /url: /services
+            - link "Kitchen Setup" [ref=e91] [cursor=pointer]:
+              - /url: /services
+            - link "Request a Quote →" [ref=e92] [cursor=pointer]:
+              - /url: /quote
+        - generic [ref=e93]:
+          - heading "Support" [level=5] [ref=e94]
+          - navigation [ref=e95]:
+            - link "My Account" [ref=e96] [cursor=pointer]:
+              - /url: /account
+            - link "Track Order" [ref=e97] [cursor=pointer]:
+              - /url: /account
+            - link "Returns Policy" [ref=e98] [cursor=pointer]:
+              - /url: "#"
+            - link "Privacy Policy" [ref=e99] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e100]:
+          - heading "Stay Updated" [level=5] [ref=e101]
+          - paragraph [ref=e102]: New arrivals and exclusive offers.
+          - generic [ref=e103]:
+            - textbox "your@email.com" [ref=e104]
+            - button "Subscribe" [ref=e105] [cursor=pointer]
+      - generic [ref=e106]:
+        - paragraph [ref=e107]: © 2026 ChefWare Enterprise. All rights reserved.
+        - generic [ref=e108]:
+          - generic [ref=e109]: MTN MoMo
+          - generic [ref=e110]: ·
+          - generic [ref=e111]: Vodafone Cash
+          - generic [ref=e112]: ·
+          - generic [ref=e113]: AirtelTigo
+          - generic [ref=e114]: ·
+          - generic [ref=e115]: GCB Bank
+          - generic [ref=e116]: ·
+          - generic [ref=e117]: Stanbic
+  - link "Chat with us on WhatsApp" [ref=e118] [cursor=pointer]:
+    - /url: https://wa.me/233302000000?text=Hello%20ChefWare!%20I'd%20like%20to%20enquire%20about%20your%20hospitality%20supplies.
+    - img [ref=e120]

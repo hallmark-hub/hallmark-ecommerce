@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Package, Wrench, FileText, Award, Search, ArrowRight } from 'lucide-react'
-import { lookupOrder } from '../api/orders'
-import { validatePhone, formatPhone, formatPrice, formatDate } from '../utils/format'
+import { formatPrice, formatDate } from '../utils/format'
 import Button from '../components/Button'
+import useOrderLookup from '../hooks/useOrderLookup'
 
 const MOCK_ORDERS = [
   { id: 'o1', reference: 'CW-20260520-0001', date: '2026-05-20T10:00:00Z', status: 'delivered', total_pesewas: 90000 },
@@ -18,28 +17,7 @@ const STATUS_STYLES = {
 }
 
 export default function AccountPage() {
-  const [lookup, setLookup] = useState({ reference: '', phone: '' })
-  const [lookupResult, setLookupResult] = useState(null)
-  const [lookupError, setLookupError] = useState('')
-  const [lookupLoading, setLookupLoading] = useState(false)
-
-  async function handleLookup(e) {
-    e.preventDefault()
-    setLookupError('')
-    setLookupResult(null)
-    if (!lookup.reference.trim()) { setLookupError('Order reference is required.'); return }
-    if (!validatePhone(formatPhone(lookup.phone))) { setLookupError('Phone must be +233XXXXXXXXX.'); return }
-    setLookupLoading(true)
-    try {
-      const res = await lookupOrder(lookup.reference.trim(), formatPhone(lookup.phone))
-      if (res.success) setLookupResult(res.data)
-      else setLookupError(res.message)
-    } catch {
-      setLookupError('Lookup failed. Check your reference and phone number.')
-    } finally {
-      setLookupLoading(false)
-    }
-  }
+  const { reference, setReference, phone, setPhone, result: lookupResult, error: lookupError, loading: lookupLoading, lookup: handleLookup } = useOrderLookup()
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
@@ -125,15 +103,15 @@ export default function AccountPage() {
               <form onSubmit={handleLookup} className="space-y-sm">
                 <input
                   type="text"
-                  value={lookup.reference}
-                  onChange={e => setLookup(p => ({ ...p, reference: e.target.value }))}
+                  value={reference}
+                  onChange={e => setReference(e.target.value)}
                   placeholder="Order reference (CW-...)"
                   className="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <input
                   type="tel"
-                  value={lookup.phone}
-                  onChange={e => setLookup(p => ({ ...p, phone: e.target.value }))}
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
                   placeholder="Phone (+233...)"
                   className="w-full px-3 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 />

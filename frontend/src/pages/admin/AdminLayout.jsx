@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -57,7 +58,7 @@ export default function AdminLayout() {
 
       {/* Content */}
       <main className="flex-1 ml-56 p-gutter min-w-0">
-        <Outlet />
+        <ErrorBoundary><Outlet /></ErrorBoundary>
       </main>
     </div>
   )

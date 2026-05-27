@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
     const review = { id: Date.now(), date: new Date().toISOString(), ...reviewForm }
     const next = [review, ...reviews]
     setReviews(next)
-    try { localStorage.setItem(`chefware_reviews_${slug}`, JSON.stringify(next)) } catch {}
+    try { localStorage.setItem(`chefware_reviews_${slug}`, JSON.stringify(next)) } catch (e) { void e }
     setReviewForm({ name: '', rating: 5, comment: '' })
     setReviewSubmitted(true)
     setTimeout(() => setReviewSubmitted(false), 3000)

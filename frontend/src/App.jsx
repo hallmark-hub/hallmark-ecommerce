@@ -15,16 +15,18 @@ import ServicesPage from './pages/ServicesPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 import WhatsAppButton from './components/WhatsAppButton'
+import ErrorBoundary from './components/ErrorBoundary'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 import AdminInventoryPage from './pages/admin/AdminInventoryPage'
+import AdminSettingsPage from './pages/admin/AdminSettingsPage'
 
 function StorefrontLayout({ children }) {
   return (
     <>
       <Navbar />
-      {children}
+      <ErrorBoundary>{children}</ErrorBoundary>
       <Footer />
       <WhatsAppButton />
     </>
@@ -50,6 +52,7 @@ export default function App() {
           <Route index element={<AdminDashboardPage />} />
           <Route path="orders" element={<AdminOrdersPage />} />
           <Route path="inventory" element={<AdminInventoryPage />} />
+          <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
 
         <Route path="*" element={<StorefrontLayout><NotFoundPage /></StorefrontLayout>} />
