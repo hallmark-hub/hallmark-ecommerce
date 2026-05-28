@@ -1,7 +1,7 @@
 export function formatPrice(pesewas) {
   if (pesewas === null || pesewas === undefined) return 'Request a quote'
   const amount = pesewas / 100
-  return `GH₵ ${amount.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  return `GH₵${amount.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 export function formatPhone(phone) {

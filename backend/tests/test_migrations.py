@@ -15,6 +15,8 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "003_seed_sample_products.sql",
         "004_payment_event_deduplication.sql",
         "005_remove_manual_bank_transfer.sql",
+        "006_fix_product_images.sql",
+        "007_customer_profiles.sql",
     ]
 
 
@@ -70,3 +72,18 @@ def test_manual_bank_transfer_cleanup_migration_drops_bank_storage() -> None:
 
     assert "drop column if exists bank" in migration
     assert "drop type if exists bank_code" in migration
+
+
+def test_product_image_fix_migration_updates_seeded_products() -> None:
+    migration = (MIGRATIONS_DIR / "006_fix_product_images.sql").read_text()
+
+    assert "UPDATE products SET images" in migration
+    assert "classic-white-chef-jacket" in migration
+
+
+def test_customer_profiles_migration_adds_auth_linked_profiles() -> None:
+    migration = (MIGRATIONS_DIR / "007_customer_profiles.sql").read_text()
+
+    assert "create table if not exists customer_profiles" in migration
+    assert "auth_user_id uuid not null unique" in migration
+    assert "customer_role as enum ('customer', 'admin')" in migration

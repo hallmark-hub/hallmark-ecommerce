@@ -92,6 +92,7 @@ class FailingInitializeGateway(LocalPaystackGateway):
         email: str,
         amount_pesewas: int,
         reference: str,
+        callback_url: str | None = None,
     ) -> dict[str, str]:
         raise PaystackGatewayError("Paystack initialization failed")
 

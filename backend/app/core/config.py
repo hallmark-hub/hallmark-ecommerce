@@ -20,8 +20,16 @@ class Settings(BaseSettings):
     paystack_secret_key: str = Field(default="", alias="PAYSTACK_SECRET_KEY")
     paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
     admin_api_key: str = Field(default="", alias="ADMIN_API_KEY")
+    cors_allowed_origins: str = Field(default="", alias="CORS_ALLOWED_ORIGINS")
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    @property
+    def cors_origins(self) -> list[str]:
+        """Return the configured CORS allowlist, falling back to the frontend URL."""
+        raw = [origin.strip() for origin in self.cors_allowed_origins.split(",")]
+        origins = [origin for origin in raw if origin]
+        return origins or [self.frontend_url]
 
 
 @lru_cache

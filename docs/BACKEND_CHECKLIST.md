@@ -1,6 +1,6 @@
 # Backend Checklist — ChefWare Enterprise
 
-Last updated: 2026-05-25
+Last updated: 2026-05-28
 
 Status key:
 - `[ ]` Not started
@@ -78,12 +78,12 @@ Status key:
 
 - `[x]` Create Supabase client wrapper.
 - `[x]` Add manual SQL migrations under `backend/migrations/`.
-- `[~]` Define table access layer through services only.
-- `[~]` Replace in-memory catalog data with Supabase reads.
-- `[~]` Replace in-memory order writes with Supabase writes.
-- `[~]` Replace in-memory quote request writes with Supabase writes.
-- `[~]` Replace in-memory payment status updates with Supabase writes.
-- `[!]` Confirm schema before any migration or database-changing action.
+- `[x]` Define table access layer through services only.
+- `[x]` Replace in-memory catalog data with Supabase reads when configured.
+- `[x]` Replace in-memory order writes with Supabase writes when configured.
+- `[x]` Replace in-memory quote request writes with Supabase writes when configured.
+- `[x]` Replace in-memory payment status updates with Supabase writes when configured.
+- `[!]` Confirm production Supabase schema before any migration or database-changing action.
 
 ## Admin Backend
 
@@ -93,6 +93,19 @@ Status key:
 - `[-]` Manual bank transfer confirmation endpoint removed; not needed with Paystack-only checkout.
 - `[x]` Add basic analytics endpoints.
 - `[x]` Add inventory update endpoints.
+- `[x]` Allow authenticated `admin` customer profile role to access admin endpoints.
+- `[!]` Create/mark the first production admin account manually in `customer_profiles`.
+
+## Customer Accounts
+
+- `[x]` Add Supabase Auth-backed customer registration endpoint.
+- `[x]` Add customer login endpoint.
+- `[x]` Add bearer-token current profile endpoint.
+- `[x]` Add customer order history endpoint.
+- `[x]` Add `customer_profiles` manual migration.
+- `[x]` Keep local tests/dev independent of live Supabase Auth.
+- `[!]` Apply `007_customer_profiles.sql` manually in production Supabase.
+- `[!]` Decide whether email confirmation is required before customer login.
 
 ## Testing
 
@@ -108,6 +121,7 @@ Status key:
 - `[x]` Add Paystack reliability tests for idempotency, amount checks, and status transitions.
 - `[x]` Add Paystack gateway error wrapping tests.
 - `[x]` Add Paystack webhook duplicate detection tests.
+- `[x]` Add customer auth/profile/order route tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.

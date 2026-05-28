@@ -1,14 +1,7 @@
-import { useState } from 'react'
-import { Search } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { AlertTriangle, Search } from 'lucide-react'
+import { getAdminOrders, updateAdminOrderStatus } from '../../api/admin'
 import { formatPrice, formatDate } from '../../utils/format'
-
-const MOCK_ORDERS = [
-  { id: 'o1', reference: 'CW-20260525-0042', client: 'Kempinski Hotel Accra', phone: '+233302000001', amount_pesewas: 480000, payment_method: 'paystack', payment_status: 'paid', status: 'confirmed', date: '2026-05-25T10:00:00Z' },
-  { id: 'o2', reference: 'CW-20260524-0041', client: 'Movenpick Hotel', phone: '+233302000002', amount_pesewas: 185000, payment_method: 'bank_transfer', payment_status: 'pending', status: 'pending', date: '2026-05-24T14:00:00Z' },
-  { id: 'o3', reference: 'CW-20260523-0040', client: 'Holiday Inn Accra', phone: '+233302000003', amount_pesewas: 90000, payment_method: 'paystack', payment_status: 'paid', status: 'delivered', date: '2026-05-23T09:00:00Z' },
-  { id: 'o4', reference: 'CW-20260522-0039', client: 'La Palm Royal Beach', phone: '+233302000004', amount_pesewas: 210000, payment_method: 'paystack', payment_status: 'paid', status: 'confirmed', date: '2026-05-22T11:00:00Z' },
-  { id: 'o5', reference: 'CW-20260521-0038', client: 'Labadi Beach Hotel', phone: '+233302000005', amount_pesewas: 650000, payment_method: 'bank_transfer', payment_status: 'pending', status: 'pending', date: '2026-05-21T08:00:00Z' },
-]
 
 const ORDER_STATUSES = ['all', 'pending', 'confirmed', 'delivered']
 const STATUS_STYLES = {
@@ -25,19 +18,42 @@ const PAYMENT_STATUS_STYLES = {
 export default function AdminOrdersPage() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
-  const [orders, setOrders] = useState(MOCK_ORDERS)
+  const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  function updateStatus(id, newStatus) {
-    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus } : o))
-  }
+  useEffect(() => {
+    async function loadOrders() {
+      setLoading(true)
+      setError('')
+      try {
+        const res = await getAdminOrders(100)
+        if (!res.success) throw new Error(res.message)
+        setOrders(res.data || [])
+      } catch (e) {
+        setError(e.message || 'Unable to load admin orders.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadOrders()
+  }, [])
 
-  function confirmBankPayment(id) {
-    setOrders(prev => prev.map(o => o.id === id ? { ...o, payment_status: 'paid', status: 'confirmed' } : o))
+  async function updateStatus(reference, newStatus) {
+    const previous = orders
+    setOrders(prev => prev.map(o => o.reference === reference ? { ...o, order_status: newStatus } : o))
+    try {
+      const res = await updateAdminOrderStatus(reference, newStatus)
+      if (!res.success) throw new Error(res.message)
+    } catch (e) {
+      setOrders(previous)
+      setError(e.message || 'Unable to update order status.')
+    }
   }
 
   const filtered = orders.filter(o => {
-    const matchSearch = !search || o.reference.includes(search.toUpperCase()) || o.client.toLowerCase().includes(search.toLowerCase())
-    const matchStatus = statusFilter === 'all' || o.status === statusFilter
+    const matchSearch = !search || o.reference.includes(search.toUpperCase()) || o.customer_name.toLowerCase().includes(search.toLowerCase())
+    const matchStatus = statusFilter === 'all' || o.order_status === statusFilter
     return matchSearch && matchStatus
   })
 
@@ -45,8 +61,15 @@ export default function AdminOrdersPage() {
     <div>
       <div className="mb-lg">
         <h1 className="text-h1 font-medium text-on-surface">Orders Management</h1>
-        <p className="text-secondary text-body-sm">{orders.length} total orders</p>
+        <p className="text-secondary text-body-sm">{loading ? 'Loading orders...' : `${orders.length} total orders`}</p>
       </div>
+
+      {error && (
+        <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
+          <AlertTriangle size={16} className="shrink-0" />
+          <p className="text-body-sm">{error}</p>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="bg-white rounded-xl border border-outline-variant p-md mb-md flex flex-wrap gap-md items-center">
@@ -92,36 +115,27 @@ export default function AdminOrdersPage() {
               <tr key={o.id} className="hover:bg-surface-container-low transition-colors">
                 <td className="px-md py-sm text-body-sm font-medium text-primary">{o.reference}</td>
                 <td className="px-md py-sm">
-                  <p className="text-body-sm font-medium text-on-surface">{o.client}</p>
-                  <p className="text-label text-xs text-secondary">{o.phone}</p>
+                  <p className="text-body-sm font-medium text-on-surface">{o.customer_name}</p>
+                  <p className="text-label text-xs text-secondary">{o.customer_phone}</p>
                 </td>
-                <td className="px-md py-sm text-body-sm font-bold text-on-surface">{formatPrice(o.amount_pesewas)}</td>
+                <td className="px-md py-sm text-body-sm font-bold text-on-surface">{formatPrice(o.total_pesewas)}</td>
                 <td className="px-md py-sm">
                   <p className={`text-body-sm ${PAYMENT_STATUS_STYLES[o.payment_status]}`}>{o.payment_status}</p>
                   <p className="text-label text-xs text-secondary capitalize">{o.payment_method.replace('_', ' ')}</p>
                 </td>
                 <td className="px-md py-sm">
                   <select
-                    value={o.status}
-                    onChange={e => updateStatus(o.id, e.target.value)}
-                    className={`px-2 py-0.5 rounded-full text-label text-xs font-semibold cursor-pointer border-0 focus:ring-1 focus:ring-primary outline-none ${STATUS_STYLES[o.status]}`}
+                    value={o.order_status}
+                    onChange={e => updateStatus(o.reference, e.target.value)}
+                    className={`px-2 py-0.5 rounded-full text-label text-xs font-semibold cursor-pointer border-0 focus:ring-1 focus:ring-primary outline-none ${STATUS_STYLES[o.order_status]}`}
                   >
                     <option value="pending">Pending</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="delivered">Delivered</option>
                   </select>
                 </td>
-                <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.date)}</td>
-                <td className="px-md py-sm">
-                  {o.payment_method === 'bank_transfer' && o.payment_status === 'pending' && (
-                    <button
-                      onClick={() => confirmBankPayment(o.id)}
-                      className="text-label text-xs text-primary hover:underline cursor-pointer font-semibold"
-                    >
-                      Confirm Transfer
-                    </button>
-                  )}
-                </td>
+                <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.created_at)}</td>
+                <td className="px-md py-sm text-label text-xs text-secondary">Paystack</td>
               </tr>
             ))}
           </tbody>

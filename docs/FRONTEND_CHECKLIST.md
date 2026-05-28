@@ -134,35 +134,35 @@
 - [ ] Success state with reference number
 
 ### Customer Account Dashboard
-- [ ] Build as mocked UI only — no real auth wired until backend auth contract is defined
-- [ ] "Welcome back, [name]" header
+- [x] Wire to backend auth/profile contract
+- [x] "Welcome back, [name]" header
 - [ ] Stats: Active Orders, Equipment in Service, Service Requests, Loyalty Tier
-- [ ] Recent Orders table — Order ID, Date, Status (colour-coded), Total, View link
-- [ ] Order lookup by reference + phone (uses `GET /api/v1/orders/lookup`)
+- [x] Recent Orders table — Order ID, Date, Status (colour-coded), Total
+- [x] Order lookup by reference + phone (uses `GET /api/v1/orders/lookup`)
 - [ ] Quick Procurement category shortcuts
 - [ ] Kitchen Audit promo card
 - [ ] New Heritage Collection promo card
 
 ### Auth (Login / Register)
-- [ ] Build as mocked UI only — backend has no auth contract yet
-- [ ] Login form — email + password
-- [ ] Register form — name, email, phone, password
-- [ ] Ghana phone validation
-- [ ] Protected routes redirect to login (mock guard using hardcoded flag for now)
+- [x] Wire login/register to backend auth endpoints
+- [x] Login form — email + password
+- [x] Register form — name, email, phone, password
+- [x] Ghana phone validation
+- [x] Customer account route redirects to login when unauthenticated
 
 ---
 
 ## 6. Admin Dashboard
 
-- [ ] Build as mocked UI only — no real admin auth contract yet
+- [x] Wire dashboard/orders/inventory to backend routes where endpoints exist
 - [ ] Sidebar nav — Dashboard, Orders, Inventory, Kitchen Services, Branding, Settings
-- [ ] Enterprise Overview — Total Orders, Revenue (`GH₵`), Active Services/Contracts
-- [ ] Recent Orders table — Order ID, Client, Amount, Status, Action
-- [ ] Inventory Alerts panel — critical stock items, "Reorder All Low Stock"
-- [ ] New Quote Requests panel — "Respond Now" CTA
-- [ ] Admin Orders Management page (see `design/admin_orders_management_desktop/screen.png`)
-- [ ] Admin Inventory Management page (see `design/admin_inventory_management_desktop/screen.png`)
-- [ ] Route-guard: mock admin flag only until backend auth is defined
+- [x] Enterprise Overview — Total Orders, Revenue (`GH₵`), order status summary
+- [x] Recent Orders table — Order ID, Client, Amount, Status
+- [x] Inventory Alerts panel — critical stock items
+- [!] New Quote Requests panel — backend admin quote-list endpoint still needed
+- [x] Admin Orders Management page (see `design/admin_orders_management_desktop/screen.png`)
+- [x] Admin Inventory Management page (see `design/admin_inventory_management_desktop/screen.png`)
+- [x] Route-guard uses authenticated admin profile role
 
 ---
 
@@ -206,6 +206,8 @@
 - [-] Bank details rendered from API response only — removed with manual bank transfer flow
 - [ ] Mobile: homepage + catalog match design screens
 - [ ] Paystack redirect → verify → confirmation flow works end-to-end (once backend live)
+- [x] Customer login/register build and lint pass against backend contract
+- [!] Admin login requires a customer profile with `role = 'admin'` in Supabase
 
 ---
 

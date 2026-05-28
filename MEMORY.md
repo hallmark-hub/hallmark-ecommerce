@@ -113,3 +113,42 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **What was decided:** Remove the manual bank transfer checkout path; bank rails will be connected inside Paystack and the app will submit orders with `payment_method: "paystack"`.
 **Why:** Paystack can handle card, MoMo, and bank settlement without exposing manual account details or requiring manual bank-transfer confirmation in the e-commerce backend.
 **What was rejected:** Keeping placeholder GCB/Stanbic instructions and a separate manual transfer confirmation flow, because it adds operational risk and is no longer needed for checkout.
+
+## 2026-05-28, Backend checklist completion
+**What was decided:** Mark backend Supabase repository integration complete in code, keep production schema confirmation blocked until explicit migration approval, renumber the product-image SQL fix to `006_fix_product_images.sql`, and force pytest runs to blank external-service credentials.
+**Why:** The backend now routes Supabase access through repositories with in-memory fallback for local verification, migration filenames need a single documented apply order, and tests must not mutate real Supabase data when `.env` contains credentials.
+**What was rejected:** Running migrations or validating against the live Supabase project in this session, because database-changing actions require explicit approval.
+
+## 2026-05-28, Frontend-backend wiring
+**What was decided:** Wire the Claude-built frontend to the FastAPI backend through the centralized API layer, including real checkout payloads, Paystack verification return handling, admin analytics/orders, and inventory stock updates.
+**Why:** The database and backend are now connected, so the frontend should use the implemented API contract instead of local mock data wherever backend routes exist.
+**What was rejected:** Keeping admin orders/inventory/dashboard as static mocks, because those views now have usable backend routes; admin quote listing remains pending because no backend list endpoint exists yet.
+
+## 2026-05-28, Production account architecture
+**What was decided:** Use Supabase Auth bearer tokens for customer login/register and admin dashboard access, with `customer_profiles.role = 'admin'` controlling admin authorization and `ADMIN_API_KEY` retained only as a backend fallback.
+**Why:** Customer dashboards need real identities, and exposing an admin API key in Vercel/frontend code would not be production safe.
+**What was rejected:** Continuing with mock customer auth or shipping `VITE_ADMIN_API_KEY`, because those approaches cannot safely protect customer/admin production data.
+
+## 2026-05-28, Product image source
+**What was decided:** Product images are sourced from the backend `products.images` array, with a shared frontend fallback only when the DB image URL is missing or fails to load.
+**Why:** Supabase is now the catalog source of truth, but live test rows contained broken placeholder URLs such as `https://example.com/hat.jpg`, causing blank images.
+**What was rejected:** Embedding product-specific image mappings in the frontend, because that would drift from the database-backed catalog.
+
+## 2026-05-28, Post-wiring integration check — known broken state
+**What was decided:** Log the current end-to-end state after wiring the frontend to the real backend so Codex and Evans share one snapshot of what is broken and what needs explicit approval.
+**Why:** Categories sidebar groups render empty and customer auth fails, but the frontend code is correct — the failures are CORS, missing migration 007, and test pollution in the live `products` table.
+**What was rejected:** Patching the frontend to hide the symptoms (e.g. hardcoding category lists or silencing auth errors), because the real fixes belong on the backend/DB side and hiding them would mask the production-readiness gap.
+
+Findings (as of 2026-05-28):
+1. **CORS** — Backend `allow_origins` in `backend/app/main.py` is a single string `settings.frontend_url` = `http://localhost:5173`. Two Vite servers are alive (5173 and 5174); requests from 5174 are rejected with `Disallowed CORS origin`. Decision: standardize on 5173 locally, or have Codex widen `allow_origins` to a list.
+2. **Live `products` table is nearly empty and polluted** — 7 rows total, 4 are pytest artifacts (`admin-test-chef-hat`, `admin-update-hat`, `admin-stock-hat`, `admin-active-hat`) with `https://example.com/hat.jpg`. Only categories `chef-uniforms` and `kitchen-setup` have any real rows; categories 2, 3, 5–8 are empty. Pytest must be locked out of prod Supabase before anything else.
+3. **Migration 007 not applied** — `customer_profiles` table is missing in live Supabase (`PGRST205`). `/api/v1/auth/register` succeeds at Supabase Auth then fails the profile insert and returns the generic `"Customer registration failed"`. Customer login, `/auth/me`, and `/customer/orders` all blocked until migration 007 runs. Requires explicit Evans approval per hard-stop rule.
+4. **Admin login chain blocked on migration 007** — Frontend only sends the Supabase JWT; backend `require_admin` accepts that JWT only if the matching `customer_profiles` row has `role='admin'`. After 007 is applied, Evans's account must be promoted manually: `UPDATE customer_profiles SET role='admin' WHERE email='okyerevansjohn@gmail.com';`. No `VITE_ADMIN_API_KEY` is shipped to the client — that is intentional and must stay that way.
+5. **Images** — Frontend already falls back via `frontend/src/utils/images.js` `useFallbackImage`. Real Unsplash URLs in the DB render fine; only the 4 admin-test rows look broken. Cloudinary upload is independent and can wait.
+
+How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (backend/DB); item 5 is informational. Do not paper over any of these on the frontend. Update or remove this entry once each item is resolved.
+
+## 2026-05-28, CORS env-driven allowlist
+**What was decided:** Replace the single-origin `allow_origins=[settings.frontend_url]` with an env-driven `CORS_ALLOWED_ORIGINS` comma-separated list, falling back to `FRONTEND_URL` when unset. Local `.env` sets it to `http://localhost:5173,http://localhost:5174`.
+**Why:** Production best practice is a strict explicit allowlist (no wildcards with credentials), and the current Vite setup runs two dev ports — the previous single-origin config silently broke whichever browser tab was on the wrong port. Env-driven means production deploys can set the exact Vercel origin without code changes.
+**What was rejected:** Wildcard `allow_origins=["*"]` (incompatible with `allow_credentials=True` and unsafe), and hardcoding multiple origins in `app/main.py` (would couple deploy targets to code).

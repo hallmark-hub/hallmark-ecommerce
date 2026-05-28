@@ -1,5 +1,6 @@
 -- Fix product images: replace broken/mismatched Cloudinary URLs with
--- matching high-resolution Unsplash images. Run on Supabase SQL editor.
+-- matching high-resolution Unsplash images. Run in Supabase SQL Editor after
+-- 005_remove_manual_bank_transfer.sql.
 
 -- ── Chef Uniforms ────────────────────────────────────────────────────────────
 

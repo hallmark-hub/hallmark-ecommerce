@@ -1,30 +1,44 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-
-const MOCK_USER = { id: 'u1', name: 'Kwame Asante', email: 'kwame@example.com', phone: '+233244123456' }
+import { loginCustomer, registerCustomer } from '../api/auth'
 
 const useAuthStore = create(
   persist(
     (set) => ({
       user: null,
+      profile: null,
       token: null,
       isAdmin: false,
 
-      login(email) {
-        // Mock auth — real auth contract TBD with backend
-        if (email === 'admin@chefware.com') {
-          set({ user: { ...MOCK_USER, name: 'Admin', email }, token: 'mock-admin-token', isAdmin: true })
-        } else {
-          set({ user: { ...MOCK_USER, email }, token: 'mock-user-token', isAdmin: false })
-        }
+      async login(email, password) {
+        const res = await loginCustomer({ email, password })
+        if (!res.success) throw new Error(res.message)
+        setAuthState(set, res.data)
+        return res.data
+      },
+
+      async register(payload) {
+        const res = await registerCustomer(payload)
+        if (!res.success) throw new Error(res.message)
+        setAuthState(set, res.data)
+        return res.data
       },
 
       logout() {
-        set({ user: null, token: null, isAdmin: false })
+        set({ user: null, profile: null, token: null, isAdmin: false })
       },
     }),
     { name: 'chefware-auth' }
   )
 )
+
+function setAuthState(set, auth) {
+  set({
+    user: auth.user,
+    profile: auth.profile,
+    token: auth.access_token,
+    isAdmin: auth.profile?.role === 'admin',
+  })
+}
 
 export default useAuthStore

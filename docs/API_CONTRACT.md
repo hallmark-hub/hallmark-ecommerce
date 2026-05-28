@@ -192,6 +192,92 @@ Used for `checkout_type: quote` categories.
 
 ---
 
+### Customer Accounts
+
+#### `POST /api/v1/auth/register`
+
+Creates a customer account through Supabase Auth and stores a matching customer
+profile.
+
+**Request body:**
+```json
+{
+  "name": "Kwame Asante",
+  "email": "kwame@example.com",
+  "phone": "+233244123456",
+  "password": "strongpass123"
+}
+```
+
+**Response `data`:**
+```json
+{
+  "access_token": "jwt-or-null-if-email-confirmation-required",
+  "refresh_token": "refresh-token-or-null",
+  "user": {
+    "id": "uuid",
+    "email": "kwame@example.com"
+  },
+  "profile": {
+    "id": "uuid",
+    "auth_user_id": "uuid",
+    "name": "Kwame Asante",
+    "email": "kwame@example.com",
+    "phone": "+233244123456",
+    "role": "customer",
+    "created_at": "2026-05-28T10:00:00Z",
+    "updated_at": "2026-05-28T10:00:00Z"
+  }
+}
+```
+
+#### `POST /api/v1/auth/login`
+
+Authenticates a customer.
+
+**Request body:**
+```json
+{
+  "email": "kwame@example.com",
+  "password": "strongpass123"
+}
+```
+
+**Response `data`:** same shape as registration.
+
+#### `GET /api/v1/auth/me`
+
+Requires `Authorization: Bearer <access_token>`.
+
+**Response `data`:** customer profile.
+
+#### `GET /api/v1/customer/orders`
+
+Requires `Authorization: Bearer <access_token>`. Returns orders matching the
+authenticated profile email and phone.
+
+**Response `data`:**
+```json
+[
+  {
+    "id": "uuid",
+    "reference": "CW-20260525-0042",
+    "total_pesewas": 30000,
+    "payment_method": "paystack",
+    "payment_status": "pending",
+    "order_status": "pending",
+    "returns_policy": "No refunds. Exchange only within 3 days of purchase.",
+    "created_at": "2026-05-25T10:00:00Z"
+  }
+]
+```
+
+Admin dashboard endpoints require a bearer token whose `customer_profiles.role`
+is `admin`. `X-Admin-API-Key` remains a backend-only fallback and must not be
+exposed in frontend environment variables.
+
+---
+
 ### Orders
 
 #### `POST /api/v1/orders`

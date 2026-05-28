@@ -7,6 +7,7 @@ import PriceDisplay from '../components/PriceDisplay'
 import ProductCard from '../components/ProductCard'
 import Button from '../components/Button'
 import { PageLoader } from '../components/PageLoader'
+import { PRODUCT_IMAGE_FALLBACK, useFallbackImage } from '../utils/images'
 
 export default function ProductDetailPage() {
   const { slug } = useParams()
@@ -51,7 +52,7 @@ export default function ProductDetailPage() {
   if (!product) return null
 
   const isQuote = product.checkout_type === 'quote'
-  const images = product.images?.length ? product.images : ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800']
+  const images = product.images?.length ? product.images : [PRODUCT_IMAGE_FALLBACK]
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0
   const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
 
@@ -78,7 +79,7 @@ export default function ProductDetailPage() {
           {/* Gallery */}
           <div>
             <div className="aspect-square rounded-xl overflow-hidden bg-surface-container border border-outline-variant mb-sm">
-              <img src={images[activeImg]} alt={product.name} className="w-full h-full object-cover" />
+              <img src={images[activeImg]} alt={product.name} onError={useFallbackImage} className="w-full h-full object-cover" />
             </div>
             {images.length > 1 && (
               <div className="flex gap-sm">
@@ -90,7 +91,7 @@ export default function ProductDetailPage() {
                     aria-current={i === activeImg ? 'true' : undefined}
                     className={`w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${i === activeImg ? 'border-primary ring-1 ring-primary/30' : 'border-outline-variant hover:border-primary/60 opacity-70 hover:opacity-100'}`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" onError={useFallbackImage} className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

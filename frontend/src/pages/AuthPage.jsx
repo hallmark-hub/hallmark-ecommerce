@@ -8,6 +8,7 @@ import Button from '../components/Button'
 export default function AuthPage() {
   const navigate = useNavigate()
   const login = useAuthStore(s => s.login)
+  const register = useAuthStore(s => s.register)
   const [mode, setMode] = useState('login')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -15,7 +16,7 @@ export default function AuthPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' })
   function update(f, v) { setForm(p => ({ ...p, [f]: v })) }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     setError('')
     if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) { setError('Valid email required.'); return }
@@ -25,11 +26,23 @@ export default function AuthPage() {
       if (!validatePhone(formatPhone(form.phone))) { setError('Phone must be +233XXXXXXXXX.'); return }
     }
     setLoading(true)
-    setTimeout(() => {
-      login(form.email, form.password)
-      navigate('/account')
+    try {
+      if (mode === 'register') {
+        await register({
+          name: form.name,
+          email: form.email,
+          phone: formatPhone(form.phone),
+          password: form.password,
+        })
+      } else {
+        await login(form.email, form.password)
+      }
       setLoading(false)
-    }, 600)
+      navigate('/account')
+    } catch (e) {
+      setError(e.message || 'Authentication failed.')
+      setLoading(false)
+    }
   }
 
   return (
@@ -38,7 +51,6 @@ export default function AuthPage() {
         <div className="text-center mb-xl">
           <h1 className="text-h1 text-on-surface">{mode === 'login' ? 'Sign In' : 'Create Account'}</h1>
           <p className="text-body text-secondary mt-2">ChefWare Enterprise — Accra</p>
-          <p className="text-label uppercase text-tertiary mt-1">Mock UI — auth pending backend</p>
         </div>
 
         <div className="bg-white rounded-xl border border-outline-variant p-xl">
@@ -85,10 +97,6 @@ export default function AuthPage() {
             </button>
           </p>
         </div>
-
-        <p className="text-center text-body-sm text-secondary mt-md">
-          Hint: use <code className="bg-surface-container px-1 rounded text-xs">admin@chefware.com</code> to log in as admin
-        </p>
       </div>
     </main>
   )

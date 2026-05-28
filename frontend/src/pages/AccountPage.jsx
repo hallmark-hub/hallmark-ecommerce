@@ -1,14 +1,11 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
 import { Package, Wrench, FileText, Award, Search, ArrowRight } from 'lucide-react'
 import { formatPrice, formatDate } from '../utils/format'
 import Button from '../components/Button'
 import useOrderLookup from '../hooks/useOrderLookup'
-
-const MOCK_ORDERS = [
-  { id: 'o1', reference: 'CW-20260520-0001', date: '2026-05-20T10:00:00Z', status: 'delivered', total_pesewas: 90000 },
-  { id: 'o2', reference: 'CW-20260518-0002', date: '2026-05-18T14:30:00Z', status: 'confirmed', total_pesewas: 185000 },
-  { id: 'o3', reference: 'CW-20260510-0003', date: '2026-05-10T09:00:00Z', status: 'pending', total_pesewas: 45000 },
-]
+import useAuthStore from '../store/authStore'
+import { getCustomerOrders } from '../api/auth'
 
 const STATUS_STYLES = {
   pending: 'bg-tertiary-fixed/30 text-tertiary',
@@ -17,21 +14,44 @@ const STATUS_STYLES = {
 }
 
 export default function AccountPage() {
+  const { profile, token } = useAuthStore()
+  const [orders, setOrders] = useState([])
+  const [ordersError, setOrdersError] = useState('')
+  const [ordersLoading, setOrdersLoading] = useState(true)
   const { reference, setReference, phone, setPhone, result: lookupResult, error: lookupError, loading: lookupLoading, lookup: handleLookup } = useOrderLookup()
+
+  useEffect(() => {
+    async function loadOrders() {
+      if (!token) return
+      setOrdersLoading(true)
+      setOrdersError('')
+      try {
+        const res = await getCustomerOrders()
+        if (!res.success) throw new Error(res.message)
+        setOrders(res.data || [])
+      } catch (e) {
+        setOrdersError(e.message || 'Unable to load orders.')
+      } finally {
+        setOrdersLoading(false)
+      }
+    }
+    loadOrders()
+  }, [token])
+
+  if (!token) return <Navigate to="/login" replace />
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
       <div className="max-w-container-max mx-auto px-gutter py-section-mobile md:py-section">
         <div className="mb-xl">
-          <h1 className="text-h1 text-on-surface">Welcome back, Kwame</h1>
+          <h1 className="text-h1 text-on-surface">Welcome back, {profile?.name || 'Customer'}</h1>
           <p className="text-body-lg text-secondary mt-1">Manage your orders and services</p>
-          <p className="text-label uppercase text-tertiary mt-xs">Mock UI — real auth pending backend contract</p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-md mb-xl">
           {[
-            { label: 'Active Orders', value: '2', icon: Package, color: 'text-primary' },
+            { label: 'Active Orders', value: String(orders.filter(order => order.order_status !== 'delivered').length), icon: Package, color: 'text-primary' },
             { label: 'Equipment in Service', value: '5', icon: Wrench, color: 'text-primary' },
             { label: 'Service Requests', value: '1', icon: FileText, color: 'text-tertiary' },
             { label: 'Loyalty Tier', value: 'Gold', icon: Award, color: 'text-gold' },
@@ -65,18 +85,23 @@ export default function AccountPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant">
-                  {MOCK_ORDERS.map(o => (
+                  {orders.map(o => (
                     <tr key={o.id} className="hover:bg-surface-container-low transition-colors">
                       <td className="px-md py-sm text-body-sm font-medium text-primary">{o.reference}</td>
-                      <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.date)}</td>
+                      <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.created_at)}</td>
                       <td className="px-md py-sm">
-                        <span className={`px-2 py-0.5 rounded-full text-label uppercase capitalize ${STATUS_STYLES[o.status]}`}>{o.status}</span>
+                        <span className={`px-2 py-0.5 rounded-full text-label uppercase capitalize ${STATUS_STYLES[o.order_status]}`}>{o.order_status}</span>
                       </td>
                       <td className="px-md py-sm text-body-sm font-bold text-primary">{formatPrice(o.total_pesewas)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              {ordersLoading && <div className="p-md text-body-sm text-secondary">Loading orders...</div>}
+              {ordersError && <div className="p-md text-body-sm text-error">{ordersError}</div>}
+              {!ordersLoading && !ordersError && orders.length === 0 && (
+                <div className="p-md text-body-sm text-secondary">No orders found for this account yet.</div>
+              )}
             </div>
 
             {/* Quick procurement */}

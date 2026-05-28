@@ -1,24 +1,64 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { CheckCircle, Printer, Home } from 'lucide-react'
+import { AlertTriangle, CheckCircle, Printer, Home } from 'lucide-react'
 import Button from '../components/Button'
 import { formatPrice, formatDate } from '../utils/format'
+import { lookupOrder } from '../api/orders'
+
+const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 export default function OrderConfirmationPage() {
   const { reference } = useParams()
+  const [order, setOrder] = useState(null)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(true)
 
-  // Mock order data for display — real data would come from order lookup
-  const order = {
-    reference,
-    customer: { name: 'Ama Boateng', phone: '+233201987654' },
-    items: [
-      { product_name: 'Classic White Chef Jacket', quantity: 2, unit_price_pesewas: 45000 },
-    ],
-    total_pesewas: 90000,
-    payment_method: 'paystack',
-    payment_status: 'paid',
-    order_status: 'confirmed',
-    returns_policy: 'No refunds. Exchange only within 3 days of purchase.',
-    created_at: new Date().toISOString(),
+  useEffect(() => {
+    async function loadOrder() {
+      setLoading(true)
+      setError('')
+      const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
+      if (!stored.phone) {
+        setError('Order confirmed. Sign in or contact us with your reference for full receipt details.')
+        setOrder({ reference, customer: { phone: '' }, items: [], total_pesewas: 0, payment_method: 'paystack', payment_status: 'paid', order_status: 'confirmed', returns_policy: 'No refunds. Exchange only within 3 days of purchase.', created_at: new Date().toISOString() })
+        setLoading(false)
+        return
+      }
+
+      try {
+        const res = await lookupOrder(reference, stored.phone)
+        if (!res.success) throw new Error(res.message)
+        setOrder(res.data)
+      } catch (e) {
+        setError(e.message || 'Unable to load order details.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadOrder()
+  }, [reference])
+
+  if (loading) {
+    return (
+      <main className="pt-20 min-h-screen bg-surface">
+        <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section text-center">
+          <p className="text-body text-secondary">Loading order details...</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (!order) {
+    return (
+      <main className="pt-20 min-h-screen bg-surface">
+        <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section text-center">
+          <AlertTriangle size={48} className="text-error mx-auto mb-md" />
+          <h1 className="text-h2 text-on-surface mb-sm">Order Details Unavailable</h1>
+          <p className="text-body text-secondary mb-md">{error || 'Please contact us with your order reference.'}</p>
+          <Button as={Link} to="/" variant="primary" size="lg" iconLeft={<Home />}>Back to Home</Button>
+        </div>
+      </main>
+    )
   }
 
   return (
@@ -29,7 +69,8 @@ export default function OrderConfirmationPage() {
           <CheckCircle size={64} className="text-primary mx-auto mb-md" />
           <h1 className="text-h1 text-on-surface mb-sm">Order Confirmed!</h1>
           <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
-          <p className="text-body-sm text-secondary mt-xs">We'll send confirmation updates to {order.customer.phone}</p>
+          {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">We'll send confirmation updates to {order.customer.phone}</p>}
+          {error && <p className="text-body-sm text-tertiary mt-xs">{error}</p>}
         </div>
 
         <div className="bg-white rounded-xl border border-outline-variant p-xl mb-md">
@@ -48,12 +89,14 @@ export default function OrderConfirmationPage() {
           <div className="mb-md">
             <h3 className="text-h3 text-on-surface mb-sm">Items Ordered</h3>
             <div className="space-y-sm">
-              {order.items.map((item, i) => (
+              {order.items.length > 0 ? order.items.map((item, i) => (
                 <div key={i} className="flex justify-between text-body">
                   <span className="text-on-surface">{item.product_name} <span className="text-secondary">× {item.quantity}</span></span>
                   <span className="font-semibold text-primary whitespace-nowrap">{formatPrice(item.unit_price_pesewas * item.quantity)}</span>
                 </div>
-              ))}
+              )) : (
+                <p className="text-body-sm text-secondary">Receipt details will be available from order lookup.</p>
+              )}
             </div>
           </div>
 

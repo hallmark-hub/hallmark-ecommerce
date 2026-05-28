@@ -49,6 +49,8 @@ manually in Supabase SQL Editor, in order:
 3. `backend/migrations/003_seed_sample_products.sql`
 4. `backend/migrations/004_payment_event_deduplication.sql`
 5. `backend/migrations/005_remove_manual_bank_transfer.sql`
+6. `backend/migrations/006_fix_product_images.sql`
+7. `backend/migrations/007_customer_profiles.sql`
 
 After applying, verify:
 
@@ -77,9 +79,37 @@ VITE_API_URL=https://<backend-domain>
 
 The backend already expects frontend requests from `FRONTEND_URL` through CORS.
 
+Customer and admin sessions use Supabase Auth bearer tokens. Do not expose
+`ADMIN_API_KEY` in frontend environment variables; it is only a backend fallback
+for emergency/bootstrap access.
+
+## Customer/Admin Accounts
+
+Customers register through:
+
+```text
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+GET /api/v1/auth/me
+GET /api/v1/customer/orders
+```
+
+Admin dashboard access requires a profile row with:
+
+```sql
+update customer_profiles
+set role = 'admin'
+where email = '<admin-email>';
+```
+
+Only run that after the admin user has registered and the profile row exists.
+
 ## Known Blockers
 
-- Admin authentication is API-key based; rotate `ADMIN_API_KEY` if exposed.
+- Apply `007_customer_profiles.sql` before enabling customer login in production.
+- Create the first admin profile by setting `customer_profiles.role = 'admin'`.
+- Remove/deactivate test products and orders from the connected Supabase project before launch.
+- Admin quote request listing endpoint is not implemented yet.
 - Africa's Talking notification sending is gated and not integrated with real sends yet.
 
 ## Verification Before Launch

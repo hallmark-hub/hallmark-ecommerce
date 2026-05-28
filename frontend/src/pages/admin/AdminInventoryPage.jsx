@@ -1,19 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Search, AlertTriangle, CheckCircle, XCircle, Plus } from 'lucide-react'
+import { getProducts } from '../../api/products'
+import { updateAdminProductStock } from '../../api/admin'
 import { formatPrice } from '../../utils/format'
 
-const INITIAL_INVENTORY = [
-  { id: 'p1', name: 'Classic White Chef Jacket', category: 'Uniforms', sku: 'CWJ-001', price_pesewas: 45000, stock: 48, threshold: 10, status: 'active' },
-  { id: 'p2', name: 'Forest Green Executive Jacket', category: 'Uniforms', sku: 'FGJ-002', price_pesewas: 65000, stock: 30, threshold: 10, status: 'active' },
-  { id: 'p3', name: 'Chef Trouser Set (3-Pack)', category: 'Uniforms', sku: 'CTS-003', price_pesewas: 38000, stock: 60, threshold: 15, status: 'active' },
-  { id: 'p4', name: 'Professional Bib Apron', category: 'Uniforms', sku: 'PBA-004', price_pesewas: 15000, stock: 120, threshold: 20, status: 'active' },
-  { id: 'p5', name: 'Industrial Gas Range 6-Burner', category: 'Equipment', sku: 'IGR-005', price_pesewas: 480000, stock: 2, threshold: 5, status: 'active' },
-  { id: 'p6', name: 'Industrial Stock Pot 50L', category: 'Equipment', sku: 'ISP-006', price_pesewas: 125000, stock: 20, threshold: 5, status: 'active' },
-  { id: 'p7', name: 'Stainless Steel Prep Table 1.5m', category: 'Equipment', sku: 'SSP-007', price_pesewas: 210000, stock: 12, threshold: 3, status: 'active' },
-  { id: 'p8', name: 'Signature 8" Chef Knife', category: 'Equipment', sku: 'SCK-008', price_pesewas: 89000, stock: 35, threshold: 10, status: 'active' },
-  { id: 'p9', name: 'Waiter Vest & Bow Tie Set', category: 'Uniforms', sku: 'WVB-009', price_pesewas: 22000, stock: 45, threshold: 10, status: 'active' },
-  { id: 'p12', name: 'Commercial Double Deep Fryer', category: 'Equipment', sku: 'CDF-012', price_pesewas: 185000, stock: 0, threshold: 3, status: 'active' },
-]
+const DEFAULT_THRESHOLD = 5
 
 function stockStatus(stock, threshold) {
   if (stock === 0) return 'out'
@@ -29,12 +20,48 @@ const STOCK_BADGES = {
 
 export default function AdminInventoryPage() {
   const [search, setSearch] = useState('')
-  const [inventory, setInventory] = useState(INITIAL_INVENTORY)
+  const [inventory, setInventory] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  function updateStock(id, delta) {
+  useEffect(() => {
+    async function loadInventory() {
+      setLoading(true)
+      setError('')
+      try {
+        const res = await getProducts({ limit: 100 })
+        if (!res.success) throw new Error(res.message)
+        setInventory((res.data?.items || []).map(product => ({
+          ...product,
+          stock: product.stock_qty,
+          threshold: DEFAULT_THRESHOLD,
+          sku: product.slug.toUpperCase().replace(/-/g, '-').slice(0, 16),
+          category: product.category_slug,
+        })))
+      } catch (e) {
+        setError(e.message || 'Unable to load inventory.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadInventory()
+  }, [])
+
+  async function updateStock(id, delta) {
+    const product = inventory.find(item => item.id === id)
+    if (!product) return
+    const nextStock = Math.max(0, product.stock + delta)
+    const previous = inventory
     setInventory(prev => prev.map(item =>
-      item.id === id ? { ...item, stock: Math.max(0, item.stock + delta) } : item
+      item.id === id ? { ...item, stock: nextStock, stock_qty: nextStock, in_stock: nextStock > 0 } : item
     ))
+    try {
+      const res = await updateAdminProductStock(product.slug, nextStock, nextStock > 0)
+      if (!res.success) throw new Error(res.message)
+    } catch (e) {
+      setInventory(previous)
+      setError(e.message || 'Unable to update stock.')
+    }
   }
 
   const filtered = inventory.filter(item =>
@@ -47,12 +74,19 @@ export default function AdminInventoryPage() {
       <div className="flex justify-between items-start mb-lg flex-wrap gap-4">
         <div>
           <h1 className="text-h1 font-medium text-on-surface">Inventory Management</h1>
-          <p className="text-secondary text-body-sm">{inventory.length} products tracked</p>
+          <p className="text-secondary text-body-sm">{loading ? 'Loading products...' : `${inventory.length} products tracked`}</p>
         </div>
         <button className="inline-flex items-center gap-2 px-md py-sm bg-primary-container text-white rounded-lg text-label text-sm font-semibold hover:brightness-110 transition-all cursor-pointer">
           <Plus size={16} /> Add Product
         </button>
       </div>
+
+      {error && (
+        <div className="bg-error-container text-on-error-container rounded-xl p-md mb-md flex items-center gap-2">
+          <AlertTriangle size={18} className="text-error" />
+          <p className="text-body-sm">{error}</p>
+        </div>
+      )}
 
       {/* Alerts */}
       {lowStock.length > 0 && (

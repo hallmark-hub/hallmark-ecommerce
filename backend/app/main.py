@@ -8,6 +8,7 @@ from app.routers import (
     admin_orders,
     admin_products,
     catalog,
+    customers,
     health,
     orders,
     payments,
@@ -22,7 +23,7 @@ def create_app() -> FastAPI:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[settings.frontend_url],
+        allow_origins=settings.cors_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -31,6 +32,7 @@ def create_app() -> FastAPI:
     register_exception_handlers(app)
     app.include_router(health.router)
     app.include_router(catalog.router, prefix="/api/v1")
+    app.include_router(customers.router, prefix="/api/v1")
     app.include_router(admin_analytics.router, prefix="/api/v1")
     app.include_router(admin_orders.router, prefix="/api/v1")
     app.include_router(admin_products.router, prefix="/api/v1")

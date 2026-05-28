@@ -1,21 +1,23 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Smartphone, Building2, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } from 'lucide-react'
+import { Smartphone, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } from 'lucide-react'
 import useCartStore from '../store/cartStore'
 import { createOrder } from '../api/orders'
-import { initializePaystack, bankTransfer } from '../api/payments'
+import { initializePaystack } from '../api/payments'
 import { formatPrice } from '../utils/format'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
+import { productImage, useFallbackImage } from '../utils/images'
 
 const STEP_SHIPPING = 1
 const STEP_PAYMENT = 2
+const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 const PAYMENT_METHODS = [
-  { id: 'mtn_momo', label: 'MTN MoMo', desc: 'Pay instantly with MTN Mobile Money', icon: Smartphone, apiValue: 'paystack' },
-  { id: 'vodafone', label: 'Vodafone Cash', desc: 'Pay with Vodafone Cash', icon: Smartphone, apiValue: 'paystack' },
-  { id: 'bank_gcb', label: 'GCB Bank Transfer', desc: 'Manual bank transfer — GCB Bank', icon: Building2, apiValue: 'bank_transfer', bank: 'gcb' },
-  { id: 'bank_stanbic', label: 'Stanbic Bank Transfer', desc: 'Manual bank transfer — Stanbic Bank', icon: Building2, apiValue: 'bank_transfer', bank: 'stanbic' },
+  { id: 'mtn_momo', label: 'MTN MoMo', desc: 'Pay instantly with MTN Mobile Money', icon: Smartphone },
+  { id: 'vodafone', label: 'Vodafone Cash', desc: 'Pay with Vodafone Cash', icon: Smartphone },
+  { id: 'airteltigo', label: 'AirtelTigo Money', desc: 'Pay with AirtelTigo Mobile Money', icon: Smartphone },
+  { id: 'card', label: 'Debit / Credit Card', desc: 'Visa, Mastercard and bank cards', icon: Smartphone },
 ]
 
 const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
@@ -29,10 +31,9 @@ export default function CheckoutPage() {
   const [step, setStep] = useState(STEP_SHIPPING)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [bankDetails, setBankDetails] = useState(null)
   const [acceptedPolicy, setAcceptedPolicy] = useState(false)
 
-  const [shipping, setShipping] = useState({ name: '', company: '', address: '', phone: '' })
+  const [shipping, setShipping] = useState({ name: '', email: '', company: '', address: '', phone: '' })
   const [paymentMethod, setPaymentMethod] = useState('mtn_momo')
 
   function updateShipping(field, val) {
@@ -41,6 +42,7 @@ export default function CheckoutPage() {
 
   function validateShipping() {
     if (!shipping.name.trim()) return 'Full name is required.'
+    if (!shipping.email.trim() || !/\S+@\S+\.\S+/.test(shipping.email)) return 'A valid email address is required.'
     if (!shipping.address.trim()) return 'Delivery address is required.'
     if (!shipping.phone.trim()) return 'Phone number is required.'
     const normalized = formatPhone(shipping.phone)
@@ -60,34 +62,29 @@ export default function CheckoutPage() {
     setError('')
     setLoading(true)
 
-    const selected = PAYMENT_METHODS.find(m => m.id === paymentMethod)
     const payload = {
       customer: {
         name: shipping.name,
-        email: 'customer@example.com',
+        email: shipping.email,
         phone: formatPhone(shipping.phone),
       },
-      items: items.map(i => ({ product_id: i.id, quantity: i.quantity, unit_price_pesewas: i.price_pesewas })),
-      payment_method: selected.apiValue,
+      items: items.map(i => ({ product_id: i.id, quantity: i.quantity })),
+      payment_method: 'paystack',
       accepted_returns_policy: true,
     }
 
     try {
       const orderRes = await createOrder(payload)
       if (!orderRes.success) throw new Error(orderRes.message)
-      const order = orderRes.data
-
-      if (selected.apiValue === 'paystack') {
-        const payRes = await initializePaystack(order.id)
-        if (!payRes.success) throw new Error(payRes.message)
-        clearCart()
-        window.location.href = payRes.data.authorization_url
-      } else {
-        const transferRes = await bankTransfer(order.id, selected.bank)
-        if (!transferRes.success) throw new Error(transferRes.message)
-        setBankDetails(transferRes.data)
-        clearCart()
-      }
+      sessionStorage.setItem(PENDING_ORDER_KEY, JSON.stringify({
+        reference: orderRes.data.reference,
+        phone: payload.customer.phone,
+        customer: payload.customer,
+      }))
+      const payRes = await initializePaystack(orderRes.data.id)
+      if (!payRes.success) throw new Error(payRes.message)
+      clearCart()
+      window.location.href = payRes.data.authorization_url
     } catch (e) {
       setError(e.message || 'Something went wrong. Please try again.')
     } finally {
@@ -95,7 +92,7 @@ export default function CheckoutPage() {
     }
   }
 
-  if (items.length === 0 && !bankDetails) {
+  if (items.length === 0) {
     return (
       <main className="pt-20 min-h-screen bg-surface-container-low">
         <div className="max-w-2xl mx-auto px-gutter py-20 text-center">
@@ -124,45 +121,6 @@ export default function CheckoutPage() {
                 {c.label}
               </button>
             ))}
-          </div>
-        </div>
-      </main>
-    )
-  }
-
-  if (bankDetails) {
-    return (
-      <main className="pt-20 min-h-screen bg-surface-container-low">
-        <div className="max-w-lg mx-auto px-gutter py-xl text-center">
-          <div className="bg-white rounded-2xl border border-outline-variant shadow-card p-xl">
-            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-md">
-              <Building2 size={32} className="text-primary" />
-            </div>
-            <h1 className="text-h2 text-on-surface mb-sm">Bank Transfer Instructions</h1>
-            <p className="text-body text-secondary mb-md">{bankDetails.instructions}</p>
-            <div className="text-left space-y-sm bg-surface-container-low rounded-xl p-md mb-md">
-              {[
-                ['Bank', bankDetails.bank_name],
-                ['Account Name', bankDetails.account_name],
-                ['Account Number', bankDetails.account_number],
-                ['Branch', bankDetails.branch],
-              ].map(([label, value]) => (
-                <div key={label} className="flex justify-between text-body-sm">
-                  <span className="text-secondary">{label}</span>
-                  <span className="font-medium text-on-surface">{value}</span>
-                </div>
-              ))}
-              <div className="flex justify-between text-body-sm pt-sm border-t border-outline-variant">
-                <span className="text-secondary">Reference</span>
-                <span className="font-bold text-primary">{bankDetails.reference}</span>
-              </div>
-              <div className="flex justify-between text-body-sm">
-                <span className="text-secondary">Amount</span>
-                <span className="font-bold text-primary">{formatPrice(bankDetails.amount_pesewas)}</span>
-              </div>
-            </div>
-            <p className="text-body-sm text-error font-medium mb-md">Use the reference number exactly as shown above.</p>
-            <Button onClick={() => navigate('/')} variant="primary" size="lg" fullWidth>Back to Home</Button>
           </div>
         </div>
       </main>
@@ -238,6 +196,12 @@ export default function CheckoutPage() {
                       <label className="block text-label uppercase text-secondary mb-2" htmlFor="phone">Phone Number <span className="text-error">*</span></label>
                       <input id="phone" type="tel" value={shipping.phone} onChange={e => updateShipping('phone', e.target.value)} className={inputCls} placeholder="+233244123456" />
                       <p className="text-label uppercase text-secondary mt-2">Format: +233XXXXXXXXX</p>
+                    </div>
+
+                    {/* Email */}
+                    <div className="sm:col-span-2">
+                      <label className="block text-label uppercase text-secondary mb-2" htmlFor="email">Email Address <span className="text-error">*</span></label>
+                      <input id="email" type="email" value={shipping.email} onChange={e => updateShipping('email', e.target.value)} className={inputCls} placeholder="kwame@example.com" />
                     </div>
 
                     {/* Company */}
@@ -354,7 +318,7 @@ export default function CheckoutPage() {
             <div className="px-6 py-2 divide-y divide-outline-variant/60">
               {items.map(item => (
                 <div key={item.id} className="py-4 flex gap-3 items-start">
-                  <img src={item.images?.[0]} alt={item.name} className="w-14 h-14 rounded-xl object-cover bg-surface-container shrink-0" />
+                  <img src={productImage(item)} alt={item.name} onError={useFallbackImage} className="w-14 h-14 rounded-xl object-cover bg-surface-container shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-body-sm font-medium text-on-surface line-clamp-2 leading-snug">{item.name}</p>
                     <p className="text-body-sm text-secondary mt-1">Qty: {item.quantity}</p>

@@ -4,11 +4,12 @@ import { ShoppingCart, FileText, Check } from 'lucide-react'
 import PriceDisplay from './PriceDisplay'
 import Button from './Button'
 import useCartStore from '../store/cartStore'
+import { productImage, useFallbackImage } from '../utils/images'
 
 export default function ProductCard({ product }) {
   const addItem = useCartStore(s => s.addItem)
   const isQuote = product.checkout_type === 'quote'
-  const img = product.images?.[0] || 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400'
+  const img = productImage(product)
   const [added, setAdded] = useState(false)
 
   function handleAdd(e) {
@@ -28,6 +29,7 @@ export default function ProductCard({ product }) {
           src={img}
           alt={product.name}
           loading="lazy"
+          onError={useFallbackImage}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {!product.in_stock && (

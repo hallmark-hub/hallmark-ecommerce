@@ -27,6 +27,7 @@ class PaystackGateway(Protocol):
         email: str,
         amount_pesewas: int,
         reference: str,
+        callback_url: str | None = None,
     ) -> dict[str, str]:
         """Initialize a Paystack payment."""
 
@@ -42,6 +43,7 @@ class LocalPaystackGateway:
         email: str,
         amount_pesewas: int,
         reference: str,
+        callback_url: str | None = None,
     ) -> dict[str, str]:
         """Return deterministic local checkout data."""
         return {
@@ -66,13 +68,17 @@ class HttpPaystackGateway:
         email: str,
         amount_pesewas: int,
         reference: str,
+        callback_url: str | None = None,
     ) -> dict[str, str]:
         """Initialize a Paystack payment through Paystack API."""
+        payload = {"email": email, "amount": amount_pesewas, "reference": reference}
+        if callback_url is not None:
+            payload["callback_url"] = callback_url
         try:
             response = httpx.post(
                 "https://api.paystack.co/transaction/initialize",
                 headers={"Authorization": f"Bearer {self.secret_key}"},
-                json={"email": email, "amount": amount_pesewas, "reference": reference},
+                json=payload,
                 timeout=15,
             )
             response.raise_for_status()
@@ -142,6 +148,7 @@ class PaystackService:
                 email=order["customer_email"],
                 amount_pesewas=order["total_pesewas"],
                 reference=order["reference"],
+                callback_url=_paystack_callback_url(),
             )
         except PaystackGatewayError as exc:
             raise PaymentValidationError(str(exc)) from exc
@@ -249,6 +256,11 @@ def get_paystack_gateway() -> PaystackGateway:
     if settings.paystack_secret_key:
         return HttpPaystackGateway(settings.paystack_secret_key)
     return LocalPaystackGateway()
+
+
+def _paystack_callback_url() -> str:
+    settings = get_settings()
+    return f"{settings.frontend_url.rstrip('/')}/payment/verify"
 
 
 def _valid_paystack_signature(

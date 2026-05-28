@@ -5,6 +5,8 @@ import { verifyPaystack } from '../api/payments'
 import { PageLoader } from '../components/PageLoader'
 import Button from '../components/Button'
 
+const PENDING_ORDER_KEY = 'chefware-pending-order'
+
 export default function PaymentVerifyPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -17,6 +19,10 @@ export default function PaymentVerifyPage() {
       try {
         const res = await verifyPaystack(reference)
         if (res.success && res.data.payment_status === 'paid') {
+          const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
+          if (!stored.reference || stored.reference === reference) {
+            sessionStorage.setItem(PENDING_ORDER_KEY, JSON.stringify({ ...stored, reference }))
+          }
           navigate(`/order-confirmation/${reference}`, { replace: true })
         } else {
           setStatus('error')
