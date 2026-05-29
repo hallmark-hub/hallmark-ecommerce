@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { AlertTriangle, Search } from 'lucide-react'
 import { getAdminOrders, updateAdminOrderStatus } from '../../api/admin'
 import { formatPrice, formatDate } from '../../utils/format'
 
 const ORDER_STATUSES = ['all', 'pending', 'confirmed', 'delivered']
+const PAYMENT_STATUSES = ['all', 'paid', 'pending', 'failed']
 const STATUS_STYLES = {
   pending: 'bg-tertiary-fixed/30 text-tertiary',
   confirmed: 'bg-surface-container text-primary',
@@ -16,11 +18,22 @@ const PAYMENT_STATUS_STYLES = {
 }
 
 export default function AdminOrdersPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialPayment = PAYMENT_STATUSES.includes(searchParams.get('payment')) ? searchParams.get('payment') : 'all'
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [paymentFilter, setPaymentFilter] = useState(initialPayment)
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  function applyPaymentFilter(next) {
+    setPaymentFilter(next)
+    const params = new URLSearchParams(searchParams)
+    if (next === 'all') params.delete('payment')
+    else params.set('payment', next)
+    setSearchParams(params, { replace: true })
+  }
 
   useEffect(() => {
     async function loadOrders() {
@@ -54,7 +67,8 @@ export default function AdminOrdersPage() {
   const filtered = orders.filter(o => {
     const matchSearch = !search || o.reference.includes(search.toUpperCase()) || o.customer_name.toLowerCase().includes(search.toLowerCase())
     const matchStatus = statusFilter === 'all' || o.order_status === statusFilter
-    return matchSearch && matchStatus
+    const matchPayment = paymentFilter === 'all' || o.payment_status === paymentFilter
+    return matchSearch && matchStatus && matchPayment
   })
 
   return (
@@ -72,8 +86,8 @@ export default function AdminOrdersPage() {
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-outline-variant p-md mb-md flex flex-wrap gap-md items-center">
-        <div className="relative flex-1 min-w-48">
+      <div className="bg-white rounded-xl border border-outline-variant p-md mb-md space-y-sm">
+        <div className="relative">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
           <input
             type="text"
@@ -83,16 +97,31 @@ export default function AdminOrdersPage() {
             className="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        <div className="flex gap-sm">
-          {ORDER_STATUSES.map(s => (
-            <button
-              key={s}
-              onClick={() => setStatusFilter(s)}
-              className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${statusFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
-            >
-              {s}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-md">
+          <div className="flex items-center gap-sm flex-wrap">
+            <span className="text-label text-xs uppercase tracking-wide text-secondary">Order</span>
+            {ORDER_STATUSES.map(s => (
+              <button
+                key={s}
+                onClick={() => setStatusFilter(s)}
+                className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${statusFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-sm flex-wrap">
+            <span className="text-label text-xs uppercase tracking-wide text-secondary">Payment</span>
+            {PAYMENT_STATUSES.map(s => (
+              <button
+                key={s}
+                onClick={() => applyPaymentFilter(s)}
+                className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${paymentFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

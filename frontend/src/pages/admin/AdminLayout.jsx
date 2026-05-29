@@ -1,18 +1,46 @@
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, MessageSquare, Settings, LogOut } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/admin/orders', label: 'Orders', icon: ShoppingBag },
+  { to: '/admin/quotes', label: 'Quote Requests', icon: MessageSquare },
   { to: '/admin/inventory', label: 'Inventory', icon: Package },
   { to: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
 export default function AdminLayout() {
-  const { user, isAdmin, logout } = useAuthStore()
+  const { user, token, isAdmin, logout, refreshProfile } = useAuthStore()
+  const [checkingRole, setCheckingRole] = useState(Boolean(token))
   const navigate = useNavigate()
+
+  useEffect(() => {
+    async function checkRole() {
+      if (!token) {
+        setCheckingRole(false)
+        return
+      }
+      try {
+        await refreshProfile()
+      } catch {
+        logout()
+      } finally {
+        setCheckingRole(false)
+      }
+    }
+    checkRole()
+  }, [token, refreshProfile, logout])
+
+  if (checkingRole) {
+    return (
+      <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
+        <p className="text-body text-secondary">Checking admin access...</p>
+      </main>
+    )
+  }
 
   if (!isAdmin) {
     return (

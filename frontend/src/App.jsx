@@ -20,6 +20,7 @@ import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminOrdersPage from './pages/admin/AdminOrdersPage'
 import AdminInventoryPage from './pages/admin/AdminInventoryPage'
+import AdminQuotesPage from './pages/admin/AdminQuotesPage'
 import AdminSettingsPage from './pages/admin/AdminSettingsPage'
 
 function StorefrontLayout({ children }) {
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboardPage />} />
           <Route path="orders" element={<AdminOrdersPage />} />
+          <Route path="quotes" element={<AdminQuotesPage />} />
           <Route path="inventory" element={<AdminInventoryPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
