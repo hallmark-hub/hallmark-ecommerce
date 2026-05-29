@@ -18,3 +18,21 @@ export async function updateAdminProductStock(slug, stockQty, inStock) {
     in_stock: inStock,
   })
 }
+
+export async function createAdminProduct(payload) {
+  return client.adminPost('/api/v1/admin/products', payload)
+}
+
+export async function uploadAdminProductImage(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return client.adminUpload('/api/v1/admin/media/images', formData)
+}
+
+export async function getAdminQuoteRequests(limit = 10) {
+  return client.adminGet('/api/v1/admin/quote-requests', { limit })
+}
+
+export async function updateAdminQuoteStatus(reference, status) {
+  return client.adminPatch(`/api/v1/admin/quote-requests/${reference}/status`, { status })
+}

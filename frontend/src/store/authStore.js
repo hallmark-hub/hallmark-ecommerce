@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { loginCustomer, registerCustomer } from '../api/auth'
+import { getCurrentCustomer, loginCustomer, registerCustomer } from '../api/auth'
 
 const useAuthStore = create(
   persist(
@@ -21,6 +21,17 @@ const useAuthStore = create(
         const res = await registerCustomer(payload)
         if (!res.success) throw new Error(res.message)
         setAuthState(set, res.data)
+        return res.data
+      },
+
+      async refreshProfile() {
+        const res = await getCurrentCustomer()
+        if (!res.success) throw new Error(res.message)
+        set(state => ({
+          profile: res.data,
+          isAdmin: res.data?.role === 'admin',
+          user: state.user ? { ...state.user, email: res.data.email } : state.user,
+        }))
         return res.data
       },
 

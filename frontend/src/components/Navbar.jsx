@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, User, Search, Menu, X, ChevronDown, FileText } from 'lucide-react'
+import { ShoppingCart, User, Search, Menu, X, ChevronDown, FileText, LogOut } from 'lucide-react'
 import useCartStore from '../store/cartStore'
+import useAuthStore from '../store/authStore'
 import CartDrawer from './CartDrawer'
 
 const NAV_GROUPS = [
@@ -67,6 +68,9 @@ export default function Navbar() {
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
   const itemCount = useCartStore(s => s.items.reduce((sum, i) => sum + i.quantity, 0))
+  const token = useAuthStore(s => s.token)
+  const isAdmin = useAuthStore(s => s.isAdmin)
+  const logout = useAuthStore(s => s.logout)
   const closeTimer = useRef(null)
 
   useEffect(() => {
@@ -91,6 +95,12 @@ export default function Navbar() {
 
   function scheduleClose() {
     closeTimer.current = setTimeout(() => setActiveGroup(null), 120)
+  }
+
+  function handleLogout() {
+    logout()
+    setMobileOpen(false)
+    navigate('/login')
   }
 
   return (
@@ -175,9 +185,20 @@ export default function Navbar() {
             </button>
 
             {/* Account */}
-            <Link to="/account" className="p-2 hover:bg-surface-container-low rounded-full transition-colors" aria-label="My account">
+            <Link to={isAdmin ? '/admin' : '/account'} className="p-2 hover:bg-surface-container-low rounded-full transition-colors" aria-label={isAdmin ? 'Admin dashboard' : 'My account'}>
               <User size={22} className="text-on-surface-variant" />
             </Link>
+
+            {token && (
+              <button
+                onClick={handleLogout}
+                className="hidden md:flex p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer"
+                aria-label="Sign out"
+                title="Sign out"
+              >
+                <LogOut size={20} className="text-on-surface-variant" />
+              </button>
+            )}
 
             {/* Mobile hamburger */}
             <button
@@ -236,10 +257,19 @@ export default function Navbar() {
             ))}
 
             <div className="pt-sm pb-2 flex flex-col gap-2">
+              <Link to={isAdmin ? '/admin' : '/account'} onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">{isAdmin ? 'Admin Dashboard' : 'My Account'}</Link>
               <Link to="/products" onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">All Products</Link>
               <Link to="/quote" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-2 px-3 bg-gold text-white text-body-sm font-semibold rounded-lg">
                 <FileText size={14} /> Request a Quote
               </Link>
+              {token && (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 py-2 px-3 border border-outline-variant text-secondary text-body-sm font-semibold rounded-lg"
+                >
+                  <LogOut size={14} /> Sign Out
+                </button>
+              )}
             </div>
           </div>
         )}

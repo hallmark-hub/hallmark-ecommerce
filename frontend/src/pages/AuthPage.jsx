@@ -27,18 +27,19 @@ export default function AuthPage() {
     }
     setLoading(true)
     try {
+      let auth
       if (mode === 'register') {
-        await register({
+        auth = await register({
           name: form.name,
           email: form.email,
           phone: formatPhone(form.phone),
           password: form.password,
         })
       } else {
-        await login(form.email, form.password)
+        auth = await login(form.email, form.password)
       }
       setLoading(false)
-      navigate('/account')
+      navigate(auth.profile?.role === 'admin' ? '/admin' : '/account')
     } catch (e) {
       setError(e.message || 'Authentication failed.')
       setLoading(false)

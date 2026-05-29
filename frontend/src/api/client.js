@@ -24,6 +24,20 @@ async function request(path, options = {}) {
   return json
 }
 
+async function upload(path, formData, options = {}) {
+  const url = `${BASE_URL}${path}`
+  const headers = { ...(options.headers || {}) }
+  if (options.auth || options.admin) {
+    const token = authToken()
+    if (token) headers.Authorization = `Bearer ${token}`
+  }
+
+  const res = await fetch(url, { method: 'POST', body: formData, headers })
+  const json = await res.json().catch(() => null)
+  if (!res.ok) throw new Error(json?.message || 'Upload failed')
+  return json
+}
+
 function withQuery(path, params = {}) {
   const qs = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
@@ -41,4 +55,5 @@ export const client = {
   adminGet: (path, params) => request(withQuery(path, params), { admin: true }),
   adminPatch: (path, body) => request(path, { method: 'PATCH', body: JSON.stringify(body), admin: true }),
   adminPost: (path, body) => request(path, { method: 'POST', body: JSON.stringify(body), admin: true }),
+  adminUpload: (path, formData) => upload(path, formData, { admin: true }),
 }

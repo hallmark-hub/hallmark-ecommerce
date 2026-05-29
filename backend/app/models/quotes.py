@@ -1,4 +1,5 @@
 from enum import StrEnum
+from datetime import datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
@@ -39,4 +40,26 @@ class CreateQuoteResponse(BaseModel):
 
     id: UUID
     reference: str
+    status: QuoteStatus
+
+
+class AdminQuoteSummary(BaseModel):
+    """Admin quote request list item."""
+
+    id: UUID
+    reference: str
+    name: str
+    email: str
+    phone: str
+    category_slug: str
+    message: str
+    status: QuoteStatus
+    notification_attempted: bool
+    notification_sent: bool
+    created_at: datetime
+
+
+class UpdateQuoteStatusRequest(BaseModel):
+    """Admin quote status update request."""
+
     status: QuoteStatus

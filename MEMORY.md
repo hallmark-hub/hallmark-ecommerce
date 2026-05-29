@@ -152,3 +152,28 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **What was decided:** Replace the single-origin `allow_origins=[settings.frontend_url]` with an env-driven `CORS_ALLOWED_ORIGINS` comma-separated list, falling back to `FRONTEND_URL` when unset. Local `.env` sets it to `http://localhost:5173,http://localhost:5174`.
 **Why:** Production best practice is a strict explicit allowlist (no wildcards with credentials), and the current Vite setup runs two dev ports — the previous single-origin config silently broke whichever browser tab was on the wrong port. Env-driven means production deploys can set the exact Vercel origin without code changes.
 **What was rejected:** Wildcard `allow_origins=["*"]` (incompatible with `allow_credentials=True` and unsafe), and hardcoding multiple origins in `app/main.py` (would couple deploy targets to code).
+
+## 2026-05-28, Production admin product uploads
+**What was decided:** Admin product images upload through a protected backend endpoint that validates file type/size, signs Cloudinary uploads server-side, and stores returned `secure_url` values in `products.images`.
+**Why:** Product media must not rely on manual URL pasting or expose Cloudinary credentials in the browser. The backend is the right boundary for validation, signing, and auditability.
+**What was rejected:** Direct browser uploads with Cloudinary API secrets, and a manual “paste image URL” workflow, because both are unsafe or operationally weak for production.
+
+## 2026-05-28, Admin role routing
+**What was decided:** After login, route users with `customer_profiles.role = 'admin'` to `/admin`, refresh the stored profile role before account/admin access decisions, and make the navbar account link point to the admin dashboard for admins.
+**Why:** Promoting an existing customer to admin in Supabase can leave an old customer role cached in browser storage, and the previous login flow always navigated to the customer dashboard.
+**What was rejected:** Asking admins to manually clear local storage or manually type `/admin`, because routing should follow the authenticated profile role.
+
+## 2026-05-28, Admin image input options
+**What was decided:** The admin product form supports either uploading an image file through the backend Cloudinary path or using an existing HTTPS image URL; file upload wins when both are provided.
+**Why:** Production product management should support direct uploads while still allowing already-hosted approved product assets to be reused without re-uploading.
+**What was rejected:** Requiring only manual URLs or only file uploads, because either option alone creates unnecessary operational friction.
+
+## 2026-05-28, Setup-phase test data
+**What was decided:** Allow existing test products/orders to remain during setup and defer cleanup until public launch preparation.
+**Why:** Evans is still validating admin workflows and may not upload final product images yet, so removing test data now would slow iteration.
+**What was rejected:** Treating test data cleanup as an immediate blocker; it remains a launch checklist item, not a current development blocker.
+
+## 2026-05-28, Admin quote management
+**What was decided:** Expose admin quote request list, detail, and status update endpoints, and wire the admin dashboard quote panel to those backend routes.
+**Why:** Quote-only services need a real admin workflow instead of a placeholder, and status updates let admins track requests from received through contacted, quoted, and closed.
+**What was rejected:** Leaving the quote panel as static text or a one-way "mark contacted" action, because that would not be enough for production quote handling.

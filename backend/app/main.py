@@ -5,8 +5,10 @@ from app.core.config import get_settings
 from app.core.errors import register_exception_handlers
 from app.routers import (
     admin_analytics,
+    admin_media,
     admin_orders,
     admin_products,
+    admin_quotes,
     catalog,
     customers,
     health,
@@ -34,8 +36,10 @@ def create_app() -> FastAPI:
     app.include_router(catalog.router, prefix="/api/v1")
     app.include_router(customers.router, prefix="/api/v1")
     app.include_router(admin_analytics.router, prefix="/api/v1")
+    app.include_router(admin_media.router, prefix="/api/v1")
     app.include_router(admin_orders.router, prefix="/api/v1")
     app.include_router(admin_products.router, prefix="/api/v1")
+    app.include_router(admin_quotes.router, prefix="/api/v1")
     app.include_router(orders.router, prefix="/api/v1")
     app.include_router(payments.router, prefix="/api/v1")
     app.include_router(quotes.router, prefix="/api/v1")

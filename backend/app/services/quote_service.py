@@ -2,7 +2,12 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 from app.models.catalog import CheckoutType
-from app.models.quotes import CreateQuoteRequest, CreateQuoteResponse, QuoteStatus
+from app.models.quotes import (
+    AdminQuoteSummary,
+    CreateQuoteRequest,
+    CreateQuoteResponse,
+    QuoteStatus,
+)
 from app.repositories.quote_repository import QuoteRepository, get_quote_repository
 from app.services.notification_service import NotificationService, get_notification_service
 
@@ -60,6 +65,25 @@ class QuoteService:
         if notification_sent:
             created["notification_sent"] = True
         return CreateQuoteResponse.model_validate(created)
+
+    def list_quote_requests(self, limit: int = 50) -> list[AdminQuoteSummary]:
+        """Return recent quote requests for admin views."""
+        rows = self.repository.list_quote_requests(limit)
+        return [AdminQuoteSummary.model_validate(row) for row in rows]
+
+    def get_quote_request(self, reference: str) -> AdminQuoteSummary | None:
+        """Return one quote request for admin views."""
+        row = self.repository.get_quote_request(reference)
+        return AdminQuoteSummary.model_validate(row) if row is not None else None
+
+    def update_quote_status(
+        self,
+        reference: str,
+        status: QuoteStatus,
+    ) -> AdminQuoteSummary | None:
+        """Update a quote request status."""
+        row = self.repository.update_quote_status(reference, status.value)
+        return AdminQuoteSummary.model_validate(row) if row is not None else None
 
 
 def _generate_quote_reference(now: datetime) -> str:

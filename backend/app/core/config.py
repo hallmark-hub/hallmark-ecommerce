@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
     admin_api_key: str = Field(default="", alias="ADMIN_API_KEY")
     cors_allowed_origins: str = Field(default="", alias="CORS_ALLOWED_ORIGINS")
+    cloudinary_cloud_name: str = Field(default="", alias="CLOUDINARY_CLOUD_NAME")
+    cloudinary_api_key: str = Field(default="", alias="CLOUDINARY_API_KEY")
+    cloudinary_api_secret: str = Field(default="", alias="CLOUDINARY_API_SECRET")
+    max_upload_bytes: int = Field(default=5_000_000, alias="MAX_UPLOAD_BYTES")
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

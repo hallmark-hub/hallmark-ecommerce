@@ -190,6 +190,49 @@ Used for `checkout_type: quote` categories.
 
 > Backend sends an admin notification only when notification credentials are configured and the current environment allows external messaging. Local tests/dev must not send real SMS.
 
+#### `GET /api/v1/admin/quote-requests`
+
+Returns recent quote requests for admin management.
+
+**Query params:**
+- `limit` — optional, default `50`, max `100`
+
+**Response `data`:**
+```json
+[
+  {
+    "id": "uuid",
+    "reference": "QR-20260525-0001",
+    "name": "Kwame Asante",
+    "email": "kwame@example.com",
+    "phone": "+233244123456",
+    "category_slug": "kitchen-setup",
+    "message": "We need a full kitchen setup for a 60-seat restaurant.",
+    "status": "received",
+    "notification_attempted": false,
+    "notification_sent": false,
+    "created_at": "2026-05-25T12:00:00Z"
+  }
+]
+```
+
+#### `GET /api/v1/admin/quote-requests/{reference}`
+
+Returns one quote request for admin management.
+
+#### `PATCH /api/v1/admin/quote-requests/{reference}/status`
+
+Updates a quote request status.
+
+**Request body:**
+```json
+{
+  "status": "contacted"
+}
+```
+
+`status` values: `received` | `contacted` | `quoted` | `closed`
+
 ---
 
 ### Customer Accounts
@@ -275,6 +318,24 @@ authenticated profile email and phone.
 Admin dashboard endpoints require a bearer token whose `customer_profiles.role`
 is `admin`. `X-Admin-API-Key` remains a backend-only fallback and must not be
 exposed in frontend environment variables.
+
+#### `POST /api/v1/admin/media/images`
+
+Requires admin auth. Uploads one product image through the backend to configured
+media storage. The frontend must send `multipart/form-data` with a `file` field.
+Allowed types: JPEG, PNG, WebP.
+
+**Response `data`:**
+```json
+{
+  "secure_url": "https://res.cloudinary.com/.../image/upload/...",
+  "public_id": "chefware/products/abc123",
+  "bytes": 125000,
+  "format": "webp"
+}
+```
+
+The returned `secure_url` is then stored in `products.images`.
 
 ---
 

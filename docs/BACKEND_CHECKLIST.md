@@ -89,7 +89,9 @@ Status key:
 
 - `[x]` Define admin authentication approach.
 - `[x]` Add product management endpoints.
+- `[x]` Add admin product image upload endpoint with backend Cloudinary signing.
 - `[x]` Add order management endpoints.
+- `[x]` Add admin quote request list, detail, and status update endpoints.
 - `[-]` Manual bank transfer confirmation endpoint removed; not needed with Paystack-only checkout.
 - `[x]` Add basic analytics endpoints.
 - `[x]` Add inventory update endpoints.
@@ -122,6 +124,8 @@ Status key:
 - `[x]` Add Paystack gateway error wrapping tests.
 - `[x]` Add Paystack webhook duplicate detection tests.
 - `[x]` Add customer auth/profile/order route tests.
+- `[x]` Add admin media upload route tests.
+- `[x]` Add admin quote management route tests.
 - `[x]` Add migration file structure tests.
 - `[x]` Add Supabase catalog repository selection tests.
 - `[x]` Keep `cd backend && python -m pytest -x -q` passing after each backend change.

@@ -28,6 +28,10 @@ SUPABASE_SERVICE_ROLE_KEY=<supabase-service-role-key>
 PAYSTACK_SECRET_KEY=<paystack-secret-key>
 PAYSTACK_PUBLIC_KEY=<paystack-public-key>
 ADMIN_API_KEY=<strong-admin-api-key>
+CLOUDINARY_CLOUD_NAME=<cloudinary-cloud-name>
+CLOUDINARY_API_KEY=<cloudinary-api-key>
+CLOUDINARY_API_SECRET=<cloudinary-api-secret>
+MAX_UPLOAD_BYTES=5000000
 ```
 
 Optional until real notifications are enabled:
@@ -104,12 +108,25 @@ where email = '<admin-email>';
 
 Only run that after the admin user has registered and the profile row exists.
 
+## Media Uploads
+
+Admin product image uploads go through the backend:
+
+```text
+POST /api/v1/admin/media/images
+```
+
+The backend validates image type/size, signs the Cloudinary upload server-side,
+and returns a `secure_url`. The frontend stores that URL in `products.images`
+when creating the product. Do not upload directly from the browser with
+Cloudinary credentials.
+
 ## Known Blockers
 
 - Apply `007_customer_profiles.sql` before enabling customer login in production.
 - Create the first admin profile by setting `customer_profiles.role = 'admin'`.
-- Remove/deactivate test products and orders from the connected Supabase project before launch.
-- Admin quote request listing endpoint is not implemented yet.
+- Test products/orders may remain during setup; remove/deactivate them before public launch.
+- Cloudinary credentials must be configured before admin product image uploads work in production.
 - Africa's Talking notification sending is gated and not integrated with real sends yet.
 
 ## Verification Before Launch

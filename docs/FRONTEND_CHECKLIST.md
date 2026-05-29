@@ -159,9 +159,10 @@
 - [x] Enterprise Overview — Total Orders, Revenue (`GH₵`), order status summary
 - [x] Recent Orders table — Order ID, Client, Amount, Status
 - [x] Inventory Alerts panel — critical stock items
-- [!] New Quote Requests panel — backend admin quote-list endpoint still needed
+- [x] New Quote Requests panel — wired to backend quote requests with status updates
 - [x] Admin Orders Management page (see `design/admin_orders_management_desktop/screen.png`)
 - [x] Admin Inventory Management page (see `design/admin_inventory_management_desktop/screen.png`)
+- [x] Admin product creation form uploads images through backend media endpoint before saving product
 - [x] Route-guard uses authenticated admin profile role
 
 ---

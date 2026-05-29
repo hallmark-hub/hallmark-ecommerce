@@ -24,6 +24,19 @@ class QuoteRepository(Protocol):
     ) -> dict[str, Any]:
         """Persist a quote request."""
 
+    def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent quote requests."""
+
+    def get_quote_request(self, reference: str) -> dict[str, Any] | None:
+        """Return one quote request by reference."""
+
+    def update_quote_status(
+        self,
+        reference: str,
+        status: str,
+    ) -> dict[str, Any] | None:
+        """Update quote request status."""
+
 
 class InMemoryQuoteRepository:
     """Local quote repository for tests/dev without Supabase credentials."""
@@ -58,6 +71,31 @@ class InMemoryQuoteRepository:
         self.quote_requests[quote_request["reference"]] = quote_request
         self.product_ids[quote_request["reference"]] = product_ids
         return quote_request
+
+    def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent in-memory quote requests."""
+        quotes = sorted(
+            self.quote_requests.values(),
+            key=lambda quote: quote["created_at"],
+            reverse=True,
+        )
+        return quotes[:limit]
+
+    def get_quote_request(self, reference: str) -> dict[str, Any] | None:
+        """Return one in-memory quote request by reference."""
+        return self.quote_requests.get(reference)
+
+    def update_quote_status(
+        self,
+        reference: str,
+        status: str,
+    ) -> dict[str, Any] | None:
+        """Update in-memory quote status."""
+        quote = self.quote_requests.get(reference)
+        if quote is None:
+            return None
+        quote["status"] = status
+        return quote
 
 
 class SupabaseQuoteRepository:
@@ -108,6 +146,52 @@ class SupabaseQuoteRepository:
             ]
             self.client.table("quote_request_products").insert(join_rows).execute()
         return created
+
+    def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
+        """Return recent quote requests."""
+        response = (
+            self.client.table("quote_requests")
+            .select(
+                "id,reference,name,email,phone,category_slug,message,status,"
+                "notification_attempted,notification_sent,created_at"
+            )
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
+        return response_data(response)
+
+    def get_quote_request(self, reference: str) -> dict[str, Any] | None:
+        """Return one quote request by reference."""
+        response = (
+            self.client.table("quote_requests")
+            .select(
+                "id,reference,name,email,phone,category_slug,message,status,"
+                "notification_attempted,notification_sent,created_at"
+            )
+            .eq("reference", reference)
+            .limit(1)
+            .execute()
+        )
+        rows = response_data(response)
+        return rows[0] if rows else None
+
+    def update_quote_status(
+        self,
+        reference: str,
+        status: str,
+    ) -> dict[str, Any] | None:
+        """Update quote request status."""
+        response = (
+            self.client.table("quote_requests")
+            .update({"status": status})
+            .eq("reference", reference)
+            .execute()
+        )
+        rows = response_data(response)
+        if not rows:
+            return None
+        return self.get_quote_request(reference)
 
     def _with_category_slug(self, row: dict[str, Any]) -> dict[str, Any]:
         category = row.pop("category_slug", None)
