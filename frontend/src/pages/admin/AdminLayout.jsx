@@ -50,14 +50,14 @@ export default function AdminLayout() {
   const sidebarVisible = mobileOpen || !desktopCollapsed
 
   return (
-    <div className="pt-20 min-h-screen bg-surface-container-low">
+    <div className="min-h-screen bg-surface-container-low">
       {/* Mobile overlay */}
       {mobileOpen && (
         <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setMobileOpen(false)} />
       )}
 
       {/* Sidebar */}
-      <aside className={`w-64 bg-inverse-surface flex flex-col fixed top-20 left-0 bottom-0 overflow-y-auto z-40 transition-transform duration-300 ease-in-out
+      <aside className={`w-64 bg-inverse-surface flex flex-col fixed top-0 left-0 bottom-0 overflow-y-auto z-40 transition-transform duration-300 ease-in-out
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
         ${!desktopCollapsed ? 'lg:translate-x-0' : 'lg:-translate-x-full'}
       `}>
@@ -109,7 +109,7 @@ export default function AdminLayout() {
       {/* Content */}
       <main className={`min-w-0 transition-all duration-300 ${desktopCollapsed ? 'lg:ml-0' : 'lg:ml-64'}`}>
         {/* Top bar — mobile hamburger + desktop expand button when collapsed */}
-        <div className="sticky top-20 z-20 bg-white border-b border-outline-variant px-4 py-3 flex items-center gap-3">
+        <div className="sticky top-0 z-20 bg-white border-b border-outline-variant px-4 py-3 flex items-center gap-3">
           {/* Mobile open */}
           <button
             onClick={() => setMobileOpen(true)}
