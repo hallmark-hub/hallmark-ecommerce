@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Eye, EyeOff } from 'lucide-react'
 import useAuthStore from '../store/authStore'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
@@ -14,8 +14,9 @@ export default function AuthPage() {
   const [mode, setMode] = useState('login')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' })
   function update(f, v) { setForm(p => ({ ...p, [f]: v })) }
 
   async function handleSubmit(e) {
@@ -26,6 +27,7 @@ export default function AuthPage() {
     if (mode === 'register') {
       if (!form.name.trim()) { setError('Name required.'); return }
       if (!validatePhone(formatPhone(form.phone))) { setError('Phone must be +233XXXXXXXXX.'); return }
+      if (form.password !== form.confirmPassword) { setError('Passwords do not match.'); return }
     }
     setLoading(true)
     try {
@@ -83,8 +85,24 @@ export default function AuthPage() {
             )}
             <div>
               <label className="block text-label uppercase text-secondary mb-xs" htmlFor="password">Password *</label>
-              <input id="password" type="password" value={form.password} onChange={e => update('password', e.target.value)} className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
+              <div className="relative">
+                <input id="password" type={showPassword ? 'text' : 'password'} value={form.password} onChange={e => update('password', e.target.value)} className="w-full px-md py-sm pr-10 border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
+                <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary hover:text-on-surface cursor-pointer" aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
+            {mode === 'register' && (
+              <div>
+                <label className="block text-label uppercase text-secondary mb-xs" htmlFor="confirmPassword">Confirm Password *</label>
+                <div className="relative">
+                  <input id="confirmPassword" type={showPassword ? 'text' : 'password'} value={form.confirmPassword} onChange={e => update('confirmPassword', e.target.value)} className="w-full px-md py-sm pr-10 border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••" />
+                  <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-secondary hover:text-on-surface cursor-pointer" aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </div>
+            )}
             <Button type="submit" loading={loading} variant="primary" size="lg" fullWidth>
               {mode === 'login' ? 'Sign In' : 'Create Account'}
             </Button>
