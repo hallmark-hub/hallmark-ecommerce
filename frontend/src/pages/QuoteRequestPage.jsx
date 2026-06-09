@@ -4,6 +4,7 @@ import { CheckCircle, AlertTriangle } from 'lucide-react'
 import { submitQuote } from '../api/quotes'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
+import useAuthStore from '../store/authStore'
 
 const CATEGORIES = [
   { slug: 'kitchen-setup', name: 'Industrial Kitchen Setup' },
@@ -15,14 +16,15 @@ const CATEGORIES = [
 
 export default function QuoteRequestPage() {
   const [searchParams] = useSearchParams()
+  const profile = useAuthStore(s => s.profile)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
 
   const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: profile?.name || '',
+    email: profile?.email || '',
+    phone: profile?.phone || '',
     category_slug: searchParams.get('category') || '',
     message: '',
   })
