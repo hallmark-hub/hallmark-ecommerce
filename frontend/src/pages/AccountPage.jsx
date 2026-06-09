@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Package, Wallet, CalendarClock, ArrowRight, LogOut, Mail, Phone, User, FileText } from 'lucide-react'
+import { Package, Wallet, CalendarClock, ArrowRight, LogOut, Mail, Phone, User } from 'lucide-react'
 import { formatPrice, formatDate } from '../utils/format'
 import Button from '../components/Button'
 import useAuthStore from '../store/authStore'
