@@ -6,7 +6,12 @@ import jwt
 from supabase import Client
 
 from app.core.config import get_settings
-from app.db.supabase import get_supabase_client, response_data, supabase_is_configured
+from app.db.supabase import (
+    get_supabase_auth_client,
+    get_supabase_client,
+    response_data,
+    supabase_is_configured,
+)
 from app.models.customers import CustomerRegisterRequest
 
 _jwk_client: jwt.PyJWKClient | None = None
@@ -120,11 +125,14 @@ class SupabaseCustomerRepository:
 
     def __init__(self, client: Client) -> None:
         self.client = client
+        # Dedicated client for auth so sign_in/sign_up/get_user never overwrite
+        # the service-role session on the data client (which RLS depends on).
+        self.auth_client = get_supabase_auth_client()
 
     def register(self, request: CustomerRegisterRequest) -> dict[str, Any]:
         """Register a customer through Supabase Auth and create a profile."""
         try:
-            auth_response = self.client.auth.sign_up(
+            auth_response = self.auth_client.auth.sign_up(
                 {
                     "email": request.email,
                     "password": request.password,
@@ -157,7 +165,7 @@ class SupabaseCustomerRepository:
     def login(self, email: str, password: str) -> dict[str, Any]:
         """Authenticate a customer through Supabase Auth."""
         try:
-            auth_response = self.client.auth.sign_in_with_password(
+            auth_response = self.auth_client.auth.sign_in_with_password(
                 {"email": email, "password": password}
             )
         except Exception as exc:
@@ -213,7 +221,7 @@ class SupabaseCustomerRepository:
                 return None
         else:
             try:
-                user_response = self.client.auth.get_user(token)
+                user_response = self.auth_client.auth.get_user(token)
             except Exception:
                 return None
             user = getattr(user_response, "user", None)

@@ -9,6 +9,18 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 
 ---
 
+## 2026-06-09, Supabase auth must use a separate client (never the service-role data client)
+**What was decided:** Auth calls (`sign_in_with_password`, `sign_up`, `get_user`) run on a dedicated `get_supabase_auth_client()` (anon key), never on the shared `get_supabase_client()` service-role singleton. The service-role client is reserved strictly for table/data operations.
+**Why:** supabase-py auth calls set the session on whichever client makes them. Running them on the shared service-role singleton overwrote its session with the end user's JWT, so every query after *any* login ran as that RLS-restricted user — admin "list all" returned ~0 rows, inserts (orders, quote requests) failed with `42501` RLS violations, and the customer dashboard only worked when the client's session happened to be that same customer. A server restart appeared to "fix" it, but only until the next login. A separate auth client leaves the data client's service-role session intact.
+**What was rejected:** Restarting the worker / chasing a stale `.env` (treated symptoms, not the cause); creating a fresh client per auth request (needless overhead — one cached anon auth client suffices, since the session is read from the auth *response*, not from client state).
+
+## 2026-06-09, Supabase JWTs are ES256 — verify via JWKS, requires `cryptography`
+**What was decided:** Local JWT verification routes by the token's actual `alg`: ES256 (Supabase asymmetric signing keys) is verified against the project JWKS endpoint via a cached `PyJWKClient`; HS256 falls back to the shared secret. `cryptography` is pinned in requirements (PyJWT needs it for ES256).
+**Why:** The project's Supabase signs tokens with ES256, but verification was hardcoded to HS256 → every authenticated request 401'd (`alg not allowed`), and without `cryptography` installed PyJWT raised `MissingCryptographyError`. JWKS keeps verification local (key is cached) so there's no per-request auth round-trip.
+**What was rejected:** Removing `SUPABASE_JWT_SECRET` to fall back to the slow `auth.get_user()` API round-trip; switching the Supabase project back to legacy HS256 secrets.
+
+---
+
 ## 2026-05-25, Codex project reference
 **What was decided:** Add `AGENTS.md` as the Codex entry point and keep `CLAUDE.md` as the canonical project contract.
 **Why:** The project was already set up for Claude, and Codex needs a stable local reference that points to the same client rules without creating competing instructions.
