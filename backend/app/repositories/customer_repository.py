@@ -1,3 +1,4 @@
+import logging
 from datetime import UTC, datetime
 from typing import Any, Protocol
 from uuid import uuid4
@@ -8,6 +9,8 @@ from supabase import Client
 from app.core.config import get_settings
 from app.db.supabase import get_supabase_client, response_data, supabase_is_configured
 from app.models.customers import CustomerRegisterRequest
+
+logger = logging.getLogger(__name__)
 
 
 class CustomerRepositoryError(RuntimeError):
@@ -180,19 +183,27 @@ class SupabaseCustomerRepository:
                 )
                 user_id = payload.get("sub")
                 if not user_id:
+                    logger.warning("get_profile_for_token: JWT decoded but no sub claim")
                     return None
-            except jwt.PyJWTError:
+            except jwt.PyJWTError as exc:
+                logger.warning("get_profile_for_token: JWT decode failed: %s", exc)
                 return None
         else:
+            logger.warning("get_profile_for_token: no JWT secret, falling back to get_user()")
             try:
                 user_response = self.client.auth.get_user(token)
-            except Exception:
+            except Exception as exc:
+                logger.warning("get_profile_for_token: get_user() raised: %s", exc)
                 return None
             user = getattr(user_response, "user", None)
             if user is None:
+                logger.warning("get_profile_for_token: get_user() returned user=None")
                 return None
             user_id = str(user.id)
-        return self._profile_for_auth_user(user_id)
+        profile = self._profile_for_auth_user(user_id)
+        if profile is None:
+            logger.warning("get_profile_for_token: no profile found for user_id=%s", user_id)
+        return profile
 
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
         """Return customer orders matched by profile email."""
