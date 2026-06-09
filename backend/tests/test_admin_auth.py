@@ -1,29 +1,35 @@
 import pytest
+from unittest.mock import AsyncMock, MagicMock, patch
 from fastapi import HTTPException
 
 from app.core.admin_auth import require_admin
-from app.core.config import get_settings
 
 
 @pytest.mark.asyncio
-async def test_admin_auth_allows_local_without_key(monkeypatch) -> None:
-    monkeypatch.setenv("APP_ENV", "local")
-    monkeypatch.delenv("ADMIN_API_KEY", raising=False)
-    get_settings.cache_clear()
-
-    assert await require_admin() is None
-
-    get_settings.cache_clear()
-
-
-@pytest.mark.asyncio
-async def test_admin_auth_rejects_invalid_key(monkeypatch) -> None:
-    monkeypatch.setenv("ADMIN_API_KEY", "secret")
-    get_settings.cache_clear()
-
+async def test_admin_auth_rejects_missing_token() -> None:
     with pytest.raises(HTTPException) as exc:
-        await require_admin(x_admin_api_key="bad")
-
+        await require_admin(authorization=None)
     assert exc.value.status_code == 403
 
-    get_settings.cache_clear()
+
+@pytest.mark.asyncio
+async def test_admin_auth_rejects_non_admin_token() -> None:
+    profile = MagicMock()
+    profile.role = "customer"
+    service = MagicMock()
+    service.get_profile_for_token = MagicMock(return_value=profile)
+    with patch("app.core.admin_auth.get_customer_service", new=AsyncMock(return_value=service)):
+        with pytest.raises(HTTPException) as exc:
+            await require_admin(authorization="Bearer sometoken")
+    assert exc.value.status_code == 403
+
+
+@pytest.mark.asyncio
+async def test_admin_auth_allows_admin_token() -> None:
+    profile = MagicMock()
+    profile.role = "admin"
+    service = MagicMock()
+    service.get_profile_for_token = MagicMock(return_value=profile)
+    with patch("app.core.admin_auth.get_customer_service", new=AsyncMock(return_value=service)):
+        result = await require_admin(authorization="Bearer admintoken")
+    assert result is None
