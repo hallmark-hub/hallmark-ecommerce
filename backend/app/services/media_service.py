@@ -119,7 +119,7 @@ class MediaService:
         return MediaUploadResponse.model_validate(uploaded)
 
 
-def get_media_service() -> MediaService:
+async def get_media_service() -> MediaService:
     """Return the configured media service."""
     settings = get_settings()
     if (

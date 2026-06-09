@@ -176,8 +176,8 @@
 - [ ] `/payment/verify` — Post-Paystack verification
 - [ ] `/order-confirmation/:reference` — Confirmation
 - [ ] `/quote` — Quote Request
-- [ ] `/account` — Customer Dashboard (mock-protected)
-- [ ] `/admin` — Admin Dashboard (mock-protected)
+- [x] `/account` — Customer Dashboard (auth-protected)
+- [x] `/admin` — Admin Dashboard (admin role-protected)
 - [ ] `/admin/orders` — Admin Orders
 - [ ] `/admin/inventory` — Admin Inventory
 - [ ] 404 page

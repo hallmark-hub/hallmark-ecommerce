@@ -19,6 +19,6 @@ cd backend
 python -m pytest -x -q
 ```
 
-The current implementation uses in-memory catalog seed data that matches
-`docs/API_CONTRACT.md`. Supabase persistence is intentionally deferred until the
-schema is confirmed.
+The app uses Supabase repositories when credentials are configured and local
+in-memory repositories for tests/development when credentials are blank. Manual
+migrations live in `backend/migrations/` and must be applied explicitly.

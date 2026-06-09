@@ -20,7 +20,7 @@ async def upload_admin_image(
 ) -> dict[str, object]:
     """Upload a product image to configured media storage."""
     try:
-        content = await file.read()
+        content = file.file.read()
         uploaded = service.upload_product_image(
             content=content,
             filename=file.filename or "product-image",

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Save, Eye, EyeOff, Store, Bell, Shield } from 'lucide-react'
+import { Save, Store, Bell } from 'lucide-react'
 
 const SECTIONS = [
   {
@@ -23,15 +23,6 @@ const SECTIONS = [
       { key: 'quote_sms', label: 'Quote Request Alerts', value: 'enabled', type: 'toggle' },
     ],
   },
-  {
-    id: 'api',
-    label: 'API & Security',
-    icon: Shield,
-    fields: [
-      { key: 'admin_key', label: 'Admin API Key', value: 'cw-admin-xxxxxxxxxxxxxxxx', type: 'secret' },
-      { key: 'paystack_key', label: 'Paystack Public Key', value: 'pk_live_xxxxxxxxxxxx', type: 'secret' },
-    ],
-  },
 ]
 
 function ToggleField({ value, onChange }) {
@@ -44,24 +35,6 @@ function ToggleField({ value, onChange }) {
     >
       <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${on ? 'translate-x-6' : 'translate-x-1'}`} />
     </button>
-  )
-}
-
-function SecretField({ value }) {
-  const [show, setShow] = useState(false)
-  return (
-    <div className="flex items-center gap-2">
-      <span className="flex-1 font-mono text-sm text-secondary bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant truncate">
-        {show ? value : '•'.repeat(Math.min(value.length, 24))}
-      </span>
-      <button
-        type="button"
-        onClick={() => setShow(s => !s)}
-        className="p-2 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors cursor-pointer text-secondary"
-      >
-        {show ? <EyeOff size={15} /> : <Eye size={15} />}
-      </button>
-    </div>
   )
 }
 
@@ -81,7 +54,7 @@ export default function AdminSettingsPage() {
     <div className="max-w-2xl">
       <div className="mb-8">
         <h1 className="text-2xl font-black text-on-surface">Settings</h1>
-        <p className="text-secondary text-sm mt-1">Store configuration — mock UI, real values pending backend auth</p>
+        <p className="text-secondary text-sm mt-1">Store configuration</p>
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
@@ -109,8 +82,6 @@ export default function AdminSettingsPage() {
                         />
                         <span className="text-sm text-secondary capitalize">{values[field.key]}</span>
                       </div>
-                    ) : field.type === 'secret' ? (
-                      <SecretField value={values[field.key]} />
                     ) : (
                       <input
                         type={field.type}

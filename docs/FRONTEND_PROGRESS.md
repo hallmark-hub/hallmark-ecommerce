@@ -1,6 +1,6 @@
 # Frontend Progress — ChefWare Enterprise
-**Last updated:** 2026-05-25  
-**Build status:** ✅ `npm run build` passes clean (22.8 kB CSS · 345.5 kB JS · 1.83s)
+**Last updated:** 2026-05-30  
+**Build status:** ✅ `npm run build` and `npm run lint` pass
 
 ---
 
@@ -21,22 +21,22 @@ Heritage Industrial tokens wired into Tailwind:
 - Spacing: `px-gutter`, `py-xl/lg/md/sm/base/xs`
 
 ### API Layer (`src/api/`)
-All mocks return exact shapes from `docs/API_CONTRACT.md`.
+API services call the FastAPI backend contract through the centralized client.
 
 | File | Endpoints covered |
 |---|---|
 | `client.js` | Base fetch wrapper, reads `VITE_API_URL` |
 | `categories.js` | `GET /api/v1/categories` — all 8 seeded categories |
-| `products.js` | `GET /api/v1/products`, `GET /api/v1/products/{slug}` — 12 mock products |
+| `products.js` | `GET /api/v1/products`, `GET /api/v1/products/{slug}` |
 | `orders.js` | `POST /api/v1/orders`, `GET /api/v1/orders/lookup` |
 | `payments.js` | Paystack initialize/verify |
 | `quotes.js` | `POST /api/v1/quote-requests` |
 
-**To go live:** set `VITE_API_URL=https://api.chefware.com` and set `USE_MOCK = false` in each service file.
+**To go live:** set `VITE_API_URL` to the deployed backend base URL.
 
 ### State Management (`src/store/`)
 - `cartStore.js` — Zustand + persist → `localStorage`. Items, addItem, removeItem, updateQty, clearCart, total, itemCount.
-- `authStore.js` — Zustand + persist. Mock login/logout. Admin detected by email `admin@chefware.com`.
+- `authStore.js` — Zustand + persist. Uses backend auth responses and admin role from customer profile.
 
 ### Shared Components (`src/components/`)
 - `Navbar` — sticky, search, cart badge, mobile hamburger, scroll shadow
@@ -61,17 +61,18 @@ All mocks return exact shapes from `docs/API_CONTRACT.md`.
 | `/order-confirmation/:reference` | `OrderConfirmationPage` | Green tick, "Medaase!", items, totals, delivery & payment cards, print |
 | `/quote` | `QuoteRequestPage` | Full form, Ghana phone validation, success state with reference |
 | `/account` | `AccountPage` | Stats, recent orders table, order lookup, quick procurement, promo cards |
-| `/login` | `AuthPage` | Login + register (mock UI) |
+| `/login` | `AuthPage` | Login + register wired to backend auth |
 | `*` | `NotFoundPage` | 404 |
 
-#### Admin (mock-protected, `/admin/*`)
+#### Admin (role-protected, `/admin/*`)
 | Route | Page | Notes |
 |---|---|---|
-| `/admin` | `AdminDashboardPage` | Stats, recent orders, inventory alerts, quote requests |
-| `/admin/orders` | `AdminOrdersPage` | Full table, status dropdown |
-| `/admin/inventory` | `AdminInventoryPage` | Stock table, low-stock alert banner, +10 / −1 controls |
+| `/admin` | `AdminDashboardPage` | Backend analytics, recent orders, inventory alerts, quote requests |
+| `/admin/orders` | `AdminOrdersPage` | Backend orders table and status updates |
+| `/admin/quotes` | `AdminQuotesPage` | Backend quote request list and status updates |
+| `/admin/inventory` | `AdminInventoryPage` | Backend catalog/stock data and product creation |
 
-Admin sidebar via `AdminLayout`. Access by logging in as `admin@chefware.com`.
+Admin sidebar via `AdminLayout`. Access requires an authenticated profile with `role = 'admin'`.
 
 ### Hooks (`src/hooks/`)
 - `useProducts(params)` — fetch + loading + error
@@ -99,7 +100,7 @@ All items from `docs/FRONTEND_CHECKLIST.md` are complete. Key compliance:
 - ✅ Quote-type categories show "Request a Quote" flow, never cart
 - ✅ Notifications phrased as "We'll send updates to [phone]" not "You will receive an SMS"
 - ✅ VAT line omitted from order summary (pending client confirmation)
-- ✅ Admin is mock-protected (real auth pending backend contract)
+- ✅ Admin route guard uses authenticated admin profile role
 
 ---
 
@@ -108,9 +109,9 @@ All items from `docs/FRONTEND_CHECKLIST.md` are complete. Key compliance:
 
 ---
 
-## Next Steps (backend integration)
-1. Set `VITE_API_URL` to deployed backend URL
-2. Set `USE_MOCK = false` in each `src/api/*.js` file
-3. Wire real Paystack redirect — `authorization_url` is already used; just needs a real key
-4. Add auth header (`Authorization: Bearer <token>`) to `api/client.js` once backend auth contract is defined
-5. Run `npm run build` and deploy to Vercel
+## Next Steps (launch integration)
+1. Set `VITE_API_URL` to the deployed backend URL
+2. Apply required Supabase migrations manually
+3. Promote the first admin profile in Supabase
+4. Configure Paystack and Cloudinary production credentials
+5. Run full verification before deploy

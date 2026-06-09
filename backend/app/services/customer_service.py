@@ -52,6 +52,6 @@ class CustomerService:
         return [CustomerOrderSummary.model_validate(row) for row in rows]
 
 
-def get_customer_service() -> CustomerService:
+async def get_customer_service() -> CustomerService:
     """Return the customer service."""
     return CustomerService(get_customer_repository())
