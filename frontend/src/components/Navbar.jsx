@@ -185,7 +185,7 @@ export default function Navbar() {
             </button>
 
             {/* Account */}
-            <Link to={isAdmin ? '/admin' : '/account'} className="p-2 hover:bg-surface-container-low rounded-full transition-colors" aria-label={isAdmin ? 'Admin dashboard' : 'My account'}>
+            <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} className="p-2 hover:bg-surface-container-low rounded-full transition-colors" aria-label={!token ? 'Sign in' : isAdmin ? 'Admin dashboard' : 'My account'}>
               <User size={22} className="text-on-surface-variant" />
             </Link>
 
@@ -257,7 +257,7 @@ export default function Navbar() {
             ))}
 
             <div className="pt-sm pb-2 flex flex-col gap-2">
-              <Link to={isAdmin ? '/admin' : '/account'} onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">{isAdmin ? 'Admin Dashboard' : 'My Account'}</Link>
+              <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">{!token ? 'Sign In' : isAdmin ? 'Admin Dashboard' : 'My Account'}</Link>
               <Link to="/products" onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">All Products</Link>
               <Link to="/quote" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-2 px-3 bg-gold text-white text-body-sm font-semibold rounded-lg">
                 <FileText size={14} /> Request a Quote
