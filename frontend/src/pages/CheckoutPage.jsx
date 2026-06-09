@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Smartphone, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } from 'lucide-react'
 import useCartStore from '../store/cartStore'
+import useAuthStore from '../store/authStore'
 import { createOrder } from '../api/orders'
 import { initializePaystack } from '../api/payments'
 import { formatPrice } from '../utils/format'
@@ -27,13 +28,25 @@ export default function CheckoutPage() {
   const total = useCartStore(s => s.total)
   const clearCart = useCartStore(s => s.clearCart)
   const navigate = useNavigate()
+  const token = useAuthStore(s => s.token)
+  const profile = useAuthStore(s => s.profile)
+
+  useEffect(() => {
+    if (!token) navigate('/login?redirect=/checkout', { replace: true })
+  }, [token, navigate])
 
   const [step, setStep] = useState(STEP_SHIPPING)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [acceptedPolicy, setAcceptedPolicy] = useState(false)
 
-  const [shipping, setShipping] = useState({ name: '', email: '', company: '', address: '', phone: '' })
+  const [shipping, setShipping] = useState({
+    name: profile?.name || '',
+    email: profile?.email || '',
+    company: '',
+    address: '',
+    phone: profile?.phone || '',
+  })
   const [paymentMethod, setPaymentMethod] = useState('mtn_momo')
 
   function updateShipping(field, val) {

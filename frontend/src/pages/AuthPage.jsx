@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { AlertTriangle } from 'lucide-react'
 import useAuthStore from '../store/authStore'
 import { validatePhone, formatPhone } from '../utils/format'
@@ -7,6 +7,8 @@ import Button from '../components/Button'
 
 export default function AuthPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirect = searchParams.get('redirect') || '/account'
   const login = useAuthStore(s => s.login)
   const register = useAuthStore(s => s.register)
   const [mode, setMode] = useState('login')
@@ -39,7 +41,7 @@ export default function AuthPage() {
         auth = await login(form.email, form.password)
       }
       setLoading(false)
-      navigate(auth.profile?.role === 'admin' ? '/admin' : '/account')
+      navigate(auth.profile?.role === 'admin' ? '/admin' : redirect)
     } catch (e) {
       setError(e.message || 'Authentication failed.')
       setLoading(false)
