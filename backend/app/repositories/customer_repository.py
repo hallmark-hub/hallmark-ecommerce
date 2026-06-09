@@ -1,4 +1,3 @@
-import logging
 from datetime import UTC, datetime
 from typing import Any, Protocol
 from uuid import uuid4
@@ -10,7 +9,25 @@ from app.core.config import get_settings
 from app.db.supabase import get_supabase_client, response_data, supabase_is_configured
 from app.models.customers import CustomerRegisterRequest
 
-logger = logging.getLogger(__name__)
+_jwk_client: jwt.PyJWKClient | None = None
+
+
+def _get_jwk_client() -> jwt.PyJWKClient | None:
+    """Return a cached PyJWKClient for the Supabase project's JWKS endpoint.
+
+    Supabase now signs tokens with asymmetric keys (ES256). The client fetches
+    and caches the public signing keys, so verification stays local after the
+    first call.
+    """
+    global _jwk_client
+    if _jwk_client is None:
+        base = get_settings().supabase_url.rstrip("/")
+        if not base:
+            return None
+        _jwk_client = jwt.PyJWKClient(
+            f"{base}/auth/v1/.well-known/jwks.json", cache_keys=True
+        )
+    return _jwk_client
 
 
 class CustomerRepositoryError(RuntimeError):
@@ -173,37 +190,37 @@ class SupabaseCustomerRepository:
         round-trip to the Supabase Auth API.
         """
         jwt_secret = get_settings().supabase_jwt_secret
-        if jwt_secret:
+        jwk_client = _get_jwk_client()
+        if jwt_secret or jwk_client:
             try:
+                alg = jwt.get_unverified_header(token).get("alg", "")
+                if alg.startswith("HS"):
+                    key: Any = jwt_secret
+                elif jwk_client is not None:
+                    key = jwk_client.get_signing_key_from_jwt(token).key
+                else:
+                    raise jwt.InvalidKeyError(f"no key available for alg={alg}")
                 payload = jwt.decode(
                     token,
-                    jwt_secret,
-                    algorithms=["HS256"],
+                    key,
+                    algorithms=[alg],
                     audience="authenticated",
                 )
                 user_id = payload.get("sub")
                 if not user_id:
-                    logger.warning("get_profile_for_token: JWT decoded but no sub claim")
                     return None
-            except jwt.PyJWTError as exc:
-                logger.warning("get_profile_for_token: JWT decode failed: %s", exc)
+            except jwt.PyJWTError:
                 return None
         else:
-            logger.warning("get_profile_for_token: no JWT secret, falling back to get_user()")
             try:
                 user_response = self.client.auth.get_user(token)
-            except Exception as exc:
-                logger.warning("get_profile_for_token: get_user() raised: %s", exc)
+            except Exception:
                 return None
             user = getattr(user_response, "user", None)
             if user is None:
-                logger.warning("get_profile_for_token: get_user() returned user=None")
                 return None
             user_id = str(user.id)
-        profile = self._profile_for_auth_user(user_id)
-        if profile is None:
-            logger.warning("get_profile_for_token: no profile found for user_id=%s", user_id)
-        return profile
+        return self._profile_for_auth_user(user_id)
 
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
         """Return customer orders matched by profile email."""

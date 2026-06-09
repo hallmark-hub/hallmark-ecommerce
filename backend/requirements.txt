@@ -1,4 +1,5 @@
 PyJWT==2.10.1
+cryptography==46.0.3  # required by PyJWT for ES256 (Supabase asymmetric JWT) verification
 fastapi==0.111.0
 pydantic==2.12.5
 pydantic-settings==2.6.0
