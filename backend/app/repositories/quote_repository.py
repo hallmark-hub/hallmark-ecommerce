@@ -105,17 +105,11 @@ class SupabaseQuoteRepository:
         self.client = client
 
     def get_category_by_slug(self, slug: str) -> dict[str, Any] | None:
-        """Return one active category by slug."""
-        response = (
-            self.client.table("categories")
-            .select("id,slug,checkout_type")
-            .eq("is_active", True)
-            .eq("slug", slug)
-            .limit(1)
-            .execute()
-        )
-        rows = response_data(response)
-        return rows[0] if rows else None
+        """Return one category by slug from the application-defined list."""
+        for category in _CATEGORY_DATA:
+            if category["slug"] == slug:
+                return category
+        return None
 
     def get_products_by_ids(self, product_ids: list[str]) -> list[dict[str, Any]]:
         """Return active products by IDs."""
