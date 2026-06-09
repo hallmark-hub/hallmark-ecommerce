@@ -24,44 +24,28 @@ export default function AccountPage() {
   const [quotesError, setQuotesError] = useState('')
 
   useEffect(() => {
-    async function loadOrders() {
-      if (!token) return
-      try {
-        const latestProfile = await refreshProfile()
-        if (latestProfile?.role === 'admin') {
-          navigate('/admin', { replace: true })
-          return
-        }
-      } catch {
-        logout()
-        navigate('/login', { replace: true })
-        return
-      }
-      setOrdersLoading(true)
-      setOrdersError('')
-      try {
-        const res = await getCustomerOrders()
-        if (!res.success) throw new Error(res.message)
-        setOrders(res.data || [])
-      } catch (e) {
-        setOrdersError(e.message || 'Unable to load orders.')
-      } finally {
-        setOrdersLoading(false)
-      }
-
-      setQuotesLoading(true)
-      setQuotesError('')
-      try {
-        const res = await getCustomerQuotes()
-        if (!res.success) throw new Error(res.message)
-        setQuotes(res.data || [])
-      } catch (e) {
-        setQuotesError(e.message || 'Unable to load quote requests.')
-      } finally {
-        setQuotesLoading(false)
-      }
-    }
-    loadOrders()
+    if (!token) return
+    const [profileP, ordersP, quotesP] = [
+      refreshProfile(),
+      getCustomerOrders(),
+      getCustomerQuotes(),
+    ]
+    profileP.then(latestProfile => {
+      if (latestProfile?.role === 'admin') navigate('/admin', { replace: true })
+    }).catch(() => {
+      logout()
+      navigate('/login', { replace: true })
+    })
+    ordersP.then(res => {
+      if (res.success) setOrders(res.data || [])
+      else setOrdersError(res.message || 'Unable to load orders.')
+    }).catch(e => setOrdersError(e.message || 'Unable to load orders.'))
+      .finally(() => setOrdersLoading(false))
+    quotesP.then(res => {
+      if (res.success) setQuotes(res.data || [])
+      else setQuotesError(res.message || 'Unable to load quote requests.')
+    }).catch(e => setQuotesError(e.message || 'Unable to load quote requests.'))
+      .finally(() => setQuotesLoading(false))
   }, [token, refreshProfile, logout, navigate])
 
   const stats = useMemo(() => {

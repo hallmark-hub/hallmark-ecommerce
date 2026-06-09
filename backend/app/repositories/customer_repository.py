@@ -173,7 +173,7 @@ class SupabaseCustomerRepository:
         return self._profile_for_auth_user(str(user.id))
 
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
-        """Return customer orders matched by profile email and phone."""
+        """Return customer orders matched by profile email."""
         response = (
             self.client.table("orders")
             .select(
@@ -181,7 +181,6 @@ class SupabaseCustomerRepository:
                 "order_status,returns_policy,created_at"
             )
             .eq("customer_email", profile["email"])
-            .eq("customer_phone", profile["phone"])
             .order("created_at", desc=True)
             .execute()
         )
