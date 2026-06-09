@@ -62,13 +62,9 @@ export default function CartDrawer({ open, onClose }) {
             </div>
 
             <div className="border-t border-outline-variant px-md py-md">
-              <div className="flex justify-between text-body-sm text-secondary mb-xs">
+              <div className="flex justify-between text-body-sm text-secondary mb-md">
                 <span>Subtotal</span>
                 <span>{formatPrice(total)}</span>
-              </div>
-              <div className="flex justify-between text-body-sm text-secondary mb-md">
-                <span>Delivery (Accra Central)</span>
-                <span className="text-primary font-medium">Free on orders over GH₵ 250</span>
               </div>
               <div className="flex justify-between text-h3 font-semibold text-on-surface mb-md">
                 <span>Total</span>
