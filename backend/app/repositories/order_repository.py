@@ -193,7 +193,7 @@ class SupabaseOrderRepository:
         response = (
             self.client.table("orders")
             .select(
-                "id,reference,customer_email,total_pesewas,payment_method,"
+                "id,reference,customer_name,customer_email,total_pesewas,payment_method,"
                 "payment_status,order_status"
             )
             .eq("id", order_id)

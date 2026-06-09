@@ -9,6 +9,7 @@ from app.models.orders import PaymentMethod, PaymentStatus
 from app.models.payments import InitializePaystackResponse, VerifyPaystackResponse
 from app.repositories.order_repository import OrderRepository, get_order_repository
 from app.repositories.payment_repository import PaymentRepository, get_payment_repository
+from app.services.notification_service import NotificationService, get_notification_service
 
 
 class PaymentValidationError(ValueError):
@@ -121,10 +122,12 @@ class PaystackService:
         orders: OrderRepository,
         payments: PaymentRepository,
         gateway: PaystackGateway,
+        notifications: NotificationService,
     ) -> None:
         self.orders = orders
         self.payments = payments
         self.gateway = gateway
+        self.notifications = notifications
 
     def initialize(self, order_id: str) -> InitializePaystackResponse:
         """Initialize payment for an existing Paystack order."""
@@ -182,6 +185,7 @@ class PaystackService:
             if verified.get("status") == "success"
             else PaymentStatus.failed
         )
+        already_paid = payment["status"] == PaymentStatus.paid.value
         payment_status = _safe_next_status(payment["status"], payment_status)
         self.payments.update_payment_status(
             reference=reference,
@@ -189,6 +193,10 @@ class PaystackService:
             raw_response=dict(verified),
         )
         self.orders.update_payment_status(str(payment["order_id"]), payment_status.value)
+        if not already_paid and payment_status == PaymentStatus.paid:
+            order = self.orders.get_order_by_id(str(payment["order_id"]))
+            if order is not None:
+                self.notifications.send_order_receipt(order)
         return VerifyPaystackResponse(
             reference=reference,
             payment_status=payment_status,
@@ -315,4 +323,5 @@ async def get_paystack_service() -> PaystackService:
         orders=get_order_repository(),
         payments=get_payment_repository(),
         gateway=get_paystack_gateway(),
+        notifications=await get_notification_service(),
     )

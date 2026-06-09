@@ -59,6 +59,17 @@ class AdminQuoteSummary(BaseModel):
     created_at: datetime
 
 
+class CustomerQuoteSummary(BaseModel):
+    """Quote request summary for the customer dashboard."""
+
+    id: UUID
+    reference: str
+    category_slug: str
+    message: str
+    status: QuoteStatus
+    created_at: datetime
+
+
 class UpdateQuoteStatusRequest(BaseModel):
     """Admin quote status update request."""
 

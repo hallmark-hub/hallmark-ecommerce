@@ -30,6 +30,9 @@ class QuoteRepository(Protocol):
     def get_quote_request(self, reference: str) -> dict[str, Any] | None:
         """Return one quote request by reference."""
 
+    def get_quotes_by_email(self, email: str) -> list[dict[str, Any]]:
+        """Return quote requests submitted by a customer email."""
+
     def update_quote_status(
         self,
         reference: str,
@@ -84,6 +87,11 @@ class InMemoryQuoteRepository:
     def get_quote_request(self, reference: str) -> dict[str, Any] | None:
         """Return one in-memory quote request by reference."""
         return self.quote_requests.get(reference)
+
+    def get_quotes_by_email(self, email: str) -> list[dict[str, Any]]:
+        """Return in-memory quote requests matching a customer email."""
+        quotes = [q for q in self.quote_requests.values() if q.get("email") == email]
+        return sorted(quotes, key=lambda q: q["created_at"], reverse=True)
 
     def update_quote_status(
         self,
@@ -169,6 +177,17 @@ class SupabaseQuoteRepository:
         )
         rows = response_data(response)
         return rows[0] if rows else None
+
+    def get_quotes_by_email(self, email: str) -> list[dict[str, Any]]:
+        """Return quote requests submitted by a customer email."""
+        response = (
+            self.client.table("quote_requests")
+            .select("id,reference,category_slug,message,status,created_at")
+            .eq("email", email)
+            .order("created_at", desc=True)
+            .execute()
+        )
+        return response_data(response)
 
     def update_quote_status(
         self,

@@ -1,26 +1,16 @@
-from app.core.config import get_settings
+from typing import Any
 
 
 class NotificationService:
-    """Environment-gated admin notification service."""
+    """Notification service — stub until a messaging provider is configured."""
 
     def should_send_admin_notifications(self) -> bool:
-        """Return whether real admin notifications are allowed."""
-        settings = get_settings()
-        if settings.app_env.lower() in {"local", "test", "development"}:
-            return False
-        return bool(
-            settings.at_api_key
-            and settings.at_username
-            and settings.at_sender_id
-            and settings.admin_notification_phone
-        )
+        return False
 
     def notify_quote_request(self, reference: str) -> bool:
-        """Notify admin of a quote request when external messaging is allowed."""
-        if not self.should_send_admin_notifications():
-            return False
-        # Real Africa's Talking integration belongs in a later integration slice.
+        return False
+
+    def send_order_receipt(self, order: dict[str, Any]) -> bool:
         return False
 
 

@@ -6,6 +6,7 @@ from app.models.quotes import (
     AdminQuoteSummary,
     CreateQuoteRequest,
     CreateQuoteResponse,
+    CustomerQuoteSummary,
     QuoteStatus,
 )
 from app.repositories.quote_repository import QuoteRepository, get_quote_repository
@@ -75,6 +76,11 @@ class QuoteService:
         """Return one quote request for admin views."""
         row = self.repository.get_quote_request(reference)
         return AdminQuoteSummary.model_validate(row) if row is not None else None
+
+    def get_quotes_for_email(self, email: str) -> list[CustomerQuoteSummary]:
+        """Return quote requests for a customer by email."""
+        rows = self.repository.get_quotes_by_email(email)
+        return [CustomerQuoteSummary.model_validate(row) for row in rows]
 
     def update_quote_status(
         self,

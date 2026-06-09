@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Package, Wallet, CalendarClock, ArrowRight, LogOut, Mail, Phone, User } from 'lucide-react'
+import { Package, Wallet, CalendarClock, ArrowRight, LogOut, Mail, Phone, User, FileText } from 'lucide-react'
 import { formatPrice, formatDate } from '../utils/format'
 import Button from '../components/Button'
 import useAuthStore from '../store/authStore'
 import { getCustomerOrders } from '../api/auth'
+import { getCustomerQuotes } from '../api/quotes'
 
 const STATUS_STYLES = {
   pending: 'bg-tertiary-fixed/30 text-tertiary',
@@ -18,6 +19,9 @@ export default function AccountPage() {
   const [orders, setOrders] = useState([])
   const [ordersError, setOrdersError] = useState('')
   const [ordersLoading, setOrdersLoading] = useState(true)
+  const [quotes, setQuotes] = useState([])
+  const [quotesLoading, setQuotesLoading] = useState(true)
+  const [quotesError, setQuotesError] = useState('')
 
   useEffect(() => {
     async function loadOrders() {
@@ -43,6 +47,18 @@ export default function AccountPage() {
         setOrdersError(e.message || 'Unable to load orders.')
       } finally {
         setOrdersLoading(false)
+      }
+
+      setQuotesLoading(true)
+      setQuotesError('')
+      try {
+        const res = await getCustomerQuotes()
+        if (!res.success) throw new Error(res.message)
+        setQuotes(res.data || [])
+      } catch (e) {
+        setQuotesError(e.message || 'Unable to load quote requests.')
+      } finally {
+        setQuotesLoading(false)
       }
     }
     loadOrders()
@@ -146,6 +162,41 @@ export default function AccountPage() {
               {ordersError && <div className="p-md text-body-sm text-error">{ordersError}</div>}
               {!ordersLoading && !ordersError && orders.length === 0 && (
                 <div className="p-md text-body-sm text-secondary">No orders found for this account yet.</div>
+              )}
+            </div>
+
+            {/* Quote requests */}
+            <div className="bg-white rounded-xl border border-outline-variant overflow-hidden mt-md">
+              <div className="px-md py-sm border-b border-outline-variant flex justify-between items-center">
+                <h2 className="text-h3 text-on-surface">Service Requests</h2>
+                <Link to="/quote" className="text-label uppercase text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">New Request</Link>
+              </div>
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-surface-container-low text-left">
+                    <th className="px-md py-sm text-label uppercase text-secondary">Reference</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Service</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Date</th>
+                    <th className="px-md py-sm text-label uppercase text-secondary">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline-variant">
+                  {quotes.map(q => (
+                    <tr key={q.id} className="hover:bg-surface-container-low transition-colors">
+                      <td className="px-md py-sm text-body-sm font-medium text-primary">{q.reference}</td>
+                      <td className="px-md py-sm text-body-sm text-secondary capitalize">{q.category_slug.replace(/-/g, ' ')}</td>
+                      <td className="px-md py-sm text-body-sm text-secondary">{formatDate(q.created_at)}</td>
+                      <td className="px-md py-sm">
+                        <span className="px-2 py-0.5 rounded-full text-label uppercase bg-surface-container text-primary capitalize">{q.status}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {quotesLoading && <div className="p-md text-body-sm text-secondary">Loading requests...</div>}
+              {quotesError && <div className="p-md text-body-sm text-error">{quotesError}</div>}
+              {!quotesLoading && !quotesError && quotes.length === 0 && (
+                <div className="p-md text-body-sm text-secondary">No service requests yet. <Link to="/quote" className="text-primary hover:underline">Submit one.</Link></div>
               )}
             </div>
 

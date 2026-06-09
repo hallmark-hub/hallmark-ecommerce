@@ -9,10 +9,8 @@ for key in [
     "SUPABASE_SERVICE_ROLE_KEY",
     "PAYSTACK_SECRET_KEY",
     "PAYSTACK_PUBLIC_KEY",
-    "AT_API_KEY",
-    "AT_USERNAME",
-    "AT_SENDER_ID",
-    "ADMIN_NOTIFICATION_PHONE",
-    "ADMIN_API_KEY",
+    "CLOUDINARY_CLOUD_NAME",
+    "CLOUDINARY_API_KEY",
+    "CLOUDINARY_API_SECRET",
 ]:
     os.environ[key] = ""

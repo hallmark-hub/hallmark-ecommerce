@@ -10,6 +10,7 @@ from app.services.customer_service import (
     CustomerServiceError,
     get_customer_service,
 )
+from app.services.quote_service import QuoteService, get_quote_service
 
 router = APIRouter(tags=["customers"])
 bearer = HTTPBearer(auto_error=False)
@@ -70,3 +71,13 @@ async def list_customer_orders(
     """Return orders for the authenticated customer."""
     orders = service.list_orders_for_profile(profile)
     return ok([order.model_dump(mode="json") for order in orders], "Customer orders retrieved")
+
+
+@router.get("/customer/quotes")
+async def list_customer_quotes(
+    quote_service: Annotated[QuoteService, Depends(get_quote_service)],
+    profile: Annotated[CustomerProfile, Depends(require_customer_profile)],
+) -> dict[str, object]:
+    """Return quote requests for the authenticated customer."""
+    quotes = quote_service.get_quotes_for_email(profile.email)
+    return ok([q.model_dump(mode="json") for q in quotes], "Customer quotes retrieved")

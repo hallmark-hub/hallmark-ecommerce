@@ -177,3 +177,44 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **What was decided:** Expose admin quote request list, detail, and status update endpoints, and wire the admin dashboard quote panel to those backend routes.
 **Why:** Quote-only services need a real admin workflow instead of a placeholder, and status updates let admins track requests from received through contacted, quoted, and closed.
 **What was rejected:** Leaving the quote panel as static text or a one-way "mark contacted" action, because that would not be enough for production quote handling.
+
+## 2026-06-09, Quote category lookup moved to code
+
+**What was decided:** `SupabaseQuoteRepository.get_category_by_slug` now looks up `_CATEGORY_DATA` in application code instead of querying the Supabase `categories` table.
+**Why:** Quote service categories (Kitchen Setup, Embroidery, etc.) are application-defined constants — they do not live in Supabase. Querying the DB for them caused "Quote category not found" errors because the `categories` table was never seeded.
+**What was rejected:** Seeding the Supabase `categories` table as the fix — the migration `002_seed_categories.sql` exists but the architectural decision is that these are code-owned constants, not DB-owned data.
+
+## 2026-06-09, Admin auth simplified to Supabase role only
+
+**What was decided:** `require_admin` validates a bearer token against `customer_profiles.role = 'admin'` only. The `ADMIN_API_KEY` env var and its fallback path are removed.
+**Why:** Setting `role = 'admin'` in Supabase is the correct production mechanism. The API key was a secondary fallback that caused "Admin API key is not configured" errors in production when it wasn't set.
+**What was rejected:** Keeping the API key fallback — it added confusion and a production error path with no real benefit now that Supabase auth is wired end-to-end.
+
+## 2026-06-09, Navbar user icon routing
+
+**What was decided:** The navbar user icon checks `token` first: no token → `/login`, admin → `/admin`, customer → `/account`.
+**Why:** The previous check only read `isAdmin` (persisted in Zustand), so a stale `isAdmin: true` in localStorage sent unauthenticated users directly to `/admin`.
+**What was rejected:** Relying on `AccountPage`'s redirect guard — it works but forces an unnecessary page load before the redirect.
+
+## 2026-06-09, Customer quote requests on account dashboard
+
+**What was decided:** Added `GET /api/v1/customer/quotes` endpoint that returns the authenticated customer's quote requests matched by email, and the account dashboard now shows a "Service Requests" table alongside orders.
+**Why:** Customers had no visibility into submitted quote requests from their dashboard.
+**What was rejected:** Matching by phone instead of email — email is the auth identity and is more reliable as a lookup key.
+
+## 2026-06-09, Africa's Talking removed — NotificationService is a stub
+
+**What was decided:** All Africa's Talking code (API calls, config fields `AT_API_KEY`, `AT_USERNAME`, `AT_SENDER_ID`, `AT_SENDER_EMAIL`, `ADMIN_NOTIFICATION_PHONE`) is removed. `NotificationService` is now a no-op stub with `send_order_receipt`, `notify_quote_request`, and `should_send_admin_notifications` all returning `False`.
+**Why:** Africa's Talking pricing is too high. The stub keeps all notification hooks wired in place for when a provider is chosen.
+**What was rejected:** Africa's Talking email and SMS — cost ruled out.
+
+## 2026-06-09, WAHA chosen as future WhatsApp messaging provider
+
+**What was decided:** WAHA (self-hosted WhatsApp HTTP API) is the planned provider for order receipts and quote follow-ups sent to customers on WhatsApp. Implementation is deferred until a 24/7 server is available.
+**Why:** Free per-message cost, sends to WhatsApp which customers already use, simple REST API (`POST /api/sendText`). Ghana phone `+233XXXXXXXXX` → chatId `233XXXXXXXXX@c.us`.
+**What was rejected:** Running WAHA locally — laptop downtime would silently drop notifications. Needs a VPS (Hetzner/DigitalOcean ~$5/month) or Railway to run 24/7.
+
+## 2026-05-30, Backend verification hardening
+**What was decided:** Keep external media credentials blank during tests, make remaining FastAPI dependency providers async, and pin the test/runtime multipart stack used by upload routes.
+**Why:** The backend test suite was hanging in admin media route tests because the active Python environment could enter external Cloudinary or sync dependency/threadpool paths during verification. Tests must stay local, deterministic, and free of real external side effects.
+**What was rejected:** Treating the hang as an environment-only issue or skipping admin media route tests, because production upload behavior and CI confidence depend on that route being testable.
