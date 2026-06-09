@@ -70,6 +70,7 @@ export default function Navbar() {
   const itemCount = useCartStore(s => s.items.reduce((sum, i) => sum + i.quantity, 0))
   const token = useAuthStore(s => s.token)
   const isAdmin = useAuthStore(s => s.isAdmin)
+  const firstName = useAuthStore(s => s.profile?.name?.split(' ')[0] || '')
   const logout = useAuthStore(s => s.logout)
   const closeTimer = useRef(null)
 
@@ -185,8 +186,11 @@ export default function Navbar() {
             </button>
 
             {/* Account */}
-            <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} className="p-2 hover:bg-surface-container-low rounded-full transition-colors" aria-label={!token ? 'Sign in' : isAdmin ? 'Admin dashboard' : 'My account'}>
-              <User size={22} className="text-on-surface-variant" />
+            <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-surface-container-low rounded-lg transition-colors" aria-label={!token ? 'Sign in' : isAdmin ? 'Admin dashboard' : 'My account'}>
+              <User size={22} className="text-on-surface-variant shrink-0" />
+              {token && firstName && (
+                <span className="hidden md:block text-sm font-medium text-on-surface max-w-[80px] truncate">{firstName}</span>
+              )}
             </Link>
 
             {token && (
