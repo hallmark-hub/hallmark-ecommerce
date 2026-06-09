@@ -8,7 +8,7 @@ export default function CartDrawer({ open, onClose }) {
   const items = useCartStore(s => s.items)
   const removeItem = useCartStore(s => s.removeItem)
   const updateQty = useCartStore(s => s.updateQty)
-  const total = useCartStore(s => s.total)
+  const total = useCartStore(s => s.items.reduce((sum, i) => sum + i.price_pesewas * i.quantity, 0))
 
   return (
     <>

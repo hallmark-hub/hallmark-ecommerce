@@ -32,13 +32,6 @@ const useCartStore = create(
         set({ items: [] })
       },
 
-      get total() {
-        return get().items.reduce((sum, i) => sum + i.price_pesewas * i.quantity, 0)
-      },
-
-      get itemCount() {
-        return get().items.reduce((sum, i) => sum + i.quantity, 0)
-      },
     }),
     { name: 'chefware-cart' }
   )

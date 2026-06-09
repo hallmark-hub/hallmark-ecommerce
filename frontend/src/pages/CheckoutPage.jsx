@@ -25,7 +25,7 @@ const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounde
 
 export default function CheckoutPage() {
   const items = useCartStore(s => s.items)
-  const total = useCartStore(s => s.total)
+  const total = useCartStore(s => s.items.reduce((sum, i) => sum + i.price_pesewas * i.quantity, 0))
   const clearCart = useCartStore(s => s.clearCart)
   const navigate = useNavigate()
   const token = useAuthStore(s => s.token)
