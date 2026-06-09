@@ -2,8 +2,10 @@ from datetime import UTC, datetime
 from typing import Any, Protocol
 from uuid import uuid4
 
+import jwt
 from supabase import Client
 
+from app.core.config import get_settings
 from app.db.supabase import get_supabase_client, response_data, supabase_is_configured
 from app.models.customers import CustomerRegisterRequest
 
@@ -162,15 +164,35 @@ class SupabaseCustomerRepository:
         }
 
     def get_profile_for_token(self, token: str) -> dict[str, Any] | None:
-        """Return a Supabase profile for a bearer token."""
-        try:
-            user_response = self.client.auth.get_user(token)
-        except Exception:
-            return None
-        user = getattr(user_response, "user", None)
-        if user is None:
-            return None
-        return self._profile_for_auth_user(str(user.id))
+        """Return a Supabase profile for a bearer token.
+
+        Decodes the JWT locally when SUPABASE_JWT_SECRET is set, avoiding a
+        round-trip to the Supabase Auth API.
+        """
+        jwt_secret = get_settings().supabase_jwt_secret
+        if jwt_secret:
+            try:
+                payload = jwt.decode(
+                    token,
+                    jwt_secret,
+                    algorithms=["HS256"],
+                    audience="authenticated",
+                )
+                user_id = payload.get("sub")
+                if not user_id:
+                    return None
+            except jwt.PyJWTError:
+                return None
+        else:
+            try:
+                user_response = self.client.auth.get_user(token)
+            except Exception:
+                return None
+            user = getattr(user_response, "user", None)
+            if user is None:
+                return None
+            user_id = str(user.id)
+        return self._profile_for_auth_user(user_id)
 
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
         """Return customer orders matched by profile email."""

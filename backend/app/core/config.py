@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     supabase_url: str = Field(default="", alias="SUPABASE_URL")
     supabase_anon_key: str = Field(default="", alias="SUPABASE_ANON_KEY")
     supabase_service_role_key: str = Field(default="", alias="SUPABASE_SERVICE_ROLE_KEY")
+    supabase_jwt_secret: str = Field(default="", alias="SUPABASE_JWT_SECRET")
     paystack_secret_key: str = Field(default="", alias="PAYSTACK_SECRET_KEY")
     paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
     cors_allowed_origins: str = Field(default="", alias="CORS_ALLOWED_ORIGINS")
