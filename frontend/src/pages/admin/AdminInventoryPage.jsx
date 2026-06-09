@@ -294,51 +294,53 @@ export default function AdminInventoryPage() {
       </div>
 
       <div className="bg-white rounded-xl border border-outline-variant overflow-hidden">
-        <table className="w-full min-w-[700px]">
-          <thead>
-            <tr className="bg-surface-container-low text-left">
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Product</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">SKU</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Price</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Stock</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Status</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Adjust</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-outline-variant">
-            {filtered.map(item => {
-              const ss = stockStatus(item.stock, item.threshold)
-              const { label, cls, Icon } = STOCK_BADGES[ss]
-              return (
-                <tr key={item.id} className="hover:bg-surface-container-low transition-colors">
-                  <td className="px-md py-sm">
-                    <div className="flex items-center gap-3">
-                      <img src={productImage(item)} alt="" onError={useFallbackImage} className="w-10 h-10 rounded-lg object-cover bg-surface-container shrink-0" />
-                      <div>
-                        <p className="text-body-sm font-medium text-on-surface">{item.name}</p>
-                        <p className="text-label text-xs text-secondary">{item.category}</p>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[420px]">
+            <thead>
+              <tr className="bg-surface-container-low text-left">
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Product</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden md:table-cell">SKU</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden sm:table-cell">Price</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Stock</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden sm:table-cell">Status</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Adjust</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant">
+              {filtered.map(item => {
+                const ss = stockStatus(item.stock, item.threshold)
+                const { label, cls, Icon } = STOCK_BADGES[ss]
+                return (
+                  <tr key={item.id} className="hover:bg-surface-container-low transition-colors">
+                    <td className="px-md py-sm">
+                      <div className="flex items-center gap-3">
+                        <img src={productImage(item)} alt="" onError={useFallbackImage} className="w-9 h-9 rounded-lg object-cover bg-surface-container shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-body-sm font-medium text-on-surface truncate max-w-[120px] sm:max-w-none">{item.name}</p>
+                          <p className="text-label text-xs text-secondary">{item.category}</p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-md py-sm text-body-sm text-secondary font-mono">{item.sku}</td>
-                  <td className="px-md py-sm text-body-sm font-bold text-primary">{formatPrice(item.price_pesewas)}</td>
-                  <td className="px-md py-sm text-body text-on-surface font-semibold">{item.stock}</td>
-                  <td className="px-md py-sm">
-                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label text-[11px] font-semibold ${cls}`}>
-                      <Icon size={12} /> {label}
-                    </span>
-                  </td>
-                  <td className="px-md py-sm">
-                    <div className="flex items-center gap-1">
-                      <button onClick={() => updateStock(item.id, -1)} className="w-6 h-6 rounded border border-outline-variant hover:bg-surface-container flex items-center justify-center text-body text-secondary cursor-pointer">−</button>
-                      <button onClick={() => updateStock(item.id, 10)} className="px-2 py-0.5 rounded bg-primary-fixed/20 text-primary text-label text-xs font-semibold hover:bg-primary-fixed/40 cursor-pointer">+10</button>
-                    </div>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="px-md py-sm text-body-sm text-secondary font-mono hidden md:table-cell">{item.sku}</td>
+                    <td className="px-md py-sm text-body-sm font-bold text-primary hidden sm:table-cell">{formatPrice(item.price_pesewas)}</td>
+                    <td className="px-md py-sm text-body text-on-surface font-semibold">{item.stock}</td>
+                    <td className="px-md py-sm hidden sm:table-cell">
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label text-[11px] font-semibold ${cls}`}>
+                        <Icon size={12} /> {label}
+                      </span>
+                    </td>
+                    <td className="px-md py-sm">
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => updateStock(item.id, -1)} className="w-7 h-7 rounded border border-outline-variant hover:bg-surface-container flex items-center justify-center text-body text-secondary cursor-pointer">−</button>
+                        <button onClick={() => updateStock(item.id, 10)} className="px-2 py-1 rounded bg-primary-fixed/20 text-primary text-label text-xs font-semibold hover:bg-primary-fixed/40 cursor-pointer">+10</button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
         {filtered.length === 0 && (
           <div className="text-center py-xl text-secondary text-body-sm">No products match your search.</div>
         )}

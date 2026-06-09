@@ -127,48 +127,51 @@ export default function AdminOrdersPage() {
 
       {/* Table */}
       <div className="bg-white rounded-xl border border-outline-variant overflow-hidden">
-        <table className="w-full min-w-[700px]">
-          <thead>
-            <tr className="bg-surface-container-low text-left">
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Order ID</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Client</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Amount</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Payment</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Status</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Date</th>
-              <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-outline-variant">
-            {filtered.map(o => (
-              <tr key={o.id} className="hover:bg-surface-container-low transition-colors">
-                <td className="px-md py-sm text-body-sm font-medium text-primary">{o.reference}</td>
-                <td className="px-md py-sm">
-                  <p className="text-body-sm font-medium text-on-surface">{o.customer_name}</p>
-                  <p className="text-label text-xs text-secondary">{o.customer_phone}</p>
-                </td>
-                <td className="px-md py-sm text-body-sm font-bold text-on-surface">{formatPrice(o.total_pesewas)}</td>
-                <td className="px-md py-sm">
-                  <p className={`text-body-sm ${PAYMENT_STATUS_STYLES[o.payment_status]}`}>{o.payment_status}</p>
-                  <p className="text-label text-xs text-secondary capitalize">{o.payment_method.replace('_', ' ')}</p>
-                </td>
-                <td className="px-md py-sm">
-                  <select
-                    value={o.order_status}
-                    onChange={e => updateStatus(o.reference, e.target.value)}
-                    className={`px-2 py-0.5 rounded-full text-label text-xs font-semibold cursor-pointer border-0 focus:ring-1 focus:ring-primary outline-none ${STATUS_STYLES[o.order_status]}`}
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="delivered">Delivered</option>
-                  </select>
-                </td>
-                <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.created_at)}</td>
-                <td className="px-md py-sm text-label text-xs text-secondary">Paystack</td>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[560px]">
+            <thead>
+              <tr className="bg-surface-container-low text-left">
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Order ID</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden sm:table-cell">Client</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Amount</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden md:table-cell">Payment</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Status</th>
+                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden lg:table-cell">Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-outline-variant">
+              {filtered.map(o => (
+                <tr key={o.id} className="hover:bg-surface-container-low transition-colors">
+                  <td className="px-md py-sm">
+                    <p className="text-body-sm font-medium text-primary">{o.reference}</p>
+                    <p className="text-xs text-secondary sm:hidden mt-0.5">{o.customer_name}</p>
+                  </td>
+                  <td className="px-md py-sm hidden sm:table-cell">
+                    <p className="text-body-sm font-medium text-on-surface">{o.customer_name}</p>
+                    <p className="text-label text-xs text-secondary">{o.customer_phone}</p>
+                  </td>
+                  <td className="px-md py-sm text-body-sm font-bold text-on-surface">{formatPrice(o.total_pesewas)}</td>
+                  <td className="px-md py-sm hidden md:table-cell">
+                    <p className={`text-body-sm ${PAYMENT_STATUS_STYLES[o.payment_status]}`}>{o.payment_status}</p>
+                    <p className="text-label text-xs text-secondary capitalize">{o.payment_method.replace('_', ' ')}</p>
+                  </td>
+                  <td className="px-md py-sm">
+                    <select
+                      value={o.order_status}
+                      onChange={e => updateStatus(o.reference, e.target.value)}
+                      className={`px-2 py-0.5 rounded-full text-label text-xs font-semibold cursor-pointer border-0 focus:ring-1 focus:ring-primary outline-none ${STATUS_STYLES[o.order_status]}`}
+                    >
+                      <option value="pending">Pending</option>
+                      <option value="confirmed">Confirmed</option>
+                      <option value="delivered">Delivered</option>
+                    </select>
+                  </td>
+                  <td className="px-md py-sm text-body-sm text-secondary hidden lg:table-cell">{formatDate(o.created_at)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         {filtered.length === 0 && (
           <div className="text-center py-xl text-secondary text-body-sm">No orders match your filter.</div>
         )}

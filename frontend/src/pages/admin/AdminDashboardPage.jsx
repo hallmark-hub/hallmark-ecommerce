@@ -117,7 +117,7 @@ export default function AdminDashboardPage() {
       )}
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
         {stats.map(s => {
           const Icon = s.icon
           return (
@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
         {/* Revenue windows + Orders */}
         <div className="xl:col-span-2 space-y-6">
           {/* Paid Revenue Windows */}
@@ -153,7 +153,7 @@ export default function AdminDashboardPage() {
                 <p className="text-xs text-secondary mt-0.5">Computed from the last 50 orders</p>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
               {[
                 { label: 'Today', value: revenue.today },
                 { label: 'Last 7 days', value: revenue.week },
