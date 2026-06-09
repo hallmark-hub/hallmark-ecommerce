@@ -110,7 +110,9 @@ export default function Navbar() {
         <div className="flex justify-between items-center px-gutter w-full max-w-container-max mx-auto h-full">
 
           {/* Logo */}
-          <Link to="/" className="text-h2 font-bold text-primary shrink-0">ChefWare</Link>
+          <Link to="/" className="shrink-0">
+            <img src="/logo.jpg" alt="Chefware Enterprise" className="h-10 md:h-12 w-auto object-contain" />
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">

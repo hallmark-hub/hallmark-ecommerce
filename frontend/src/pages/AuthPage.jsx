@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { AlertTriangle, Eye, EyeOff } from 'lucide-react'
 import useAuthStore from '../store/authStore'
 import { validatePhone, formatPhone } from '../utils/format'
@@ -54,6 +54,9 @@ export default function AuthPage() {
     <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
       <div className="w-full max-w-md px-gutter py-xl">
         <div className="text-center mb-xl">
+          <Link to="/" className="inline-block mb-md">
+            <img src="/logo.jpg" alt="Chefware Enterprise" className="h-14 w-auto object-contain mx-auto" />
+          </Link>
           <h1 className="text-h1 text-on-surface">{mode === 'login' ? 'Sign In' : 'Create Account'}</h1>
           <p className="text-body text-secondary mt-2">ChefWare Enterprise — Accra</p>
         </div>
