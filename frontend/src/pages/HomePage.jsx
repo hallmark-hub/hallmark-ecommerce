@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Truck, MapPin, ShieldCheck, ChevronRight, Star, Quote } from 'lucide-react'
+import { ArrowRight, ClipboardCheck, MapPin, PackageCheck, ChevronRight } from 'lucide-react'
 import { getProducts } from '../api/products'
 import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
@@ -14,34 +14,10 @@ const CAT_IMAGES = {
 }
 
 const STATS = [
-  { value: '500+', label: 'Hotels & Restaurants' },
-  { value: '10+', label: 'Years of Excellence' },
-  { value: '24hr', label: 'Accra Delivery' },
-  { value: '1,000+', label: 'Products in Stock' },
-]
-
-const TESTIMONIALS = [
-  {
-    quote: "ChefWare transformed our kitchen. The equipment quality is outstanding and delivery was next-day as promised. Our chefs love the uniforms.",
-    name: 'Kwame Mensah',
-    role: 'Executive Chef',
-    company: 'Kempinski Hotel Gold Coast City',
-    rating: 5,
-  },
-  {
-    quote: "We've been sourcing all our front-of-house uniforms from ChefWare for 3 years. The embroidery quality is exceptional and the pricing is fair.",
-    name: 'Ama Serwaa',
-    role: 'F&B Operations Manager',
-    company: 'Mövenpick Ambassador Hotel Accra',
-    rating: 5,
-  },
-  {
-    quote: "The kitchen setup service was seamless. They handled everything from design to installation. Highly recommend for any restaurant owner in Accra.",
-    name: 'Abena Owusu',
-    role: 'Owner',
-    company: 'The Kitchen Restaurant, Osu',
-    rating: 5,
-  },
+  { value: 'Uniforms', label: 'For kitchen and service teams' },
+  { value: 'Equipment', label: 'For commercial kitchens' },
+  { value: 'Branding', label: 'For a consistent team look' },
+  { value: 'Quotes', label: 'For custom requirements' },
 ]
 
 export default function HomePage() {
@@ -49,47 +25,57 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getProducts({ limit: 8 }).then(prods => {
-      setFeatured(prods.data?.items?.filter(p => p.checkout_type === 'direct').slice(0, 4) || [])
-      setLoading(false)
-    })
+    let active = true
+
+    async function loadFeatured() {
+      try {
+        const prods = await getProducts({ limit: 8 })
+        if (active) setFeatured(prods.data?.items?.filter(p => p.checkout_type === 'direct').slice(0, 4) || [])
+      } catch {
+        if (active) setFeatured([])
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    loadFeatured()
+    return () => { active = false }
   }, [])
 
   return (
-    <main className="pt-20">
+    <main className="pt-20 overflow-x-hidden">
       {/* Hero */}
       <section className="relative min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src={HERO_IMAGE} alt="Premium industrial kitchen in Accra" className="w-full h-full object-cover object-top" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/65 to-black/90" />
         </div>
-        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter pb-14 md:pb-20 flex flex-col items-center text-center">
-          <span className="bg-gold/90 backdrop-blur-sm text-white text-label uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
-            Accra's #1 Hospitality Supplier
+        <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-gutter pb-14 md:pb-20 flex flex-col items-center text-center">
+          <span className="max-w-full bg-gold/90 backdrop-blur-sm text-white text-label uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
+            Hospitality supplies for businesses in Ghana
           </span>
-          <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-tight text-white mb-6 max-w-3xl">
-            Premium Supplies for Ghana's Finest Kitchens
+          <h1 className="max-w-3xl text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-tight text-white mb-6 break-words">
+            Equip Your Hospitality Business with Confidence
           </h1>
           <p className="text-body-lg text-white/80 mb-8 max-w-xl">
-            Equipping leading hotels and restaurants with industrial-grade equipment, bespoke uniforms, and custom branding services.
+            Source uniforms and stocked equipment, or get a tailored quote for kitchen setup, embroidery, and branding.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button as={Link} to="/products" variant="gold" size="lg" iconRight={<ArrowRight />} className="shadow-lg">
-              Shop Now
+          <div className="flex w-full flex-col sm:w-auto sm:flex-row justify-center gap-3 sm:gap-4">
+            <Button as={Link} to="/products" variant="gold" size="lg" iconRight={<ArrowRight />} className="w-full shadow-lg sm:w-auto">
+              Shop Stocked Products
             </Button>
             <Button
-              as={Link}
-              to="/services"
+              as={Link} to="/quote"
               variant="ghost"
               size="lg"
-              className="!bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white"
+              className="w-full !bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white sm:w-auto"
             >
-              Our Services
+              Get a Business Quote
             </Button>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-white/70 text-body-sm">
-            <Truck size={16} />
-            <span>Free delivery on orders over GH₵ 250 across Greater Accra</span>
+          <div className="mt-8 flex max-w-full items-center gap-2 text-white/70 text-body-sm">
+            <ClipboardCheck size={16} className="shrink-0" />
+            <span>Choose the route that fits your order: buy online or request a tailored quote.</span>
           </div>
         </div>
       </section>
@@ -182,7 +168,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
             <div>
               <h2 className="text-h2 text-on-surface">Top Ghanaian Essentials</h2>
-              <p className="text-body text-secondary mt-2">Trusted by Ghana's finest hotels and restaurants.</p>
+              <p className="text-body text-secondary mt-2">Stocked products for hospitality teams and commercial kitchens.</p>
             </div>
             <Button as={Link} to="/products" variant="ghost" size="md" iconRight={<ArrowRight />}>
               View Full Catalog
@@ -194,6 +180,12 @@ export default function HomePage() {
               : featured.map(p => <ProductCard key={p.id} product={p} />)
             }
           </div>
+          {!loading && featured.length === 0 && (
+            <div className="mt-5 rounded-xl border border-outline-variant bg-white p-6 text-center">
+              <p className="text-body text-secondary">Our current catalogue is being updated.</p>
+              <Button as={Link} to="/products" variant="ghost" size="sm" className="mt-3">Browse the catalogue</Button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -206,9 +198,9 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: MapPin, title: 'Accra-Based Support', desc: 'Dedicated local team for consultations, deliveries, and after-sales support across Greater Accra.' },
-              { icon: Truck, title: 'Free 24hr Delivery', desc: 'Complimentary next-day delivery on all orders over GH₵ 250 within Greater Accra.' },
-              { icon: ShieldCheck, title: '12-Month Warranty', desc: 'Every piece of industrial kitchen equipment comes with a full 12-month standard warranty.' },
+              { icon: MapPin, title: 'Built for Ghanaian Hospitality', desc: 'Explore product categories made for kitchen teams, restaurants, hotels, and food-service businesses.' },
+              { icon: PackageCheck, title: 'Buy What Is Ready', desc: 'Add stocked uniforms and equipment to cart when you know exactly what your team needs.' },
+              { icon: ClipboardCheck, title: 'Quote What Is Custom', desc: 'Use a quote request for projects, branding, embroidery, and requirements that need a tailored plan.' },
             ].map(item => (
               <div key={item.title} className="flex flex-col items-center text-center p-8 bg-white rounded-2xl border border-outline-variant hover:shadow-md transition-shadow">
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
@@ -222,33 +214,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-28 bg-primary">
-        <div className="max-w-container-max mx-auto px-gutter text-center mb-12 md:mb-16">
-          <p className="text-label uppercase text-primary-fixed mb-3">Client Stories</p>
-          <h2 className="text-h2 text-white">Trusted by Ghana's Best</h2>
-        </div>
-        <div className="overflow-hidden">
-          <div className="flex marquee-track" style={{ width: 'max-content' }}>
-            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
-              <div key={i} className="w-[340px] shrink-0 mr-6 bg-white/10 backdrop-blur-sm rounded-2xl p-7 border border-white/20 flex flex-col">
-                <Quote size={28} className="text-gold mb-4 shrink-0" />
-                <p className="text-white/90 text-body flex-1 mb-6">"{t.quote}"</p>
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-white font-bold text-body-sm">{t.name}</p>
-                    <p className="text-white/60 text-body-sm mt-0.5">{t.role}</p>
-                    <p className="text-gold text-body-sm font-semibold mt-0.5">{t.company}</p>
-                  </div>
-                  <div className="flex gap-0.5 shrink-0">
-                    {Array.from({ length: t.rating }).map((_, j) => (
-                      <Star key={j} size={14} className="text-gold fill-gold" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <section className="bg-primary py-section-mobile md:py-section px-gutter text-center">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-label uppercase text-primary-fixed mb-3">For a clear next step</p>
+          <h2 className="text-h2 text-white mb-4">Tell Us What Your Business Needs</h2>
+          <p className="text-body text-white/75 mb-8">For quantities, branding, kitchen projects, or a custom specification, send the details and the team can prepare the right quote.</p>
+          <Button as={Link} to="/quote" variant="gold" size="lg" iconRight={<ArrowRight />}>Request a Business Quote</Button>
         </div>
       </section>
 
@@ -256,7 +227,7 @@ export default function HomePage() {
       <section className="py-section-mobile md:py-section px-gutter bg-surface-container-low text-center">
         <h2 className="text-h2 text-on-surface mb-4">Need a Custom Quote?</h2>
         <p className="text-body text-secondary max-w-md mx-auto mb-8">
-          Services like kitchen setup, embroidery, and machine customization require a personalised quote. We respond within 24 hours.
+          Kitchen setup, embroidery, machine customization, and branded teamwear need a tailored plan. Tell us what you need to get started.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Button as={Link} to="/quote" variant="primary" size="lg" iconRight={<ArrowRight />}>

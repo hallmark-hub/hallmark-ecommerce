@@ -226,6 +226,11 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **Why:** Free per-message cost, sends to WhatsApp which customers already use, simple REST API (`POST /api/sendText`). Ghana phone `+233XXXXXXXXX` → chatId `233XXXXXXXXX@c.us`.
 **What was rejected:** Running WAHA locally — laptop downtime would silently drop notifications. Needs a VPS (Hetzner/DigitalOcean ~$5/month) or Railway to run 24/7.
 
+## 2026-09-04, Evidence-first public marketing content
+**What was decided:** Replace unverified homepage leadership claims, delivery/warranty promises, and named hotel testimonials with factual buying paths until ChefWare supplies approved evidence. Request real product, team, leadership, completed-work, and company-history content in a structured brief before building the About Us page or publishing proof statements.
+**Why:** Generic stock photography and unverified client names or performance claims weaken trust and create publishing risk. A business buyer needs demonstrable work and real assets before a high-value quote conversion path can be credible.
+**What was rejected:** Inventing company history, testimonials, customer logos, delivery/warranty conditions, or AI-generated substitutes for ChefWare's actual work.
+
 ## 2026-05-30, Backend verification hardening
 **What was decided:** Keep external media credentials blank during tests, make remaining FastAPI dependency providers async, and pin the test/runtime multipart stack used by upload routes.
 **Why:** The backend test suite was hanging in admin media route tests because the active Python environment could enter external Cloudinary or sync dependency/threadpool paths during verification. Tests must stay local, deterministic, and free of real external side effects.
