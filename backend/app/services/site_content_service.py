@@ -52,6 +52,11 @@ LOCAL_DEFAULT_CONTENT = {
         {"title": "Luggage-loading robots", "body": "Discuss robot options for luggage-handling operations in suitable venues.", "image_url": "/media/chefware/room-service-robot.jpg", "image_alt": "Hospitality delivery robot"},
         {"title": "Room-service robots", "body": "Explore controlled delivery workflows for hotels and other suitable indoor environments.", "image_url": "/media/chefware/room-service-robot.jpg", "image_alt": "Room-service delivery robot"},
     ],
+    "global_partners": [
+        {"title": "KEENON", "body": "Hospitality and service robotics.", "image_url": "/clients-logo/KENON-removebg-preview.png", "image_alt": "KEENON logo"},
+        {"title": "ALPHA ROBOTICS COMPANY", "body": "Robotics solutions."},
+        {"title": "PIMAK TURKIYE", "body": "International sourcing for kitchen equipment and disposable products."},
+    ],
     "services": [
         {"slug": "uniforms", "title": "Professional Hospitality Uniforms", "body": "Chef uniforms, hospitality staff uniforms, security and management wear, and customised staff uniforms.", "image_url": "/media/chefware/products/chef-uniform-combo.jpg", "image_alt": "Chef uniform set"},
         {"slug": "branding-embroidery", "title": "Branding & Embroidery", "body": "T-shirt printing, embroidery and customised branding for businesses, schools and institutions.", "image_url": "/media/chefware/products/white-gold-stripe-chef-top.jpeg", "image_alt": "Branded chef uniform"},

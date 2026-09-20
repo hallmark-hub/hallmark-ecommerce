@@ -16,6 +16,8 @@ import ServicesPage from './pages/ServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import RoboticsPage from './pages/RoboticsPage'
 import AboutPage from './pages/AboutPage'
+import WarrantyReturnsPage from './pages/WarrantyReturnsPage'
+import TermsConditionsPage from './pages/TermsConditionsPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 import WhatsAppButton from './components/WhatsAppButton'
@@ -85,6 +87,8 @@ export default function App() {
         <Route path="/services/:slug" element={<StorefrontLayout><ServiceDetailPage /></StorefrontLayout>} />
         <Route path="/robotics" element={<StorefrontLayout><RoboticsPage /></StorefrontLayout>} />
         <Route path="/about" element={<StorefrontLayout><AboutPage /></StorefrontLayout>} />
+        <Route path="/warranty-returns" element={<StorefrontLayout><WarrantyReturnsPage /></StorefrontLayout>} />
+        <Route path="/terms" element={<StorefrontLayout><TermsConditionsPage /></StorefrontLayout>} />
         <Route path="/quote" element={<StorefrontLayout><QuoteRequestPage /></StorefrontLayout>} />
         <Route path="/account" element={<StorefrontLayout><AccountPage /></StorefrontLayout>} />
         <Route path="/login" element={<StorefrontLayout><AuthPage /></StorefrontLayout>} />

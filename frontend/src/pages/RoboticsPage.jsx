@@ -65,6 +65,33 @@ export default function RoboticsPage() {
         </div>
       </section>
 
+      <section className="max-w-container-max mx-auto px-gutter py-section-mobile md:py-section">
+        <div className="max-w-2xl mb-10">
+          <p className="text-label uppercase text-primary mb-3">Our Global Partnerships</p>
+          <h2 className="text-h1 text-on-surface mb-3">Supplied in partnership with leading manufacturers</h2>
+          <p className="text-body text-secondary">
+            ChefWare&apos;s robotics representation and partnerships bring international manufacturing
+            to hospitality operations across Ghana.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {content.global_partners.map(partner => (
+            <article key={partner.title} className="rounded-2xl border border-outline-variant bg-white p-6 flex flex-col items-center text-center">
+              {partner.image_url && (
+                <img
+                  src={partner.image_url}
+                  alt={partner.image_alt || `${partner.title} logo`}
+                  loading="lazy"
+                  className="h-14 w-auto object-contain mb-4"
+                />
+              )}
+              <h3 className="text-h3 text-on-surface mb-2">{partner.title}</h3>
+              <p className="text-body-sm text-secondary">{partner.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="bg-primary text-white px-gutter py-section-mobile md:py-section">
         <div className="max-w-container-max mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div>

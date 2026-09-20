@@ -64,6 +64,11 @@ export const SITE_CONTENT_SECTIONS = [
     ],
   },
   {
+    id: 'partners',
+    label: 'Global Partnerships',
+    fields: [],
+  },
+  {
     id: 'quote',
     label: 'Quote Page',
     fields: [

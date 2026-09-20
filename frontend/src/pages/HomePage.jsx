@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Bot, ClipboardCheck, MapPin, PackageCheck, ChevronRight } from 'lucide-react'
+import { ArrowRight, Bot, ClipboardCheck, Clock, Mail, MapPin, Phone, PackageCheck, ChevronRight } from 'lucide-react'
 import { getProducts } from '../api/products'
 import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
 import Button from '../components/Button'
+import { mapsDirectionsUrl, mapsEmbedUrl } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
 
 const STATS = [
@@ -16,11 +17,11 @@ const STATS = [
 ]
 
 const TRUSTED_BY = [
-  { name: 'Labadi Beach Hotel', logo_url: null },
-  { name: 'Lancaster Hotels', logo_url: null },
+  { name: 'Labadi Beach Hotel', logo_url: '/clients-logo/labadi-removebg-preview.png' },
+  { name: 'Lancaster Hotels', logo_url: '/clients-logo/lancaster-removebg-preview.png' },
   { name: 'Pomona', logo_url: null },
-  { name: "Moka's Express", logo_url: null },
-  { name: 'Hallmark Cafe', logo_url: null },
+  { name: "Moka's Express", logo_url: '/clients-logo/moka-removebg-preview.png' },
+  { name: 'Hallmark Cafe', logo_url: '/clients-logo/hallmark-removebg-preview.png' },
 ]
 
 export default function HomePage() {
@@ -221,6 +222,16 @@ export default function HomePage() {
                 Book a Robot Demonstration
               </Button>
             </div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-white/15 pt-6">
+              <p className="text-label uppercase text-white/70">Robotics partners</p>
+              {content.global_partners
+                .filter(p => ['KEENON', 'ALPHA ROBOTICS COMPANY'].includes(p.title))
+                .map(p => p.image_url ? (
+                  <img key={p.title} src={p.image_url} alt={p.image_alt || `${p.title} logo`} loading="lazy" className="h-10 w-auto object-contain bg-white rounded-lg px-2 py-1" />
+                ) : (
+                  <span key={p.title} className="text-white/85 font-semibold">{p.title}</span>
+                ))}
+            </div>
           </div>
           <div className="relative min-h-[360px] lg:min-h-full">
             <img
@@ -294,6 +305,55 @@ export default function HomePage() {
               About {content.company_name}
             </Button>
           )}
+        </div>
+      </section>
+
+      {/* Find Us */}
+      <section className="bg-white py-section-mobile md:py-section px-gutter border-t border-outline-variant">
+        <div className="max-w-container-max mx-auto grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <p className="text-label uppercase text-primary mb-3">Find us here</p>
+            <h2 className="text-h2 text-on-surface mb-4">Visit {content.company_name} in Accra</h2>
+            <div className="space-y-3 text-body text-secondary">
+              <p className="flex items-start gap-3">
+                <MapPin size={20} className="text-primary shrink-0 mt-0.5" />
+                <span>{content.contact_address}</span>
+              </p>
+              <p className="flex items-start gap-3">
+                <Phone size={20} className="text-primary shrink-0 mt-0.5" />
+                <span className="flex flex-col">
+                  <a href={`tel:${content.contact_phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors">{content.contact_phone}</a>
+                  <a href={`tel:${content.contact_secondary_phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors">{content.contact_secondary_phone}</a>
+                </span>
+              </p>
+              <p className="flex items-start gap-3">
+                <Mail size={20} className="text-primary shrink-0 mt-0.5" />
+                <a href={`mailto:${content.contact_email}`} className="hover:text-primary transition-colors">{content.contact_email}</a>
+              </p>
+              <p className="flex items-start gap-3">
+                <Clock size={20} className="text-primary shrink-0 mt-0.5" />
+                <span>{content.business_hours}</span>
+              </p>
+            </div>
+            <a
+              href={mapsDirectionsUrl(content.company_name, content.contact_address)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-7 px-5 py-3 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors"
+            >
+              <MapPin size={16} /> Get Directions on Google Maps
+            </a>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-outline-variant shadow-sm">
+            <iframe
+              title={`Map to ${content.company_name}`}
+              src={mapsEmbedUrl(content.company_name, content.contact_address)}
+              className="w-full h-[320px] md:h-[420px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
         </div>
       </section>
 

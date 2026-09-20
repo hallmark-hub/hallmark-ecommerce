@@ -25,6 +25,7 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "013_quote_request_business_details.sql",
         "014_doc_aligned_categories_and_quote_options.sql",
         "015_seed_client_catalog.sql",
+        "016_global_partners_content.sql",
     ]
 
 

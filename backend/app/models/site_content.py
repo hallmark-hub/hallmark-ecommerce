@@ -81,6 +81,7 @@ class SiteContent(BaseModel):
     robotics_intro_title: str = Field(min_length=1, max_length=180)
     robotics_intro_body: str = Field(min_length=1, max_length=600)
     robotics_cards: list[ContentCard] = Field(min_length=1, max_length=6)
+    global_partners: list[ContentCard] = Field(min_length=1, max_length=8)
     services: list[ServiceCard] = Field(min_length=1, max_length=8)
     quote_options: list[QuoteOption] = Field(min_length=7, max_length=7)
     quote_image_url: str = Field(min_length=1, max_length=1000)

@@ -33,14 +33,6 @@ const SOCIALS = [
   },
 ]
 
-const WARRANTY_ITEMS = [
-  ['Uniforms & Branding', 'Quality guaranteed; exchange for manufacturing defects.'],
-  ['Kitchen Equipment', '6–12 months warranty depending on supplier.'],
-  ['Robots', '1-year warranty plus after-sales support.'],
-  ['Returns', 'Within 3 days for defects only.'],
-  ['Customised Items', 'Custom-branded items are not returnable.'],
-]
-
 export default function Footer() {
   const content = useSiteContentStore(state => state.content)
 
@@ -126,6 +118,8 @@ export default function Footer() {
             <nav className="flex flex-col gap-3">
               {content.show_about_page && <Link to="/about" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">About {content.company_name}</Link>}
               {content.show_robotics_page && <Link to="/robotics" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Hospitality Robotics</Link>}
+              <Link to="/warranty-returns" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Warranty & Returns</Link>
+              <Link to="/terms" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Terms & Conditions</Link>
               <Link to="/account" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">My Account</Link>
               <Link to="/account" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Track Order</Link>
             </nav>
@@ -138,22 +132,6 @@ export default function Footer() {
             <Link to="/quote" className="inline-flex w-full justify-center py-2.5 px-4 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors">
               Request a Quote
             </Link>
-          </div>
-        </div>
-
-        {/* Warranty & Returns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12 border-t border-white/10 pt-10">
-          <div className="md:col-span-2">
-            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-4">Warranty & Returns</h5>
-            <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
-              {WARRANTY_ITEMS.map(([label, detail]) => (
-                <div key={label}>
-                  <p className="text-sm font-semibold text-white">{label}</p>
-                  <p className="text-sm text-secondary-fixed/70 leading-relaxed">{detail}</p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-3 text-xs text-secondary-fixed/50">Exact warranty terms are confirmed with the team at the time of your order or quote.</p>
           </div>
         </div>
 

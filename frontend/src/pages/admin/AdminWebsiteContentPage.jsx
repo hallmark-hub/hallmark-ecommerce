@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { AlertTriangle, Bot, Building2, Home, Info, MessageSquare, Save, Wrench } from 'lucide-react'
+import { AlertTriangle, Bot, Building2, Handshake, Home, Info, MessageSquare, Save, Wrench } from 'lucide-react'
 import { uploadAdminProductImage } from '../../api/admin'
 import { getAdminSiteContent, updateAdminSiteContent } from '../../api/siteContent'
 import AdminContentField from '../../components/admin/AdminContentField'
 import { SITE_CONTENT_SECTIONS } from '../../config/siteContentFields'
 import useSiteContentStore from '../../store/siteContentStore'
 
-const SECTION_ICONS = { company: Building2, home: Home, about: Info, services: Wrench, robotics: Bot, quote: MessageSquare }
+const SECTION_ICONS = { company: Building2, home: Home, about: Info, services: Wrench, robotics: Bot, partners: Handshake, quote: MessageSquare }
 
 export default function AdminWebsiteContentPage() {
   const [content, setContent] = useState(null)
@@ -109,6 +109,7 @@ export default function AdminWebsiteContentPage() {
                 {section.id === 'about' && <CardEditors title="Capability Cards" collection="about_capabilities" cards={content.about_capabilities} onChange={updateCard} onUpload={uploadImage} uploadingKey={uploadingKey} />}
                 {section.id === 'services' && <CardEditors title="Service Pages" collection="services" cards={content.services} images onChange={updateCard} onUpload={uploadImage} uploadingKey={uploadingKey} />}
                 {section.id === 'robotics' && <CardEditors title="Robotics Use Cases" collection="robotics_cards" cards={content.robotics_cards} images onChange={updateCard} onUpload={uploadImage} uploadingKey={uploadingKey} />}
+                {section.id === 'partners' && <CardEditors title="Global Partners" collection="global_partners" cards={content.global_partners} images onChange={updateCard} onUpload={uploadImage} uploadingKey={uploadingKey} />}
                 {section.id === 'quote' && <QuoteOptionsEditor options={content.quote_options} onChange={updateCard} />}
               </div>
             </section>
