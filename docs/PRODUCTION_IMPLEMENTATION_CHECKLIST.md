@@ -33,10 +33,11 @@ commerce-first implementation plan.
 
 - [x] Load the 13 supplied catalogue items with their distinct supplied images.
   (Migration `015_seed_client_catalog.sql` — apply pending.)
-- [x] Use prices only when explicitly supplied. (Decision 2026-09-20: items are
-  seeded with clearly-marked replaceable placeholder prices so the shop works,
-  and ChefWare updates the real prices via the Admin Inventory dashboard; the
-  banqueting trolley and the three robotics items are quote-only with no price.)
+- [x] Use prices only when explicitly supplied. (Prices for 015 come from the
+  client's supplied photo filenames, e.g. "WHITE WITH GOLD STRIPES POLYCOTTON
+  GHC240.jpeg"; ChefWare should still confirm them via the Admin Inventory
+  dashboard before launch. Banqueting trolley + the three robotics items are
+  quote-only with no price.)
 - [x] Keep the banqueting trolley quote-only because no price was supplied.
 - [x] Keep robotics products quote-only. (Migration 015 keeps all three
   supplied robots quote-only.)

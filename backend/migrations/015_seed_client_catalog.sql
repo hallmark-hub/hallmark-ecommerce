@@ -1,11 +1,11 @@
 -- Seed the client-supplied catalogue from the supplied product photography.
 -- Categories must already exist (apply 002 and 014 first).
 --
--- PRICING NOTE: The client supplied images but no per-item prices. Items are
--- seeded with REPLACEABLE PLACEHOLDER prices so the storefront shop/checkout
--- flow works end to end. ChefWare must replace them with the correct prices
--- through the Admin -> Inventory dashboard before launch. Robotics items and
--- the banqueting trolley stay quote-only (no price, per the pricing rule).
+-- PRICING NOTE: Prices below come from the client-supplied photo filenames in
+-- docs/PROJECT_DETAILS (e.g. "WHITE WITH GOLD STRIPES POLYCOTTON GHC240.jpeg").
+-- ChefWare should still confirm current prices via the Admin -> Inventory
+-- dashboard before launch. Robotics items and the banqueting trolley stay
+-- quote-only (no price in the supplied data).
 --
 -- This seed is idempotent; re-running it resets these rows to the values below.
 
@@ -29,9 +29,9 @@ insert into products (
     '00000000-0000-4000-8000-000000000001',
     'Chef Uniform Combo',
     'chef-uniform-combo',
-    'Coordinated chef uniform set with jacket, trousers, cap and apron for professional kitchen teams.',
+    'Chef jacket, long waist apron and cap set for professional kitchen teams.',
     'direct',
-    25000,
+    32000,
     null,
     array['/media/chefware/products/chef-uniform-combo.jpg'],
     true,
@@ -44,9 +44,9 @@ insert into products (
     '00000000-0000-4000-8000-000000000001',
     'Blue Collar Chef Top',
     'blue-collar-chef-top',
-    'Hard-wearing chef top with blue collar and trim for daily kitchen service.',
+    'Hard-wearing polycotton chef top with blue collar and trim for daily kitchen service.',
     'direct',
-    18000,
+    20000,
     null,
     array['/media/chefware/products/blue-collar-chef-top.jpeg'],
     true,
@@ -59,9 +59,9 @@ insert into products (
     '00000000-0000-4000-8000-000000000001',
     'Off-White Cotton Chef Jacket',
     'off-white-cotton-chef-jacket',
-    'Classic off-white cotton chef jacket for chefs, cooks and bakers.',
+    'Classic off-white 100% cotton chef jacket for chefs, cooks and bakers.',
     'direct',
-    22000,
+    25000,
     null,
     array['/media/chefware/products/off-white-cotton-chef-jacket.jpeg'],
     true,
@@ -89,7 +89,7 @@ insert into products (
     '00000000-0000-4000-8000-000000000001',
     'White Long-Sleeve Chef Jacket',
     'white-long-sleeve-chef-jacket',
-    'White long-sleeve chef jacket suited to front and back of house.',
+    'White long-sleeve chef jacket with pearl buttons, suited to front and back of house.',
     'direct',
     26000,
     null,
@@ -104,9 +104,9 @@ insert into products (
     '00000000-0000-4000-8000-000000000001',
     'Short Waist Apron',
     'short-waist-apron',
-    'Short waiter-style apron for daily service.',
+    'Short waist apron for daily service.',
     'direct',
-    9000,
+    6000,
     null,
     array['/media/chefware/products/short-waist-apron.jpg'],
     true,
@@ -117,11 +117,11 @@ insert into products (
 (
     '20000000-0000-4000-8000-000000000007',
     '00000000-0000-4000-8000-000000000003',
-    'Commercial Combi Oven',
+    'Rational Combi Oven',
     'commercial-combi-oven',
-    'Commercial combi oven for volume cooking in restaurant and institutional kitchens.',
+    'Rational combi oven for volume cooking in restaurant and institutional kitchens.',
     'direct',
-    1200000,
+    42000000,
     null,
     array['/media/chefware/products/commercial-combi-oven.jpg'],
     true,
@@ -136,7 +136,7 @@ insert into products (
     'commercial-egg-boiler',
     'Commercial egg boiler for high-volume boiling in catering operations.',
     'direct',
-    65000,
+    1200000,
     null,
     array['/media/chefware/products/commercial-egg-boiler.jpg'],
     true,
@@ -151,7 +151,7 @@ insert into products (
     'refrigerated-cold-bain-marie',
     'Refrigerated cold bain marie for temperature-safe food service and display.',
     'direct',
-    480000,
+    4600000,
     null,
     array['/media/chefware/products/refrigerated-cold-bain-marie.jpg'],
     true,
