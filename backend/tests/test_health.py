@@ -23,3 +23,12 @@ def test_health_returns_standard_envelope() -> None:
         "data": {"status": "ok"},
         "message": "Service is running",
     }
+
+
+def test_readiness_reports_unconfigured_database_without_failing() -> None:
+    response = get("/health/ready")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["success"] is True
+    assert payload["data"]["database"] == "not_configured"

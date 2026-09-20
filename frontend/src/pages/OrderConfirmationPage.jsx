@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AlertTriangle, CheckCircle, Printer, Home } from 'lucide-react'
 import Button from '../components/Button'
@@ -12,6 +12,17 @@ export default function OrderConfirmationPage() {
   const [order, setOrder] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
+  const [phone, setPhone] = useState('')
+  const [verifying, setVerifying] = useState(false)
+
+  // Order status is only ever read from the backend. Never assume a payment
+  // succeeded from the fact that the customer landed on this URL — they may be
+  // on a different device, or the payment may have failed.
+  const fetchOrder = useCallback(async (customerPhone) => {
+    const res = await lookupOrder(reference, customerPhone)
+    if (!res.success) throw new Error(res.message)
+    return res.data
+  }, [reference])
 
   useEffect(() => {
     async function loadOrder() {
@@ -19,16 +30,12 @@ export default function OrderConfirmationPage() {
       setError('')
       const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
       if (!stored.phone) {
-        setError('Order confirmed. Sign in or contact us with your reference for full receipt details.')
-        setOrder({ reference, customer: { phone: '' }, items: [], total_pesewas: 0, payment_method: 'paystack', payment_status: 'paid', order_status: 'confirmed', returns_policy: 'No refunds. Exchange only within 3 days of purchase.', created_at: new Date().toISOString() })
         setLoading(false)
         return
       }
 
       try {
-        const res = await lookupOrder(reference, stored.phone)
-        if (!res.success) throw new Error(res.message)
-        setOrder(res.data)
+        setOrder(await fetchOrder(stored.phone))
       } catch (e) {
         setError(e.message || 'Unable to load order details.')
       } finally {
@@ -36,7 +43,20 @@ export default function OrderConfirmationPage() {
       }
     }
     loadOrder()
-  }, [reference])
+  }, [reference, fetchOrder])
+
+  async function handleVerify(e) {
+    e.preventDefault()
+    setVerifying(true)
+    setError('')
+    try {
+      setOrder(await fetchOrder(phone))
+    } catch {
+      setError('No order found for that reference and phone number.')
+    } finally {
+      setVerifying(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -51,11 +71,34 @@ export default function OrderConfirmationPage() {
   if (!order) {
     return (
       <main className="pt-20 min-h-screen bg-surface">
-        <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section text-center">
-          <AlertTriangle size={48} className="text-error mx-auto mb-md" />
-          <h1 className="text-h2 text-on-surface mb-sm">Order Details Unavailable</h1>
-          <p className="text-body text-secondary mb-md">{error || 'Please contact us with your order reference.'}</p>
-          <Button as={Link} to="/" variant="primary" size="lg" iconLeft={<Home />}>Back to Home</Button>
+        <div className="max-w-md mx-auto px-gutter py-section-mobile md:py-section text-center">
+          <AlertTriangle size={48} className="text-tertiary mx-auto mb-md" />
+          <h1 className="text-h2 text-on-surface mb-sm">Confirm Your Order</h1>
+          <p className="text-body text-secondary mb-xs">
+            Order reference <span className="font-semibold text-primary">{reference}</span>
+          </p>
+          <p className="text-body-sm text-secondary mb-md">
+            Enter the phone number used at checkout to view this order's status and receipt.
+          </p>
+          <form onSubmit={handleVerify} className="space-y-sm text-left">
+            <label className="block text-label uppercase text-secondary" htmlFor="lookup-phone">Phone Number</label>
+            <input
+              id="lookup-phone"
+              type="tel"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              placeholder="+233244123456"
+              className="w-full px-md py-sm border border-outline-variant rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            />
+            {error && <p className="text-body-sm text-error">{error}</p>}
+            <Button type="submit" loading={verifying} variant="primary" size="lg" fullWidth>
+              View Order
+            </Button>
+          </form>
+          <div className="mt-md">
+            <Button as={Link} to="/" variant="ghost" size="md" iconLeft={<Home />}>Back to Home</Button>
+          </div>
         </div>
       </main>
     )
@@ -69,7 +112,7 @@ export default function OrderConfirmationPage() {
           <CheckCircle size={64} className="text-primary mx-auto mb-md" />
           <h1 className="text-h1 text-on-surface mb-sm">Order Confirmed!</h1>
           <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
-          {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">We'll send confirmation updates to {order.customer.phone}</p>}
+          {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">Save your reference above — quote it to our team on WhatsApp for any updates.</p>}
           {error && <p className="text-body-sm text-tertiary mt-xs">{error}</p>}
         </div>
 

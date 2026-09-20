@@ -57,6 +57,14 @@ class QuoteService:
             "category_id": str(category["id"]),
             "category_slug": request.category_slug,
             "message": request.message,
+            "company_name": request.company_name.strip() or None,
+            "location": request.location.strip() or None,
+            "quantity": request.quantity.strip() or None,
+            "preferred_delivery_date": (
+                request.preferred_delivery_date.isoformat()
+                if request.preferred_delivery_date is not None
+                else None
+            ),
             "status": QuoteStatus.received.value,
             "notification_attempted": self.notifications.should_send_admin_notifications(),
             "notification_sent": False,

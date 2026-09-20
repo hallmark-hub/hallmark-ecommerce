@@ -154,7 +154,8 @@ class SupabaseQuoteRepository:
         response = (
             self.client.table("quote_requests")
             .select(
-                "id,reference,name,email,phone,category_slug,message,status,"
+                "id,reference,name,email,phone,category_slug,message,company_name,location,"
+                "quantity,preferred_delivery_date,status,"
                 "notification_attempted,notification_sent,created_at"
             )
             .order("created_at", desc=True)
@@ -168,7 +169,8 @@ class SupabaseQuoteRepository:
         response = (
             self.client.table("quote_requests")
             .select(
-                "id,reference,name,email,phone,category_slug,message,status,"
+                "id,reference,name,email,phone,category_slug,message,company_name,location,"
+                "quantity,preferred_delivery_date,status,"
                 "notification_attempted,notification_sent,created_at"
             )
             .eq("reference", reference)

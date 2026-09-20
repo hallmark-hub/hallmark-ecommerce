@@ -1,8 +1,11 @@
 import asyncio
 
 import httpx
+import pytest
 
 from app.main import app
+
+pytestmark = pytest.mark.usefixtures("admin_auth")
 
 
 def upload_image(content: bytes, content_type: str = "image/png") -> httpx.Response:

@@ -6,6 +6,7 @@ import Button from '../components/Button'
 import useAuthStore from '../store/authStore'
 import { getCustomerOrders } from '../api/auth'
 import { getCustomerQuotes } from '../api/quotes'
+import { formatQuoteCategory } from '../config/quoteCategories'
 
 const STATUS_STYLES = {
   pending: 'bg-tertiary-fixed/30 text-tertiary',
@@ -168,7 +169,7 @@ export default function AccountPage() {
                   {quotes.map(q => (
                     <tr key={q.id} className="hover:bg-surface-container-low transition-colors">
                       <td className="px-md py-sm text-body-sm font-medium text-primary">{q.reference}</td>
-                      <td className="px-md py-sm text-body-sm text-secondary capitalize">{q.category_slug.replace(/-/g, ' ')}</td>
+                      <td className="px-md py-sm text-body-sm text-secondary">{formatQuoteCategory(q.category_slug)}</td>
                       <td className="px-md py-sm text-body-sm text-secondary">{formatDate(q.created_at)}</td>
                       <td className="px-md py-sm">
                         <span className="px-2 py-0.5 rounded-full text-label uppercase bg-surface-container text-primary capitalize">{q.status}</span>

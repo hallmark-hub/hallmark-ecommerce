@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, ChefHat, Users, Wrench, LayoutGrid, Building2, Package, Settings, Scissors, Printer } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChefHat, Users, Wrench, LayoutGrid, ArrowRight } from 'lucide-react'
 import { getProducts } from '../api/products'
 import { getCategories } from '../api/categories'
 import ProductCard from '../components/ProductCard'
@@ -11,11 +11,13 @@ const CAT_ICONS = {
   'chef-uniforms': ChefHat,
   'staff-uniforms-branding': Users,
   'kitchen-equipment-tools': Wrench,
-  'kitchen-setup': Building2,
-  'machine-preorders': Package,
-  'machine-customization': Settings,
-  'embroidery': Scissors,
-  'logo-printing-branding': Printer,
+}
+
+// Direct shop categories whose real offering is made-to-order/branding work.
+// When they have no stocked products, route visitors to the quote form instead
+// of a dead-end "no products" page.
+const QUOTE_PATH_BY_CATEGORY = {
+  'staff-uniforms-branding': 'branding-embroidery',
 }
 
 const SORT_OPTIONS = [
@@ -132,25 +134,15 @@ export default function ProductCatalogPage() {
           </div>
         </div>
 
-        {/* Services group */}
+        {/* Services */}
         <div className="px-md mb-md">
-          <p className="text-label uppercase text-secondary mb-2">Services</p>
-          <div className="space-y-1">
-            {categories.filter(c => c.checkout_type === 'quote').map(c => {
-              const Icon = CAT_ICONS[c.slug] || Settings
-              const active = category === c.slug
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => setParam('category', c.slug)}
-                  className={`flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 ${active ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container hover:text-primary'}`}
-                >
-                  <Icon size={16} className="shrink-0" />
-                  <span className="text-body-sm">{c.name}</span>
-                </button>
-              )
-            })}
-          </div>
+          <Link
+            to="/services"
+            className="flex items-center gap-2.5 w-full px-3 py-2.5 rounded-lg text-left text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+          >
+            <Wrench size={16} className="shrink-0" />
+            <span className="text-body-sm font-medium">Services</span>
+          </Link>
         </div>
       </aside>
 
@@ -209,9 +201,24 @@ export default function ProductCatalogPage() {
             : products.length === 0
               ? (
                 <div className="col-span-full flex flex-col items-center justify-center py-xl text-center">
-                  <p className="text-h3 font-medium text-on-surface mb-2">No products found</p>
-                  <p className="text-secondary text-body-sm mb-md">Try a different category or search term.</p>
-                  <Button onClick={() => setSearchParams({})} variant="ghost">Clear Filters</Button>
+                  {currentCat && QUOTE_PATH_BY_CATEGORY[currentCat.slug] ? (
+                    <>
+                      <p className="text-h3 font-medium text-on-surface mb-2">{currentCat.name} is made to order</p>
+                      <p className="text-secondary text-body-sm mb-md max-w-md">Branded staff uniforms are custom work — logo printing, embroidery and corporate branding. Tell the team what your staff need and get a quote.</p>
+                      <div className="flex flex-wrap justify-center gap-3">
+                        <Button as={Link} to={`/quote?category=${QUOTE_PATH_BY_CATEGORY[currentCat.slug]}`} variant="gold" iconRight={<ArrowRight />}>
+                          Request a Quote
+                        </Button>
+                        <Button as={Link} to="/services" variant="ghost">View Services</Button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-h3 font-medium text-on-surface mb-2">No products found</p>
+                      <p className="text-secondary text-body-sm mb-md">Try a different category or search term.</p>
+                      <Button onClick={() => setSearchParams({})} variant="ghost">Clear Filters</Button>
+                    </>
+                  )}
                 </div>
               )
               : products.map(p => <ProductCard key={p.id} product={p} />)

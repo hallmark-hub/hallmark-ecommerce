@@ -8,6 +8,14 @@ from app.db.supabase import get_supabase_client, response_data, supabase_is_conf
 from app.services.catalog_service import _PRODUCT_DATA
 
 
+class OrderReferenceConflictError(RuntimeError):
+    """Raised when an order reference is already taken."""
+
+
+class OrderPersistenceError(RuntimeError):
+    """Raised when an order could not be persisted."""
+
+
 class OrderRepository(Protocol):
     """Order data access contract."""
 
@@ -23,6 +31,9 @@ class OrderRepository(Protocol):
 
     def lookup_order(self, reference: str, phone: str) -> dict[str, Any] | None:
         """Return an order by reference and customer phone."""
+
+    def apply_order_stock(self, order_id: str) -> bool:
+        """Decrement stock for an order exactly once."""
 
     def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         """Return an order by ID."""
@@ -66,6 +77,8 @@ class InMemoryOrderRepository:
         items: list[dict[str, Any]],
     ) -> dict[str, Any]:
         """Store order and items in memory."""
+        if order["reference"] in self.orders:
+            raise OrderReferenceConflictError("Order reference is already taken")
         order = {**order, "id": str(uuid4()), "created_at": datetime.now(UTC)}
         self.orders[order["reference"]] = order
         self.items[order["reference"]] = items
@@ -77,6 +90,21 @@ class InMemoryOrderRepository:
         if order is None or order["customer_phone"] != phone:
             return None
         return {**order, "items": self.items.get(reference, [])}
+
+    def apply_order_stock(self, order_id: str) -> bool:
+        """Decrement in-memory seed stock for an order exactly once."""
+        order = self.get_order_by_id(order_id)
+        if order is None or order.get("stock_applied"):
+            return False
+        order["stock_applied"] = True
+        for item in self.items.get(order["reference"], []):
+            for product in _PRODUCT_DATA:
+                if str(product["id"]) == str(item["product_id"]):
+                    product["stock_qty"] = max(
+                        int(product["stock_qty"]) - int(item["quantity"]), 0
+                    )
+                    product["in_stock"] = product["stock_qty"] > 0
+        return True
 
     def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         """Return an in-memory order by ID."""
@@ -138,7 +166,7 @@ class SupabaseOrderRepository:
             return []
         response = (
             self.client.table("products")
-            .select("id,name,checkout_type,price_pesewas")
+            .select("id,name,checkout_type,price_pesewas,in_stock,stock_qty")
             .eq("is_active", True)
             .in_("id", product_ids)
             .execute()
@@ -151,14 +179,30 @@ class SupabaseOrderRepository:
         items: list[dict[str, Any]],
     ) -> dict[str, Any]:
         """Persist order and items to Supabase."""
-        order_response = self.client.table("orders").insert(order).execute()
+        try:
+            order_response = self.client.table("orders").insert(order).execute()
+        except Exception as exc:
+            if _is_unique_violation(exc):
+                raise OrderReferenceConflictError(
+                    "Order reference is already taken"
+                ) from exc
+            raise OrderPersistenceError("Order could not be created") from exc
+
         rows = response_data(order_response)
+        if not rows:
+            raise OrderPersistenceError("Order could not be created")
         created = rows[0]
         order_id = created["id"]
 
         order_items = [{**item, "order_id": order_id} for item in items]
         if order_items:
-            self.client.table("order_items").insert(order_items).execute()
+            try:
+                self.client.table("order_items").insert(order_items).execute()
+            except Exception as exc:
+                # Supabase has no multi-table transaction here, so roll the
+                # order back rather than leave one with no line items.
+                self.client.table("orders").delete().eq("id", order_id).execute()
+                raise OrderPersistenceError("Order items could not be created") from exc
 
         return created
 
@@ -187,6 +231,13 @@ class SupabaseOrderRepository:
             .execute()
         )
         return {**order, "items": response_data(items_response)}
+
+    def apply_order_stock(self, order_id: str) -> bool:
+        """Decrement stock for an order exactly once via the database function."""
+        response = self.client.rpc(
+            "apply_order_stock", {"p_order_id": order_id}
+        ).execute()
+        return bool(getattr(response, "data", False))
 
     def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         """Return an order by ID."""
@@ -270,6 +321,14 @@ class SupabaseOrderRepository:
         )
         rows = response_data(response)
         return rows[0] if rows else None
+
+
+def _is_unique_violation(exc: Exception) -> bool:
+    """Return whether a Supabase error is a unique-constraint violation."""
+    code = getattr(exc, "code", None)
+    if code == "23505":
+        return True
+    return "duplicate key value" in str(exc).lower()
 
 
 _IN_MEMORY_REPOSITORY = InMemoryOrderRepository()

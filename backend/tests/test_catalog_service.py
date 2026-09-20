@@ -5,13 +5,26 @@ from app.services.catalog_service import CatalogService
 def test_list_categories_matches_contract_seed_count() -> None:
     categories = CatalogService().list_categories()
 
-    assert len(categories) == 8
+    assert len(categories) == 10
     assert categories[0].slug == "chef-uniforms"
     assert categories[0].checkout_type == CheckoutType.direct
     assert categories[-1].checkout_type == CheckoutType.quote
+    assert categories[-1].slug == "other"
+    assert {category.slug for category in categories} == {
+        "chef-uniforms",
+        "staff-uniforms-branding",
+        "kitchen-equipment-tools",
+        "uniforms",
+        "branding-embroidery",
+        "kitchen-equipment",
+        "kitchen-setup",
+        "disposables",
+        "robotics",
+        "other",
+    }
 
 
-def test_list_products_filters_search_and_category() -> None:
+def test_list_products_without_repository_does_not_expose_demo_data() -> None:
     products = CatalogService().list_products(
         category="chef-uniforms",
         search="apron",
@@ -19,17 +32,14 @@ def test_list_products_filters_search_and_category() -> None:
         limit=20,
     )
 
-    assert products.total == 1
-    assert products.items[0].slug == "chef-apron-with-pocket"
+    assert products.total == 0
+    assert products.items == []
 
 
-def test_quote_product_allows_nullable_price_with_label() -> None:
+def test_product_lookup_without_repository_does_not_expose_demo_data() -> None:
     product = CatalogService().get_product_by_slug("full-kitchen-setup-consultation")
 
-    assert product is not None
-    assert product.checkout_type == CheckoutType.quote
-    assert product.price_pesewas is None
-    assert product.price_label == "Request a quote"
+    assert product is None
 
 
 class FakeCatalogRepository:

@@ -39,6 +39,12 @@ class CustomerLoginRequest(BaseModel):
     password: str = Field(min_length=1)
 
 
+class CustomerRefreshRequest(BaseModel):
+    """Customer session refresh request."""
+
+    refresh_token: str = Field(min_length=1)
+
+
 class CustomerUser(BaseModel):
     """Authenticated Supabase user summary."""
 

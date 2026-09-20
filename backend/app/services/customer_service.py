@@ -38,6 +38,14 @@ class CustomerService:
             raise CustomerServiceError(str(exc)) from exc
         return CustomerAuthResponse.model_validate(auth)
 
+    def refresh(self, refresh_token: str) -> CustomerAuthResponse:
+        """Exchange a refresh token for a fresh customer session."""
+        try:
+            auth = self.repository.refresh(refresh_token)
+        except CustomerRepositoryError as exc:
+            raise CustomerServiceError(str(exc)) from exc
+        return CustomerAuthResponse.model_validate(auth)
+
     def get_profile_for_token(self, token: str) -> CustomerProfile | None:
         """Return the authenticated customer profile for a bearer token."""
         profile = self.repository.get_profile_for_token(token)

@@ -193,6 +193,8 @@ class PaystackService:
             raw_response=dict(verified),
         )
         self.orders.update_payment_status(str(payment["order_id"]), payment_status.value)
+        if payment_status == PaymentStatus.paid:
+            self.orders.apply_order_stock(str(payment["order_id"]))
         if not already_paid and payment_status == PaymentStatus.paid:
             order = self.orders.get_order_by_id(str(payment["order_id"]))
             if order is not None:
@@ -232,6 +234,7 @@ class PaystackService:
         payment_status = _payment_status_from_webhook(event_type, data)
         if payment is not None and payment_status is not None:
             _validate_payment_amount(payment, data.get("amount"))
+            already_paid = payment["status"] == PaymentStatus.paid.value
             payment_status = _safe_next_status(payment["status"], payment_status)
             self.payments.update_payment_status(
                 reference=reference,
@@ -242,6 +245,14 @@ class PaystackService:
                 str(payment["order_id"]),
                 payment_status.value,
             )
+            if payment_status == PaymentStatus.paid:
+                # Idempotent at the database level, so a webhook retry that
+                # slips past dedup still cannot double-decrement stock.
+                self.orders.apply_order_stock(str(payment["order_id"]))
+                if not already_paid:
+                    order = self.orders.get_order_by_id(str(payment["order_id"]))
+                    if order is not None:
+                        self.notifications.send_order_receipt(order)
 
         self.payments.create_payment_event(
             {

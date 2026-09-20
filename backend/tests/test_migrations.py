@@ -17,6 +17,14 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "005_remove_manual_bank_transfer.sql",
         "006_fix_product_images.sql",
         "007_customer_profiles.sql",
+        "008_order_stock_application.sql",
+        "009_add_robotics_category.sql",
+        "010_site_content.sql",
+        "011_remove_demo_products.sql",
+        "012_refresh_client_website_content.sql",
+        "013_quote_request_business_details.sql",
+        "014_doc_aligned_categories_and_quote_options.sql",
+        "015_seed_client_catalog.sql",
     ]
 
 
@@ -87,3 +95,102 @@ def test_customer_profiles_migration_adds_auth_linked_profiles() -> None:
     assert "create table if not exists customer_profiles" in migration
     assert "auth_user_id uuid not null unique" in migration
     assert "customer_role as enum ('customer', 'admin')" in migration
+
+
+def test_order_stock_migration_adds_idempotent_stock_application() -> None:
+    migration = (MIGRATIONS_DIR / "008_order_stock_application.sql").read_text()
+
+    assert "add column if not exists stock_applied" in migration
+    assert "create or replace function apply_order_stock" in migration
+    assert "and stock_applied = false" in migration
+
+
+def test_robotics_category_migration_is_idempotent_and_quote_only() -> None:
+    migration = (MIGRATIONS_DIR / "009_add_robotics_category.sql").read_text()
+
+    assert "'robotics'" in migration
+    assert "'quote'" in migration
+    assert "on conflict (slug) do update" in migration
+
+
+def test_site_content_migration_seeds_admin_managed_content() -> None:
+    migration = (MIGRATIONS_DIR / "010_site_content.sql").read_text()
+
+    assert "create table if not exists site_content" in migration
+    assert "'public-site'" in migration
+    assert "'show_robotics_page', true" in migration
+    assert "on conflict (id) do nothing" in migration
+
+
+def test_demo_product_cleanup_migration_removes_seed_rows() -> None:
+    migration = (MIGRATIONS_DIR / "011_remove_demo_products.sql").read_text()
+
+    assert "10000000-0000-4000-8000-000000000001" in migration
+    assert "10000000-0000-4000-8000-000000000002" in migration
+    assert "10000000-0000-4000-8000-000000000003" in migration
+    assert "delete from products" in migration.lower()
+
+
+def test_client_content_refresh_excludes_unapproved_proof_claims() -> None:
+    migration = (MIGRATIONS_DIR / "012_refresh_client_website_content.sql").read_text()
+
+    assert "Complete Hospitality Solutions. All Under One Roof." in migration
+    assert "Labadi Beach Hotel" not in migration
+    assert "KEENON" not in migration
+
+
+def test_quote_detail_migration_adds_business_scoping_fields() -> None:
+    migration = (MIGRATIONS_DIR / "013_quote_request_business_details.sql").read_text()
+
+    for field in ["company_name", "location", "quantity", "preferred_delivery_date"]:
+        assert f"add column if not exists {field}" in migration
+
+
+def test_doc_aligned_categories_migration_matches_client_document() -> None:
+    migration = (MIGRATIONS_DIR / "014_doc_aligned_categories_and_quote_options.sql").read_text()
+
+    for slug in [
+        "uniforms",
+        "branding-embroidery",
+        "kitchen-equipment",
+        "kitchen-setup",
+        "disposables",
+        "robotics",
+        "other",
+    ]:
+        assert f"'{slug}'" in migration
+
+    for legacy in [
+        "machine-preorders",
+        "machine-customization",
+        "embroidery",
+        "logo-printing-branding",
+    ]:
+        assert f"'{legacy}'" in migration
+
+    assert "is_active = false" in migration
+    assert "quote_options" in migration
+    assert "'public-site'" in migration
+
+
+def test_client_catalog_seed_covers_supplied_photography() -> None:
+    migration = (MIGRATIONS_DIR / "015_seed_client_catalog.sql").read_text()
+
+    for slug in [
+        "chef-uniform-combo",
+        "blue-collar-chef-top",
+        "off-white-cotton-chef-jacket",
+        "white-gold-stripe-chef-top",
+        "white-long-sleeve-chef-jacket",
+        "short-waist-apron",
+        "commercial-combi-oven",
+        "commercial-egg-boiler",
+        "refrigerated-cold-bain-marie",
+        "banqueting-trolley",
+        "kleenbot-cleaning-robot",
+        "dinnerbot-delivery-marketing-robot",
+        "butlerbot-room-service-robot",
+    ]:
+        assert f"'{slug}'" in migration
+
+    assert "on conflict (slug) do update" in migration

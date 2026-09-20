@@ -1,8 +1,11 @@
 import asyncio
 
 import httpx
+import pytest
 
 from app.main import app
+
+pytestmark = pytest.mark.usefixtures("admin_auth")
 
 
 def request(
@@ -28,6 +31,10 @@ def create_quote() -> dict[str, object]:
             "phone": "+233244123456",
             "category_slug": "kitchen-setup",
             "message": "We need a kitchen setup quote.",
+            "company_name": "Asante Catering",
+            "location": "East Legon, Accra",
+            "quantity": "60 settings",
+            "preferred_delivery_date": "2026-10-15",
             "product_ids": [],
         },
     )
@@ -53,6 +60,7 @@ def test_admin_can_get_quote_request_detail() -> None:
 
     assert response.status_code == 200
     assert response.json()["data"]["message"] == "We need a kitchen setup quote."
+    assert response.json()["data"]["company_name"] == "Asante Catering"
 
 
 def test_admin_can_update_quote_status() -> None:

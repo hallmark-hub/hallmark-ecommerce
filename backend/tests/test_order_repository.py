@@ -36,10 +36,10 @@ def test_in_memory_order_repository_stores_and_secures_lookup() -> None:
     assert hidden is None
 
 
-def test_in_memory_order_repository_returns_seed_products_by_id() -> None:
+def test_in_memory_order_repository_returns_test_products_by_id() -> None:
     repository = InMemoryOrderRepository()
 
     products = repository.get_products_by_ids(["10000000-0000-4000-8000-000000000001"])
 
     assert len(products) == 1
-    assert products[0]["slug"] == "classic-white-chef-jacket"
+    assert products[0]["slug"] == "test-direct-product"

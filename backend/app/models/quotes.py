@@ -1,5 +1,5 @@
 from enum import StrEnum
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
@@ -24,6 +24,10 @@ class CreateQuoteRequest(BaseModel):
     phone: str
     category_slug: str = Field(min_length=1)
     message: str = Field(min_length=1)
+    company_name: str = Field(default="", max_length=200)
+    location: str = Field(default="", max_length=300)
+    quantity: str = Field(default="", max_length=100)
+    preferred_delivery_date: date | None = None
     product_ids: list[UUID] = Field(default_factory=list)
 
     @field_validator("phone")
@@ -53,6 +57,10 @@ class AdminQuoteSummary(BaseModel):
     phone: str
     category_slug: str
     message: str
+    company_name: str = ""
+    location: str = ""
+    quantity: str = ""
+    preferred_delivery_date: date | None = None
     status: QuoteStatus
     notification_attempted: bool
     notification_sent: bool

@@ -1,8 +1,11 @@
 import asyncio
 
 import httpx
+import pytest
 
 from app.main import app
+
+pytestmark = pytest.mark.usefixtures("admin_auth")
 
 
 def request(

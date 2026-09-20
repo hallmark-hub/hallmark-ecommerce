@@ -1,10 +1,12 @@
-const WA_NUMBER = '233302000000'
-const WA_MESSAGE = encodeURIComponent('Hello ChefWare! I\'d like to enquire about your hospitality supplies.')
+import { whatsappLink } from '../config/contact'
+import useSiteContentStore from '../store/siteContentStore'
 
 export default function WhatsAppButton() {
+  const whatsappNumber = useSiteContentStore(state => state.content.whatsapp_number)
+
   return (
     <a
-      href={`https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`}
+      href={whatsappLink(whatsappNumber)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"

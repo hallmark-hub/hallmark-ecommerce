@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from starlette.concurrency import run_in_threadpool
 
 from app.core.admin_auth import require_admin
 from app.core.responses import ok
@@ -20,7 +21,7 @@ async def list_admin_orders(
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
 ) -> dict[str, object]:
     """Return recent orders for admin management."""
-    orders = service.list_orders(limit=limit)
+    orders = await run_in_threadpool(service.list_orders, limit)
     return ok([order.model_dump(mode="json") for order in orders], "Orders retrieved")
 
 
@@ -30,7 +31,7 @@ async def get_admin_order(
     service: Annotated[AdminOrderService, Depends(get_admin_order_service)],
 ) -> dict[str, object]:
     """Return one order by reference for admin management."""
-    order = service.get_order(reference)
+    order = await run_in_threadpool(service.get_order, reference)
     if order is None:
         raise HTTPException(status_code=404, detail="Order not found")
     return ok(order.model_dump(mode="json"), "Order retrieved")
@@ -43,7 +44,9 @@ async def update_admin_order_status(
     service: Annotated[AdminOrderService, Depends(get_admin_order_service)],
 ) -> dict[str, object]:
     """Update an order status for admin management."""
-    order = service.update_order_status(reference, request.order_status)
+    order = await run_in_threadpool(
+        service.update_order_status, reference, request.order_status
+    )
     if order is None:
         raise HTTPException(status_code=404, detail="Order not found")
     return ok(order.model_dump(mode="json"), "Order status updated")

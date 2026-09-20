@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
+from starlette.concurrency import run_in_threadpool
 
 from app.core.admin_auth import require_admin
 from app.core.responses import ok
@@ -29,7 +30,7 @@ async def create_admin_product(
 ) -> dict[str, object]:
     """Create a product for admin management."""
     try:
-        product = service.create_product(request)
+        product = await run_in_threadpool(service.create_product, request)
     except AdminProductError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return ok(product.model_dump(mode="json"), "Product created")
@@ -43,7 +44,7 @@ async def update_admin_product(
 ) -> dict[str, object]:
     """Update a product for admin management."""
     try:
-        product = service.update_product(slug, request)
+        product = await run_in_threadpool(service.update_product, slug, request)
     except AdminProductError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     if product is None:
@@ -58,7 +59,7 @@ async def update_admin_product_stock(
     service: Annotated[AdminProductService, Depends(get_admin_product_service)],
 ) -> dict[str, object]:
     """Update a product inventory for admin management."""
-    product = service.update_stock(slug, request)
+    product = await run_in_threadpool(service.update_stock, slug, request)
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return ok(product.model_dump(mode="json"), "Product stock updated")
@@ -71,7 +72,7 @@ async def update_admin_product_active(
     service: Annotated[AdminProductService, Depends(get_admin_product_service)],
 ) -> dict[str, object]:
     """Update a product active state for admin management."""
-    product = service.update_active(slug, request)
+    product = await run_in_threadpool(service.update_active, slug, request)
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return ok(product.model_dump(mode="json"), "Product active state updated")

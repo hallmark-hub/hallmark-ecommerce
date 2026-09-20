@@ -153,10 +153,10 @@ export default function CheckoutPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-10">
-            <p className="text-white text-h1 font-bold leading-tight mb-3">Accra's #1<br />Hospitality Supplier</p>
+            <p className="text-white text-h1 font-bold leading-tight mb-3">A Clear Path from<br />Cart to Confirmation</p>
             <div className="flex items-center gap-2 mt-3">
               <div className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-              <p className="text-white/75 text-body-sm">Trusted by 500+ Hotels & Restaurants</p>
+              <p className="text-white/75 text-body-sm">Secure online payment through Paystack</p>
             </div>
           </div>
         </div>

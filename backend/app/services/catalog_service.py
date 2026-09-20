@@ -29,101 +29,70 @@ _CATEGORY_DATA = [
         "image_url": "https://res.cloudinary.com/chefware/categories/kitchen-equipment.jpg",
     },
     {
+        "id": "00000000-0000-4000-8000-000000000010",
+        "name": "Uniforms",
+        "slug": "uniforms",
+        "description": "Quote enquiries for professional and customised hospitality uniforms.",
+        "checkout_type": CheckoutType.quote,
+        "image_url": "https://res.cloudinary.com/chefware/categories/chef-uniforms.jpg",
+    },
+    {
+        "id": "00000000-0000-4000-8000-000000000011",
+        "name": "Branding & Embroidery",
+        "slug": "branding-embroidery",
+        "description": "T-shirt printing, embroidery and customised branding enquiries.",
+        "checkout_type": CheckoutType.quote,
+        "image_url": "https://res.cloudinary.com/chefware/categories/embroidery.jpg",
+    },
+    {
+        "id": "00000000-0000-4000-8000-000000000012",
+        "name": "Kitchen Equipment",
+        "slug": "kitchen-equipment",
+        "description": "Sourcing and importation enquiries for commercial kitchen equipment.",
+        "checkout_type": CheckoutType.quote,
+        "image_url": "https://res.cloudinary.com/chefware/categories/kitchen-equipment.jpg",
+    },
+    {
         "id": "00000000-0000-4000-8000-000000000004",
-        "name": "Industrial Kitchen Setup",
+        "name": "Kitchen Setup",
         "slug": "kitchen-setup",
         "description": "Consultation and equipment planning for full commercial kitchens.",
         "checkout_type": CheckoutType.quote,
         "image_url": "https://res.cloudinary.com/chefware/categories/kitchen-setup.jpg",
     },
     {
-        "id": "00000000-0000-4000-8000-000000000005",
-        "name": "Customized Machine Pre-Orders",
-        "slug": "machine-preorders",
-        "description": "Pre-order customized commercial kitchen machines.",
+        "id": "00000000-0000-4000-8000-000000000013",
+        "name": "Disposables",
+        "slug": "disposables",
+        "description": "Tissues, bowls, spoons, takeaway packs and other hospitality disposables.",
         "checkout_type": CheckoutType.quote,
-        "image_url": "https://res.cloudinary.com/chefware/categories/machine-preorders.jpg",
+        "image_url": "https://res.cloudinary.com/chefware/categories/disposables.jpg",
     },
     {
-        "id": "00000000-0000-4000-8000-000000000006",
-        "name": "Machine Customization",
-        "slug": "machine-customization",
-        "description": "Custom machine modifications for hospitality operations.",
+        "id": "00000000-0000-4000-8000-000000000009",
+        "name": "Hospitality Robotics",
+        "slug": "robotics",
+        "description": "Consultative enquiries for hospitality service, delivery, and cleaning robots.",
         "checkout_type": CheckoutType.quote,
-        "image_url": "https://res.cloudinary.com/chefware/categories/machine-customization.jpg",
+        "image_url": "https://res.cloudinary.com/chefware/categories/robotics.jpg",
     },
     {
-        "id": "00000000-0000-4000-8000-000000000007",
-        "name": "Embroidery Services",
-        "slug": "embroidery",
-        "description": "Embroidery services for uniforms and branded garments.",
+        "id": "00000000-0000-4000-8000-000000000014",
+        "name": "Other",
+        "slug": "other",
+        "description": "Other hospitality sourcing requirements not covered by the listed categories.",
         "checkout_type": CheckoutType.quote,
-        "image_url": "https://res.cloudinary.com/chefware/categories/embroidery.jpg",
-    },
-    {
-        "id": "00000000-0000-4000-8000-000000000008",
-        "name": "Logo Printing & Garment Branding",
-        "slug": "logo-printing-branding",
-        "description": "Logo printing and garment branding for teams and businesses.",
-        "checkout_type": CheckoutType.quote,
-        "image_url": "https://res.cloudinary.com/chefware/categories/logo-printing.jpg",
+        "image_url": "https://res.cloudinary.com/chefware/categories/other.jpg",
     },
 ]
 
-_PRODUCT_DATA = [
-    {
-        "id": "10000000-0000-4000-8000-000000000001",
-        "name": "Classic White Chef Jacket",
-        "slug": "classic-white-chef-jacket",
-        "description": "Premium cotton chef jacket for professional kitchen teams.",
-        "category_id": "00000000-0000-4000-8000-000000000001",
-        "category_slug": "chef-uniforms",
-        "checkout_type": CheckoutType.direct,
-        "price_pesewas": 15000,
-        "price_label": None,
-        "images": ["https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=900&q=80"],
-        "in_stock": True,
-        "stock_qty": 50,
-        "tags": ["jacket", "uniform"],
-        "created_at": "2026-05-25T00:00:00Z",
-    },
-    {
-        "id": "10000000-0000-4000-8000-000000000002",
-        "name": "Chef Apron with Pocket",
-        "slug": "chef-apron-with-pocket",
-        "description": "Durable apron with front pocket for daily kitchen use.",
-        "category_id": "00000000-0000-4000-8000-000000000001",
-        "category_slug": "chef-uniforms",
-        "checkout_type": CheckoutType.direct,
-        "price_pesewas": 8500,
-        "price_label": None,
-        "images": ["https://images.unsplash.com/photo-1537624204044-4928ddab6b57?w=900&q=80"],
-        "in_stock": True,
-        "stock_qty": 80,
-        "tags": ["apron", "uniform"],
-        "created_at": "2026-05-25T00:00:00Z",
-    },
-    {
-        "id": "10000000-0000-4000-8000-000000000003",
-        "name": "Full Kitchen Setup Consultation",
-        "slug": "full-kitchen-setup-consultation",
-        "description": "Planning support for restaurants building commercial kitchen capacity.",
-        "category_id": "00000000-0000-4000-8000-000000000004",
-        "category_slug": "kitchen-setup",
-        "checkout_type": CheckoutType.quote,
-        "price_pesewas": None,
-        "price_label": "Request a quote",
-        "images": ["https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80"],
-        "in_stock": True,
-        "stock_qty": 1,
-        "tags": ["consultation", "setup"],
-        "created_at": "2026-05-25T00:00:00Z",
-    },
-]
+# Local admin/repository implementations share this runtime collection. It is
+# deliberately empty: sellable products must come from admin-managed data.
+_PRODUCT_DATA: list[dict[str, object]] = []
 
 
 class CatalogService:
-    """Catalog business logic backed by Supabase or local seed data."""
+    """Catalog business logic backed by the admin-managed product repository."""
 
     def __init__(self, repository: CatalogRepository | None = None) -> None:
         self.repository = repository
@@ -163,7 +132,7 @@ class CatalogService:
                 pages=pages,
             )
 
-        return self._seed_products(category, search, in_stock, page, limit)
+        return ProductList(items=[], total=0, page=page, limit=limit, pages=0)
 
     def get_product_by_slug(self, slug: str) -> Product | None:
         """Return one product by slug."""
@@ -171,41 +140,10 @@ class CatalogService:
             row = self.repository.get_product_by_slug(slug)
             return Product.model_validate(row) if row is not None else None
 
-        for product in _PRODUCT_DATA:
-            if product["slug"] == slug:
-                return Product.model_validate(product)
         return None
 
     def _seed_categories(self) -> list[Category]:
         return [Category.model_validate(category) for category in _CATEGORY_DATA]
-
-    def _seed_products(
-        self,
-        category: str | None,
-        search: str | None,
-        in_stock: bool | None,
-        page: int,
-        limit: int,
-    ) -> ProductList:
-        products = [Product.model_validate(product) for product in _PRODUCT_DATA]
-
-        if category is not None:
-            products = [product for product in products if product.category_slug == category]
-        if search is not None:
-            needle = search.lower()
-            products = [
-                product
-                for product in products
-                if needle in product.name.lower() or needle in product.description.lower()
-            ]
-        if in_stock is not None:
-            products = [product for product in products if product.in_stock is in_stock]
-
-        total = len(products)
-        start = (page - 1) * limit
-        items = products[start : start + limit]
-        pages = ceil(total / limit) if total else 0
-        return ProductList(items=items, total=total, page=page, limit=limit, pages=pages)
 
 
 async def get_catalog_service() -> CatalogService:

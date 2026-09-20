@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { AlertTriangle, Search, Mail, Phone, Calendar } from 'lucide-react'
+import { AlertTriangle, Search, Mail, Phone, Calendar, Building2, MapPin, Package } from 'lucide-react'
 import { getAdminQuoteRequests, updateAdminQuoteStatus } from '../../api/admin'
 import { formatDate } from '../../utils/format'
+import { formatQuoteCategory } from '../../config/quoteCategories'
 
 const QUOTE_STATUSES = ['all', 'received', 'contacted', 'quoted', 'closed']
 const STATUS_STYLES = {
@@ -114,7 +115,7 @@ export default function AdminQuotesPage() {
                   <h3 className="text-body font-bold text-on-surface">{q.name}</h3>
                   <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${STATUS_STYLES[q.status]}`}>{q.status}</span>
                 </div>
-                <p className="text-body-sm text-primary font-medium capitalize mt-1">{q.category_slug.replace(/-/g, ' ')}</p>
+                <p className="text-body-sm text-primary font-medium mt-1">{formatQuoteCategory(q.category_slug)}</p>
                 <p className="text-label text-xs text-secondary font-mono mt-1">{q.reference}</p>
               </div>
               <select
@@ -142,6 +143,15 @@ export default function AdminQuotesPage() {
                 <span className="truncate">{formatDate(q.created_at)}</span>
               </div>
             </div>
+
+            {(q.company_name || q.location || q.quantity || q.preferred_delivery_date) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-sm text-body-sm text-secondary mb-sm">
+                {q.company_name && <div className="flex items-center gap-2 min-w-0"><Building2 size={14} className="shrink-0" /><span className="truncate">{q.company_name}</span></div>}
+                {q.location && <div className="flex items-center gap-2 min-w-0"><MapPin size={14} className="shrink-0" /><span className="truncate">{q.location}</span></div>}
+                {q.quantity && <div className="flex items-center gap-2 min-w-0"><Package size={14} className="shrink-0" /><span className="truncate">{q.quantity}</span></div>}
+                {q.preferred_delivery_date && <div className="flex items-center gap-2 min-w-0"><Calendar size={14} className="shrink-0" /><span className="truncate">Preferred: {q.preferred_delivery_date}</span></div>}
+              </div>
+            )}
 
             <p className="text-body-sm text-on-surface bg-surface-container-lowest border border-outline-variant rounded-lg p-sm whitespace-pre-wrap">{q.message}</p>
           </div>

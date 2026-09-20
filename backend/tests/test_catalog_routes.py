@@ -24,16 +24,16 @@ def test_categories_endpoint_returns_contract_shape() -> None:
     assert payload["data"][0]["slug"] == "chef-uniforms"
 
 
-def test_products_endpoint_filters_and_paginates() -> None:
+def test_products_endpoint_does_not_expose_demo_fallback_data() -> None:
     response = get("/api/v1/products", params={"category": "chef-uniforms", "limit": 1})
 
     assert response.status_code == 200
     data = response.json()["data"]
-    assert data["total"] >= 2
+    assert data["total"] == 0
     assert data["page"] == 1
     assert data["limit"] == 1
-    assert data["pages"] >= 2
-    assert len(data["items"]) == 1
+    assert data["pages"] == 0
+    assert data["items"] == []
 
 
 def test_get_product_not_found_uses_error_envelope() -> None:

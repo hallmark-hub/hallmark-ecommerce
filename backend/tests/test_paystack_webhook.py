@@ -9,6 +9,7 @@ from app.models.orders import CreateOrderRequest
 from app.repositories.order_repository import InMemoryOrderRepository
 from app.repositories.payment_repository import InMemoryPaymentRepository
 from app.services.order_service import OrderService
+from app.services.notification_service import NotificationService
 from app.services.paystack_service import (
     LocalPaystackGateway,
     PaymentValidationError,
@@ -45,7 +46,7 @@ def create_initialized_service() -> tuple[PaystackService, str, InMemoryOrderRep
             }
         )
     )
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
     initialized = service.initialize(str(order.id))
     return service, initialized.reference, orders, payments
 

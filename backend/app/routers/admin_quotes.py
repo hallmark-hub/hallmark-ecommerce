@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from starlette.concurrency import run_in_threadpool
 
 from app.core.admin_auth import require_admin
 from app.core.responses import ok
@@ -20,7 +21,7 @@ async def list_admin_quote_requests(
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
 ) -> dict[str, object]:
     """Return recent quote requests for admin management."""
-    quotes = service.list_quote_requests(limit)
+    quotes = await run_in_threadpool(service.list_quote_requests, limit)
     return ok([quote.model_dump(mode="json") for quote in quotes], "Quote requests retrieved")
 
 
@@ -30,7 +31,7 @@ async def get_admin_quote_request(
     service: Annotated[QuoteService, Depends(get_quote_service)],
 ) -> dict[str, object]:
     """Return one quote request for admin management."""
-    quote = service.get_quote_request(reference)
+    quote = await run_in_threadpool(service.get_quote_request, reference)
     if quote is None:
         raise HTTPException(status_code=404, detail="Quote request not found")
     return ok(quote.model_dump(mode="json"), "Quote request retrieved")
@@ -43,7 +44,9 @@ async def update_admin_quote_status(
     service: Annotated[QuoteService, Depends(get_quote_service)],
 ) -> dict[str, object]:
     """Update a quote request status for admin management."""
-    quote = service.update_quote_status(reference, request.status)
+    quote = await run_in_threadpool(
+        service.update_quote_status, reference, request.status
+    )
     if quote is None:
         raise HTTPException(status_code=404, detail="Quote request not found")
     return ok(quote.model_dump(mode="json"), "Quote request status updated")

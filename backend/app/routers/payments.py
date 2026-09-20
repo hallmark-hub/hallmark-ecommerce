@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
+from starlette.concurrency import run_in_threadpool
 
 from app.core.responses import ok
 from app.models.payments import InitializePaystackRequest
@@ -20,7 +21,7 @@ async def initialize_paystack(
 ) -> dict[str, object]:
     """Initialize a Paystack transaction for an existing order."""
     try:
-        payment = service.initialize(str(request.order_id))
+        payment = await run_in_threadpool(service.initialize, str(request.order_id))
     except PaymentValidationError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return ok(payment.model_dump(mode="json"), "Paystack payment initialized")
@@ -33,7 +34,7 @@ async def verify_paystack(
 ) -> dict[str, object]:
     """Verify a Paystack transaction by reference."""
     try:
-        payment = service.verify(reference)
+        payment = await run_in_threadpool(service.verify, reference)
     except PaymentValidationError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     return ok(payment.model_dump(mode="json"), "Paystack payment verified")
@@ -49,7 +50,8 @@ async def paystack_webhook(
     raw_body = await request.body()
     payload = await request.json()
     try:
-        result = service.handle_webhook(
+        result = await run_in_threadpool(
+            service.handle_webhook,
             raw_body=raw_body,
             signature=x_paystack_signature,
             payload=payload,

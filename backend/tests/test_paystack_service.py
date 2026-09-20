@@ -6,6 +6,7 @@ from app.models.orders import CreateOrderRequest
 from app.repositories.order_repository import InMemoryOrderRepository
 from app.repositories.payment_repository import InMemoryPaymentRepository
 from app.services.order_service import OrderService
+from app.services.notification_service import NotificationService
 from app.services.paystack_service import (
     LocalPaystackGateway,
     PaystackGatewayError,
@@ -41,7 +42,7 @@ def test_paystack_initialize_and_verify_update_status() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
 
     initialized = service.initialize(order_id)
     verified = service.verify(initialized.reference)
@@ -56,7 +57,7 @@ def test_paystack_initialize_is_idempotent_for_existing_payment() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
 
     first = service.initialize(order_id)
     second = service.initialize(order_id)
@@ -70,6 +71,7 @@ def test_paystack_initialize_rejects_missing_order() -> None:
         InMemoryOrderRepository(),
         InMemoryPaymentRepository(),
         LocalPaystackGateway(),
+        NotificationService(),
     )
 
     with pytest.raises(PaymentValidationError, match="Order not found"):
@@ -106,9 +108,9 @@ def test_paystack_verify_rejects_amount_mismatch() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
     initialized = service.initialize(order_id)
-    mismatch_service = PaystackService(orders, payments, AmountMismatchGateway())
+    mismatch_service = PaystackService(orders, payments, AmountMismatchGateway(), NotificationService())
 
     with pytest.raises(PaymentValidationError, match="amount does not match"):
         mismatch_service.verify(initialized.reference)
@@ -118,10 +120,10 @@ def test_paystack_verify_does_not_downgrade_paid_payment() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
     initialized = service.initialize(order_id)
     service.verify(initialized.reference)
-    failed_service = PaystackService(orders, payments, FailedGateway())
+    failed_service = PaystackService(orders, payments, FailedGateway(), NotificationService())
 
     verified = failed_service.verify(initialized.reference)
 
@@ -133,7 +135,7 @@ def test_paystack_initialize_wraps_gateway_failure() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, FailingInitializeGateway())
+    service = PaystackService(orders, payments, FailingInitializeGateway(), NotificationService())
 
     with pytest.raises(PaymentValidationError, match="Paystack initialization failed"):
         service.initialize(order_id)
@@ -143,9 +145,9 @@ def test_paystack_verify_wraps_gateway_failure() -> None:
     orders = InMemoryOrderRepository()
     payments = InMemoryPaymentRepository()
     order_id = create_order(orders)
-    service = PaystackService(orders, payments, LocalPaystackGateway())
+    service = PaystackService(orders, payments, LocalPaystackGateway(), NotificationService())
     initialized = service.initialize(order_id)
-    failing_service = PaystackService(orders, payments, FailingVerifyGateway())
+    failing_service = PaystackService(orders, payments, FailingVerifyGateway(), NotificationService())
 
     with pytest.raises(PaymentValidationError, match="Paystack verification failed"):
         failing_service.verify(initialized.reference)

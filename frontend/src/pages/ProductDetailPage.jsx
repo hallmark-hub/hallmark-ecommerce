@@ -119,11 +119,11 @@ export default function ProductDetailPage() {
             {/* Feature bullets */}
             <ul className="mb-md space-y-xs">
               <li className="flex items-center gap-2 text-body-sm text-on-surface">
-                <Truck size={16} className="text-primary shrink-0" /> Next-day delivery across Accra on in-stock items
+                <Truck size={16} className="text-primary shrink-0" /> Delivery and collection options are confirmed at checkout
               </li>
               <li className="flex items-center gap-2 text-body-sm text-on-surface">
                 <RefreshCw size={16} className="text-error shrink-0" />
-                <span className="text-error font-medium">No refunds. Exchange only within 3 days of purchase.</span>
+                <span className="text-error font-medium">Exchange within 3 days for manufacturing defects. Custom-branded items are not returnable.</span>
               </li>
               <li className="flex items-center gap-2 text-body-sm text-on-surface">
                 <ShoppingCart size={16} className="text-primary shrink-0" />
@@ -135,7 +135,7 @@ export default function ProductDetailPage() {
               <div className="flex flex-col gap-sm">
                 <Button
                   as={Link}
-                  to={`/quote?product=${product.id}`}
+                  to={`/quote?category=${product.category_slug}&product=${product.id}`}
                   variant="gold"
                   size="lg"
                   fullWidth
@@ -143,7 +143,7 @@ export default function ProductDetailPage() {
                 >
                   Request a Quote
                 </Button>
-                <p className="text-body-sm text-secondary text-center">We'll respond within 24 hours with pricing.</p>
+                <p className="text-body-sm text-secondary text-center">The team will review the requirement and follow up.</p>
               </div>
             ) : (
               <div className="flex flex-col gap-sm">
@@ -194,9 +194,9 @@ export default function ProductDetailPage() {
               ['Category', product.category_slug?.replace(/-/g, ' ')],
               ['SKU', product.slug.toUpperCase().slice(0, 12)],
               ['Stock Status', product.in_stock ? 'In Stock' : 'Out of Stock'],
-              ['Availability', 'Ghana — Greater Accra delivery'],
-              ['Warranty', product.category_slug?.includes('equipment') ? '12-month standard warranty' : 'Exchange within 3 days'],
-              ['Payment', 'MTN MoMo · Vodafone Cash · Bank Transfer · Card'],
+              ['Availability', 'Confirmed at checkout'],
+              ['Warranty', product.category_slug?.includes('equipment') ? '6–12 months warranty, depending on supplier' : 'Exchange within 3 days for manufacturing defects'],
+              ['Payment', 'MTN MoMo · Vodafone Cash · Card'],
             ].map(([key, val], i) => (
               <div key={key} className={`flex justify-between px-md py-sm text-body-sm ${i % 2 === 0 ? 'bg-primary-fixed/10' : 'bg-white'}`}>
                 <span className="text-secondary font-medium">{key}</span>

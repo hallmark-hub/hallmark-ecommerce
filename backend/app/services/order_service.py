@@ -1,6 +1,7 @@
+import secrets
 from datetime import UTC, datetime
-from uuid import uuid4
 
+from app.core.logging import get_logger
 from app.models.catalog import CheckoutType
 from app.models.orders import (
     RETURNS_POLICY,
@@ -12,7 +13,17 @@ from app.models.orders import (
     OrderStatus,
     PaymentStatus,
 )
-from app.repositories.order_repository import OrderRepository, get_order_repository
+from app.repositories.order_repository import (
+    OrderReferenceConflictError,
+    OrderRepository,
+    get_order_repository,
+)
+
+logger = get_logger(__name__)
+
+# Excludes look-alike characters so references stay readable over the phone.
+_REFERENCE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+_REFERENCE_ATTEMPTS = 5
 
 
 class OrderValidationError(ValueError):
@@ -34,6 +45,12 @@ class OrderService:
         if len(products_by_id) != len(set(requested_ids)):
             raise OrderValidationError("One or more products were not found")
 
+        requested_quantities: dict[str, int] = {}
+        for item in request.items:
+            requested_quantities[str(item.product_id)] = (
+                requested_quantities.get(str(item.product_id), 0) + item.quantity
+            )
+
         order_items: list[dict[str, object]] = []
         subtotal = 0
         for item in request.items:
@@ -43,6 +60,7 @@ class OrderService:
             price = product.get("price_pesewas")
             if not isinstance(price, int):
                 raise OrderValidationError("Product price is not available")
+            _validate_stock(product, requested_quantities[str(item.product_id)])
             line_total = price * item.quantity
             subtotal += line_total
             order_items.append(
@@ -57,7 +75,7 @@ class OrderService:
 
         now = datetime.now(UTC)
         order = {
-            "reference": _generate_order_reference(now),
+            # "reference" is filled in per attempt below.
             "customer_name": request.customer.name,
             "customer_email": request.customer.email,
             "customer_phone": request.customer.phone,
@@ -69,8 +87,26 @@ class OrderService:
             "returns_policy": RETURNS_POLICY,
             "accepted_returns_policy": request.accepted_returns_policy,
         }
-        created = self.repository.create_order(order, order_items)
+        created = self._create_with_unique_reference(now, order, order_items)
         return CreateOrderResponse.model_validate(created)
+
+    def _create_with_unique_reference(
+        self,
+        now: datetime,
+        order: dict[str, object],
+        order_items: list[dict[str, object]],
+    ) -> dict[str, object]:
+        """Persist an order, regenerating its reference if one is already taken."""
+        for _ in range(_REFERENCE_ATTEMPTS):
+            attempt = {**order, "reference": _generate_order_reference(now)}
+            try:
+                return self.repository.create_order(attempt, order_items)
+            except OrderReferenceConflictError:
+                logger.warning(
+                    "Order reference %s already taken, regenerating",
+                    attempt["reference"],
+                )
+        raise OrderValidationError("Order reference could not be generated")
 
     def lookup_order(self, reference: str, phone: str) -> LookupOrderResponse | None:
         """Look up an order by reference and customer phone."""
@@ -94,8 +130,20 @@ class OrderService:
         )
 
 
+def _validate_stock(product: dict[str, object], quantity: int) -> None:
+    """Reject checkout when a product cannot cover the requested quantity."""
+    if product.get("in_stock") is False:
+        raise OrderValidationError(f"{product['name']} is out of stock")
+    available = product.get("stock_qty")
+    if isinstance(available, int) and available < quantity:
+        raise OrderValidationError(
+            f"Only {available} of {product['name']} remain in stock"
+        )
+
+
 def _generate_order_reference(now: datetime) -> str:
-    suffix = str(uuid4().int % 10000).zfill(4)
+    """Return a collision-resistant, human-readable order reference."""
+    suffix = "".join(secrets.choice(_REFERENCE_ALPHABET) for _ in range(6))
     return f"CW-{now:%Y%m%d}-{suffix}"
 
 

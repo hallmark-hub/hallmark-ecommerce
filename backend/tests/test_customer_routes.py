@@ -68,3 +68,35 @@ def test_customer_orders_returns_authenticated_customer_history() -> None:
 
     assert response.status_code == 200
     assert response.json()["data"] == []
+
+
+def test_customer_can_refresh_an_expiring_session() -> None:
+    email = "customer-refresh@example.com"
+    auth = request("POST", "/api/v1/auth/register", json=register_payload(email)).json()["data"]
+
+    assert auth["refresh_token"]
+
+    refreshed = request(
+        "POST",
+        "/api/v1/auth/refresh",
+        json={"refresh_token": auth["refresh_token"]},
+    )
+
+    assert refreshed.status_code == 200
+    session = refreshed.json()["data"]
+    assert session["access_token"] != auth["access_token"]
+    assert session["profile"]["email"] == email
+
+    profile = request("GET", "/api/v1/auth/me", token=session["access_token"])
+    assert profile.status_code == 200
+
+
+def test_refresh_rejects_an_unknown_token() -> None:
+    response = request(
+        "POST",
+        "/api/v1/auth/refresh",
+        json={"refresh_token": "not-a-real-refresh-token"},
+    )
+
+    assert response.status_code == 401
+    assert response.json()["success"] is False

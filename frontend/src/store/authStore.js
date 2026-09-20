@@ -8,7 +8,13 @@ const useAuthStore = create(
       user: null,
       profile: null,
       token: null,
+      refreshToken: null,
       isAdmin: false,
+
+      // Called by the API client after it silently refreshes an expired token.
+      applySession(auth) {
+        setAuthState(set, auth)
+      },
 
       async login(email, password) {
         const res = await loginCustomer({ email, password })
@@ -36,7 +42,7 @@ const useAuthStore = create(
       },
 
       logout() {
-        set({ user: null, profile: null, token: null, isAdmin: false })
+        set({ user: null, profile: null, token: null, refreshToken: null, isAdmin: false })
       },
     }),
     { name: 'chefware-auth' }
@@ -48,6 +54,7 @@ function setAuthState(set, auth) {
     user: auth.user,
     profile: auth.profile,
     token: auth.access_token,
+    refreshToken: auth.refresh_token,
     isAdmin: auth.profile?.role === 'admin',
   })
 }

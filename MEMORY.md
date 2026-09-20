@@ -9,6 +9,79 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 
 ---
 
+## 2026-09-20, Client catalogue seeded with replaceable placeholder prices
+**What was decided:** Migration `015_seed_client_catalog.sql` seeds the 13 client-supplied catalogue items (from the supplied photography in `frontend/public/media/chefware/products/`) so the shop/checkout flow works end to end immediately. Direct-buy items get replaceable placeholder prices; the banqueting trolley and all three robotics items stay quote-only (`price_label: 'Request a quote'`). ChefWare updates the real prices through the Admin -> Inventory dashboard. The homepage "Industries we serve" chips were removed because the new "Trusted by Businesses Across Ghana" clients marquee covers that ground — **this supersedes the doc §6 industries chips on the homepage** (recorded per the source-of-truth doc rule).
+**Why:** The client supplied photos without prices but wants a working shop now; placeholder prices are explicitly flagged as replaceable rather than presented as final. The named-clients marquee replaces the generic industry list on the homepage per project-owner instruction.
+**What was rejected:** Leaving the catalogue empty until prices arrive (blocks the shop), or inventing definitive prices without a replaceable path (misleads buyers).
+
+## 2026-09-20, Featured client names published as a marquee strip
+**What was decided:** Add a "Trusted by Businesses Across Ghana" marquee to the homepage listing the exact documented client names: Labadi Beach Hotel, Lancaster Hotels, Pomona, Moka's Express, Hallmark Cafe. Logos will be added later (name-only text for now), so each entry has an optional `logo_url` field. Motion is a slow left-to-right marquee (`marquee-track-ltr`, 60s) that pauses on hover.
+**Why:** The client document's "Projects & Clients" section lists these as featured clients, and the project owner explicitly authorized displaying the names now.
+**What was rejected:** Continuing to withhold the client names (they are now client-approved to display as text); the logos themselves still require the doc's permission step and remain in `TRUSTED_BY` with `logo_url: null`.
+
+## 2026-09-20, Services, quote options, and footer realigned to the client document
+**What was decided:** Make the client document (`docs/PROJECT_DETAILS/Chefware_Enterprise_Professional_Website_Structure.docx`) the only source of truth for service groups and contact options. The five service slugs are now `uniforms`, `branding-embroidery`, `kitchen-solutions`, `disposables`, `robotics`; the quote/contact dropdown uses exactly the document's seven options (`uniforms`, `branding-embroidery`, `kitchen-equipment`, `kitchen-setup`, `disposables`, `robotics`, `other`) — this **supersedes** the old six-slug service rule ("six slugs remain validated system routes") and the old quote categories (machine-preorders, machine-customization, embroidery, logo-printing-branding are deactivated in code/migration 014). FAQ and warranty/returns copy now live in the storefront footer (accordion + warranty block) instead of standalone pages. Migration `014_doc_aligned_categories_and_quote_options.sql` adds the 5 service categories, renames robotics → "Hospitality Robotics" and kitchen-setup → "Kitchen Setup", deactivates the legacy quote categories, and rewrites the `site_content` JSONB.
+**Why:** The web document is the client-approved single source of truth, so the catalogue/services model, dropdown options, and footer support content must match it exactly. FAQ/warranty/returns stay outside unbuilt corporate pages while keeping e-commerce the primary journey.
+**What was rejected:** Keeping the six legacy service slugs or adding the old quote categories; hardcoding service detail/quote labels in React (new `frontend/src/config/quoteCategories.js` centralizes labels); building standalone FAQ/Projects/Industries/CEO pages instead of the footer + existing homepage.
+**Amended 2026-09-20:** The FAQ accordion was removed from the storefront footer per project-owner instruction; only the Warranty & Returns block remains there.
+
+## 2026-09-20, Services use admin-managed detail pages
+**What was decided:** Quote services are links to `/services/:slug` detail pages with a primary quote action. Service titles, descriptions, and images live in the existing admin-managed `site_content` record, while the six slugs remain validated system routes.
+**Why:** Services are not inventory filters. A short explanatory page gives buyers enough context to request a quote, and administrators can update public copy and images without a code release.
+**What was rejected:** Filtering the product grid by service category; embedding new service copy directly in React; creating a second enquiry flow.
+
+## 2026-09-20, Catalog sidebar uses one Services entry
+**What was decided:** Replace the individual service links in the product-catalog sidebar with one `Services` link to the services overview.
+**Why:** The sidebar is product navigation. One entry gives visitors a simple, clear way to discover all services without presenting services as product categories.
+**What was rejected:** Listing every service in the catalog sidebar or sending the visitor directly into a single service without the overview.
+
+## 2026-09-20, Client production catalogue loaded with conservative pricing rules
+**What was decided:** Load the 13 client-supplied catalogue items with their distinct supplied images and initial stock quantity 10. Use filename prices only where a price was explicitly supplied; keep the unpriced banqueting trolley and three robotics items quote-only.
+**Why:** This replaces the deleted test catalogue with traceable client material without inventing prices or repeating placeholder imagery.
+**What was rejected:** Generic repeated product photos, fabricated pricing, and keeping unpriced items out of the catalogue entirely.
+
+## 2026-09-20, Supabase data clients are isolated per repository
+**What was decided:** Create a fresh synchronous Supabase data client for each repository instead of sharing one cached client across API requests. Keep the separate auth client cache because auth and service-role sessions must remain isolated.
+**Why:** Concurrent browser requests corrupted the shared HTTP/2 session (`LocalProtocolError` and stream `KeyError`), leaving the catalogue loading. Per-repository clients remove unsafe cross-thread session sharing.
+**What was rejected:** Increasing frontend timeouts, serializing all database traffic behind a global lock, or sharing the auth client with data repositories.
+
+## 2026-09-20, HTTP transport debug logs are suppressed
+**What was decided:** Keep application DEBUG logging in local development, but force `httpx`, `httpcore`, and `hpack` to WARNING in every environment.
+**Why:** Low-level HTTP/2 debug output can include Authorization and API-key headers, which must never be copied into application or hosting logs.
+**What was rejected:** Disabling useful application debug logs entirely or relying on operators to redact transport output after collection.
+
+## 2026-09-20, Public company content is admin-managed
+**What was decided:** Store public company identity, contact details, SEO text, homepage marketing sections, About content, Robotics content, page visibility, quote imagery, and replaceable media URLs in one validated `site_content` record. The storefront reads that record through `/api/v1/site-content`; authenticated administrators edit it through the Website Content dashboard and existing Cloudinary upload route. Product catalogue and inventory data remain in their existing product administration flow.
+**Why:** Client-supplied company information and marketing images will change, and those changes must not require editing React or shipping a new frontend release. A bounded schema keeps the editor usable while preserving the commerce-first information architecture.
+**What was rejected:** Leaving client content and image paths embedded in page components; introducing a full generic CMS or arbitrary JSON editor, which would be harder for the client to operate and larger than the current need.
+
+## 2026-09-20, Commerce-first company and robotics architecture
+**What was decided:** Keep Shop and Request a Quote as the primary storefront journeys. Use the new professional company document as a content source rather than a literal sitemap, with dedicated About and Robotics pages, a compact company story on the homepage, and a quote-only `robotics` category backed by manual migration `009_add_robotics_category.sql`. Use the latest client-supplied public contact details and selected supplied imagery; continue withholding client, partnership, warranty, delivery, and project claims that still need approval or evidence.
+**Why:** Copying every corporate section onto the homepage would bury product discovery and checkout. Separate high-value solution pages strengthen business credibility and lead capture while preserving the working e-commerce path.
+**What was rejected:** Turning the homepage into the full corporate brochure, publishing named clients or manufacturer partnerships without approval, reviving manual bank-transfer instructions, or adding an unpersistable frontend-only robotics enquiry option.
+
+## 2026-08-21, Customer contact is WhatsApp click-to-chat, not outbound messaging
+**What was decided:** Customers reach reps by clicking through to WhatsApp (floating button on every storefront page, footer link, and a CTA on the quote request page). No outbound notification provider will be wired. All contact details now live in `frontend/src/config/contact.js`, driven by `VITE_WHATSAPP_NUMBER` / `VITE_CONTACT_PHONE` / `VITE_CONTACT_EMAIL` / `VITE_CONTACT_ADDRESS` with TBC fallbacks.
+**Why:** Click-to-chat needs no provider account, no per-message cost, and no delivery monitoring, and it puts the customer in a channel Ghanaian buyers already use. The number was previously hardcoded as a placeholder in two files, so swapping in the real one was error-prone.
+**What was rejected:** Building the WAHA integration for outbound receipts (no instance available, and it makes ChefWare responsible for delivery failures). Africa's Talking SMS (already dropped). The `AT_*`, `ADMIN_NOTIFICATION_PHONE`, and `ADMIN_API_KEY` env vars are now commented as DEPRECATED in `.env.example` rather than deleted, pending Evans's confirmation.
+
+## 2026-08-21, Order status is never inferred client-side
+**What was decided:** `OrderConfirmationPage` reads order status only from the backend lookup. When the checkout phone is missing from sessionStorage it prompts the customer to enter it, rather than rendering a success screen.
+**Why:** The page previously fabricated `payment_status: 'paid'`, `order_status: 'confirmed'`, and a GH₵0.00 total whenever sessionStorage lacked the phone — so a customer opening the confirmation link on another device, or returning later, saw a failed order presented as paid. Landing on the confirmation URL is not evidence that a payment succeeded.
+**What was rejected:** Trusting the URL reference alone (the reference is guessable-adjacent and proves nothing about payment) and showing a bare error page (loses the customer's ability to self-serve their receipt).
+
+**Chatbot:** deferred — Evans is building the FAQ chatbot himself. Nothing scaffolded for it.
+
+## 2026-08-21, Production hardening pass before client handover
+**What was decided:** Close the pre-handover blockers found in the readiness audit: pin JWT verification algorithms instead of trusting the token header, fail fast in production when required env vars are missing, add stdout logging across the backend, replace the 4-digit order reference suffix with a 6-character 32-symbol suffix plus conflict retry, validate stock at checkout and decrement it through an idempotent `apply_order_stock` database function, wrap every blocking service call in `run_in_threadpool`, add an in-process per-IP rate limiter, add a `/auth/refresh` endpoint with silent client-side token refresh, and add a GitHub Actions verify workflow.
+**Why:** The audit found an auth bypass (an unset `SUPABASE_JWT_SECRET` let a token forged with an empty HMAC secret verify), a ~39%-per-day order reference collision rate against a `unique` constraint, silent in-memory fallbacks that would have lost real orders on any Render restart, zero logging behind a 500 handler that swallowed exceptions, sync Supabase/Paystack I/O stalling the event loop, and hour-long sessions dying with no recovery path.
+**What was rejected:** Converting route handlers from `async def` to `def` to get FastAPI's automatic threadpool — smaller diff, but it contradicts the 2026-05-25 async-route decision and risks the sandbox hang that decision was made to avoid. Adding `slowapi` for rate limiting — a new dependency outside the locked stack for something ~40 lines covers at current scale. Wiring a real notification provider — WAHA has no instance URL yet, so the stub now logs every skipped receipt instead of failing silently.
+
+## 2026-08-21, Rate limiting is per-worker and skipped in tests
+**What was decided:** The sliding-window limiter keeps state in process memory and returns early when `APP_ENV=test`; the limiter itself is covered by direct unit tests in `test_rate_limit.py`.
+**Why:** Route tests drive many requests from one address and would trip the limit as the suite grows, making failures look like product bugs. Per-worker state is sufficient for the current single-worker Render deployment.
+**What was rejected:** Redis-backed shared counters (no Redis in the stack, and one worker does not need it) and raising the limits high enough for tests to pass (would have made the limits useless in production). Note: this must be revisited before scaling to multiple workers.
+
 ## 2026-06-09, Supabase auth must use a separate client (never the service-role data client)
 **What was decided:** Auth calls (`sign_in_with_password`, `sign_up`, `get_user`) run on a dedicated `get_supabase_auth_client()` (anon key), never on the shared `get_supabase_client()` service-role singleton. The service-role client is reserved strictly for table/data operations.
 **Why:** supabase-py auth calls set the session on whichever client makes them. Running them on the shared service-role singleton overwrote its session with the end user's JWT, so every query after *any* login ran as that RLS-restricted user — admin "list all" returned ~0 rows, inserts (orders, quote requests) failed with `42501` RLS violations, and the customer dashboard only worked when the client's session happened to be that same customer. A server restart appeared to "fix" it, but only until the next login. A separate auth client leaves the data client's service-role session intact.
@@ -18,6 +91,7 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **What was decided:** Local JWT verification routes by the token's actual `alg`: ES256 (Supabase asymmetric signing keys) is verified against the project JWKS endpoint via a cached `PyJWKClient`; HS256 falls back to the shared secret. `cryptography` is pinned in requirements (PyJWT needs it for ES256).
 **Why:** The project's Supabase signs tokens with ES256, but verification was hardcoded to HS256 → every authenticated request 401'd (`alg not allowed`), and without `cryptography` installed PyJWT raised `MissingCryptographyError`. JWKS keeps verification local (key is cached) so there's no per-request auth round-trip.
 **What was rejected:** Removing `SUPABASE_JWT_SECRET` to fall back to the slow `auth.get_user()` API round-trip; switching the Supabase project back to legacy HS256 secrets.
+**Amended 2026-08-21:** "routes by the token's actual `alg`" now means the header alg only *selects the key*; the `algorithms` list passed to `jwt.decode` is pinned to that key's family, and the HS branch is refused outright when `SUPABASE_JWT_SECRET` is blank. Verifying with whatever alg the token names was an auth bypass.
 
 ---
 
@@ -235,3 +309,9 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **What was decided:** Keep external media credentials blank during tests, make remaining FastAPI dependency providers async, and pin the test/runtime multipart stack used by upload routes.
 **Why:** The backend test suite was hanging in admin media route tests because the active Python environment could enter external Cloudinary or sync dependency/threadpool paths during verification. Tests must stay local, deterministic, and free of real external side effects.
 **What was rejected:** Treating the hang as an environment-only issue or skipping admin media route tests, because production upload behavior and CI confidence depend on that route being testable.
+
+## 2026-09-20, Client website document strengthens the e-commerce content model
+
+**What was decided:** Use the client-provided company profile to update the admin-managed storefront content: hospitality-solution positioning, founder date, solution descriptions, five robotics use cases, the second phone number, business hours, and business-quote capture fields. Keep products and checkout as the primary customer journey; the new information supports product discovery and quote conversion rather than creating a corporate brochure site.
+**Why:** The supplied document answers the earlier content gap with clear company identity, audience, services and contact information, while larger kitchen, branding, disposables and robotics requirements still need a scoped enquiry rather than an invented catalogue or checkout path.
+**What was rejected:** Publishing named clients, Hallmark Cafe as a case study, KEENON/ALPHA/PIMAK partnerships, nationwide or West Africa delivery claims, or warranty and returns terms. The supplied document itself marks those for confirmation or approval, so they remain out of public copy until explicitly cleared.

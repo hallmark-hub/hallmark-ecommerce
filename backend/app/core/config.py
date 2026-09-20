@@ -31,6 +31,31 @@ class Settings(BaseSettings):
         origins = [origin for origin in raw if origin]
         return origins or [self.frontend_url]
 
+    @property
+    def is_production(self) -> bool:
+        """Return whether the app is running in the production environment."""
+        return self.app_env.lower() == "production"
+
+    def missing_production_settings(self) -> list[str]:
+        """Return required production settings that are not configured.
+
+        Without this check a missing Supabase variable silently drops the app
+        onto the in-memory repositories, where real orders are written to a
+        dict that is lost on the next restart.
+        """
+        required = {
+            "SUPABASE_URL": self.supabase_url,
+            "SUPABASE_ANON_KEY": self.supabase_anon_key,
+            "SUPABASE_SERVICE_ROLE_KEY": self.supabase_service_role_key,
+            "PAYSTACK_SECRET_KEY": self.paystack_secret_key,
+            "PAYSTACK_PUBLIC_KEY": self.paystack_public_key,
+            "CLOUDINARY_CLOUD_NAME": self.cloudinary_cloud_name,
+            "CLOUDINARY_API_KEY": self.cloudinary_api_key,
+            "CLOUDINARY_API_SECRET": self.cloudinary_api_secret,
+            "FRONTEND_URL": self.frontend_url,
+        }
+        return sorted(name for name, value in required.items() if not value)
+
 
 @lru_cache
 def get_settings() -> Settings:

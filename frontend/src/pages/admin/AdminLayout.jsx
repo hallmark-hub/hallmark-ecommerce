@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBag, Package, MessageSquare, Settings, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
@@ -9,7 +9,7 @@ const NAV = [
   { to: '/admin/orders', label: 'Orders', icon: ShoppingBag },
   { to: '/admin/quotes', label: 'Quote Requests', icon: MessageSquare },
   { to: '/admin/inventory', label: 'Inventory', icon: Package },
-  { to: '/admin/settings', label: 'Settings', icon: Settings },
+  { to: '/admin/settings', label: 'Website Content', icon: FilePenLine },
 ]
 
 export default function AdminLayout() {
@@ -46,8 +46,6 @@ export default function AdminLayout() {
       </main>
     )
   }
-
-  const sidebarVisible = mobileOpen || !desktopCollapsed
 
   return (
     <div className="min-h-screen bg-surface-container-low">

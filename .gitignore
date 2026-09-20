@@ -270,3 +270,6 @@ Desktop.ini
 # ─── Misc ─────────────────────────────────────────────────────────────────────
 *.db
 *.sqlite
+
+# ─── Playwright MCP browser session dumps (not project artefacts) ──────
+.playwright-mcp/

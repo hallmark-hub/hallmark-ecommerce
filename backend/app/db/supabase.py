@@ -12,9 +12,13 @@ def supabase_is_configured() -> bool:
     return bool(settings.supabase_url and settings.supabase_anon_key)
 
 
-@lru_cache
 def get_supabase_client() -> Client:
-    """Return a cached Supabase client."""
+    """Return an isolated data client for one repository/request.
+
+    supabase-py's synchronous HTTP/2 session is not safe to share across the
+    worker threads used by the API routes. Separate clients prevent concurrent
+    catalogue requests from corrupting each other's HTTP streams.
+    """
     settings = get_settings()
     key = settings.supabase_service_role_key or settings.supabase_anon_key
     if not settings.supabase_url or not key:

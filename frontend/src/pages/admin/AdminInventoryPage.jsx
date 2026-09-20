@@ -11,11 +11,13 @@ const FALLBACK_CATEGORIES = [
   { id: 'chef-uniforms', name: 'Chef Uniforms', slug: 'chef-uniforms', checkout_type: 'direct' },
   { id: 'staff-uniforms-branding', name: 'Restaurant Staff Uniforms & Branding', slug: 'staff-uniforms-branding', checkout_type: 'direct' },
   { id: 'kitchen-equipment-tools', name: 'Industrial Kitchen Equipment & Tools', slug: 'kitchen-equipment-tools', checkout_type: 'direct' },
-  { id: 'kitchen-setup', name: 'Industrial Kitchen Setup', slug: 'kitchen-setup', checkout_type: 'quote' },
-  { id: 'machine-preorders', name: 'Customized Machine Pre-Orders', slug: 'machine-preorders', checkout_type: 'quote' },
-  { id: 'machine-customization', name: 'Machine Customization', slug: 'machine-customization', checkout_type: 'quote' },
-  { id: 'embroidery', name: 'Embroidery Services', slug: 'embroidery', checkout_type: 'quote' },
-  { id: 'logo-printing-branding', name: 'Logo Printing & Garment Branding', slug: 'logo-printing-branding', checkout_type: 'quote' },
+  { id: 'uniforms', name: 'Uniforms', slug: 'uniforms', checkout_type: 'quote' },
+  { id: 'branding-embroidery', name: 'Branding & Embroidery', slug: 'branding-embroidery', checkout_type: 'quote' },
+  { id: 'kitchen-equipment', name: 'Kitchen Equipment', slug: 'kitchen-equipment', checkout_type: 'quote' },
+  { id: 'kitchen-setup', name: 'Kitchen Setup', slug: 'kitchen-setup', checkout_type: 'quote' },
+  { id: 'disposables', name: 'Disposables', slug: 'disposables', checkout_type: 'quote' },
+  { id: 'robotics', name: 'Hospitality Robotics', slug: 'robotics', checkout_type: 'quote' },
+  { id: 'other', name: 'Other', slug: 'other', checkout_type: 'quote' },
 ]
 
 function stockStatus(stock, threshold) {

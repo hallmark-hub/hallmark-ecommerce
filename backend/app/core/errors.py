@@ -4,7 +4,10 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.core.logging import get_logger
 from app.core.responses import fail
+
+logger = get_logger(__name__)
 
 
 def _message_from_detail(detail: object) -> str:
@@ -34,11 +37,15 @@ def register_exception_handlers(app: FastAPI) -> None:
         return JSONResponse(
             status_code=exc.status_code,
             content=fail(_message_from_detail(exc.detail)),
+            headers=getattr(exc, "headers", None),
         )
 
     @app.exception_handler(Exception)
     async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
         """Return unhandled errors in the standard envelope."""
+        logger.exception(
+            "Unhandled error on %s %s", request.method, request.url.path
+        )
         return JSONResponse(
             status_code=500,
             content=fail("Internal server error"),

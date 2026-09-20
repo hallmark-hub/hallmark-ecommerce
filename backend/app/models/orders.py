@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import StrEnum
 from uuid import UUID
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from app.utils.ghana_phone import is_valid_ghana_phone
 
@@ -36,7 +36,7 @@ class CustomerInput(BaseModel):
     """Checkout customer request data."""
 
     name: str = Field(min_length=1)
-    email: str = Field(min_length=3)
+    email: EmailStr
     phone: str
 
     @field_validator("phone")

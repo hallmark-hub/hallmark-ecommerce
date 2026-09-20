@@ -14,6 +14,9 @@ from app.db.supabase import (
 )
 from app.models.customers import CustomerRegisterRequest
 
+_HS_ALGORITHMS = ["HS256", "HS384", "HS512"]
+_ASYMMETRIC_ALGORITHMS = ["ES256", "RS256"]
+
 _jwk_client: jwt.PyJWKClient | None = None
 
 
@@ -48,6 +51,9 @@ class CustomerRepository(Protocol):
     def login(self, email: str, password: str) -> dict[str, Any]:
         """Authenticate a customer."""
 
+    def refresh(self, refresh_token: str) -> dict[str, Any]:
+        """Exchange a refresh token for a new session."""
+
     def get_profile_for_token(self, token: str) -> dict[str, Any] | None:
         """Return the profile for a bearer token."""
 
@@ -61,6 +67,21 @@ class InMemoryCustomerRepository:
     def __init__(self) -> None:
         self.accounts: dict[str, dict[str, Any]] = {}
         self.tokens: dict[str, str] = {}
+        self.refresh_tokens: dict[str, str] = {}
+
+    def _issue_session(self, email: str) -> dict[str, Any]:
+        """Mint a new local access/refresh token pair for an account."""
+        account = self.accounts[email]
+        token = f"local-{uuid4()}"
+        refresh_token = f"local-refresh-{uuid4()}"
+        self.tokens[token] = email
+        self.refresh_tokens[refresh_token] = email
+        return {
+            "access_token": token,
+            "refresh_token": refresh_token,
+            "user": account["user"],
+            "profile": account["profile"],
+        }
 
     def register(self, request: CustomerRegisterRequest) -> dict[str, Any]:
         """Register a local customer account."""
@@ -79,19 +100,12 @@ class InMemoryCustomerRepository:
             "created_at": now,
             "updated_at": now,
         }
-        token = f"local-{uuid4()}"
         self.accounts[email] = {
             "password": request.password,
             "user": {"id": user_id, "email": email},
             "profile": profile,
         }
-        self.tokens[token] = email
-        return {
-            "access_token": token,
-            "refresh_token": None,
-            "user": self.accounts[email]["user"],
-            "profile": profile,
-        }
+        return self._issue_session(email)
 
     def login(self, email: str, password: str) -> dict[str, Any]:
         """Authenticate a local customer account."""
@@ -99,14 +113,14 @@ class InMemoryCustomerRepository:
         account = self.accounts.get(email)
         if account is None or account["password"] != password:
             raise CustomerRepositoryError("Invalid email or password")
-        token = f"local-{uuid4()}"
-        self.tokens[token] = email
-        return {
-            "access_token": token,
-            "refresh_token": None,
-            "user": account["user"],
-            "profile": account["profile"],
-        }
+        return self._issue_session(email)
+
+    def refresh(self, refresh_token: str) -> dict[str, Any]:
+        """Issue a new local session for a refresh token."""
+        email = self.refresh_tokens.get(refresh_token)
+        if email is None:
+            raise CustomerRepositoryError("Session could not be refreshed")
+        return self._issue_session(email)
 
     def get_profile_for_token(self, token: str) -> dict[str, Any] | None:
         """Return a local profile for a bearer token."""
@@ -191,6 +205,27 @@ class SupabaseCustomerRepository:
             "profile": profile,
         }
 
+    def refresh(self, refresh_token: str) -> dict[str, Any]:
+        """Exchange a Supabase refresh token for a new session."""
+        try:
+            auth_response = self.auth_client.auth.refresh_session(refresh_token)
+        except Exception as exc:
+            raise CustomerRepositoryError("Session could not be refreshed") from exc
+
+        user = getattr(auth_response, "user", None)
+        session = getattr(auth_response, "session", None)
+        if user is None or session is None:
+            raise CustomerRepositoryError("Session could not be refreshed")
+        profile = self._profile_for_auth_user(str(user.id))
+        if profile is None:
+            raise CustomerRepositoryError("Session could not be refreshed")
+        return {
+            "access_token": session.access_token,
+            "refresh_token": session.refresh_token,
+            "user": {"id": str(user.id), "email": str(user.email).lower()},
+            "profile": profile,
+        }
+
     def get_profile_for_token(self, token: str) -> dict[str, Any] | None:
         """Return a Supabase profile for a bearer token.
 
@@ -201,18 +236,29 @@ class SupabaseCustomerRepository:
         jwk_client = _get_jwk_client()
         if jwt_secret or jwk_client:
             try:
+                # The header alg only selects which key to try. The algorithms
+                # passed to decode() are pinned to the family that key belongs
+                # to, so a token cannot talk us into verifying an asymmetric
+                # key as an HMAC secret (or into using an unset, empty secret).
                 alg = jwt.get_unverified_header(token).get("alg", "")
-                if alg.startswith("HS"):
+                if alg in _HS_ALGORITHMS:
+                    if not jwt_secret:
+                        return None
                     key: Any = jwt_secret
-                elif jwk_client is not None:
+                    algorithms = _HS_ALGORITHMS
+                elif alg in _ASYMMETRIC_ALGORITHMS:
+                    if jwk_client is None:
+                        return None
                     key = jwk_client.get_signing_key_from_jwt(token).key
+                    algorithms = _ASYMMETRIC_ALGORITHMS
                 else:
-                    raise jwt.InvalidKeyError(f"no key available for alg={alg}")
+                    return None
                 payload = jwt.decode(
                     token,
                     key,
-                    algorithms=[alg],
+                    algorithms=algorithms,
                     audience="authenticated",
+                    options={"require": ["exp", "sub"]},
                 )
                 user_id = payload.get("sub")
                 if not user_id:

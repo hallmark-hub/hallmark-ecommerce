@@ -21,6 +21,10 @@ def valid_quote_payload() -> dict[str, object]:
         "phone": "+233244123456",
         "category_slug": "kitchen-setup",
         "message": "We need a full kitchen setup for a 60-seat restaurant.",
+        "company_name": "Asante Catering",
+        "location": "East Legon, Accra",
+        "quantity": "60 settings",
+        "preferred_delivery_date": "2026-10-15",
         "product_ids": ["10000000-0000-4000-8000-000000000003"],
     }
 
@@ -34,6 +38,18 @@ def test_create_quote_request_endpoint_returns_contract_shape() -> None:
     assert payload["message"] == "Quote request received"
     assert payload["data"]["reference"].startswith("QR-")
     assert payload["data"]["status"] == "received"
+
+
+def test_create_robotics_quote_request_without_product() -> None:
+    payload = valid_quote_payload()
+    payload["category_slug"] = "robotics"
+    payload["message"] = "We want to assess a service robot for our restaurant."
+    payload["product_ids"] = []
+
+    response = post("/api/v1/quote-requests", json=payload)
+
+    assert response.status_code == 201
+    assert response.json()["data"]["status"] == "received"
 
 
 def test_create_quote_request_rejects_direct_category() -> None:

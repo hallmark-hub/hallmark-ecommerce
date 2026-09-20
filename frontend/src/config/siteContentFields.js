@@ -1,0 +1,73 @@
+export const SITE_CONTENT_SECTIONS = [
+  {
+    id: 'company',
+    label: 'Company & Contact',
+    fields: [
+      { key: 'company_name', label: 'Company Name' },
+      { key: 'established_year', label: 'Established Year' },
+      { key: 'company_tagline', label: 'Short Tagline', type: 'textarea', wide: true },
+      { key: 'contact_email', label: 'Contact Email', type: 'email' },
+      { key: 'contact_phone', label: 'Contact Phone' },
+      { key: 'contact_secondary_phone', label: 'Second Contact Phone' },
+      { key: 'whatsapp_number', label: 'WhatsApp Number (digits only)' },
+      { key: 'contact_address', label: 'Address', wide: true },
+      { key: 'business_hours', label: 'Business Hours', wide: true },
+      { key: 'seo_title', label: 'Browser & Search Title', wide: true },
+      { key: 'seo_description', label: 'Search Description', type: 'textarea', wide: true },
+    ],
+  },
+  {
+    id: 'home',
+    label: 'Homepage',
+    fields: [
+      { key: 'home_hero_eyebrow', label: 'Hero Eyebrow', wide: true },
+      { key: 'home_hero_title', label: 'Hero Heading', type: 'textarea', wide: true },
+      { key: 'home_hero_body', label: 'Hero Description', type: 'textarea', wide: true },
+      { key: 'home_hero_image_url', label: 'Hero Image', type: 'image', wide: true },
+      { key: 'home_uniform_image_url', label: 'Uniform Category Image', type: 'image', wide: true },
+      { key: 'home_equipment_image_url', label: 'Equipment Category Image', type: 'image', wide: true },
+      { key: 'home_branding_image_url', label: 'Branding Category Image', type: 'image', wide: true },
+      { key: 'home_robotics_title', label: 'Robotics Heading', type: 'textarea', wide: true },
+      { key: 'home_robotics_body', label: 'Robotics Description', type: 'textarea', wide: true },
+      { key: 'home_robotics_image_url', label: 'Robotics Image', type: 'image', wide: true },
+      { key: 'home_company_title', label: 'Company Heading', type: 'textarea', wide: true },
+      { key: 'home_company_body', label: 'Company Description', type: 'textarea', wide: true },
+    ],
+  },
+  {
+    id: 'about',
+    label: 'About Page',
+    fields: [
+      { key: 'show_about_page', label: 'About Page Visibility', type: 'toggle', wide: true },
+      { key: 'about_title', label: 'Main Heading', type: 'textarea', wide: true },
+      { key: 'about_body', label: 'Introduction', type: 'textarea', rows: 4, wide: true },
+      { key: 'about_image_url', label: 'Main Image', type: 'image', wide: true },
+      { key: 'about_purpose_title', label: 'Purpose Heading', type: 'textarea', wide: true },
+      { key: 'about_purpose_body', label: 'Purpose Description', type: 'textarea', rows: 4, wide: true },
+    ],
+  },
+  {
+    id: 'services',
+    label: 'Services',
+    fields: [],
+  },
+  {
+    id: 'robotics',
+    label: 'Robotics Page',
+    fields: [
+      { key: 'show_robotics_page', label: 'Robotics Page Visibility', type: 'toggle', wide: true },
+      { key: 'robotics_title', label: 'Main Heading', type: 'textarea', wide: true },
+      { key: 'robotics_body', label: 'Introduction', type: 'textarea', rows: 4, wide: true },
+      { key: 'robotics_hero_image_url', label: 'Hero Image', type: 'image', wide: true },
+      { key: 'robotics_intro_title', label: 'Use-case Heading', type: 'textarea', wide: true },
+      { key: 'robotics_intro_body', label: 'Use-case Description', type: 'textarea', wide: true },
+    ],
+  },
+  {
+    id: 'quote',
+    label: 'Quote Page',
+    fields: [
+      { key: 'quote_image_url', label: 'Quote Page Image', type: 'image', wide: true },
+    ],
+  },
+]

@@ -4,31 +4,34 @@ import { ShoppingCart, User, Search, Menu, X, ChevronDown, FileText, LogOut } fr
 import useCartStore from '../store/cartStore'
 import useAuthStore from '../store/authStore'
 import CartDrawer from './CartDrawer'
+import useSiteContentStore from '../store/siteContentStore'
 
 const NAV_GROUPS = [
   {
-    label: 'Uniforms',
+    label: 'Shop',
     items: [
+      { label: 'All Products', desc: 'Browse the complete stocked catalogue', to: '/products' },
       { label: 'Chef Uniforms', desc: 'Jackets, trousers, aprons & caps', to: '/products?category=chef-uniforms' },
       { label: 'Staff Uniforms & Branding', desc: 'Front-of-house and service staff', to: '/products?category=staff-uniforms-branding' },
-    ],
-  },
-  {
-    label: 'Equipment',
-    items: [
       { label: 'Kitchen Equipment & Tools', desc: 'Commercial ranges, prep stations & tools', to: '/products?category=kitchen-equipment-tools' },
-      { label: 'Industrial Kitchen Setup', desc: 'Turnkey design & installation', to: '/quote', badge: 'Quote' },
     ],
   },
   {
-    label: 'Services',
+    label: 'Business Solutions',
     items: [
-      { label: 'All Services', desc: 'Overview of everything we offer', to: '/services' },
-      { label: 'Embroidery Services', desc: 'Custom logo embroidery on uniforms', to: '/services', badge: 'Quote' },
-      { label: 'Logo Printing & Branding', desc: 'Screen printing & heat transfer', to: '/services', badge: 'Quote' },
-      { label: 'Kitchen Setup & Machines', desc: 'Turnkey installation & custom builds', to: '/services', badge: 'Quote' },
+      { label: 'All Business Solutions', desc: 'Projects, customisation and branding', to: '/services' },
+      { label: 'Uniforms', desc: 'Professional and customised hospitality wear', to: '/services/uniforms', badge: 'Quote' },
+      { label: 'Branding & Embroidery', desc: 'T-shirt printing, embroidery and branding', to: '/services/branding-embroidery', badge: 'Quote' },
+      { label: 'Kitchen Solutions', desc: 'Sourcing, equipment and full setup', to: '/quote?category=kitchen-setup', badge: 'Quote' },
+      { label: 'Disposables', desc: 'Tissues, bowls, spoons and takeaway packs', to: '/services/disposables', badge: 'Quote' },
+      { label: 'Hospitality Robotics', desc: 'Cleaning, service and delivery robots', to: '/services/robotics', badge: 'Quote' },
     ],
   },
+]
+
+const NAV_LINKS = [
+  { label: 'Robotics', to: '/robotics' },
+  { label: 'About', to: '/about' },
 ]
 
 function DropdownGroup({ group, onClose }) {
@@ -72,11 +75,15 @@ export default function Navbar() {
   const isAdmin = useAuthStore(s => s.isAdmin)
   const firstName = useAuthStore(s => s.profile?.name?.split(' ')[0] || '')
   const logout = useAuthStore(s => s.logout)
+  const content = useSiteContentStore(s => s.content)
+  const navLinks = NAV_LINKS.filter(item => (
+    item.to === '/about' ? content.show_about_page : content.show_robotics_page
+  ))
   const closeTimer = useRef(null)
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handler)
+    window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
@@ -111,7 +118,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="shrink-0">
-            <img src="/logo.jpg" alt="Chefware Enterprise" className="h-10 md:h-12 w-auto object-contain" />
+            <img src="/logo.jpg" alt={content.company_name} className="h-10 md:h-12 w-auto object-contain" />
           </Link>
 
           {/* Desktop nav */}
@@ -122,8 +129,13 @@ export default function Navbar() {
                 className="relative"
                 onMouseEnter={() => openGroup(group.label)}
                 onMouseLeave={scheduleClose}
+                onFocus={() => openGroup(group.label)}
+                onBlur={scheduleClose}
               >
                 <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={activeGroup === group.label}
                   className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                     activeGroup === group.label
                       ? 'bg-primary text-white'
@@ -142,12 +154,15 @@ export default function Navbar() {
               </div>
             ))}
 
-            <Link
-              to="/products"
-              className="px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-primary hover:bg-surface-container-low transition-colors"
-            >
-              All Products
-            </Link>
+            {navLinks.map(item => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-primary hover:bg-surface-container-low transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Right actions */}
@@ -236,6 +251,8 @@ export default function Navbar() {
             {NAV_GROUPS.map(group => (
               <div key={group.label} className="border-b border-outline-variant last:border-0">
                 <button
+                  type="button"
+                  aria-expanded={mobileExpanded === group.label}
                   onClick={() => setMobileExpanded(mobileExpanded === group.label ? null : group.label)}
                   className="w-full flex justify-between items-center py-3 text-body-sm font-semibold text-on-surface cursor-pointer"
                 >
@@ -262,9 +279,21 @@ export default function Navbar() {
               </div>
             ))}
 
+            <div className="py-2 border-b border-outline-variant">
+              {navLinks.map(item => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-3 text-body-sm font-semibold text-on-surface"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
             <div className="pt-sm pb-2 flex flex-col gap-2">
               <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">{!token ? 'Sign In' : isAdmin ? 'Admin Dashboard' : 'My Account'}</Link>
-              <Link to="/products" onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">All Products</Link>
               <Link to="/quote" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-2 px-3 bg-gold text-white text-body-sm font-semibold rounded-lg">
                 <FileText size={14} /> Request a Quote
               </Link>

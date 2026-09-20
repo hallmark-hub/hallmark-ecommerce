@@ -107,7 +107,7 @@ class MediaService:
         filename: str,
         content_type: str,
     ) -> MediaUploadResponse:
-        """Validate and upload a product image."""
+        """Validate and upload an admin-selected image."""
         settings = get_settings()
         if content_type not in ALLOWED_IMAGE_TYPES:
             raise MediaUploadError("Only JPEG, PNG, and WebP images are allowed")
