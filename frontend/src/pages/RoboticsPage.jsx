@@ -1,6 +1,7 @@
 import { Link, Navigate } from 'react-router-dom'
 import { ArrowRight, Bot, Building2, CheckCircle, Sparkles } from 'lucide-react'
 import Button from '../components/Button'
+import HeroMedia from '../components/HeroMedia'
 import useSiteContentStore from '../store/siteContentStore'
 
 const DISCOVERY = [
@@ -17,7 +18,7 @@ export default function RoboticsPage() {
   return (
     <main className="pt-20 bg-surface min-h-screen">
       <section className="relative overflow-hidden bg-inverse-surface text-white">
-        <img
+        <HeroMedia
           src={content.robotics_hero_image_url}
           alt={`${content.company_name} hospitality robotics`}
           className="absolute inset-0 w-full h-full object-cover object-center opacity-45"

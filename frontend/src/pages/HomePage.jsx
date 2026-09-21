@@ -5,6 +5,7 @@ import { getProducts } from '../api/products'
 import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
 import Button from '../components/Button'
+import HeroMedia from '../components/HeroMedia'
 import { mapsDirectionsUrl, mapsEmbedUrl } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
 
@@ -234,10 +235,9 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative min-h-[360px] lg:min-h-full">
-            <img
+            <HeroMedia
               src={content.home_robotics_image_url}
               alt={`${content.company_name} hospitality robotics`}
-              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/70 to-transparent lg:bg-gradient-to-r lg:from-inverse-surface/40 lg:to-transparent" />

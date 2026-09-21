@@ -26,7 +26,7 @@ LOCAL_DEFAULT_CONTENT = {
     "home_branding_image_url": "/media/chefware/chef-jacket-gold-stripe.jpeg",
     "home_robotics_title": "The future of hospitality is here.",
     "home_robotics_body": "Smart robotic solutions designed to support hospitality businesses, improve service efficiency and reduce operational workload.",
-    "home_robotics_image_url": "/media/chefware/service-robot.jpg",
+    "home_robotics_image_url": "/media/chefware/robotics-hero.mp4",
     "home_company_title": "One partner. Everything you need.",
     "home_company_body": "ChefWare helps hotels, restaurants, cafés, catering businesses, institutions and corporate organisations reduce sourcing challenges, save time and operate more efficiently.",
     "about_title": "Hospitality essentials, sourced under one roof.",
@@ -42,7 +42,7 @@ LOCAL_DEFAULT_CONTENT = {
     ],
     "robotics_title": "The Future of Hospitality Is Here.",
     "robotics_body": "Explore smart robotic solutions designed to support hospitality businesses, improve service efficiency and reduce operational workload.",
-    "robotics_hero_image_url": "/media/chefware/service-robot.jpg",
+    "robotics_hero_image_url": "/media/chefware/robotics-hero.mp4",
     "robotics_intro_title": "Technology matched to the work",
     "robotics_intro_body": "Start with the venue, workflow and intended task. ChefWare can help scope an appropriate robotics solution through a tailored business enquiry.",
     "robotics_cards": [
