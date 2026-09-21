@@ -1,0 +1,212 @@
+# ChefWare Enterprise — Chatbot Knowledge Base
+
+Public-facing help content for the ChefWare e-commerce storefront, ready to import
+into Tawk.to. Sources: the site's Trading Terms, Warranty & Returns policy, checkout
+flow, and the client website-structure document in `docs/PROJECT_DETAILS`.
+
+---
+
+## Part 1 — How to find products on chefware
+
+**How do I browse products?**
+Open the Shop menu and choose All Products to see the full stocked catalogue. The shop
+is organised into categories, including Chef Uniforms, Staff Uniforms & Branding, and
+Kitchen Equipment & Tools.
+
+**How do I search for a product?**
+Use the search box in the top navigation bar. Type a keyword such as "chef jacket",
+"apron" or "oven" and press Enter. You will land on the catalogue page showing the
+matching results.
+
+**Can I filter the catalogue by category?**
+Yes. On the products page you can filter by category from the sidebar, and on mobile
+from the category chips above the product grid. There is also a sort option for the
+results.
+
+**What does a product page show?**
+Each product page shows the product image, description, price in Ghana Cedis (GH₵),
+and an Add to Cart button. Delivery and collection options are confirmed at checkout.
+
+**Are all products available to buy online?**
+No. Products with a listed price can be added to the cart and paid for online. Some
+items — such as the banqueting trolley, larger kitchen equipment and all robotics —
+have no listed price and are supplied "on request" through a quote. For these, choose
+Request a Quote on the product, and the team will reply with pricing and terms.
+
+**What if I cannot find something in the shop?**
+Try a different search term or category, or send a Request a Quote describing what you
+need. For branding, kitchen projects, disposables and robotics, the team can source or
+quote to your requirement.
+
+---
+
+## Part 2 — E-commerce (ordering, payment, delivery, returns)
+
+**Do you sell online?**
+Yes. ChefWare runs an online store (on this website). In-stock items can be added to
+the cart and paid for securely at checkout.
+
+**How do I place an order?**
+1. Add the items you want to your cart.
+2. Go to checkout and enter your delivery name, email and address.
+3. Pay at checkout. Once payment is confirmed your order reference is generated.
+After you pay, your stocked items are delivered (see delivery below).
+
+**What payment methods do you accept?**
+Online orders are paid through Paystack, which supports cards, mobile money and
+connected bank rails. Payment is taken in Ghana Cedis (GH₵).
+
+**Do I need an account to order?**
+You can complete an order without a separate login. Creating a free account lets you
+sign in and view your orders, order history and service requests in one place.
+
+**How do I create an account?**
+Use the account/login option in the navigation and register with your name, email and
+phone number.
+
+**How do I track my order?**
+Sign in to your account and open My Account. Your orders are listed with their status
+(pending, confirmed or delivered) and you can open an order to see its details and
+reference.
+
+**Are there order statuses I should know?**
+Online orders move through pending, confirmed and delivered. You can check the current
+status any time in your account.
+
+**What is an order reference?**
+An order reference is the unique code given to each order after checkout. Keep it for
+customer-support queries and order tracking.
+
+**How much is delivery?**
+Delivery is free for online orders delivered within Greater Accra. Delivery and setup
+options for equipment and larger projects are confirmed with the team at the time of
+your order or quote.
+
+**Do you deliver outside Accra?**
+ChefWare is based in Ghana and serves clients nationwide, with supply and setup
+capabilities across Greater Accra and other regions. The company also imports and
+distributes across West Africa. For online stock orders delivery is Greater Accra.
+
+**How soon will I get my items?**
+Stocked items are delivered within 24 hours after full payment. Pre-ordered or
+customised items generally take 6–8 weeks. Exact timing is confirmed with the team.
+
+**Do you offer collection?**
+Delivery and collection options are confirmed at checkout.
+
+**What is your returns policy?**
+Goods once sold are not returnable after 3 days. Exchange is available for verified
+manufacturing defects, and no refunds are issued. Custom-branded and customised items
+are not returnable.
+
+**What is your warranty policy?**
+Uniforms and branding are quality guaranteed with exchange for manufacturing defects.
+Kitchen equipment carries a 6–12 month warranty depending on the supplier. Robots
+include a 1-year warranty plus after-sales support. Exact warranty terms are confirmed
+with the team at the time of your order or quote.
+
+**What should I do if my item arrives damaged or defective?**
+Contact the ChefWare team within 3 days of delivery. Items with a verified
+manufacturing defect qualify for exchange under the returns policy.
+
+**Can I cancel or change an order after payment?**
+Please contact the team as soon as possible with your order reference. Exact
+cancellation and change terms are confirmed at the time of your order.
+
+---
+
+## Part 3 — Business & company questions
+
+**What does ChefWare do?**
+ChefWare Enterprise is an importer and supplier of hospitality service essentials.
+The company provides professional attire, custom branding, kitchen equipment and
+setup, disposables, and modern hospitality technology under one roof for hospitality
+businesses.
+
+**What are the core solutions?**
+1. Hospitality Uniforms — professional chef, hospitality, security and management wear.
+2. Branding & Embroidery — t-shirt printing, embroidery and customised branding.
+3. Kitchen Solutions — equipment sourcing, importation and complete kitchen setup.
+4. Disposables — tissues, bowls, spoons, takeaway packs and essentials.
+5. Hospitality Robotics — cleaning, service, marketing, luggage-loading and
+   room-service robots.
+
+**When was ChefWare founded and by whom?**
+ChefWare Enterprise was founded on 2 October 2023 by Madam Rebecca Eghan and Mr Abraham
+Eghan. Madam Rebecca Eghan is the Founder and CEO.
+
+**Which industries does ChefWare serve?**
+Hotels, restaurants, cafés and fast food, catering businesses, schools and
+universities, hospitals, corporate organizations, government institutions, security
+and management agencies, and event planners and food vendors.
+
+**Who are ChefWare's robotics partners?**
+KEENON (hospitality and service robotics), ALPHA ROBOTICS COMPANY (robotics) and PIMAK
+TURKIYE (international sourcing for kitchen equipment and disposables).
+
+**Who are some of your clients?**
+ChefWare has supplied hospitality solutions to businesses including Labadi Beach
+Hotel, Lancaster Hotels, Pomona, Moka's Express and Hallmark Cafe.
+
+**Where is ChefWare located?**
+Dome near the Market, Accra, Ghana.
+
+**What are your business hours?**
+Monday–Friday, 8:00 AM–5:00 PM.
+
+**How can I contact ChefWare?**
+Phone +233 548 933 215 or +233 556 790 570. WhatsApp 0548 933 215.
+Email admin@chefwareenterprise.org. Follow on Facebook, Instagram and TikTok as
+@chefware_ent.
+
+**How do I request a quote?**
+Use the Request a Quote form on the website and select the service you need —
+uniforms, branding and embroidery, kitchen equipment, kitchen setup, disposables,
+robotics, or other. For large kitchen and robotics projects, describe your project and
+the team will help you develop the right solution. You receive a quote reference and
+can track the request in your account.
+
+**What information should I include in a quote request?**
+Your name, company, phone/WhatsApp, email, location, the service required, quantity,
+project description and a preferred delivery date. The more operational context you
+share, the more useful the proposal will be.
+
+---
+
+## CSV import (Tawk.to Knowledge Base — headers: Question, Answer)
+
+```csv
+Question,Answer
+"How do I browse products?","Open the Shop menu and choose All Products to see the full stocked catalogue. The shop is organised into categories including Chef Uniforms, Staff Uniforms and Branding, and Kitchen Equipment and Tools."
+"How do I search for a product?","Use the search box in the top navigation bar, type a keyword such as chef jacket, apron or oven, and press Enter. You will land on the catalogue page showing matching results."
+"Can I filter the catalogue by category?","Yes. On the products page you can filter by category from the sidebar, and on mobile from the category chips above the product grid. You can also sort the results."
+"What does a product page show?","Each product page shows the product image, description, price in Ghana Cedis (GH¢), and an Add to Cart button. Delivery and collection options are confirmed at checkout."
+"Are all products available to buy online?","No. Products with a listed price can be added to the cart and paid online. Items such as the banqueting trolley, larger kitchen equipment and all robotics have no listed price and are supplied on request through a quote."
+"What if I cannot find a product in the shop?","Try a different search term or category, or send a Request a Quote describing what you need. The team can source or quote to your requirement for branding, kitchen projects, disposables and robotics."
+"Do you sell online?","Yes. ChefWare runs an online store on this website. In-stock items can be added to the cart and paid for securely at checkout."
+"How do I place an order?","Add items to your cart, go to checkout, enter your delivery name, email and address, and pay at checkout. Once payment is confirmed you receive an order reference and your stocked items are delivered."
+"What payment methods do you accept?","Online orders are paid through Paystack, which supports cards, mobile money and connected bank rails. Payment is taken in Ghana Cedis (GH¢)."
+"Do I need an account to order?","You can complete an order without logging in. Creating a free account lets you sign in and view your orders and service requests in one place."
+"How do I create an account?","Use the account or login option in the navigation and register with your name, email and phone number."
+"How do I track my order?","Sign in to your account and open My Account. Your orders are listed with their status (pending, confirmed or delivered) and you can open an order to see its details and reference."
+"What is an order reference?","An order reference is the unique code given to each order after checkout. Keep it for customer-support queries and order tracking."
+"How much is delivery?","Delivery is free for online orders delivered within Greater Accra. Delivery and setup options for equipment and larger projects are confirmed with the team at the time of your order or quote."
+"Do you deliver outside Accra?","ChefWare is based in Ghana and serves clients nationwide, with supply and setup capabilities across Greater Accra and other regions, and imports and distributes across West Africa. Online stock orders are delivered within Greater Accra."
+"How soon will I get my items?","Stocked items are delivered within 24 hours after full payment. Pre-ordered or customised items generally take 6 to 8 weeks. Exact timing is confirmed with the team."
+"Do you offer collection?","Delivery and collection options are confirmed at checkout."
+"What is your returns policy?","Goods once sold are not returnable after 3 days. Exchange is available for verified manufacturing defects, and no refunds are issued. Custom-branded and customised items are not returnable."
+"What is your warranty policy?","Uniforms and branding are quality guaranteed with exchange for manufacturing defects. Kitchen equipment carries a 6 to 12 month supplier-dependent warranty. Robots include a 1-year warranty plus after-sales support. Exact terms are confirmed at the time of your order or quote."
+"What should I do if my item arrives damaged or defective?","Contact the ChefWare team within 3 days of delivery. Items with a verified manufacturing defect qualify for exchange under the returns policy."
+"Can I cancel or change an order after payment?","Contact the team as soon as possible with your order reference. Exact cancellation and change terms are confirmed at the time of your order."
+"What does ChefWare do?","ChefWare Enterprise is an importer and supplier of hospitality service essentials, providing professional attire, custom branding, kitchen equipment and setup, disposables, and modern hospitality technology under one roof."
+"What are the core solutions?","1) Hospitality Uniforms, 2) Branding and Embroidery, 3) Kitchen Solutions, 4) Disposables, and 5) Hospitality Robotics."
+"When was ChefWare founded and by whom?","ChefWare Enterprise was founded on 2 October 2023 by Madam Rebecca Eghan and Mr Abraham Eghan. Madam Rebecca Eghan is the Founder and CEO."
+"Which industries does ChefWare serve?","Hotels, restaurants, cafés and fast food, catering businesses, schools and universities, hospitals, corporate organizations, government institutions, security and management agencies, and event planners and food vendors."
+"Who are ChefWare's robotics partners?","KEENON (hospitality and service robotics), ALPHA ROBOTICS COMPANY (robotics) and PIMAK TURKIYE (international sourcing for kitchen equipment and disposables)."
+"Who are some of your clients?","ChefWare has supplied hospitality solutions to businesses including Labadi Beach Hotel, Lancaster Hotels, Pomona, Moka's Express and Hallmark Cafe."
+"Where is ChefWare located?","Dome near the Market, Accra, Ghana."
+"What are your business hours?","Monday to Friday, 8:00 AM to 5:00 PM."
+"How can I contact ChefWare?","Phone +233 548 933 215 or +233 556 790 570. WhatsApp 0548 933 215. Email admin@chefwareenterprise.org. Follow on Facebook, Instagram and TikTok as chefware_ent."
+"How do I request a quote?","Use the Request a Quote form on the website and select the service you need: uniforms, branding and embroidery, kitchen equipment, kitchen setup, disposables, robotics or other. For large kitchen and robotics projects describe your project and the team will help you develop the right solution."
+"What information should I include in a quote request?","Your name, company, phone or WhatsApp, email, location, service required, quantity, project description and a preferred delivery date. The more operational context you share, the more useful the proposal will be."
+```
