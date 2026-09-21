@@ -4,6 +4,7 @@ import { CheckCircle, AlertTriangle } from 'lucide-react'
 import { submitQuote } from '../api/quotes'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
+import HeroMedia from '../components/HeroMedia'
 import useAuthStore from '../store/authStore'
 import { whatsappLink } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
@@ -76,9 +77,9 @@ export default function QuoteRequestPage() {
       {/* Full-height left image panel */}
       <div className="hidden lg:block sticky top-20 h-[calc(100vh-80px)] self-start flex-none w-[45%]">
         <div className="relative w-full h-full">
-          <img
-            src={content.quote_image_url}
-            alt="Commercial kitchen equipment and machinery"
+          <HeroMedia
+            src={form.category_slug === 'robotics' ? '/media/chefware/service-robot.jpg' : content.quote_image_url}
+            alt={form.category_slug === 'robotics' ? `${content.company_name} hospitality robotics` : 'Commercial kitchen equipment and machinery'}
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />

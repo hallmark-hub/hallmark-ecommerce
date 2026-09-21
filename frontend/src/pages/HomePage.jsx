@@ -279,9 +279,9 @@ export default function HomePage() {
         <div className="overflow-hidden">
           <div className="marquee-track-ltr flex w-max">
             {[...TRUSTED_BY, ...TRUSTED_BY].map((client, i) => (
-              <div key={i} className="flex items-center justify-center mx-8 shrink-0">
+              <div key={i} className="flex items-center justify-center mx-10 shrink-0">
                 {client.logo_url ? (
-                  <img src={client.logo_url} alt={client.name} className="h-10 w-auto object-contain opacity-70" />
+                  <img src={client.logo_url} alt={client.name} className="h-20 w-auto object-contain opacity-90" />
                 ) : (
                   <span className="text-h3 text-secondary whitespace-nowrap">{client.name}</span>
                 )}

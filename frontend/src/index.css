@@ -55,7 +55,7 @@
     100% { transform: translateX(-50%); }
   }
   .marquee-track-ltr {
-    animation: marquee-ltr 60s linear infinite;
+    animation: marquee-ltr 25s linear infinite;
   }
   .marquee-track-ltr:hover {
     animation-play-state: paused;
