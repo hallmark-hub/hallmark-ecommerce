@@ -34,6 +34,8 @@ export default function ProductCatalogPage() {
   const [total, setTotal] = useState(0)
   const [pages, setPages] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [retry, setRetry] = useState(0)
 
   const category = searchParams.get('category') || ''
   const search = searchParams.get('search') || ''
@@ -41,23 +43,33 @@ export default function ProductCatalogPage() {
   const sort = searchParams.get('sort') || ''
 
   useEffect(() => {
-    getCategories().then(res => setCategories(res.data || []))
+    getCategories().then(res => setCategories(res.data || [])).catch(() => setCategories([]))
   }, [])
 
   useEffect(() => {
+    let active = true
     async function load() {
       setLoading(true)
-      const res = await getProducts({ category: category || undefined, search: search || undefined, page, limit: 12 })
-      let items = res.data?.items || []
-      if (sort === 'price_asc') items = [...items].sort((a, b) => (a.price_pesewas || 0) - (b.price_pesewas || 0))
-      if (sort === 'price_desc') items = [...items].sort((a, b) => (b.price_pesewas || 0) - (a.price_pesewas || 0))
-      setProducts(items)
-      setTotal(res.data?.total || 0)
-      setPages(res.data?.pages || 1)
-      setLoading(false)
+      setError('')
+      try {
+        const res = await getProducts({ category: category || undefined, search: search || undefined, page, limit: 12 })
+        let items = res.data?.items || []
+        if (sort === 'price_asc') items = [...items].sort((a, b) => (a.price_pesewas || 0) - (b.price_pesewas || 0))
+        if (sort === 'price_desc') items = [...items].sort((a, b) => (b.price_pesewas || 0) - (a.price_pesewas || 0))
+        if (active) {
+          setProducts(items)
+          setTotal(res.data?.total || 0)
+          setPages(res.data?.pages || 1)
+        }
+      } catch {
+        if (active) setError('Products could not load. Please try again.')
+      } finally {
+        if (active) setLoading(false)
+      }
     }
     load()
-  }, [category, search, page, sort])
+    return () => { active = false }
+  }, [category, search, page, sort, retry])
 
   function setParam(key, val) {
     const next = new URLSearchParams(searchParams)
@@ -147,22 +159,22 @@ export default function ProductCatalogPage() {
       </aside>
 
       {/* Main grid */}
-      <section className="flex-1 p-gutter bg-surface min-w-0">
+      <section className="flex-1 px-4 py-6 sm:p-gutter bg-surface min-w-0">
         <div className="flex justify-between items-start mb-lg flex-wrap gap-4">
           <div>
-            <h1 className="text-h1 text-on-surface">
+            <h1 className="text-3xl md:text-h1 font-bold text-on-surface break-words">
               {currentCat ? currentCat.name : search ? `Results for "${search}"` : 'Premium Supplies'}
             </h1>
             <p className="text-body text-secondary">
-              {loading ? 'Loading...' : `Showing ${products.length} of ${total} products`}
+              {loading ? 'Loading...' : error || `Showing ${products.length} of ${total} products`}
             </p>
           </div>
-          <div className="flex items-center gap-sm">
+          <div className="flex items-center gap-sm min-w-0">
             <span className="text-label uppercase text-secondary">Sort by:</span>
             <select
               value={sort}
               onChange={e => setParam('sort', e.target.value)}
-              className="bg-white border border-outline-variant rounded-lg text-body-sm py-1 pl-3 pr-8 focus:ring-primary focus:ring-2 outline-none cursor-pointer"
+              className="min-w-0 bg-white border border-outline-variant rounded-lg text-body-sm py-1 pl-3 pr-8 focus:ring-primary focus:ring-2 outline-none cursor-pointer"
             >
               {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
@@ -170,10 +182,10 @@ export default function ProductCatalogPage() {
         </div>
 
         {/* Mobile category chips — direct checkout only */}
-        <div className="md:hidden flex gap-2 flex-wrap mb-md">
+        <div className="md:hidden flex gap-2 overflow-x-auto pb-2 mb-md -mx-4 px-4">
           <button
             onClick={() => setParam('category', '')}
-            className={`px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
           >
             All
           </button>
@@ -181,7 +193,7 @@ export default function ProductCatalogPage() {
             <button
               key={c.id}
               onClick={() => setParam('category', c.slug)}
-              className={`px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
             >
               {c.name}
             </button>
@@ -189,7 +201,7 @@ export default function ProductCatalogPage() {
         </div>
 
         {isQuoteCat && (
-          <div className="mb-md p-md bg-tertiary-fixed/30 border border-outline-variant rounded-xl flex items-center justify-between gap-4">
+          <div className="mb-md p-md bg-tertiary-fixed/30 border border-outline-variant rounded-xl flex flex-wrap items-center justify-between gap-4">
             <p className="text-body-sm text-on-surface">This category requires a custom quote. Fill in our form to get pricing.</p>
             <Button as={Link} to="/quote" variant="gold" size="sm">Request Quote</Button>
           </div>
@@ -198,6 +210,8 @@ export default function ProductCatalogPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
           {loading
             ? Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)
+            : error
+              ? <div className="col-span-full py-xl text-center"><Button onClick={() => setRetry(value => value + 1)} variant="ghost">Try again</Button></div>
             : products.length === 0
               ? (
                 <div className="col-span-full flex flex-col items-center justify-center py-xl text-center">

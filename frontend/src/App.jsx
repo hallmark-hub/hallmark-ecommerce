@@ -1,29 +1,14 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-
-import HomePage from './pages/HomePage'
-import ProductCatalogPage from './pages/ProductCatalogPage'
-import ProductDetailPage from './pages/ProductDetailPage'
-import CheckoutPage from './pages/CheckoutPage'
-import PaymentVerifyPage from './pages/PaymentVerifyPage'
-import OrderConfirmationPage from './pages/OrderConfirmationPage'
-import QuoteRequestPage from './pages/QuoteRequestPage'
-import AccountPage from './pages/AccountPage'
-import AuthPage from './pages/AuthPage'
-import ServicesPage from './pages/ServicesPage'
-import ServiceDetailPage from './pages/ServiceDetailPage'
-import RoboticsPage from './pages/RoboticsPage'
-import AboutPage from './pages/AboutPage'
-import WarrantyReturnsPage from './pages/WarrantyReturnsPage'
-import TermsConditionsPage from './pages/TermsConditionsPage'
-import NotFoundPage from './pages/NotFoundPage'
 
 import WhatsAppButton from './components/WhatsAppButton'
 import ErrorBoundary from './components/ErrorBoundary'
 import { PageLoader } from './components/PageLoader'
 import useSiteContentStore from './store/siteContentStore'
+import { getProducts } from './api/products'
+import HomePage from './pages/HomePage'
 
 // Admin is a separate audience from the storefront — loading it on demand keeps
 // it out of the bundle every customer downloads.
@@ -33,14 +18,43 @@ const AdminOrdersPage = lazy(() => import('./pages/admin/AdminOrdersPage'))
 const AdminInventoryPage = lazy(() => import('./pages/admin/AdminInventoryPage'))
 const AdminQuotesPage = lazy(() => import('./pages/admin/AdminQuotesPage'))
 const AdminSettingsPage = lazy(() => import('./pages/admin/AdminSettingsPage'))
+const ProductCatalogPage = lazy(() => import('./pages/ProductCatalogPage'))
+const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'))
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
+const PaymentVerifyPage = lazy(() => import('./pages/PaymentVerifyPage'))
+const OrderConfirmationPage = lazy(() => import('./pages/OrderConfirmationPage'))
+const QuoteRequestPage = lazy(() => import('./pages/QuoteRequestPage'))
+const AccountPage = lazy(() => import('./pages/AccountPage'))
+const AuthPage = lazy(() => import('./pages/AuthPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'))
+const RoboticsPage = lazy(() => import('./pages/RoboticsPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const WarrantyReturnsPage = lazy(() => import('./pages/WarrantyReturnsPage'))
+const TermsConditionsPage = lazy(() => import('./pages/TermsConditionsPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 function StorefrontLayout({ children }) {
+  const location = useLocation()
   const content = useSiteContentStore(state => state.content)
   const loading = useSiteContentStore(state => state.loading)
   const error = useSiteContentStore(state => state.error)
   const load = useSiteContentStore(state => state.load)
 
   useEffect(() => { load() }, [load])
+  useEffect(() => {
+    if (location.pathname === '/') {
+      getProducts({ limit: 8 }).catch(() => {})
+    } else if (location.pathname === '/products') {
+      const query = new URLSearchParams(location.search)
+      getProducts({
+        category: query.get('category') || undefined,
+        search: query.get('search') || undefined,
+        page: parseInt(query.get('page') || '1', 10),
+        limit: 12,
+      }).catch(() => {})
+    }
+  }, [location.pathname, location.search])
   useEffect(() => {
     if (!content) return
     document.title = content.seo_title
@@ -66,7 +80,7 @@ function StorefrontLayout({ children }) {
   return (
     <>
       <Navbar />
-      <ErrorBoundary>{children}</ErrorBoundary>
+      <ErrorBoundary><Suspense fallback={<PageLoader />}>{children}</Suspense></ErrorBoundary>
       <Footer />
       <WhatsAppButton />
     </>

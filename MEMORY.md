@@ -9,6 +9,13 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 
 ---
 
+## 2026-09-23, Mobile storefront loading and media priority
+**What was decided:** Keep the homepage in the initial bundle and load other storefront routes on demand; start homepage/catalogue product requests alongside site-content loading and share recent identical requests for ten seconds. On phones, show a still image for robotics video, and load desktop video when it approaches view. Defer the Tawk widget until after page load.
+**Why:** Site content previously delayed the first product request, every storefront route shipped in the initial JavaScript, and a 9.8 MB video competed with mobile page assets. Small catalogue layout changes keep controls usable on narrow screens.
+**What was rejected:** Caching admin-managed content indefinitely or changing product data and backend schema; those would risk stale storefront content and exceed the responsiveness task.
+
+---
+
 ## 2026-09-20, Homepage map section + Terms page from documented policy fragments
 **What was decided:** Add a keyless Google Maps embed (address-string geocoded, no GPS pin needed) plus a "Get Directions on Google Maps" link in a "Find Us Here" homepage section placed immediately before the final "Need a Custom Quote?" CTA, alongside the admin-managed address, phones, email and business hours (new `mapsEmbedUrl`/`mapsDirectionsUrl` helpers in `frontend/src/config/contact.js`). Add a `/terms` Terms & Conditions page drafted strictly from the client-documented policy fragments — Paystack payment, 24-hour delivery after full payment / 6–8 weeks preorders, 3-day returns/no refunds with exchange for defects, custom items non-returnable, warranty summary — linked from the footer Company column. Owner confirmed 2026-09-20 that **all migrations 001–015 are applied** in Supabase.
 **Why:** The owner wanted a clickable map for directions keyed off the existing address (the address resolves GPS, so no coordinates are needed) and asked for it as a visible homepage section rather than the footer; the client docs contain no actual Terms & Conditions text, so the page uses only supplied facts and avoids fabricated legal clauses, mirroring the conservative warranty/returns approach.

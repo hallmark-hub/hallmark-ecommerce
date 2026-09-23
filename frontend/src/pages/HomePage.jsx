@@ -53,7 +53,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={content.home_hero_image_url} alt={`${content.company_name} hospitality offering`} className="w-full h-full object-cover object-top" />
+          <img src={content.home_hero_image_url} alt={`${content.company_name} hospitality offering`} fetchPriority="high" className="w-full h-full object-cover object-top" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/65 to-black/90" />
         </div>
         <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-gutter pb-14 md:pb-20 flex flex-col items-center text-center">
@@ -91,7 +91,7 @@ export default function HomePage() {
         <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
           {STATS.map(s => (
             <div key={s.label}>
-              <p className="text-h1 text-white">{s.value}</p>
+              <p className="text-xl sm:text-2xl md:text-h1 font-bold text-white break-words">{s.value}</p>
               <p className="text-primary-fixed text-body-sm mt-1">{s.label}</p>
             </div>
           ))}
@@ -117,7 +117,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-5 md:h-[500px]">
           {/* Chef Uniforms — hero card */}
           <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[320px] md:h-auto">
-            <img src={content.home_uniform_image_url} alt="Chef Uniforms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <img src={content.home_uniform_image_url} alt="Chef Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <p className="text-label uppercase text-gold mb-2">Professional teamwear</p>
@@ -139,7 +139,7 @@ export default function HomePage() {
           <div className="md:col-span-5 grid grid-rows-2 gap-5">
             {/* Industrial Equipment */}
             <div className="group relative rounded-2xl overflow-hidden h-[200px] md:h-auto">
-              <img src={content.home_equipment_image_url} alt="Kitchen Equipment" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={content.home_equipment_image_url} alt="Kitchen Equipment" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-h3 text-white mb-1">Industrial Equipment</h3>
@@ -154,7 +154,7 @@ export default function HomePage() {
 
             {/* Services Strip */}
             <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[200px] md:h-auto">
-              <img src={content.home_branding_image_url} alt="Staff Uniforms" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
+              <img src={content.home_branding_image_url} alt="Staff Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex flex-col justify-end p-6">
                 <h3 className="text-h3 text-white mb-1">Branding & Customization</h3>
               <p className="text-white/70 text-body-sm mb-3">Embroidery, printing and customised teamwear</p>
@@ -281,7 +281,7 @@ export default function HomePage() {
             {[...TRUSTED_BY, ...TRUSTED_BY].map((client, i) => (
               <div key={i} className="flex items-center justify-center mx-10 shrink-0">
                 {client.logo_url ? (
-                  <img src={client.logo_url} alt={client.name} className="h-20 w-auto object-contain opacity-90" />
+                  <img src={client.logo_url} alt={client.name} loading="lazy" decoding="async" className="h-20 w-auto object-contain opacity-90" />
                 ) : (
                   <span className="text-h3 text-secondary whitespace-nowrap">{client.name}</span>
                 )}
