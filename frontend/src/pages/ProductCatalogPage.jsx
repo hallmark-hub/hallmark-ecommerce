@@ -160,7 +160,7 @@ export default function ProductCatalogPage() {
 
       {/* Main grid */}
       <section className="flex-1 px-4 py-6 sm:p-gutter bg-surface min-w-0">
-        <div className="flex justify-between items-start mb-lg flex-wrap gap-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-lg gap-4">
           <div>
             <h1 className="text-3xl md:text-h1 font-bold text-on-surface break-words">
               {currentCat ? currentCat.name : search ? `Results for "${search}"` : 'Premium Supplies'}
@@ -169,7 +169,7 @@ export default function ProductCatalogPage() {
               {loading ? 'Loading...' : error || `Showing ${products.length} of ${total} products`}
             </p>
           </div>
-          <div className="flex items-center gap-sm min-w-0">
+          <div className="flex items-center gap-sm min-w-0 sm:ml-auto">
             <span className="text-label uppercase text-secondary">Sort by:</span>
             <select
               value={sort}
@@ -207,7 +207,7 @@ export default function ProductCatalogPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-md">
           {loading
             ? Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)
             : error

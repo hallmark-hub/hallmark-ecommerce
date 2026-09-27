@@ -7,6 +7,11 @@ Maintain this file. After any significant decision, about direction, format, con
 
 Read MEMORY.md at the start of every session before doing anything. Never contradict a logged decision without flagging it first.
 
+## 2026-09-27, Mobile storefront density
+**What was decided:** Give phone screens a denser two-column product grid, compact product cards and category panels, and smaller heading sizes while retaining the existing desktop breakpoints and layouts.
+**Why:** Most storefront visits are expected on phones, and the previous one-card-per-row catalogue plus desktop-sized spacing made mobile browsing unnecessarily long and visually oversized.
+**What was rejected:** Reworking the information architecture or adding mobile-only features before checking the existing commerce flow; a targeted responsive pass addresses the observed friction.
+
 ---
 
 ## 2026-09-23, Mobile storefront loading and media priority

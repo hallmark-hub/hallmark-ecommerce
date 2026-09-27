@@ -38,23 +38,23 @@ export default function ProductCard({ product }) {
           </div>
         )}
         <div className="absolute top-3 left-3">
-          <span className="bg-white/95 backdrop-blur-sm text-primary text-label uppercase px-2.5 py-1 rounded-full">
+          <span className="block max-w-[90%] sm:max-w-full truncate bg-white/95 backdrop-blur-sm text-primary text-[9px] sm:text-label uppercase px-2 py-1 sm:px-2.5 rounded-full">
             {product.category_slug?.replace(/-/g, ' ')}
           </span>
         </div>
       </Link>
 
-      <div className="p-4 flex flex-col flex-1 gap-3">
+      <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2 sm:gap-3">
         <Link
           to={`/products/${product.slug}`}
           className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
         >
-          <h3 className="text-h3 text-on-surface line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="text-body-sm sm:text-h3 font-semibold text-on-surface line-clamp-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
         </Link>
 
-        <div className="mt-auto flex flex-col gap-3">
+        <div className="mt-auto flex flex-col gap-2 sm:gap-3">
           <PriceDisplay pesewas={product.price_pesewas} label={product.price_label} size="md" />
 
           {isQuote ? (

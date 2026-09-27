@@ -114,12 +114,12 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-5 md:h-[500px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-4 sm:gap-5 md:h-[500px]">
           {/* Chef Uniforms — hero card */}
-          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[320px] md:h-auto">
+          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[260px] sm:h-[320px] md:h-auto">
             <img src={content.home_uniform_image_url} alt="Chef Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8">
+            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
               <p className="text-label uppercase text-gold mb-2">Professional teamwear</p>
               <h3 className="text-h1 text-white mb-2">Chef Uniforms</h3>
               <p className="text-white/70 text-body-sm mb-5">Jackets, aprons, trousers, caps and coordinated sets</p>
@@ -136,12 +136,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="md:col-span-5 grid grid-rows-2 gap-5">
+          <div className="md:col-span-5 grid grid-rows-2 gap-4 sm:gap-5">
             {/* Industrial Equipment */}
-            <div className="group relative rounded-2xl overflow-hidden h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden h-[170px] sm:h-[200px] md:h-auto">
               <img src={content.home_equipment_image_url} alt="Kitchen Equipment" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
                 <h3 className="text-h3 text-white mb-1">Industrial Equipment</h3>
                 <Link
                   to="/products?category=kitchen-equipment-tools"
@@ -153,9 +153,9 @@ export default function HomePage() {
             </div>
 
             {/* Services Strip */}
-            <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[170px] sm:h-[200px] md:h-auto">
               <img src={content.home_branding_image_url} alt="Staff Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
+              <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3 className="text-h3 text-white mb-1">Branding & Customization</h3>
               <p className="text-white/70 text-body-sm mb-3">Embroidery, printing and customised teamwear</p>
                 <Button as={Link} to="/services" variant="gold" size="sm" iconRight={<ArrowRight />} className="w-fit">
@@ -180,7 +180,7 @@ export default function HomePage() {
               View Full Catalog
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {loading
               ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
               : featured.map(p => <ProductCard key={p.id} product={p} />)
