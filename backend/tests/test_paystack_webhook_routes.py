@@ -39,6 +39,7 @@ def create_order() -> dict[str, object]:
                 "name": "Ama Boateng",
                 "email": "ama@example.com",
                 "phone": "+233201987654",
+                "delivery_address": "12 Test Street, Accra",
             },
             "items": [
                 {
@@ -77,7 +78,7 @@ def test_paystack_webhook_endpoint_processes_signed_payload(monkeypatch) -> None
     get_settings.cache_clear()
     payload = {
         "event": "charge.success",
-        "data": {"reference": payment["reference"], "status": "success"},
+        "data": {"reference": payment["reference"], "status": "success", "amount": 30000, "currency": "GHS"},
     }
     raw_body, signature = signed_payload(payload, "secret")
 

@@ -17,6 +17,7 @@ def order_payload(product_id: UUID = DIRECT_PRODUCT_ID) -> dict[str, object]:
             "name": "Ama Boateng",
             "email": "ama@example.com",
             "phone": "+233201987654",
+            "delivery_address": "12 Test Street, Accra",
         },
         "items": [{"product_id": str(product_id), "quantity": 2}],
         "payment_method": "paystack",

@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from threading import Lock
 from typing import Any, Protocol
 from uuid import uuid4
 
@@ -65,6 +66,7 @@ class InMemoryOrderRepository:
     def __init__(self) -> None:
         self.orders: dict[str, dict[str, Any]] = {}
         self.items: dict[str, list[dict[str, Any]]] = {}
+        self._stock_lock = Lock()
 
     def get_products_by_ids(self, product_ids: list[str]) -> list[dict[str, Any]]:
         """Return seed products by ID."""
@@ -76,13 +78,35 @@ class InMemoryOrderRepository:
         order: dict[str, Any],
         items: list[dict[str, Any]],
     ) -> dict[str, Any]:
-        """Store order and items in memory."""
-        if order["reference"] in self.orders:
-            raise OrderReferenceConflictError("Order reference is already taken")
-        order = {**order, "id": str(uuid4()), "created_at": datetime.now(UTC)}
-        self.orders[order["reference"]] = order
-        self.items[order["reference"]] = items
-        return order
+        """Create an in-memory order and reserve stock under one lock."""
+        with self._stock_lock:
+            if order["reference"] in self.orders:
+                raise OrderReferenceConflictError("Order reference is already taken")
+            quantities = _quantities_by_product(items)
+            products = {str(p["id"]): p for p in _PRODUCT_DATA}
+            for product_id, quantity in quantities.items():
+                product = products.get(product_id)
+                if (
+                    product is None
+                    or product.get("checkout_type") != "direct"
+                    or int(product.get("stock_qty", 0)) < quantity
+                ):
+                    raise OrderPersistenceError("Available stock changed; refresh the cart")
+            for product_id, quantity in quantities.items():
+                product = products[product_id]
+                product["stock_qty"] = int(product["stock_qty"]) - quantity
+                product["in_stock"] = product["stock_qty"] > 0
+            order = {
+                **order,
+                "id": str(uuid4()),
+                "created_at": datetime.now(UTC),
+                "stock_reserved": True,
+                "stock_applied": False,
+                "stock_reservation_expires_at": datetime.now(UTC).timestamp() + 1800,
+            }
+            self.orders[order["reference"]] = order
+            self.items[order["reference"]] = items
+            return order
 
     def lookup_order(self, reference: str, phone: str) -> dict[str, Any] | None:
         """Return an in-memory order by secure lookup keys."""
@@ -92,26 +116,56 @@ class InMemoryOrderRepository:
         return {**order, "items": self.items.get(reference, [])}
 
     def apply_order_stock(self, order_id: str) -> bool:
-        """Decrement in-memory seed stock for an order exactly once."""
+        """Finalize or safely reacquire stock for a paid order exactly once."""
         order = self.get_order_by_id(order_id)
-        if order is None or order.get("stock_applied"):
+        if order is None or order.get("stock_applied") or order.get("payment_status") != "paid":
             return False
-        order["stock_applied"] = True
-        for item in self.items.get(order["reference"], []):
-            for product in _PRODUCT_DATA:
-                if str(product["id"]) == str(item["product_id"]):
-                    product["stock_qty"] = max(
-                        int(product["stock_qty"]) - int(item["quantity"]), 0
-                    )
+        with self._stock_lock:
+            products = {str(p["id"]): p for p in _PRODUCT_DATA}
+            quantities = _quantities_by_product(self.items.get(order["reference"], []))
+            if not order.get("stock_reserved"):
+                for product_id, quantity in quantities.items():
+                    product = products.get(product_id)
+                    if product is None or int(product.get("stock_qty", 0)) < quantity:
+                        return False
+                for product_id, quantity in quantities.items():
+                    product = products[product_id]
+                    product["stock_qty"] = int(product["stock_qty"]) - quantity
                     product["in_stock"] = product["stock_qty"] > 0
-        return True
+            order["stock_reserved"] = False
+            order["stock_applied"] = True
+            return True
 
     def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         """Return an in-memory order by ID."""
+        now = datetime.now(UTC).timestamp()
         for order in self.orders.values():
+            expires_at = order.get("stock_reservation_expires_at")
+            if (
+                order.get("stock_reserved")
+                and isinstance(expires_at, (int, float))
+                and expires_at <= now
+                and order.get("payment_status") != "paid"
+            ):
+                self._release_order_reservation(order)
             if str(order["id"]) == order_id:
                 return order
         return None
+
+    def _release_order_reservation(self, order: dict[str, Any]) -> None:
+        """Return an expired unpaid order's reserved units to available stock."""
+        with self._stock_lock:
+            if not order.get("stock_reserved"):
+                return
+            products = {str(p["id"]): p for p in _PRODUCT_DATA}
+            for product_id, quantity in _quantities_by_product(
+                self.items.get(order["reference"], [])
+            ).items():
+                product = products.get(product_id)
+                if product is not None:
+                    product["stock_qty"] = int(product.get("stock_qty", 0)) + quantity
+                    product["in_stock"] = True
+            order["stock_reserved"] = False
 
     def update_payment_status(
         self,
@@ -178,32 +232,21 @@ class SupabaseOrderRepository:
         order: dict[str, Any],
         items: list[dict[str, Any]],
     ) -> dict[str, Any]:
-        """Persist order and items to Supabase."""
+        """Create order and item rows atomically while reserving stock."""
         try:
-            order_response = self.client.table("orders").insert(order).execute()
+            response = self.client.rpc(
+                "create_order_with_items",
+                {"p_order": order, "p_items": items},
+            ).execute()
         except Exception as exc:
             if _is_unique_violation(exc):
                 raise OrderReferenceConflictError(
                     "Order reference is already taken"
                 ) from exc
             raise OrderPersistenceError("Order could not be created") from exc
-
-        rows = response_data(order_response)
-        if not rows:
+        created = getattr(response, "data", None)
+        if not isinstance(created, dict):
             raise OrderPersistenceError("Order could not be created")
-        created = rows[0]
-        order_id = created["id"]
-
-        order_items = [{**item, "order_id": order_id} for item in items]
-        if order_items:
-            try:
-                self.client.table("order_items").insert(order_items).execute()
-            except Exception as exc:
-                # Supabase has no multi-table transaction here, so roll the
-                # order back rather than leave one with no line items.
-                self.client.table("orders").delete().eq("id", order_id).execute()
-                raise OrderPersistenceError("Order items could not be created") from exc
-
         return created
 
     def lookup_order(self, reference: str, phone: str) -> dict[str, Any] | None:
@@ -211,7 +254,7 @@ class SupabaseOrderRepository:
         order_response = (
             self.client.table("orders")
             .select(
-                "id,reference,customer_name,customer_phone,total_pesewas,"
+                "id,reference,customer_name,customer_phone,company_name,delivery_address,total_pesewas,"
                 "payment_method,payment_status,order_status,returns_policy,created_at"
             )
             .eq("reference", reference)
@@ -240,12 +283,14 @@ class SupabaseOrderRepository:
         return bool(getattr(response, "data", False))
 
     def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
-        """Return an order by ID."""
+        """Return an order by ID after releasing expired reservations."""
+        self.client.rpc("release_expired_order_stock").execute()
         response = (
             self.client.table("orders")
             .select(
                 "id,reference,customer_name,customer_email,total_pesewas,payment_method,"
-                "payment_status,order_status"
+                "payment_status,order_status,stock_reserved,"
+                "stock_reservation_expires_at,stock_applied"
             )
             .eq("id", order_id)
             .limit(1)
@@ -274,7 +319,7 @@ class SupabaseOrderRepository:
         response = (
             self.client.table("orders")
             .select(
-                "id,reference,customer_name,customer_phone,total_pesewas,"
+                "id,reference,customer_name,customer_phone,customer_email,company_name,delivery_address,total_pesewas,"
                 "payment_method,payment_status,order_status,created_at"
             )
             .order("created_at", desc=True)
@@ -288,8 +333,8 @@ class SupabaseOrderRepository:
         order_response = (
             self.client.table("orders")
             .select(
-                "id,reference,customer_name,customer_phone,total_pesewas,"
-                "payment_method,payment_status,order_status,returns_policy,created_at"
+                "id,reference,customer_name,customer_phone,company_name,delivery_address,total_pesewas,"
+                "payment_method,payment_status,order_status,returns_policy,stock_applied,created_at"
             )
             .eq("reference", reference)
             .limit(1)
@@ -321,6 +366,15 @@ class SupabaseOrderRepository:
         )
         rows = response_data(response)
         return rows[0] if rows else None
+
+
+def _quantities_by_product(items: list[dict[str, Any]]) -> dict[str, int]:
+    """Sum order-line quantities by product ID."""
+    quantities: dict[str, int] = {}
+    for item in items:
+        product_id = str(item["product_id"])
+        quantities[product_id] = quantities.get(product_id, 0) + int(item["quantity"])
+    return quantities
 
 
 def _is_unique_violation(exc: Exception) -> bool:

@@ -31,6 +31,7 @@ def create_order() -> dict[str, object]:
                 "name": "Ama Boateng",
                 "email": "ama@example.com",
                 "phone": "+233201987654",
+                "delivery_address": "12 Test Street, Accra",
             },
             "items": [
                 {
@@ -71,6 +72,14 @@ def test_admin_can_get_order_by_reference() -> None:
 
 def test_admin_can_update_order_status() -> None:
     order = create_order()
+    initialized = request(
+        "POST",
+        "/api/v1/payments/paystack/initialize",
+        json={"order_id": order["id"]},
+    )
+    reference = initialized.json()["data"]["reference"]
+    paid = request("GET", f"/api/v1/payments/paystack/verify/{reference}")
+    assert paid.status_code == 200
 
     response = request(
         "PATCH",

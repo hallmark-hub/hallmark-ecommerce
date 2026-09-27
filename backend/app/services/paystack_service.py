@@ -5,11 +5,14 @@ from typing import Any, Protocol
 import httpx
 
 from app.core.config import get_settings
+from app.core.logging import get_logger
 from app.models.orders import PaymentMethod, PaymentStatus
 from app.models.payments import InitializePaystackResponse, VerifyPaystackResponse
 from app.repositories.order_repository import OrderRepository, get_order_repository
 from app.repositories.payment_repository import PaymentRepository, get_payment_repository
 from app.services.notification_service import NotificationService, get_notification_service
+
+logger = get_logger(__name__)
 
 
 class PaymentValidationError(ValueError):
@@ -39,6 +42,8 @@ class PaystackGateway(Protocol):
 class LocalPaystackGateway:
     """Local Paystack gateway for dev/tests without external calls."""
 
+    _amounts: dict[str, int] = {}
+
     def initialize(
         self,
         email: str,
@@ -47,6 +52,7 @@ class LocalPaystackGateway:
         callback_url: str | None = None,
     ) -> dict[str, str]:
         """Return deterministic local checkout data."""
+        self._amounts[reference] = amount_pesewas
         return {
             "authorization_url": f"https://checkout.paystack.com/local-{reference}",
             "access_code": f"local-{reference}",
@@ -55,7 +61,7 @@ class LocalPaystackGateway:
 
     def verify(self, reference: str) -> dict[str, object]:
         """Return deterministic local verification data."""
-        return {"reference": reference, "status": "success", "amount": None}
+        return {"reference": reference, "status": "success", "amount": self._amounts[reference], "currency": "GHS"}
 
 
 class HttpPaystackGateway:
@@ -72,7 +78,7 @@ class HttpPaystackGateway:
         callback_url: str | None = None,
     ) -> dict[str, str]:
         """Initialize a Paystack payment through Paystack API."""
-        payload = {"email": email, "amount": amount_pesewas, "reference": reference}
+        payload = {"email": email, "amount": amount_pesewas, "reference": reference, "currency": "GHS"}
         if callback_url is not None:
             payload["callback_url"] = callback_url
         try:
@@ -105,9 +111,10 @@ class HttpPaystackGateway:
             payload = response.json()
             data = payload["data"]
             return {
-                "reference": reference,
+                "reference": data.get("reference"),
                 "status": data.get("status"),
                 "amount": data.get("amount"),
+                "currency": data.get("currency"),
                 "raw": payload,
             }
         except (KeyError, TypeError, ValueError, httpx.HTTPError) as exc:
@@ -155,11 +162,13 @@ class PaystackService:
             )
         except PaystackGatewayError as exc:
             raise PaymentValidationError(str(exc)) from exc
+        if initialized.get("reference") != order["reference"]:
+            raise PaymentValidationError("Paystack returned an unexpected reference")
         self.payments.create_payment(
             {
                 "order_id": order["id"],
                 "provider": PaymentMethod.paystack.value,
-                "reference": initialized["reference"],
+                "reference": order["reference"],
                 "status": PaymentStatus.pending.value,
                 "amount_pesewas": order["total_pesewas"],
                 "provider_access_code": initialized["access_code"],
@@ -179,12 +188,8 @@ class PaystackService:
             verified = self.gateway.verify(reference)
         except PaystackGatewayError as exc:
             raise PaymentValidationError(str(exc)) from exc
-        _validate_payment_amount(payment, verified.get("amount"))
-        payment_status = (
-            PaymentStatus.paid
-            if verified.get("status") == "success"
-            else PaymentStatus.failed
-        )
+        _validate_provider_payment(reference, payment, verified)
+        payment_status = _payment_status(verified.get("status"))
         already_paid = payment["status"] == PaymentStatus.paid.value
         payment_status = _safe_next_status(payment["status"], payment_status)
         self.payments.update_payment_status(
@@ -193,8 +198,11 @@ class PaystackService:
             raw_response=dict(verified),
         )
         self.orders.update_payment_status(str(payment["order_id"]), payment_status.value)
-        if payment_status == PaymentStatus.paid:
-            self.orders.apply_order_stock(str(payment["order_id"]))
+        if payment_status == PaymentStatus.paid and not self.orders.apply_order_stock(str(payment["order_id"])):
+            logger.error(
+                "Paid payment could not be matched to available stock for order %s",
+                payment["order_id"],
+            )
         if not already_paid and payment_status == PaymentStatus.paid:
             order = self.orders.get_order_by_id(str(payment["order_id"]))
             if order is not None:
@@ -233,7 +241,7 @@ class PaystackService:
 
         payment_status = _payment_status_from_webhook(event_type, data)
         if payment is not None and payment_status is not None:
-            _validate_payment_amount(payment, data.get("amount"))
+            _validate_provider_payment(reference, payment, data)
             already_paid = payment["status"] == PaymentStatus.paid.value
             payment_status = _safe_next_status(payment["status"], payment_status)
             self.payments.update_payment_status(
@@ -248,7 +256,11 @@ class PaystackService:
             if payment_status == PaymentStatus.paid:
                 # Idempotent at the database level, so a webhook retry that
                 # slips past dedup still cannot double-decrement stock.
-                self.orders.apply_order_stock(str(payment["order_id"]))
+                if not self.orders.apply_order_stock(str(payment["order_id"])):
+                    logger.error(
+                        "Paid webhook could not be matched to available stock for order %s",
+                        payment["order_id"],
+                    )
                 if not already_paid:
                     order = self.orders.get_order_by_id(str(payment["order_id"]))
                     if order is not None:
@@ -299,7 +311,7 @@ def _payment_status_from_webhook(
 ) -> PaymentStatus | None:
     if event_type != "charge.success":
         return None
-    return PaymentStatus.paid if data.get("status") == "success" else PaymentStatus.failed
+    return _payment_status(data.get("status"))
 
 
 def _paystack_event_key(event_type: str, data: dict[str, Any]) -> str:
@@ -310,13 +322,30 @@ def _paystack_event_key(event_type: str, data: dict[str, Any]) -> str:
     return f"{event_type}:{reference}"
 
 
-def _validate_payment_amount(payment: dict[str, Any], amount: object) -> None:
-    if amount is None:
-        return
-    if not isinstance(amount, int):
+def _validate_provider_payment(
+    reference: str,
+    payment: dict[str, Any],
+    result: dict[str, Any],
+) -> None:
+    """Require Paystack to confirm reference, exact amount and currency."""
+    if result.get("reference") != reference:
+        raise PaymentValidationError("Paystack reference does not match payment")
+    amount = result.get("amount")
+    if isinstance(amount, bool) or not isinstance(amount, int):
         raise PaymentValidationError("Paystack amount is invalid")
     if amount != payment["amount_pesewas"]:
         raise PaymentValidationError("Paystack amount does not match order total")
+    if result.get("currency") != "GHS":
+        raise PaymentValidationError("Paystack currency does not match order currency")
+
+
+def _payment_status(provider_status: object) -> PaymentStatus:
+    """Keep non-final Paystack results pending."""
+    if provider_status == "success":
+        return PaymentStatus.paid
+    if provider_status in {"failed", "abandoned"}:
+        return PaymentStatus.failed
+    return PaymentStatus.pending
 
 
 def _safe_next_status(

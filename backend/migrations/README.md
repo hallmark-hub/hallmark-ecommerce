@@ -18,10 +18,18 @@ Supabase SQL Editor in filename order:
 11. `011_remove_demo_products.sql`
 12. `012_refresh_client_website_content.sql`
 13. `013_quote_request_business_details.sql`
+14. `014_doc_aligned_categories_and_quote_options.sql`
+15. `015_seed_client_catalog.sql`
+16. `016_global_partners_content.sql`
+17. `017_production_access_and_order_details.sql`
+18. `018_atomic_order_stock_reservations.sql`
 
-Each file is written to be safe to run more than once where PostgreSQL supports
-that cleanly. Do not edit an already-applied migration. Add a new numbered file
-for future schema or seed changes.
+Apply only migrations that are not already recorded as applied, in filename
+order. Confirm the target database's applied migration history before running
+017 and 018; 017 requires 016 and 018 requires 017. Take a backup first and
+validate the SQL and its effects against an isolated database. Do not edit or
+blindly rerun an already-applied migration. Add a new numbered file for future
+schema or seed changes.
 
 ## Verification
 

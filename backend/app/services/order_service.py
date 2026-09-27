@@ -79,6 +79,8 @@ class OrderService:
             "customer_name": request.customer.name,
             "customer_email": request.customer.email,
             "customer_phone": request.customer.phone,
+            "company_name": request.customer.company_name.strip(),
+            "delivery_address": request.customer.delivery_address.strip(),
             "subtotal_pesewas": subtotal,
             "total_pesewas": subtotal,
             "payment_method": request.payment_method.value,
@@ -119,6 +121,8 @@ class OrderService:
             customer=LookupCustomer(
                 name=order["customer_name"],
                 phone=order["customer_phone"],
+                company_name=order.get("company_name") or "",
+                delivery_address=order["delivery_address"],
             ),
             items=[LookupOrderItem.model_validate(item) for item in order["items"]],
             total_pesewas=order["total_pesewas"],

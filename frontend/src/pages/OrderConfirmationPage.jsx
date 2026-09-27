@@ -110,7 +110,7 @@ export default function OrderConfirmationPage() {
         {/* Success header */}
         <div className="text-center mb-xl">
           <CheckCircle size={64} className="text-primary mx-auto mb-md" />
-          <h1 className="text-h1 text-on-surface mb-sm">Order Confirmed!</h1>
+          <h1 className="text-h1 text-on-surface mb-sm">{order.payment_status === 'paid' ? 'Order Confirmed!' : 'Order Received'}</h1>
           <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
           {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">Save your reference above — quote it to our team on WhatsApp for any updates.</p>}
           {error && <p className="text-body-sm text-tertiary mt-xs">{error}</p>}
@@ -152,10 +152,16 @@ export default function OrderConfirmationPage() {
               <span>Delivery</span><span className="text-primary font-semibold">Free (Accra)</span>
             </div>
             <div className="flex justify-between items-baseline pt-sm border-t border-outline-variant">
-              <span className="text-h3 text-on-surface">Total Paid</span>
+              <span className="text-h3 text-on-surface">{order.payment_status === 'paid' ? 'Total Paid' : 'Order Total'}</span>
               <span className="text-price text-primary whitespace-nowrap">{formatPrice(order.total_pesewas)}</span>
             </div>
           </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-outline-variant p-md mb-md">
+          <p className="text-label uppercase text-secondary mb-sm">Delivery address</p>
+          {order.customer.company_name && <p className="text-body-sm font-medium text-on-surface">{order.customer.company_name}</p>}
+          <p className="text-body-sm text-on-surface">{order.customer.delivery_address}</p>
         </div>
 
         {/* Delivery & Payment cards */}

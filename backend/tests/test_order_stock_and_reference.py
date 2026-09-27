@@ -39,6 +39,7 @@ def order_payload(items: list[dict[str, object]]) -> dict[str, object]:
             "name": "Ama Boateng",
             "email": "ama@example.com",
             "phone": "+233201987654",
+            "delivery_address": "12 Test Street, Accra",
         },
         "items": items,
         "payment_method": "paystack",
@@ -101,6 +102,7 @@ def test_applying_order_stock_decrements_once() -> None:
         )
     )
 
+    repository.update_payment_status(str(order.id), "paid")
     assert repository.apply_order_stock(str(order.id)) is True
     assert seed_product()["stock_qty"] == 6
 
@@ -118,6 +120,7 @@ def test_applying_all_remaining_stock_marks_product_out_of_stock() -> None:
         )
     )
 
+    repository.update_payment_status(str(order.id), "paid")
     repository.apply_order_stock(str(order.id))
 
     assert seed_product()["stock_qty"] == 0

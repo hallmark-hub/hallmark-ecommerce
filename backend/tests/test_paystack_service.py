@@ -23,6 +23,7 @@ def create_order(repository: InMemoryOrderRepository) -> str:
                     "name": "Ama Boateng",
                     "email": "ama@example.com",
                     "phone": "+233201987654",
+                    "delivery_address": "12 Test Street, Accra",
                 },
                 "items": [
                     {
@@ -85,7 +86,7 @@ class AmountMismatchGateway(LocalPaystackGateway):
 
 class FailedGateway(LocalPaystackGateway):
     def verify(self, reference: str) -> dict[str, object]:
-        return {"reference": reference, "status": "failed", "amount": 30000}
+        return {"reference": reference, "status": "failed", "amount": 30000, "currency": "GHS"}
 
 
 class FailingInitializeGateway(LocalPaystackGateway):

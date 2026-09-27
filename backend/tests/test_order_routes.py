@@ -25,6 +25,7 @@ def valid_order_payload() -> dict[str, object]:
             "name": "Ama Boateng",
             "email": "ama@example.com",
             "phone": "+233201987654",
+            "delivery_address": "12 Test Street, Accra",
         },
         "items": [
             {

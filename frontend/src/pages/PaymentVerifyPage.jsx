@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { XCircle } from 'lucide-react'
 import { verifyPaystack } from '../api/payments'
+import useCartStore from '../store/cartStore'
 import { PageLoader } from '../components/PageLoader'
 import Button from '../components/Button'
 
@@ -12,6 +13,7 @@ export default function PaymentVerifyPage() {
   const navigate = useNavigate()
   const reference = searchParams.get('reference') || searchParams.get('trxref')
   const [status, setStatus] = useState('loading')
+  const removePurchasedItems = useCartStore(s => s.removePurchasedItems)
 
   useEffect(() => {
     async function verify() {
@@ -20,6 +22,11 @@ export default function PaymentVerifyPage() {
         const res = await verifyPaystack(reference)
         if (res.success && res.data.payment_status === 'paid') {
           const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
+          const cartClearedKey = `chefware-cart-cleared-${reference}`
+          if (stored.reference === reference && Array.isArray(stored.items) && !sessionStorage.getItem(cartClearedKey)) {
+            removePurchasedItems(stored.items)
+            sessionStorage.setItem(cartClearedKey, 'true')
+          }
           if (!stored.reference || stored.reference === reference) {
             sessionStorage.setItem(PENDING_ORDER_KEY, JSON.stringify({ ...stored, reference }))
           }
@@ -32,7 +39,7 @@ export default function PaymentVerifyPage() {
       }
     }
     verify()
-  }, [reference, navigate])
+  }, [reference, navigate, removePurchasedItems])
 
   if (status === 'loading') {
     return (

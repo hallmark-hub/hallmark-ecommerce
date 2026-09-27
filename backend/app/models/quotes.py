@@ -2,7 +2,7 @@ from enum import StrEnum
 from datetime import date, datetime
 from uuid import UUID
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from app.utils.ghana_phone import is_valid_ghana_phone
 
@@ -20,7 +20,7 @@ class CreateQuoteRequest(BaseModel):
     """Quote request body."""
 
     name: str = Field(min_length=1)
-    email: str = Field(min_length=3)
+    email: EmailStr
     phone: str
     category_slug: str = Field(min_length=1)
     message: str = Field(min_length=1)
@@ -57,9 +57,9 @@ class AdminQuoteSummary(BaseModel):
     phone: str
     category_slug: str
     message: str
-    company_name: str = ""
-    location: str = ""
-    quantity: str = ""
+    company_name: str | None = None
+    location: str | None = None
+    quantity: str | None = None
     preferred_delivery_date: date | None = None
     status: QuoteStatus
     notification_attempted: bool

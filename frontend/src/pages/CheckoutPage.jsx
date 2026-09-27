@@ -26,7 +26,6 @@ const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounde
 export default function CheckoutPage() {
   const items = useCartStore(s => s.items)
   const total = useCartStore(s => s.items.reduce((sum, i) => sum + i.price_pesewas * i.quantity, 0))
-  const clearCart = useCartStore(s => s.clearCart)
   const navigate = useNavigate()
   const token = useAuthStore(s => s.token)
   const profile = useAuthStore(s => s.profile)
@@ -39,6 +38,8 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [acceptedPolicy, setAcceptedPolicy] = useState(false)
+  const [pendingOrderId, setPendingOrderId] = useState(null)
+  const [pendingTotal, setPendingTotal] = useState(null)
 
   const [shipping, setShipping] = useState({
     name: profile?.name || '',
@@ -59,7 +60,7 @@ export default function CheckoutPage() {
     if (!shipping.address.trim()) return 'Delivery address is required.'
     if (!shipping.phone.trim()) return 'Phone number is required.'
     const normalized = formatPhone(shipping.phone)
-    if (!validatePhone(normalized)) return 'Phone must be in +233XXXXXXXXX format (10 digits after +233).'
+    if (!validatePhone(normalized)) return 'Phone must be in +233XXXXXXXXX format (9 digits after +233).'
     return ''
   }
 
@@ -80,6 +81,8 @@ export default function CheckoutPage() {
         name: shipping.name,
         email: shipping.email,
         phone: formatPhone(shipping.phone),
+        company_name: shipping.company.trim(),
+        delivery_address: shipping.address.trim(),
       },
       items: items.map(i => ({ product_id: i.id, quantity: i.quantity })),
       payment_method: 'paystack',
@@ -93,13 +96,31 @@ export default function CheckoutPage() {
         reference: orderRes.data.reference,
         phone: payload.customer.phone,
         customer: payload.customer,
+        items: items.map(item => ({ id: item.id, quantity: item.quantity })),
       }))
+      setPendingOrderId(orderRes.data.id)
+      setPendingTotal(orderRes.data.total_pesewas)
+      if (orderRes.data.total_pesewas !== total) return
       const payRes = await initializePaystack(orderRes.data.id)
       if (!payRes.success) throw new Error(payRes.message)
-      clearCart()
       window.location.href = payRes.data.authorization_url
     } catch (e) {
       setError(e.message || 'Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleContinueToPayment() {
+    if (!pendingOrderId) return
+    setError('')
+    setLoading(true)
+    try {
+      const payRes = await initializePaystack(pendingOrderId)
+      if (!payRes.success) throw new Error(payRes.message)
+      window.location.href = payRes.data.authorization_url
+    } catch (e) {
+      setError(e.message || 'Payment could not be opened. You can retry safely.')
     } finally {
       setLoading(false)
     }
@@ -308,9 +329,20 @@ export default function CheckoutPage() {
                   </label>
 
                   <div>
-                    <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" fullWidth iconRight={<ShieldCheck />}>
-                      Place Order
-                    </Button>
+                    {pendingTotal !== null && pendingTotal !== total && (
+                      <p className="text-body-sm text-on-surface bg-amber-50 border border-amber-200 rounded-lg p-3" role="status">
+                        The catalogue price changed. Review the updated total of {formatPrice(pendingTotal)} before continuing.
+                      </p>
+                    )}
+                    {pendingOrderId ? (
+                      <Button onClick={handleContinueToPayment} loading={loading} variant="primary" size="lg" fullWidth iconRight={<ShieldCheck />}>
+                        {pendingTotal !== null && pendingTotal !== total ? 'Confirm Updated Total and Pay' : 'Continue to Payment'}
+                      </Button>
+                    ) : (
+                      <Button onClick={handlePlaceOrder} loading={loading} variant="primary" size="lg" fullWidth iconRight={<ShieldCheck />}>
+                        Place Order
+                      </Button>
+                    )}
                     <div className="flex items-center justify-center gap-1.5 mt-4 text-secondary">
                       <Lock size={12} />
                       <span className="text-label uppercase">Secured with SSL encryption</span>
@@ -351,7 +383,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between items-center pt-3 border-t border-outline-variant">
                 <span className="text-h3 text-on-surface">Total</span>
-                <span className="text-price text-primary whitespace-nowrap">{formatPrice(total)}</span>
+                <span className="text-price text-primary whitespace-nowrap">{formatPrice(pendingTotal ?? total)}</span>
               </div>
             </div>
 

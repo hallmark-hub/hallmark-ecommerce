@@ -34,6 +34,7 @@ def create_initialized_service() -> tuple[PaystackService, str, InMemoryOrderRep
                     "name": "Ama Boateng",
                     "email": "ama@example.com",
                     "phone": "+233201987654",
+                    "delivery_address": "12 Test Street, Accra",
                 },
                 "items": [
                     {
@@ -64,7 +65,7 @@ def test_handle_webhook_updates_payment_and_order_status(monkeypatch) -> None:
     service, reference, orders, payments = create_initialized_service()
     payload = {
         "event": "charge.success",
-        "data": {"reference": reference, "status": "success", "amount": 30000},
+        "data": {"reference": reference, "status": "success", "amount": 30000, "currency": "GHS"},
     }
     raw_body, signature = signed_body(payload, "secret")
 
@@ -103,7 +104,7 @@ def test_handle_webhook_rejects_amount_mismatch(monkeypatch) -> None:
     service, reference, _, _ = create_initialized_service()
     payload = {
         "event": "charge.success",
-        "data": {"reference": reference, "status": "success", "amount": 1},
+        "data": {"reference": reference, "status": "success", "amount": 1, "currency": "GHS"},
     }
     raw_body, signature = signed_body(payload, "secret")
 
@@ -119,11 +120,11 @@ def test_handle_webhook_does_not_downgrade_paid_payment(monkeypatch) -> None:
     service, reference, _, payments = create_initialized_service()
     success_payload = {
         "event": "charge.success",
-        "data": {"reference": reference, "status": "success", "amount": 30000},
+        "data": {"reference": reference, "status": "success", "amount": 30000, "currency": "GHS"},
     }
     failed_payload = {
         "event": "charge.success",
-        "data": {"reference": reference, "status": "failed", "amount": 30000},
+        "data": {"reference": reference, "status": "failed", "amount": 30000, "currency": "GHS"},
     }
     success_body, success_signature = signed_body(success_payload, "secret")
     failed_body, failed_signature = signed_body(failed_payload, "secret")
@@ -147,6 +148,7 @@ def test_handle_webhook_skips_duplicate_event(monkeypatch) -> None:
             "reference": reference,
             "status": "success",
             "amount": 30000,
+            "currency": "GHS",
         },
     }
     raw_body, signature = signed_body(payload, "secret")

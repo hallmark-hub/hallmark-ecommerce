@@ -6,7 +6,11 @@ from starlette.concurrency import run_in_threadpool
 from app.core.admin_auth import require_admin
 from app.core.responses import ok
 from app.models.orders import UpdateOrderStatusRequest
-from app.services.admin_order_service import AdminOrderService, get_admin_order_service
+from app.services.admin_order_service import (
+    AdminOrderService,
+    OrderStatusTransitionError,
+    get_admin_order_service,
+)
 
 router = APIRouter(
     prefix="/admin",
@@ -44,9 +48,12 @@ async def update_admin_order_status(
     service: Annotated[AdminOrderService, Depends(get_admin_order_service)],
 ) -> dict[str, object]:
     """Update an order status for admin management."""
-    order = await run_in_threadpool(
-        service.update_order_status, reference, request.order_status
-    )
+    try:
+        order = await run_in_threadpool(
+            service.update_order_status, reference, request.order_status
+        )
+    except OrderStatusTransitionError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
     if order is None:
         raise HTTPException(status_code=404, detail="Order not found")
     return ok(order.model_dump(mode="json"), "Order status updated")

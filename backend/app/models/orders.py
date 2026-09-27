@@ -38,6 +38,8 @@ class CustomerInput(BaseModel):
     name: str = Field(min_length=1)
     email: EmailStr
     phone: str
+    company_name: str = Field(default="", max_length=200)
+    delivery_address: str = Field(min_length=5, max_length=500)
 
     @field_validator("phone")
     @classmethod
@@ -52,14 +54,14 @@ class OrderItemInput(BaseModel):
     """Checkout item request data."""
 
     product_id: UUID
-    quantity: int = Field(gt=0)
+    quantity: int = Field(gt=0, le=1000)
 
 
 class CreateOrderRequest(BaseModel):
     """Create order request model."""
 
     customer: CustomerInput
-    items: list[OrderItemInput] = Field(min_length=1)
+    items: list[OrderItemInput] = Field(min_length=1, max_length=100)
     payment_method: PaymentMethod
     accepted_returns_policy: bool
 
@@ -87,10 +89,12 @@ class CreateOrderResponse(BaseModel):
 
 
 class LookupCustomer(BaseModel):
-    """Customer data returned by order lookup."""
+    """Customer and fulfillment data returned by order lookup."""
 
     name: str
     phone: str
+    company_name: str = ""
+    delivery_address: str = ""
 
 
 class LookupOrderItem(BaseModel):
@@ -123,6 +127,9 @@ class AdminOrderSummary(BaseModel):
     reference: str
     customer_name: str
     customer_phone: str
+    customer_email: str = ""
+    company_name: str = ""
+    delivery_address: str = ""
     total_pesewas: int
     payment_method: PaymentMethod
     payment_status: PaymentStatus

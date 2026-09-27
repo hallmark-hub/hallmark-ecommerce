@@ -32,6 +32,14 @@ const useCartStore = create(
         set({ items: [] })
       },
 
+      removePurchasedItems(purchasedItems) {
+        const quantities = new Map(purchasedItems.map(item => [item.id, item.quantity]))
+        set({ items: get().items.flatMap(item => {
+          const remaining = item.quantity - (quantities.get(item.id) || 0)
+          return remaining > 0 ? [{ ...item, quantity: remaining }] : []
+        }) })
+      },
+
     }),
     { name: 'chefware-cart' }
   )
