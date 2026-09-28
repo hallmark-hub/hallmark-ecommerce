@@ -51,35 +51,35 @@ export default function HomePage() {
   return (
     <main className="pt-20 overflow-x-hidden">
       {/* Hero */}
-      <section className="relative min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
+      <section className="relative min-h-[500px] sm:min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src={content.home_hero_image_url} alt={`${content.company_name} hospitality offering`} fetchPriority="high" className="w-full h-full object-cover object-top" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/65 to-black/90" />
         </div>
-        <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-gutter pb-14 md:pb-20 flex flex-col items-center text-center">
-          <span className="max-w-full bg-gold/90 backdrop-blur-sm text-white text-label uppercase px-4 py-1.5 rounded-full mb-6 inline-block">
+        <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-4 sm:px-gutter pb-9 sm:pb-14 md:pb-20 flex flex-col items-center text-center">
+          <span className="max-w-full bg-gold/90 backdrop-blur-sm text-[10px] sm:text-label uppercase px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 inline-block line-clamp-1">
             {content.home_hero_eyebrow}
           </span>
-          <h1 className="max-w-3xl text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-tight text-white mb-6 break-words">
+          <h1 className="max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.08] text-white mb-3 sm:mb-6 break-words line-clamp-3 sm:line-clamp-none">
             {content.home_hero_title}
           </h1>
-          <p className="text-body-lg text-white/80 mb-8 max-w-xl">
+          <p className="hidden sm:block text-body-lg text-white/80 mb-8 max-w-xl">
             {content.home_hero_body}
           </p>
-          <div className="flex w-full flex-col sm:w-auto sm:flex-row justify-center gap-3 sm:gap-4">
-            <Button as={Link} to="/products" variant="gold" size="lg" iconRight={<ArrowRight />} className="w-full shadow-lg sm:w-auto">
+          <div className="flex w-full max-w-sm flex-row justify-center gap-2 sm:w-auto sm:max-w-none sm:gap-4">
+            <Button as={Link} to="/products" variant="gold" size="md" iconRight={<ArrowRight />} className="min-w-0 flex-1 px-3 text-xs shadow-lg sm:flex-none sm:px-5 sm:text-body">
               Shop Stocked Products
             </Button>
             <Button
               as={Link} to="/quote"
               variant="ghost"
-              size="lg"
-              className="w-full !bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white sm:w-auto"
+              size="md"
+              className="min-w-0 flex-1 px-3 text-xs !bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white sm:flex-none sm:px-5 sm:text-body"
             >
               Get a Business Quote
             </Button>
           </div>
-          <div className="mt-8 flex max-w-full items-center gap-2 text-white/70 text-body-sm">
+          <div className="hidden sm:flex mt-8 max-w-full items-center gap-2 text-white/70 text-body-sm">
             <ClipboardCheck size={16} className="shrink-0" />
             <span>Choose the route that fits your order: buy online or request a tailored quote.</span>
           </div>
@@ -88,7 +88,7 @@ export default function HomePage() {
 
       {/* Stats Bar */}
       <section className="bg-primary py-section-mobile md:py-section px-gutter">
-        <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+        <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-5 sm:gap-6 text-center">
           {STATS.map(s => (
             <div key={s.label}>
               <p className="text-xl sm:text-2xl md:text-h1 font-bold text-white break-words">{s.value}</p>
@@ -114,9 +114,9 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-1 gap-4 sm:gap-5 md:h-[500px]">
+        <div className="grid grid-cols-2 md:grid-cols-12 md:grid-rows-1 gap-3 sm:gap-5 md:h-[500px]">
           {/* Chef Uniforms — hero card */}
-          <div className="md:col-span-7 group relative rounded-2xl overflow-hidden h-[260px] sm:h-[320px] md:h-auto">
+          <div className="col-span-2 md:col-span-7 group relative rounded-2xl overflow-hidden h-[230px] sm:h-[320px] md:h-auto">
             <img src={content.home_uniform_image_url} alt="Chef Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
@@ -136,9 +136,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="md:col-span-5 grid grid-rows-2 gap-4 sm:gap-5">
+          <div className="col-span-2 md:col-span-5 grid grid-cols-2 md:grid-cols-1 md:grid-rows-2 gap-3 sm:gap-5">
             {/* Industrial Equipment */}
-            <div className="group relative rounded-2xl overflow-hidden h-[170px] sm:h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden h-[155px] sm:h-[200px] md:h-auto">
               <img src={content.home_equipment_image_url} alt="Kitchen Equipment" loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
@@ -153,7 +153,7 @@ export default function HomePage() {
             </div>
 
             {/* Services Strip */}
-            <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[170px] sm:h-[200px] md:h-auto">
+            <div className="group relative rounded-2xl overflow-hidden bg-primary-container h-[155px] sm:h-[200px] md:h-auto">
               <img src={content.home_branding_image_url} alt="Staff Uniforms" loading="lazy" decoding="async" className="w-full h-full object-cover opacity-40 transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                 <h3 className="text-h3 text-white mb-1">Branding & Customization</h3>

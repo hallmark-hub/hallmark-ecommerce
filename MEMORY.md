@@ -12,6 +12,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** Most storefront visits are expected on phones, and the previous one-card-per-row catalogue plus desktop-sized spacing made mobile browsing unnecessarily long and visually oversized.
 **What was rejected:** Reworking the information architecture or adding mobile-only features before checking the existing commerce flow; a targeted responsive pass addresses the observed friction.
 
+## 2026-09-28, Mobile homepage and footer density
+**What was decided:** Shorten the landing hero on phones by hiding supporting copy, reducing action width, and capping headline lines; place the two smaller category panels side by side; tighten footer spacing and hide duplicate contact/enquiry details on phones while preserving desktop content.
+**Why:** The desktop content stacked into a long phone experience with oversized actions and a long footer, despite the catalogue itself already using two columns.
+**What was rejected:** Changing approved marketing copy, removing shopping/quote routes, or changing the desktop layout; responsive presentation solves the reported mobile friction.
+
 ---
 
 ## 2026-09-23, Mobile storefront loading and media priority

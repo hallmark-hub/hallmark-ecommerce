@@ -38,17 +38,17 @@ export default function Footer() {
 
   return (
     <footer className="bg-inverse-surface text-secondary-fixed">
-      <div className="max-w-container-max mx-auto px-gutter pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+      <div className="max-w-container-max mx-auto px-4 sm:px-gutter pt-9 pb-6 md:pt-16 md:pb-10">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-x-5 gap-y-7 md:gap-10 mb-8 md:mb-12">
 
           {/* Brand column */}
-          <div className="md:col-span-4">
-            <div className="text-2xl font-black text-white mb-3">{content.company_name}</div>
-            <p className="text-secondary-fixed/70 text-sm leading-relaxed mb-6 max-w-xs">
+          <div className="col-span-2 md:col-span-4">
+            <div className="text-xl md:text-2xl font-black text-white mb-2 md:mb-3">{content.company_name}</div>
+            <p className="text-secondary-fixed/70 text-sm leading-relaxed mb-3 md:mb-6 max-w-xs line-clamp-2 md:line-clamp-none">
               {content.company_tagline}
             </p>
             {/* Social links */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-3 md:mb-6">
               {SOCIALS.map(social => (
                 <a
                   key={social.label}
@@ -75,7 +75,7 @@ export default function Footer() {
               </a>
             </div>
             {/* Contact */}
-            <div className="space-y-1.5 text-sm text-secondary-fixed/70">
+            <div className="hidden md:block space-y-1.5 text-sm text-secondary-fixed/70">
               <p>{content.contact_address}</p>
               <p><a href={`tel:${content.contact_phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">{content.contact_phone}</a></p>
               <p><a href={`tel:${content.contact_secondary_phone.replace(/\s/g, '')}`} className="hover:text-white transition-colors">{content.contact_secondary_phone}</a></p>
@@ -86,8 +86,8 @@ export default function Footer() {
 
           {/* Shop */}
           <div className="md:col-span-2">
-            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-5">Shop</h5>
-            <nav className="flex flex-col gap-3">
+            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-3 md:mb-5">Shop</h5>
+            <nav className="flex flex-col gap-2 md:gap-3">
               <Link to="/products?category=chef-uniforms" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Chef Uniforms</Link>
               <Link to="/products?category=staff-uniforms-branding" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Staff Uniforms</Link>
               <Link to="/products?category=kitchen-equipment-tools" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Kitchen Equipment</Link>
@@ -96,9 +96,9 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div className="md:col-span-2">
-            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-5">Services</h5>
-            <nav className="flex flex-col gap-3">
+          <div className="col-span-2 md:col-span-2">
+            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-3 md:mb-5">Services</h5>
+            <nav className="grid grid-cols-2 md:flex md:flex-col gap-x-4 gap-y-2 md:gap-3">
               {content.services.map(service => (
                 <Link
                   key={service.slug}
@@ -114,8 +114,8 @@ export default function Footer() {
 
           {/* Company */}
           <div className="md:col-span-2">
-            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-5">Company</h5>
-            <nav className="flex flex-col gap-3">
+            <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-3 md:mb-5">Company</h5>
+            <nav className="flex flex-col gap-2 md:gap-3">
               {content.show_about_page && <Link to="/about" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">About {content.company_name}</Link>}
               {content.show_robotics_page && <Link to="/robotics" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Hospitality Robotics</Link>}
               <Link to="/warranty-returns" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Warranty & Returns</Link>
@@ -126,7 +126,7 @@ export default function Footer() {
           </div>
 
           {/* Enquiry */}
-          <div className="md:col-span-2">
+          <div className="hidden md:block md:col-span-2">
             <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-5">Business Enquiries</h5>
             <p className="text-sm text-secondary-fixed/70 mb-4">Tell the team about quantities, branding, a kitchen project, specialised equipment, or robotics.</p>
             <Link to="/quote" className="inline-flex w-full justify-center py-2.5 px-4 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors">
@@ -136,12 +136,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div className="border-t border-white/10 pt-5 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4 text-center md:text-left">
           <p className="text-xs text-secondary-fixed/50">© 2026 {content.company_name}. All rights reserved.</p>
-          <div className="flex items-center gap-4 justify-center">
+          <div className="hidden md:flex items-center gap-4 justify-center">
             <p className="text-xs text-secondary-fixed/50">Follow us on Facebook · Instagram · TikTok as <span className="text-white/70">chefware_ent</span></p>
           </div>
-          <p className="text-xs text-secondary-fixed/50">Online payments are processed through Paystack.</p>
+          <p className="hidden md:block text-xs text-secondary-fixed/50">Online payments are processed through Paystack.</p>
         </div>
       </div>
     </footer>
