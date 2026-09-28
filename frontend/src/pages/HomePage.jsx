@@ -246,7 +246,7 @@ export default function HomePage() {
       </section>}
 
       {/* Why Choose Us */}
-      <section className="py-section-mobile md:py-section px-gutter bg-white border-t border-outline-variant">
+      <section className="hidden md:block py-section-mobile md:py-section px-gutter bg-white border-t border-outline-variant">
         <div className="max-w-container-max mx-auto">
           <div className="text-center mb-12">
             <p className="text-label uppercase text-primary mb-3">Why ChefWare</p>

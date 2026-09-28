@@ -17,6 +17,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** The desktop content stacked into a long phone experience with oversized actions and a long footer, despite the catalogue itself already using two columns.
 **What was rejected:** Changing approved marketing copy, removing shopping/quote routes, or changing the desktop layout; responsive presentation solves the reported mobile friction.
 
+## 2026-09-28, Further reduce phone homepage length
+**What was decided:** Hide the Why ChefWare section on small screens and replace the visible multi-column mobile footer with a closed-by-default Explore ChefWare disclosure containing essential routes and contact links.
+**Why:** The phone landing page still required too much scrolling, and the previous footer compression left its full navigation visible.
+**What was rejected:** Removing useful footer destinations entirely; placing them in an accessible disclosure keeps the footer short until needed.
+
 ---
 
 ## 2026-09-23, Mobile storefront loading and media priority

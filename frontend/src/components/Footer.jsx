@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ChevronDown } from 'lucide-react'
 
 import { whatsappLink } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
@@ -39,7 +40,7 @@ export default function Footer() {
   return (
     <footer className="bg-inverse-surface text-secondary-fixed">
       <div className="max-w-container-max mx-auto px-4 sm:px-gutter pt-9 pb-6 md:pt-16 md:pb-10">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-x-5 gap-y-7 md:gap-10 mb-8 md:mb-12">
+        <div className="hidden md:grid md:grid-cols-12 md:gap-10 md:mb-12">
 
           {/* Brand column */}
           <div className="col-span-2 md:col-span-4">
@@ -134,6 +135,25 @@ export default function Footer() {
             </Link>
           </div>
         </div>
+
+        <details className="group border-y border-white/10 py-3 md:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-white [&::-webkit-details-marker]:hidden">
+            Explore ChefWare
+            <ChevronDown size={18} className="text-secondary-fixed/70 transition-transform group-open:rotate-180" />
+          </summary>
+          <nav className="grid grid-cols-2 gap-x-4 gap-y-3 pt-4 text-sm text-secondary-fixed/75">
+            <Link to="/products">Shop products</Link>
+            <Link to="/quote">Request a quote</Link>
+            <Link to="/services">Services</Link>
+            {content.show_about_page && <Link to="/about">About {content.company_name}</Link>}
+            {content.show_robotics_page && <Link to="/robotics">Hospitality robotics</Link>}
+            <Link to="/warranty-returns">Warranty & returns</Link>
+            <Link to="/terms">Terms & conditions</Link>
+            <Link to="/account">My account & orders</Link>
+            <a href={`tel:${content.contact_phone.replace(/\s/g, '')}`}>Call us</a>
+            <a href={`mailto:${content.contact_email}`}>Email us</a>
+          </nav>
+        </details>
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-5 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4 text-center md:text-left">
