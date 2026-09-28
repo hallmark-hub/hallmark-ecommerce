@@ -22,6 +22,11 @@ Read MEMORY.md at the start of every session before doing anything. Never contra
 **Why:** The phone landing page still required too much scrolling, and the previous footer compression left its full navigation visible.
 **What was rejected:** Removing useful footer destinations entirely; placing them in an accessible disclosure keeps the footer short until needed.
 
+## 2026-09-28, Stream robotics video on the homepage
+**What was decided:** Use the existing robotics MP4 in the homepage feature at all screen sizes, retaining the managed robotics image as its poster and loading the video as it nears the viewport. Condense Find Us contact details into a two-column phone layout with a shorter map.
+**Why:** The owner clarified that the robotics section should stream video on phones as well as desktop, and the existing location details felt too dense.
+**What was rejected:** The earlier still-image-only mobile treatment; it conflicts with the clarified video requirement.
+
 ---
 
 ## 2026-09-23, Mobile storefront loading and media priority

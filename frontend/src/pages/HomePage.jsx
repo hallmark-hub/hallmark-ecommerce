@@ -236,8 +236,9 @@ export default function HomePage() {
           </div>
           <div className="relative min-h-[360px] lg:min-h-full">
             <HeroMedia
-              src={content.home_robotics_image_url}
+              src="/media/chefware/robotics-hero.mp4"
               alt={`${content.company_name} hospitality robotics`}
+              poster={content.home_robotics_image_url}
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-inverse-surface/70 to-transparent lg:bg-gradient-to-r lg:from-inverse-surface/40 lg:to-transparent" />
@@ -310,28 +311,28 @@ export default function HomePage() {
 
       {/* Find Us */}
       <section className="bg-white py-section-mobile md:py-section px-gutter border-t border-outline-variant">
-        <div className="max-w-container-max mx-auto grid lg:grid-cols-2 gap-10 items-center">
+        <div className="max-w-container-max mx-auto grid lg:grid-cols-2 gap-6 sm:gap-10 items-center">
           <div>
-            <p className="text-label uppercase text-primary mb-3">Find us here</p>
-            <h2 className="text-h2 text-on-surface mb-4">Visit {content.company_name} in Accra</h2>
-            <div className="space-y-3 text-body text-secondary">
-              <p className="flex items-start gap-3">
-                <MapPin size={20} className="text-primary shrink-0 mt-0.5" />
+            <p className="text-label uppercase text-primary mb-2">Find us here</p>
+            <h2 className="text-h2 text-on-surface mb-4">Visit us in Accra</h2>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm sm:text-body text-secondary">
+              <p className="col-span-2 flex items-start gap-2">
+                <MapPin size={18} className="text-primary shrink-0 mt-0.5" />
                 <span>{content.contact_address}</span>
               </p>
-              <p className="flex items-start gap-3">
-                <Phone size={20} className="text-primary shrink-0 mt-0.5" />
+              <p className="flex items-start gap-2">
+                <Phone size={18} className="text-primary shrink-0 mt-0.5" />
                 <span className="flex flex-col">
                   <a href={`tel:${content.contact_phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors">{content.contact_phone}</a>
                   <a href={`tel:${content.contact_secondary_phone.replace(/\s/g, '')}`} className="hover:text-primary transition-colors">{content.contact_secondary_phone}</a>
                 </span>
               </p>
-              <p className="flex items-start gap-3">
-                <Mail size={20} className="text-primary shrink-0 mt-0.5" />
-                <a href={`mailto:${content.contact_email}`} className="hover:text-primary transition-colors">{content.contact_email}</a>
+              <p className="flex min-w-0 items-start gap-2">
+                <Mail size={18} className="text-primary shrink-0 mt-0.5" />
+                <a href={`mailto:${content.contact_email}`} className="break-all hover:text-primary transition-colors">{content.contact_email}</a>
               </p>
-              <p className="flex items-start gap-3">
-                <Clock size={20} className="text-primary shrink-0 mt-0.5" />
+              <p className="col-span-2 flex items-start gap-2">
+                <Clock size={18} className="text-primary shrink-0 mt-0.5" />
                 <span>{content.business_hours}</span>
               </p>
             </div>
@@ -339,7 +340,7 @@ export default function HomePage() {
               href={mapsDirectionsUrl(content.company_name, content.contact_address)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-7 px-5 py-3 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 mt-5 px-4 py-2.5 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors"
             >
               <MapPin size={16} /> Get Directions on Google Maps
             </a>
@@ -348,7 +349,7 @@ export default function HomePage() {
             <iframe
               title={`Map to ${content.company_name}`}
               src={mapsEmbedUrl(content.company_name, content.contact_address)}
-              className="w-full h-[320px] md:h-[420px]"
+              className="w-full h-[220px] sm:h-[280px] lg:h-[420px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
