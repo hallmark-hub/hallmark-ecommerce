@@ -4,7 +4,7 @@ import { Smartphone, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } fro
 import useCartStore from '../store/cartStore'
 import useAuthStore from '../store/authStore'
 import { createOrder } from '../api/orders'
-import { initializePaystack } from '../api/payments'
+import { initializeMoolre } from '../api/payments'
 import { formatPrice } from '../utils/format'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
@@ -16,9 +16,8 @@ const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 const PAYMENT_METHODS = [
   { id: 'mtn_momo', label: 'MTN MoMo', desc: 'Pay instantly with MTN Mobile Money', icon: Smartphone },
-  { id: 'vodafone', label: 'Vodafone Cash', desc: 'Pay with Vodafone Cash', icon: Smartphone },
-  { id: 'airteltigo', label: 'AirtelTigo Money', desc: 'Pay with AirtelTigo Mobile Money', icon: Smartphone },
-  { id: 'card', label: 'Debit / Credit Card', desc: 'Visa, Mastercard and bank cards', icon: Smartphone },
+  { id: 'vodafone', label: 'Telecel Cash', desc: 'Pay with Telecel Cash (formerly Vodafone Cash)', icon: Smartphone },
+  { id: 'airteltigo', label: 'AT Money', desc: 'Pay with AT Money (formerly AirtelTigo Money)', icon: Smartphone },
 ]
 
 const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
@@ -85,7 +84,7 @@ export default function CheckoutPage() {
         delivery_address: shipping.address.trim(),
       },
       items: items.map(i => ({ product_id: i.id, quantity: i.quantity })),
-      payment_method: 'paystack',
+      payment_method: 'moolre',
       accepted_returns_policy: true,
     }
 
@@ -101,7 +100,7 @@ export default function CheckoutPage() {
       setPendingOrderId(orderRes.data.id)
       setPendingTotal(orderRes.data.total_pesewas)
       if (orderRes.data.total_pesewas !== total) return
-      const payRes = await initializePaystack(orderRes.data.id)
+      const payRes = await initializeMoolre(orderRes.data.id)
       if (!payRes.success) throw new Error(payRes.message)
       window.location.href = payRes.data.authorization_url
     } catch (e) {
@@ -116,7 +115,7 @@ export default function CheckoutPage() {
     setError('')
     setLoading(true)
     try {
-      const payRes = await initializePaystack(pendingOrderId)
+      const payRes = await initializeMoolre(pendingOrderId)
       if (!payRes.success) throw new Error(payRes.message)
       window.location.href = payRes.data.authorization_url
     } catch (e) {
@@ -177,7 +176,7 @@ export default function CheckoutPage() {
             <p className="text-white text-h1 font-bold leading-tight mb-3">A Clear Path from<br />Cart to Confirmation</p>
             <div className="flex items-center gap-2 mt-3">
               <div className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-              <p className="text-white/75 text-body-sm">Secure online payment through Paystack</p>
+              <p className="text-white/75 text-body-sm">Secure online payment through Moolre</p>
             </div>
           </div>
         </div>

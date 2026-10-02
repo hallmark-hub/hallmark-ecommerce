@@ -196,7 +196,7 @@ export default function ProductDetailPage() {
               ['Stock Status', product.in_stock ? 'In Stock' : 'Out of Stock'],
               ['Availability', 'Confirmed at checkout'],
               ['Warranty', product.category_slug?.includes('equipment') ? '6–12 months warranty, depending on supplier' : 'Exchange within 3 days for manufacturing defects'],
-              ['Payment', 'MTN MoMo · Vodafone Cash · Card'],
+              ['Payment', 'MTN MoMo · Telecel Cash · AT Money'],
             ].map(([key, val], i) => (
               <div key={key} className={`flex justify-between px-md py-sm text-body-sm ${i % 2 === 0 ? 'bg-primary-fixed/10' : 'bg-white'}`}>
                 <span className="text-secondary font-medium">{key}</span>

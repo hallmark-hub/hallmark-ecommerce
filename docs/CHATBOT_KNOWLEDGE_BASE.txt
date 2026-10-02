@@ -53,8 +53,9 @@ the cart and paid for securely at checkout.
 After you pay, your stocked items are delivered (see delivery below).
 
 **What payment methods do you accept?**
-Online orders are paid through Paystack, which supports cards, mobile money and
-connected bank rails. Payment is taken in Ghana Cedis (GH₵).
+Online orders are paid through Moolre using mobile money (MTN, Telecel Cash, formerly Vodafone Cash,
+and AT Money, formerly AirtelTigo). Cards and bank transfers are not accepted online. Payment is taken in
+Ghana Cedis (GH₵).
 
 **Do I need an account to order?**
 You can complete an order without a separate login. Creating a free account lets you

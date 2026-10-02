@@ -7,6 +7,11 @@ Maintain this file. After any significant decision, about direction, format, con
 
 Read MEMORY.md at the start of every session before doing anything. Never contradict a logged decision without flagging it first.
 
+## 2026-10-02, Moolre replaces Paystack as the checkout payment provider
+**What was decided:** Checkout now creates `moolre` orders and pays through Moolre's hosted link (`POST /embed/link`). New `moolre_service.py` and `/payments/moolre/{initialize,verify,webhook}` endpoints; migration `019_add_moolre_payment_method.sql` adds the enum value (NOT yet applied). Moolre callbacks are unsigned, so the webhook only identifies the reference and payment state is always confirmed via Moolre's status API (reference, exact amount and our account number must match); unknown `txstatus` values stay pending. Production required settings are now `MOOLRE_API_USER/PUBLIC_KEY/ACCOUNT_NUMBER` instead of the Paystack keys. Footer and Terms copy now name Moolre. **Mobile money only** (owner-confirmed 2026-10-02): card option removed from checkout and chatbot KB.
+**Why:** Owner wants to receive payments into their Moolre account instead of Paystack.
+**What was rejected:** Deleting the Paystack code now (about 40 files, risky until Moolre is proven live; it remains in place but unused by the frontend); trusting webhook payload status (no signature to verify).
+
 ## 2026-09-27, Mobile storefront density
 **What was decided:** Give phone screens a denser two-column product grid, compact product cards and category panels, and smaller heading sizes while retaining the existing desktop breakpoints and layouts.
 **Why:** Most storefront visits are expected on phones, and the previous one-card-per-row catalogue plus desktop-sized spacing made mobile browsing unnecessarily long and visually oversized.

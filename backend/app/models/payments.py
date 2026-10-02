@@ -25,3 +25,24 @@ class VerifyPaystackResponse(BaseModel):
     reference: str
     payment_status: PaymentStatus
     order_id: UUID
+
+
+class InitializeMoolreRequest(BaseModel):
+    """Moolre initialization request."""
+
+    order_id: UUID
+
+
+class InitializeMoolreResponse(BaseModel):
+    """Moolre initialization response."""
+
+    authorization_url: str
+    reference: str
+
+
+class VerifyMoolreResponse(BaseModel):
+    """Moolre verification response."""
+
+    reference: str
+    payment_status: PaymentStatus
+    order_id: UUID

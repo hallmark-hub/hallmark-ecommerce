@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     supabase_jwt_secret: str = Field(default="", alias="SUPABASE_JWT_SECRET")
     paystack_secret_key: str = Field(default="", alias="PAYSTACK_SECRET_KEY")
     paystack_public_key: str = Field(default="", alias="PAYSTACK_PUBLIC_KEY")
+    moolre_api_user: str = Field(default="", alias="MOOLRE_API_USER")
+    moolre_public_key: str = Field(default="", alias="MOOLRE_PUBLIC_KEY")
+    moolre_account_number: str = Field(default="", alias="MOOLRE_ACCOUNT_NUMBER")
+    moolre_base_url: str = Field(default="https://api.moolre.com", alias="MOOLRE_BASE_URL")
     cors_allowed_origins: str = Field(default="", alias="CORS_ALLOWED_ORIGINS")
     cloudinary_cloud_name: str = Field(default="", alias="CLOUDINARY_CLOUD_NAME")
     cloudinary_api_key: str = Field(default="", alias="CLOUDINARY_API_KEY")
@@ -47,8 +51,9 @@ class Settings(BaseSettings):
             "SUPABASE_URL": self.supabase_url,
             "SUPABASE_ANON_KEY": self.supabase_anon_key,
             "SUPABASE_SERVICE_ROLE_KEY": self.supabase_service_role_key,
-            "PAYSTACK_SECRET_KEY": self.paystack_secret_key,
-            "PAYSTACK_PUBLIC_KEY": self.paystack_public_key,
+            "MOOLRE_API_USER": self.moolre_api_user,
+            "MOOLRE_PUBLIC_KEY": self.moolre_public_key,
+            "MOOLRE_ACCOUNT_NUMBER": self.moolre_account_number,
             "CLOUDINARY_CLOUD_NAME": self.cloudinary_cloud_name,
             "CLOUDINARY_API_KEY": self.cloudinary_api_key,
             "CLOUDINARY_API_SECRET": self.cloudinary_api_secret,

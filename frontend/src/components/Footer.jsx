@@ -156,7 +156,7 @@ export default function Footer() {
           <div className="hidden md:flex items-center gap-4 justify-center">
             <p className="text-xs text-secondary-fixed/50">Follow us on Facebook · Instagram · TikTok as <span className="text-white/70">chefware_ent</span></p>
           </div>
-          <p className="hidden md:block text-xs text-secondary-fixed/50">Online payments are processed through Paystack.</p>
+          <p className="hidden md:block text-xs text-secondary-fixed/50">Online payments are processed through Moolre.</p>
         </div>
       </div>
     </footer>

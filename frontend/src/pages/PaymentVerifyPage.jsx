@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { XCircle } from 'lucide-react'
-import { verifyPaystack } from '../api/payments'
+import { verifyMoolre } from '../api/payments'
 import useCartStore from '../store/cartStore'
 import { PageLoader } from '../components/PageLoader'
 import Button from '../components/Button'
@@ -19,7 +19,7 @@ export default function PaymentVerifyPage() {
     async function verify() {
       if (!reference) { setStatus('error'); return }
       try {
-        const res = await verifyPaystack(reference)
+        const res = await verifyMoolre(reference)
         if (res.success && res.data.payment_status === 'paid') {
           const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
           const cartClearedKey = `chefware-cart-cleared-${reference}`

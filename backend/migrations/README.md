@@ -23,6 +23,7 @@ Supabase SQL Editor in filename order:
 16. `016_global_partners_content.sql`
 17. `017_production_access_and_order_details.sql`
 18. `018_atomic_order_stock_reservations.sql`
+19. `019_add_moolre_payment_method.sql` (run alone; `ADD VALUE` cannot run in a transaction)
 
 Apply only migrations that are not already recorded as applied, in filename
 order. Confirm the target database's applied migration history before running

@@ -14,6 +14,7 @@ class PaymentMethod(StrEnum):
     """Supported payment methods."""
 
     paystack = "paystack"
+    moolre = "moolre"
 
 
 class PaymentStatus(StrEnum):

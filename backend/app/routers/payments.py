@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from starlette.concurrency import run_in_threadpool
 
 from app.core.responses import ok
-from app.models.payments import InitializePaystackRequest
+from app.models.payments import InitializeMoolreRequest, InitializePaystackRequest
+from app.services.moolre_service import MoolreService, get_moolre_service
 from app.services.paystack_service import (
     PaymentValidationError,
     PaystackService,
@@ -59,3 +60,40 @@ async def paystack_webhook(
     except PaymentValidationError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return ok(result, "Paystack webhook processed")
+
+
+@router.post("/payments/moolre/initialize")
+async def initialize_moolre(
+    request: InitializeMoolreRequest,
+    service: Annotated[MoolreService, Depends(get_moolre_service)],
+) -> dict[str, object]:
+    """Generate a Moolre hosted payment link for an existing order."""
+    try:
+        payment = await run_in_threadpool(service.initialize, str(request.order_id))
+    except PaymentValidationError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    return ok(payment.model_dump(mode="json"), "Moolre payment initialized")
+
+
+@router.get("/payments/moolre/verify/{reference}")
+async def verify_moolre(
+    reference: str,
+    service: Annotated[MoolreService, Depends(get_moolre_service)],
+) -> dict[str, object]:
+    """Verify a Moolre payment by reference through Moolre's status API."""
+    try:
+        payment = await run_in_threadpool(service.verify, reference)
+    except PaymentValidationError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return ok(payment.model_dump(mode="json"), "Moolre payment verified")
+
+
+@router.post("/payments/moolre/webhook")
+async def moolre_webhook(
+    request: Request,
+    service: Annotated[MoolreService, Depends(get_moolre_service)],
+) -> dict[str, object]:
+    """Receive a Moolre callback and confirm the payment via the status API."""
+    payload = await request.json()
+    result = await run_in_threadpool(service.handle_webhook, payload)
+    return ok(result, "Moolre webhook processed")
