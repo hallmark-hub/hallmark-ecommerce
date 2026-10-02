@@ -356,3 +356,8 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **Why:** The supplied document answers the earlier content gap with clear company identity, audience, services and contact information, while larger kitchen, branding, disposables and robotics requirements still need a scoped enquiry rather than an invented catalogue or checkout path.
 **What was rejected:** Publishing named clients, Hallmark Cafe as a case study, nationwide or West Africa delivery claims, or warranty and returns terms. The supplied document itself marks those for confirmation or approval, so they remain out of public copy until explicitly cleared.
 **Amended 2026-09-20:** KEENON/ALPHA/PIMAK partnerships were published by owner approval — see the "Global partnerships published (owner-approved)" entry above.
+
+## 2026-10-02, Mobile footer: socials + essentials only
+**What was decided:** On mobile the footer shows the social icons (Facebook, Instagram, TikTok, WhatsApp) plus only Warranty & returns, Terms & conditions, Call us, Email us. The "Explore ChefWare" accordion was removed; desktop footer unchanged.
+**Why:** The earlier compression hid the socials by mistake. Shop, quote, services, about, robotics and account links are already reachable from the navbar, so repeating them in the footer was redundant.
+**What was rejected:** Keeping the accordion with the socials added (still duplicated navbar links).
