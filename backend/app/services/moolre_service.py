@@ -97,12 +97,14 @@ class HttpMoolreGateway:
             response.raise_for_status()
             body = response.json()
             if body.get("status") != 1:
+                logger.error("Moolre rejected payment link for %s: %s", reference, body)
                 raise MoolreGatewayError(f"Moolre rejected the payment: {body.get('code')}")
             return {
                 "authorization_url": body["data"]["authorization_url"],
                 "reference": reference,
             }
         except (KeyError, TypeError, ValueError, httpx.HTTPError) as exc:
+            logger.error("Moolre initialization failed for %s: %s", reference, _failure_detail(exc))
             raise MoolreGatewayError("Moolre initialization failed") from exc
 
     def verify(self, reference: str) -> dict[str, object]:
@@ -244,7 +246,9 @@ class MoolreService:
             try:
                 self.verify(reference)
             except PaymentValidationError:
+                # Leave the event unrecorded so Moolre's retry is not deduplicated.
                 logger.exception("Moolre callback verification failed for %s", reference)
+                return {"received": True}
         self.payments.create_payment_event(
             {
                 "payment_id": payment.get("id") if payment is not None else None,
@@ -271,6 +275,14 @@ def get_moolre_gateway() -> MoolreGateway:
             settings.moolre_account_number,
         )
     return LocalMoolreGateway()
+
+
+def _failure_detail(exc: Exception) -> str:
+    """Describe a gateway failure for logs: Moolre's HTTP status and body if present."""
+    response = getattr(exc, "response", None)
+    if response is not None:
+        return f"HTTP {response.status_code} {response.text[:500]}"
+    return repr(exc)
 
 
 def _pesewas_to_cedis(amount_pesewas: int) -> str:

@@ -50,6 +50,14 @@ async function endSession() {
   useAuthStore.getState().logout()
 }
 
+// FastAPI 422s list the failing fields in data.errors; surface the first one
+// instead of the generic "Validation failed".
+function validationMessage(json) {
+  const first = json?.data?.errors?.[0]
+  if (!first?.msg) return ''
+  return `${first.loc?.[first.loc.length - 1] ?? 'request'}: ${first.msg}`
+}
+
 async function request(path, options = {}, retryOnUnauthorized = true) {
   const url = `${BASE_URL}${path}`
   const headers = { ...(options.headers || {}) }
@@ -69,7 +77,7 @@ async function request(path, options = {}, retryOnUnauthorized = true) {
   }
 
   const json = await res.json().catch(() => null)
-  if (!res.ok) throw new Error(json?.message || 'Request failed')
+  if (!res.ok) throw new Error(validationMessage(json) || json?.message || 'Request failed')
   return json
 }
 

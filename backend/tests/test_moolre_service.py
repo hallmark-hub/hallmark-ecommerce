@@ -1,3 +1,4 @@
+import httpx
 import pytest
 
 from app.core.config import get_settings
@@ -5,7 +6,9 @@ from app.models.orders import CreateOrderRequest
 from app.repositories.order_repository import InMemoryOrderRepository
 from app.repositories.payment_repository import InMemoryPaymentRepository
 from app.services.moolre_service import (
+    HttpMoolreGateway,
     LocalMoolreGateway,
+    MoolreGatewayError,
     MoolreService,
     _cedis_to_pesewas,
     _pesewas_to_cedis,
@@ -140,3 +143,34 @@ def test_webhook_with_unknown_reference_is_accepted() -> None:
 
     assert service.handle_webhook({"data": {"externalref": "nope"}}) == {"received": True}
     assert len(payments.payment_events) == 1
+
+
+def test_failed_callback_verification_is_not_recorded_so_retry_works() -> None:
+    service, order, orders, payments = create_service()
+    reference = service.initialize(str(order.id)).reference
+    good_gateway = service.gateway
+    service.gateway = FixedGateway({"status": "success", "amount": 1, "account_number": "x"})
+    payload = {"data": {"externalref": reference, "transactionid": "7"}}
+
+    service.handle_webhook(payload)
+    assert payments.payment_events == []
+
+    service.gateway = good_gateway
+    service.handle_webhook(payload)
+    assert orders.get_order_by_id(str(order.id))["payment_status"] == "paid"
+
+
+def test_http_initialize_failure_logs_moolre_response(monkeypatch, caplog) -> None:
+    def fake_post(url, **kwargs):
+        return httpx.Response(401, text='{"message":"Invalid API key"}', request=httpx.Request("POST", url))
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+    gateway = HttpMoolreGateway("https://api.moolre.com", "user", "key", "1234")
+
+    with caplog.at_level("ERROR"):
+        with pytest.raises(MoolreGatewayError):
+            gateway.initialize("a@b.com", 1000, "REF1", "https://cb", "https://redirect")
+
+    assert "HTTP 401" in caplog.text
+    assert "Invalid API key" in caplog.text
+    assert "key" not in caplog.text.replace("Invalid API key", "")
