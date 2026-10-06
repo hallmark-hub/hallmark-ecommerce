@@ -1,21 +1,26 @@
+import { useId } from 'react'
+import { inputClass, secondaryButtonClass } from './AdminUI'
+
 export default function AdminContentField({ field, value, onChange, onUpload, uploading, disabled }) {
-  const inputClass = `w-full px-3 py-2 border border-outline-variant rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary ${disabled ? 'bg-surface-container-low text-secondary cursor-not-allowed' : ''}`
+  const id = useId()
 
   return (
     <div className={field.wide ? 'md:col-span-2' : ''}>
-      <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-2">
+      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1.5">
         {field.label}
       </label>
       {field.type === 'textarea' ? (
         <textarea
+          id={id}
           value={value || ''}
           onChange={event => onChange(event.target.value)}
           rows={field.rows || 3}
-          className={`${inputClass} resize-y`}
+          className={`${inputClass} h-auto py-2 resize-y`}
         />
       ) : field.type === 'toggle' ? (
         <label className="inline-flex items-center gap-3 cursor-pointer">
           <input
+            id={id}
             type="checkbox"
             checked={Boolean(value)}
             onChange={event => onChange(event.target.checked)}
@@ -26,6 +31,7 @@ export default function AdminContentField({ field, value, onChange, onUpload, up
       ) : (
         <>
           <input
+            id={id}
             type={field.type === 'image' ? 'text' : (field.type || 'text')}
             value={value || ''}
             onChange={event => onChange(event.target.value)}
@@ -34,9 +40,9 @@ export default function AdminContentField({ field, value, onChange, onUpload, up
           />
           {field.type === 'image' && (
             <div className="mt-2 flex items-center gap-3 flex-wrap">
-              {value && <img src={value} alt="Current selection" className="h-16 w-20 rounded-lg object-cover border border-outline-variant" />}
-              <label className="px-3 py-2 rounded-lg border border-outline-variant text-sm font-semibold text-primary cursor-pointer hover:bg-surface-container-low">
-                {uploading ? 'Uploading...' : 'Replace image'}
+              {value && <img src={value} alt="Current selection" className="h-16 w-20 rounded object-cover border border-gray-200" />}
+              <label className={`${secondaryButtonClass} h-9 ${uploading ? 'opacity-60 cursor-not-allowed' : ''}`}>
+                {uploading ? 'Uploading…' : 'Replace image'}
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp"

@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
-import { AlertTriangle, Search, Mail, Phone, Calendar, Building2, MapPin, Package } from 'lucide-react'
+import { Mail, Phone, Calendar, Building2, MapPin, Package, MessageSquare } from 'lucide-react'
 import { getAdminQuoteRequests, updateAdminQuoteStatus } from '../../api/admin'
 import { formatDate } from '../../utils/format'
 import { formatQuoteCategory } from '../../config/quoteCategories'
+import {
+  Alert, EmptyState, FilterChips, PageHeader, SearchInput, StatusSelect, cardClass,
+} from '../../components/admin/AdminUI'
 
 const QUOTE_STATUSES = ['all', 'received', 'contacted', 'quoted', 'closed']
-const STATUS_STYLES = {
-  received: 'bg-gold/15 text-gold',
-  contacted: 'bg-blue-50 text-blue-700',
-  quoted: 'bg-primary/10 text-primary',
-  closed: 'bg-surface-container text-secondary',
-}
+const STATUS_TONES = { received: 'warning', contacted: 'info', quoted: 'success', closed: 'neutral' }
 
 export default function AdminQuotesPage() {
   const [search, setSearch] = useState('')
@@ -66,100 +64,69 @@ export default function AdminQuotesPage() {
 
   return (
     <div>
-      <div className="mb-lg">
-        <h1 className="text-h1 font-medium text-on-surface">Quote Requests</h1>
-        <p className="text-secondary text-body-sm">
-          {loading ? 'Loading quote requests...' : `${quotes.length} total · ${counts.received} new`}
-        </p>
+      <PageHeader
+        title="Quote requests"
+        subtitle={loading ? 'Loading quote requests…' : `${quotes.length} total · ${counts.received} new`}
+      />
+
+      {error && <Alert>{error}</Alert>}
+
+      <div className={`${cardClass} p-3 mb-4 space-y-3`}>
+        <SearchInput value={search} onChange={setSearch} placeholder="Search by reference, name, email or category" />
+        <FilterChips
+          value={statusFilter}
+          onChange={setStatusFilter}
+          label="Status"
+          options={QUOTE_STATUSES.map(s => ({ value: s, label: s, count: counts[s] }))}
+        />
       </div>
 
-      {error && (
-        <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
-          <AlertTriangle size={16} className="shrink-0" />
-          <p className="text-body-sm">{error}</p>
-        </div>
-      )}
-
-      {/* Filters */}
-      <div className="bg-white rounded-xl border border-outline-variant p-md mb-md space-y-sm">
-        <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search by reference, name, email, or category..."
-            className="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
-        <div className="flex flex-wrap gap-sm">
-          {QUOTE_STATUSES.map(s => (
-            <button
-              key={s}
-              onClick={() => setStatusFilter(s)}
-              className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${statusFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
-            >
-              {s} <span className="opacity-70">({counts[s]})</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* List */}
-      <div className="space-y-md">
+      <div className="space-y-4">
         {filtered.map(q => (
-          <div key={q.reference} className="bg-white rounded-xl border border-outline-variant p-md">
-            <div className="flex items-start justify-between gap-3 mb-sm flex-wrap">
+          <div key={q.reference} className={`${cardClass} p-5`}>
+            <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
               <div className="min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-body font-bold text-on-surface">{q.name}</h3>
-                  <span className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${STATUS_STYLES[q.status]}`}>{q.status}</span>
-                </div>
-                <p className="text-body-sm text-primary font-medium mt-1">{formatQuoteCategory(q.category_slug)}</p>
-                <p className="text-label text-xs text-secondary font-mono mt-1">{q.reference}</p>
+                <h3 className="text-base font-semibold text-on-surface">{q.name}</h3>
+                <p className="text-sm text-primary font-medium mt-1">{formatQuoteCategory(q.category_slug)}</p>
+                <p className="text-xs text-gray-500 font-mono mt-0.5">{q.reference}</p>
               </div>
-              <select
+              <StatusSelect
                 value={q.status}
-                onChange={e => updateStatus(q.reference, e.target.value)}
-                className="rounded-lg border border-outline-variant bg-white px-3 py-1.5 text-body-sm font-semibold capitalize text-on-surface focus:border-primary focus:outline-none cursor-pointer"
-              >
-                {QUOTE_STATUSES.filter(s => s !== 'all').map(s => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
+                tone={STATUS_TONES[q.status]}
+                options={QUOTE_STATUSES.filter(s => s !== 'all')}
+                label={`Status for ${q.reference}`}
+                onChange={status => updateStatus(q.reference, status)}
+              />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-sm text-body-sm text-secondary mb-sm">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-600 mb-4">
               <div className="flex items-center gap-2 min-w-0">
-                <Mail size={14} className="shrink-0" />
+                <Mail size={14} className="shrink-0 text-gray-400" />
                 <a href={`mailto:${q.email}`} className="truncate hover:text-primary">{q.email}</a>
               </div>
               <div className="flex items-center gap-2 min-w-0">
-                <Phone size={14} className="shrink-0" />
-                <a href={`tel:${q.phone}`} className="truncate hover:text-primary">{q.phone}</a>
+                <Phone size={14} className="shrink-0 text-gray-400" />
+                <a href={`tel:${q.phone}`} className="hover:text-primary">{q.phone}</a>
               </div>
-              <div className="flex items-center gap-2 min-w-0">
-                <Calendar size={14} className="shrink-0" />
-                <span className="truncate">{formatDate(q.created_at)}</span>
+              <div className="flex items-center gap-2">
+                <Calendar size={14} className="shrink-0 text-gray-400" />
+                <span>{formatDate(q.created_at)}</span>
               </div>
+              {q.company_name && <div className="flex items-center gap-2 min-w-0"><Building2 size={14} className="shrink-0 text-gray-400" /><span className="truncate">{q.company_name}</span></div>}
+              {q.location && <div className="flex items-center gap-2 min-w-0"><MapPin size={14} className="shrink-0 text-gray-400" /><span className="truncate">{q.location}</span></div>}
+              {q.quantity && <div className="flex items-center gap-2 min-w-0"><Package size={14} className="shrink-0 text-gray-400" /><span className="truncate">{q.quantity}</span></div>}
+              {q.preferred_delivery_date && <div className="flex items-center gap-2"><Calendar size={14} className="shrink-0 text-gray-400" /><span>Preferred delivery: {q.preferred_delivery_date}</span></div>}
             </div>
 
-            {(q.company_name || q.location || q.quantity || q.preferred_delivery_date) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-sm text-body-sm text-secondary mb-sm">
-                {q.company_name && <div className="flex items-center gap-2 min-w-0"><Building2 size={14} className="shrink-0" /><span className="truncate">{q.company_name}</span></div>}
-                {q.location && <div className="flex items-center gap-2 min-w-0"><MapPin size={14} className="shrink-0" /><span className="truncate">{q.location}</span></div>}
-                {q.quantity && <div className="flex items-center gap-2 min-w-0"><Package size={14} className="shrink-0" /><span className="truncate">{q.quantity}</span></div>}
-                {q.preferred_delivery_date && <div className="flex items-center gap-2 min-w-0"><Calendar size={14} className="shrink-0" /><span className="truncate">Preferred: {q.preferred_delivery_date}</span></div>}
-              </div>
-            )}
-
-            <p className="text-body-sm text-on-surface bg-surface-container-lowest border border-outline-variant rounded-lg p-sm whitespace-pre-wrap">{q.message}</p>
+            <p className="text-sm text-on-surface bg-gray-50 border border-gray-200 rounded p-3 whitespace-pre-wrap">{q.message}</p>
           </div>
         ))}
 
         {!loading && filtered.length === 0 && (
-          <div className="bg-white rounded-xl border border-outline-variant text-center py-xl text-secondary text-body-sm">
-            {quotes.length === 0 ? 'No quote requests yet.' : 'No quote requests match your filter.'}
+          <div className={cardClass}>
+            <EmptyState icon={MessageSquare} title={quotes.length === 0 ? 'No quote requests yet' : 'No quote requests match'}>
+              {quotes.length === 0 ? 'Requests from the quote form will appear here.' : 'Try a different search or status.'}
+            </EmptyState>
           </div>
         )}
       </div>

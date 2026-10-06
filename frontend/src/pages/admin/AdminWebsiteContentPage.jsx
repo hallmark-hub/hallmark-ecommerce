@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { AlertTriangle, Bot, Building2, Handshake, Home, Info, MessageSquare, Save, Wrench } from 'lucide-react'
+import { Bot, Building2, Handshake, Home, Info, Loader2, MessageSquare, Save, Wrench } from 'lucide-react'
 import { uploadAdminProductImage } from '../../api/admin'
 import { getAdminSiteContent, updateAdminSiteContent } from '../../api/siteContent'
 import AdminContentField from '../../components/admin/AdminContentField'
+import { Alert, PageHeader, cardClass, primaryButtonClass } from '../../components/admin/AdminUI'
 import { SITE_CONTENT_SECTIONS } from '../../config/siteContentFields'
 import useSiteContentStore from '../../store/siteContentStore'
 
@@ -75,27 +76,24 @@ export default function AdminWebsiteContentPage() {
     }
   }
 
-  if (loading) return <p className="text-secondary">Loading website content...</p>
-  if (!content) return <ErrorMessage message={error || 'Website content is unavailable.'} />
+  if (loading) return <p className="text-sm text-gray-500">Loading website content…</p>
+  if (!content) return <Alert>{error || 'Website content is unavailable.'}</Alert>
 
   return (
     <div className="max-w-4xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-black text-on-surface">Website Content</h1>
-        <p className="text-secondary text-sm mt-1">Edit public company pages, contact details, visibility, and images.</p>
-      </div>
-      {error && <ErrorMessage message={error} />}
+      <PageHeader title="Website content" subtitle="Edit public company pages, contact details, visibility, and images." />
+      {error && <Alert>{error}</Alert>}
 
       <form onSubmit={handleSave} className="space-y-6">
         {SITE_CONTENT_SECTIONS.map(section => {
           const Icon = SECTION_ICONS[section.id]
           return (
-            <section key={section.id} className="bg-white rounded-2xl border border-outline-variant overflow-hidden">
-              <header className="px-6 py-4 border-b border-outline-variant flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center"><Icon size={16} className="text-primary" /></span>
-                <h2 className="font-bold text-on-surface">{section.label}</h2>
+            <section key={section.id} className={`${cardClass} overflow-hidden`}>
+              <header className="px-5 py-4 border-b border-gray-200 flex items-center gap-3">
+                <span className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center"><Icon size={16} className="text-primary" /></span>
+                <h2 className="text-base font-semibold text-on-surface">{section.label}</h2>
               </header>
-              <div className="px-6 py-5 grid md:grid-cols-2 gap-5">
+              <div className="px-5 py-5 grid md:grid-cols-2 gap-5">
                 {section.fields.map(field => (
                   <AdminContentField
                     key={field.key}
@@ -116,11 +114,11 @@ export default function AdminWebsiteContentPage() {
           )
         })}
 
-        <div className="sticky bottom-4 flex items-center gap-4 bg-white border border-outline-variant rounded-xl p-4 shadow-lg">
-          <button disabled={saving || Boolean(uploadingKey)} className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl cursor-pointer disabled:opacity-60">
-            <Save size={16} /> {saving ? 'Saving...' : 'Save Website Content'}
+        <div className="sticky bottom-4 flex items-center gap-4 bg-white border border-gray-200 rounded-md p-3 shadow-lg">
+          <button disabled={saving || Boolean(uploadingKey)} className={primaryButtonClass}>
+            {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />} {saving ? 'Saving…' : 'Save changes'}
           </button>
-          {saved && <span className="text-sm text-green-600 font-medium">Public website updated.</span>}
+          {saved && <span role="status" className="text-sm text-green-700 font-medium">Public website updated.</span>}
         </div>
       </form>
     </div>
@@ -129,13 +127,13 @@ export default function AdminWebsiteContentPage() {
 
 function CardEditors({ title, collection, cards, images = false, onChange, onUpload, uploadingKey }) {
   return (
-    <div className="md:col-span-2 border-t border-outline-variant pt-5">
-      <h3 className="font-bold text-on-surface mb-4">{title}</h3>
-      <div className="space-y-5">
+    <div className="md:col-span-2 border-t border-gray-200 pt-5">
+      <h3 className="text-sm font-semibold text-on-surface mb-4">{title}</h3>
+      <div className="space-y-4">
         {cards.map((card, index) => {
           const imageKey = `${collection}.${index}.image_url`
           return (
-            <div key={`${collection}-${index}`} className="grid md:grid-cols-2 gap-4 rounded-xl bg-surface-container-low p-4">
+            <div key={`${collection}-${index}`} className="grid md:grid-cols-2 gap-4 rounded-md bg-gray-50 border border-gray-200 p-4">
               <AdminContentField field={{ label: `Card ${index + 1} Title` }} value={card.title} onChange={value => onChange(collection, index, 'title', value)} />
               <AdminContentField field={{ label: 'Description', type: 'textarea' }} value={card.body} onChange={value => onChange(collection, index, 'body', value)} />
               {images && <AdminContentField field={{ label: 'Image', type: 'image', wide: true }} value={card.image_url} onChange={value => onChange(collection, index, 'image_url', value)} uploading={uploadingKey === imageKey} onUpload={file => onUpload(file, imageKey, value => onChange(collection, index, 'image_url', value))} />}
@@ -150,12 +148,12 @@ function CardEditors({ title, collection, cards, images = false, onChange, onUpl
 
 function QuoteOptionsEditor({ options, onChange }) {
   return (
-    <div className="md:col-span-2 border-t border-outline-variant pt-5">
-      <h3 className="font-bold text-on-surface mb-1">Quote Form Options</h3>
-      <p className="text-secondary text-sm mb-4">Labels shown in the quote/contact form. Slugs are fixed by the service contract.</p>
+    <div className="md:col-span-2 border-t border-gray-200 pt-5">
+      <h3 className="text-sm font-semibold text-on-surface mb-1">Quote form options</h3>
+      <p className="text-gray-500 text-sm mb-4">Labels shown in the quote/contact form. Slugs are fixed by the service contract.</p>
       <div className="space-y-3">
         {options.map((option, index) => (
-          <div key={option.slug} className="grid md:grid-cols-2 gap-4 rounded-xl bg-surface-container-low p-4">
+          <div key={option.slug} className="grid md:grid-cols-2 gap-4 rounded-md bg-gray-50 border border-gray-200 p-4">
             <AdminContentField field={{ label: `${option.slug} — label` }} value={option.title} onChange={value => onChange('quote_options', index, 'title', value)} />
             <AdminContentField field={{ label: 'Slug (fixed)', wide: true }} value={option.slug} disabled />
           </div>
@@ -163,8 +161,4 @@ function QuoteOptionsEditor({ options, onChange }) {
       </div>
     </div>
   )
-}
-
-function ErrorMessage({ message }) {
-  return <div className="mb-5 flex items-center gap-2 rounded-xl bg-error-container p-4 text-on-error-container"><AlertTriangle size={18} /><p className="text-sm">{message}</p></div>
 }

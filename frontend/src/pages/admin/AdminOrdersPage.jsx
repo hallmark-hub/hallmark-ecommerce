@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { AlertTriangle, Search } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 import { getAdminOrders, updateAdminOrderStatus } from '../../api/admin'
 import { formatPrice, formatDate } from '../../utils/format'
+import {
+  Alert, EmptyState, FilterChips, PageHeader, SearchInput, SkeletonRows, StatusPill, StatusSelect,
+  cardClass, tableHeadClass,
+} from '../../components/admin/AdminUI'
 
 const ORDER_STATUSES = ['all', 'pending', 'confirmed', 'delivered']
 const PAYMENT_STATUSES = ['all', 'paid', 'pending', 'failed']
-const STATUS_STYLES = {
-  pending: 'bg-tertiary-fixed/30 text-tertiary',
-  confirmed: 'bg-surface-container text-primary',
-  delivered: 'bg-primary-fixed/30 text-primary',
-}
-const PAYMENT_STATUS_STYLES = {
-  paid: 'text-primary font-semibold',
-  pending: 'text-tertiary font-semibold',
-  failed: 'text-error font-semibold',
-}
+const ORDER_TONES = { pending: 'warning', confirmed: 'info', delivered: 'success' }
+const PAYMENT_TONES = { paid: 'success', pending: 'warning', failed: 'danger' }
+const toOptions = statuses => statuses.map(value => ({ value, label: value }))
 
 export default function AdminOrdersPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -73,107 +70,71 @@ export default function AdminOrdersPage() {
 
   return (
     <div>
-      <div className="mb-lg">
-        <h1 className="text-h1 font-medium text-on-surface">Orders Management</h1>
-        <p className="text-secondary text-body-sm">{loading ? 'Loading orders...' : `${orders.length} total orders`}</p>
-      </div>
+      <PageHeader
+        title="Orders"
+        subtitle={loading ? 'Loading orders…' : filtered.length === orders.length ? `${orders.length} total orders` : `Showing ${filtered.length} of ${orders.length} orders`}
+      />
 
-      {error && (
-        <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
-          <AlertTriangle size={16} className="shrink-0" />
-          <p className="text-body-sm">{error}</p>
-        </div>
-      )}
+      {error && <Alert>{error}</Alert>}
 
-      {/* Filters */}
-      <div className="bg-white rounded-xl border border-outline-variant p-md mb-md space-y-sm">
-        <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
-          <input
-            type="text"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Search by order ref or client..."
-            className="w-full pl-9 pr-4 py-2 border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
-        <div className="flex flex-wrap gap-md">
-          <div className="flex items-center gap-sm flex-wrap">
-            <span className="text-label text-xs uppercase tracking-wide text-secondary">Order</span>
-            {ORDER_STATUSES.map(s => (
-              <button
-                key={s}
-                onClick={() => setStatusFilter(s)}
-                className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${statusFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-sm flex-wrap">
-            <span className="text-label text-xs uppercase tracking-wide text-secondary">Payment</span>
-            {PAYMENT_STATUSES.map(s => (
-              <button
-                key={s}
-                onClick={() => applyPaymentFilter(s)}
-                className={`px-sm py-xs rounded-full text-label text-xs font-semibold capitalize cursor-pointer transition-colors ${paymentFilter === s ? 'bg-primary text-white' : 'border border-outline-variant text-secondary hover:border-primary'}`}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
+      <div className={`${cardClass} p-3 mb-4 space-y-3`}>
+        <SearchInput value={search} onChange={setSearch} placeholder="Search by order reference or client" />
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <FilterChips label="Order" value={statusFilter} onChange={setStatusFilter} options={toOptions(ORDER_STATUSES)} />
+          <FilterChips label="Payment" value={paymentFilter} onChange={applyPaymentFilter} options={toOptions(PAYMENT_STATUSES)} />
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl border border-outline-variant overflow-hidden">
+      <div className={`${cardClass} overflow-hidden`}>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px]">
+          <table className="w-full text-sm">
             <thead>
-              <tr className="bg-surface-container-low text-left">
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Order ID</th>
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden sm:table-cell">Client</th>
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Amount</th>
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden md:table-cell">Payment</th>
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide">Status</th>
-                <th className="px-md py-sm text-label text-xs text-secondary uppercase tracking-wide hidden lg:table-cell">Date</th>
+              <tr className="bg-gray-50 border-b border-gray-200 text-left">
+                <th className={tableHeadClass}>Order</th>
+                <th className={`${tableHeadClass} hidden sm:table-cell`}>Client</th>
+                <th className={`${tableHeadClass} hidden sm:table-cell`}>Amount</th>
+                <th className={`${tableHeadClass} hidden md:table-cell`}>Payment</th>
+                <th className={tableHeadClass}>Status</th>
+                <th className={`${tableHeadClass} hidden lg:table-cell`}>Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant">
-              {filtered.map(o => (
-                <tr key={o.id} className="hover:bg-surface-container-low transition-colors">
-                  <td className="px-md py-sm">
-                    <p className="text-body-sm font-medium text-primary">{o.reference}</p>
-                    <p className="text-xs text-secondary sm:hidden mt-0.5">{o.customer_name}</p>
+            <tbody className="divide-y divide-gray-100">
+              {loading && <SkeletonRows cols={6} />}
+              {!loading && filtered.map(o => (
+                <tr key={o.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-3 sm:px-4 py-3">
+                    <p className="font-semibold text-primary">{o.reference}</p>
+                    <p className="text-xs text-gray-500 sm:hidden mt-0.5">{o.customer_name}</p>
+                    <p className="text-xs font-semibold text-on-surface sm:hidden">{formatPrice(o.total_pesewas)}</p>
                   </td>
-                  <td className="px-md py-sm hidden sm:table-cell">
-                    <p className="text-body-sm font-medium text-on-surface">{o.customer_name}</p>
-                    <p className="text-label text-xs text-secondary">{o.customer_phone}</p>
+                  <td className="px-3 sm:px-4 py-3 hidden sm:table-cell">
+                    <p className="font-medium text-on-surface">{o.customer_name}</p>
+                    <p className="text-xs text-gray-500">{o.customer_phone}</p>
                   </td>
-                  <td className="px-md py-sm text-body-sm font-bold text-on-surface">{formatPrice(o.total_pesewas)}</td>
-                  <td className="px-md py-sm hidden md:table-cell">
-                    <p className={`text-body-sm ${PAYMENT_STATUS_STYLES[o.payment_status]}`}>{o.payment_status}</p>
-                    <p className="text-label text-xs text-secondary capitalize">{o.payment_method.replace('_', ' ')}</p>
+                  <td className="px-3 sm:px-4 py-3 font-semibold text-on-surface whitespace-nowrap hidden sm:table-cell">{formatPrice(o.total_pesewas)}</td>
+                  <td className="px-3 sm:px-4 py-3 hidden md:table-cell">
+                    <StatusPill tone={PAYMENT_TONES[o.payment_status]}>{o.payment_status}</StatusPill>
+                    <p className="text-xs text-gray-500 capitalize mt-1">{o.payment_method.replace('_', ' ')}</p>
                   </td>
-                  <td className="px-md py-sm">
-                    <select
+                  <td className="px-3 sm:px-4 py-3">
+                    <StatusSelect
                       value={o.order_status}
-                      onChange={e => updateStatus(o.reference, e.target.value)}
-                      className={`px-2 py-0.5 rounded-full text-label text-xs font-semibold cursor-pointer border-0 focus:ring-1 focus:ring-primary outline-none ${STATUS_STYLES[o.order_status]}`}
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="confirmed">Confirmed</option>
-                      <option value="delivered">Delivered</option>
-                    </select>
+                      tone={ORDER_TONES[o.order_status]}
+                      options={ORDER_STATUSES.slice(1)}
+                      label={`Order status for ${o.reference}`}
+                      onChange={status => updateStatus(o.reference, status)}
+                    />
                   </td>
-                  <td className="px-md py-sm text-body-sm text-secondary hidden lg:table-cell">{formatDate(o.created_at)}</td>
+                  <td className="px-3 sm:px-4 py-3 text-gray-500 hidden lg:table-cell whitespace-nowrap">{formatDate(o.created_at)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {filtered.length === 0 && (
-          <div className="text-center py-xl text-secondary text-body-sm">No orders match your filter.</div>
+        {!loading && filtered.length === 0 && (
+          <EmptyState icon={ShoppingBag} title={orders.length === 0 ? 'No orders yet' : 'No orders match'}>
+            {orders.length === 0 ? 'Orders will show up here as customers check out.' : 'Try a different search or reset the filters.'}
+          </EmptyState>
         )}
       </div>
     </div>

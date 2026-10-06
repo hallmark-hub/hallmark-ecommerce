@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen, ExternalLink } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import ErrorBoundary from '../../components/ErrorBoundary'
 
@@ -27,6 +27,18 @@ export default function AdminLayout() {
     checkRole()
   }, [token, refreshProfile, logout])
 
+  // The customer chat bubble is for the storefront; keep it off the admin screens.
+  useEffect(() => {
+    const tawk = window.Tawk_API
+    if (!tawk) return undefined
+    tawk.onLoad = () => tawk.hideWidget?.()
+    tawk.hideWidget?.()
+    return () => {
+      tawk.onLoad = undefined
+      tawk.showWidget?.()
+    }
+  }, [])
+
   if (checkingRole) {
     return (
       <main className="pt-20 min-h-screen bg-surface flex items-center justify-center">
@@ -47,40 +59,31 @@ export default function AdminLayout() {
     )
   }
 
+  const adminName = user?.name || 'Admin'
+
   return (
-    <div className="min-h-screen bg-surface-container-low">
+    <div className="min-h-screen bg-gray-50">
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setMobileOpen(false)} />
+        <div className="fixed inset-0 bg-black/40 z-30 lg:hidden" onClick={() => setMobileOpen(false)} />
       )}
 
       {/* Sidebar */}
-      <aside className={`w-64 bg-inverse-surface flex flex-col fixed top-0 left-0 bottom-0 overflow-y-auto z-40 transition-transform duration-300 ease-in-out
+      <aside className={`w-64 bg-white border-r border-gray-200 flex flex-col fixed top-0 left-0 bottom-0 overflow-y-auto z-40 transition-transform duration-300 ease-in-out
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
         ${!desktopCollapsed ? 'lg:translate-x-0' : 'lg:-translate-x-full'}
       `}>
-        <div className="px-md pt-md pb-sm flex items-start justify-between">
+        <div className="px-5 pt-5 pb-4 flex items-start justify-between">
           <div>
-            <p className="text-label text-xs text-secondary-fixed-dim uppercase tracking-widest mb-xs">Admin</p>
-            <p className="text-body-sm text-surface font-medium truncate max-w-[140px]">{user?.name || 'Admin'}</p>
+            <p className="text-lg font-extrabold text-primary leading-tight">ChefWare Admin</p>
+            <p className="text-xs text-gray-500 mt-0.5">Enterprise Portal</p>
           </div>
-          <div className="flex items-center gap-1">
-            {/* Desktop collapse button */}
-            <button
-              onClick={() => setDesktopCollapsed(true)}
-              className="hidden lg:flex text-secondary-fixed hover:text-surface p-1 mt-0.5 cursor-pointer rounded"
-              title="Hide sidebar"
-            >
-              <PanelLeftClose size={17} />
-            </button>
-            {/* Mobile close button */}
-            <button onClick={() => setMobileOpen(false)} className="lg:hidden text-secondary-fixed hover:text-surface p-1 mt-0.5 cursor-pointer">
-              <X size={18} />
-            </button>
-          </div>
+          <button onClick={() => setMobileOpen(false)} className="lg:hidden text-gray-500 hover:text-on-surface p-1 -mr-1 cursor-pointer" aria-label="Close menu">
+            <X size={18} />
+          </button>
         </div>
 
-        <nav className="flex-1 px-sm py-sm">
+        <nav className="flex-1 px-3 py-2 space-y-1">
           {NAV.map(({ to, label, icon: Icon, end }) => (
             <NavLink
               key={to}
@@ -88,7 +91,7 @@ export default function AdminLayout() {
               end={end}
               onClick={() => setMobileOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-sm px-sm py-xs rounded-lg mb-xs text-body-sm font-medium transition-colors ${isActive ? 'bg-primary-container text-white' : 'text-secondary-fixed hover:bg-white/10 hover:text-surface'}`
+                `flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium transition-colors ${isActive ? 'bg-primary-container text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-on-surface'}`
               }
             >
               <Icon size={18} /> {label}
@@ -96,53 +99,50 @@ export default function AdminLayout() {
           ))}
         </nav>
 
-        <button
-          onClick={() => { logout(); navigate('/') }}
-          className="flex items-center gap-sm px-md py-md text-body-sm text-secondary-fixed hover:text-surface cursor-pointer transition-colors"
-        >
-          <LogOut size={18} /> Sign Out
-        </button>
+        <div className="border-t border-gray-200 p-4">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="w-9 h-9 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center shrink-0">
+              {adminName.trim().charAt(0).toUpperCase()}
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-on-surface truncate">{adminName}</p>
+              <p className="text-xs text-gray-500">Administrator</p>
+            </div>
+          </div>
+          <button
+            onClick={() => { logout(); navigate('/') }}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-on-surface cursor-pointer transition-colors"
+          >
+            <LogOut size={16} /> Sign out
+          </button>
+        </div>
       </aside>
 
       {/* Content */}
       <main className={`min-w-0 transition-all duration-300 ${desktopCollapsed ? 'lg:ml-0' : 'lg:ml-64'}`}>
-        {/* Top bar — mobile hamburger + desktop expand button when collapsed */}
-        <div className="sticky top-0 z-20 bg-white border-b border-outline-variant px-4 py-3 flex items-center gap-3">
-          {/* Mobile open */}
+        <div className="sticky top-0 z-20 h-14 bg-white border-b border-gray-200 px-4 flex items-center gap-3">
           <button
             onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-1 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer"
+            className="lg:hidden p-1.5 -ml-1.5 rounded hover:bg-gray-100 transition-colors cursor-pointer"
             aria-label="Open menu"
           >
-            <Menu size={22} className="text-on-surface-variant" />
+            <Menu size={22} className="text-gray-600" />
           </button>
-
-          {/* Desktop: show expand button only when collapsed */}
-          {desktopCollapsed && (
-            <button
-              onClick={() => setDesktopCollapsed(false)}
-              className="hidden lg:flex items-center gap-2 p-1 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer"
-              title="Show sidebar"
-            >
-              <PanelLeftOpen size={20} className="text-on-surface-variant" />
-            </button>
-          )}
-
-          {/* Desktop: show collapse button when sidebar is open */}
-          {!desktopCollapsed && (
-            <button
-              onClick={() => setDesktopCollapsed(true)}
-              className="hidden lg:flex items-center gap-2 p-1 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer"
-              title="Hide sidebar"
-            >
-              <PanelLeftClose size={20} className="text-on-surface-variant" />
-            </button>
-          )}
-
-          <span className="text-sm font-semibold text-on-surface">Admin Dashboard</span>
+          <button
+            onClick={() => setDesktopCollapsed(collapsed => !collapsed)}
+            className="hidden lg:flex p-1.5 -ml-1.5 rounded hover:bg-gray-100 transition-colors cursor-pointer"
+            aria-label={desktopCollapsed ? 'Show sidebar' : 'Hide sidebar'}
+            title={desktopCollapsed ? 'Show sidebar' : 'Hide sidebar'}
+          >
+            {desktopCollapsed ? <PanelLeftOpen size={20} className="text-gray-600" /> : <PanelLeftClose size={20} className="text-gray-600" />}
+          </button>
+          <span className={`text-sm font-bold text-primary ${desktopCollapsed ? '' : 'lg:hidden'}`}>ChefWare Admin</span>
+          <Link to="/" target="_blank" rel="noreferrer" className="ml-auto inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-primary transition-colors">
+            View store <ExternalLink size={14} />
+          </Link>
         </div>
 
-        <div className="p-4 md:p-6">
+        <div className="mx-auto w-full max-w-[1200px] px-4 py-6 md:px-8 md:py-8">
           <ErrorBoundary><Outlet /></ErrorBoundary>
         </div>
       </main>
