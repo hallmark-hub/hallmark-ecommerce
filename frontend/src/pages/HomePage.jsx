@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
 import Button from '../components/Button'
 import HeroMedia from '../components/HeroMedia'
+import HeroSlider from '../components/HeroSlider'
 import { mapsDirectionsUrl, mapsEmbedUrl } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
 
@@ -51,40 +52,55 @@ export default function HomePage() {
   return (
     <main className="pt-20 overflow-x-hidden">
       {/* Hero */}
-      <section className="relative min-h-[500px] sm:min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img src={content.home_hero_image_url} alt={`${content.company_name} hospitality offering`} fetchPriority="high" className="w-full h-full object-cover object-top" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/65 to-black/90" />
-        </div>
-        <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-4 sm:px-gutter pb-9 sm:pb-14 md:pb-20 flex flex-col items-center text-center">
-          <span className="max-w-full bg-gold/90 backdrop-blur-sm text-[10px] sm:text-label uppercase px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 inline-block line-clamp-1">
-            {content.home_hero_eyebrow}
-          </span>
-          <h1 className="max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.08] text-white mb-3 sm:mb-6 break-words line-clamp-3 sm:line-clamp-none">
-            {content.home_hero_title}
-          </h1>
-          <p className="hidden sm:block text-body-lg text-white/80 mb-8 max-w-xl">
-            {content.home_hero_body}
-          </p>
-          <div className="flex w-full max-w-sm flex-row justify-center gap-2 sm:w-auto sm:max-w-none sm:gap-4">
-            <Button as={Link} to="/products" variant="gold" size="md" iconRight={<ArrowRight />} className="min-w-0 flex-1 px-3 text-xs shadow-lg sm:flex-none sm:px-5 sm:text-body">
-              Shop Stocked Products
-            </Button>
-            <Button
-              as={Link} to="/quote"
-              variant="ghost"
-              size="md"
-              className="min-w-0 flex-1 px-3 text-xs !bg-white/10 backdrop-blur-sm border-2 border-white/60 !text-white hover:!bg-white hover:!text-primary hover:border-white focus-visible:!ring-white sm:flex-none sm:px-5 sm:text-body"
-            >
-              Get a Business Quote
-            </Button>
-          </div>
-          <div className="hidden sm:flex mt-8 max-w-full items-center gap-2 text-white/70 text-body-sm">
-            <ClipboardCheck size={16} className="shrink-0" />
-            <span>Choose the route that fits your order: buy online or request a tailored quote.</span>
-          </div>
-        </div>
-      </section>
+      <HeroSlider
+        slides={[
+          {
+            image: content.home_hero_image_url,
+            eyebrow: content.home_hero_eyebrow,
+            title: content.home_hero_title,
+            body: content.home_hero_body,
+            primary: { label: 'Shop Stocked Products', to: '/products' },
+            secondary: { label: 'Get a Business Quote', to: '/quote' },
+          },
+          {
+            image: content.home_uniform_image_url && content.home_uniform_image_url !== content.home_hero_image_url
+              ? content.home_uniform_image_url
+              : '/media/chefware/products/off-white-cotton-chef-jacket.jpeg',
+            position: 'object-center',
+            eyebrow: 'Chef Uniforms',
+            title: 'Professional hospitality wear',
+            body: 'Chef jackets, aprons and kitchen uniforms, ready to order online.',
+            primary: { label: 'Shop Uniforms', to: '/products?category=chef-uniforms' },
+            secondary: { label: 'Get a Business Quote', to: '/quote' },
+          },
+          {
+            image: content.home_equipment_image_url || '/media/chefware/combi-oven.jpg',
+            position: 'object-center',
+            eyebrow: 'Industrial Equipment',
+            title: 'Kitchen equipment and full setup',
+            body: 'Equipment and tools for commercial kitchens, plus scoped quotes for complete installations.',
+            primary: { label: 'Shop Equipment', to: '/products?category=kitchen-equipment-tools' },
+            secondary: { label: 'Plan a Kitchen Setup', to: '/quote' },
+          },
+          {
+            image: content.home_branding_image_url || '/media/chefware/chef-jacket-gold-stripe.jpeg',
+            position: 'object-center',
+            eyebrow: 'Branding & Customization',
+            title: 'Embroidery and printing',
+            body: 'Put your brand on every uniform with embroidery and garment printing.',
+            primary: { label: 'View Services', to: '/services' },
+            secondary: { label: 'Request a Quote', to: '/quote' },
+          },
+          {
+            image: '/media/chefware/service-robot.jpg',
+            eyebrow: 'Robotics',
+            title: 'Smarter hospitality support',
+            body: 'Service, delivery and cleaning robots for hotels and restaurants.',
+            primary: { label: 'Explore Robotics', to: '/robotics' },
+            secondary: { label: 'Ask About Robotics', to: '/quote?category=robotics' },
+          },
+        ]}
+      />
 
       {/* Stats Bar */}
       <section className="bg-primary py-section-mobile md:py-section px-gutter">
