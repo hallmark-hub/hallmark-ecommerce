@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from './Button'
 
-// Each image dissolves in over 2.5s (see .hero-slide in index.css), then holds for ~4s
-// while it keeps drifting slowly, so the hero never sits still or "flips".
-const INTERVAL_MS = 6500
+// Each image dissolves in over 2.5s (see .hero-slide in index.css), then holds for ~1s
+// while it keeps drifting slowly, so the hero is almost always mid-dissolve.
+const INTERVAL_MS = 3500
 
 export default function HeroSlider({ slides, hero }) {
   const [index, setIndex] = useState(0)
