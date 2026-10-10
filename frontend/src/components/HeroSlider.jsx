@@ -3,23 +3,30 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from './Button'
 
-// Each image dissolves in over 1s (see .hero-slide in index.css), then holds fully visible for 1.5s.
-const INTERVAL_MS = 2500
+// Each image dissolves in over 2.5s (see .hero-slide in index.css), then holds for ~4s
+// while it keeps drifting slowly, so the hero never sits still or "flips".
+const INTERVAL_MS = 6500
 
 export default function HeroSlider({ slides, hero }) {
   const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
+  // The first image is active on mount, so its drift needs a tick to start transitioning.
+  const [moving, setMoving] = useState(false)
   const touchX = useRef(null)
   const count = slides.length
 
   const go = useCallback(next => setIndex((next + count) % count), [count])
 
   useEffect(() => {
-    if (paused || count < 2) return
+    const timer = setTimeout(() => setMoving(true), 50)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (count < 2) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const timer = setTimeout(() => go(index + 1), INTERVAL_MS)
     return () => clearTimeout(timer)
-  }, [index, paused, count, go])
+  }, [index, count, go])
 
   const onTouchEnd = e => {
     if (touchX.current === null) return
@@ -33,15 +40,13 @@ export default function HeroSlider({ slides, hero }) {
       className="relative min-h-[500px] sm:min-h-[600px] md:min-h-[680px] flex items-end overflow-hidden bg-black"
       aria-roledescription="carousel"
       aria-label="Featured offerings"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
       onTouchStart={e => { touchX.current = e.touches[0].clientX }}
       onTouchEnd={onTouchEnd}
     >
       {slides.map((s, i) => (
         <div
           key={i}
-          className={`hero-slide absolute inset-0 overflow-hidden ${i === index ? 'is-active z-[1]' : 'z-0'}`}
+          className={`hero-slide absolute inset-0 overflow-hidden ${i === index ? 'is-active z-[1]' : 'z-0'} ${i === index && moving ? 'is-moving' : ''}`}
           aria-hidden={i !== index}
         >
           <img
@@ -98,27 +103,6 @@ export default function HeroSlider({ slides, hero }) {
           >
             <ChevronRight size={22} />
           </button>
-
-          <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-            {slides.map((s, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => go(i)}
-                aria-label={`Go to slide ${i + 1}: ${s.label}`}
-                aria-current={i === index}
-                className={`relative h-1.5 overflow-hidden rounded-full bg-white/30 transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${i === index ? 'w-10 sm:w-14' : 'w-4 hover:bg-white/60'}`}
-              >
-                {i === index && (
-                  <span
-                    key={index}
-                    className="hero-progress absolute inset-y-0 left-0 bg-gold"
-                    style={{ animationDuration: `${INTERVAL_MS}ms`, animationPlayState: paused ? 'paused' : 'running' }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
         </>
       )}
     </section>

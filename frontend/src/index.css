@@ -64,25 +64,31 @@
     0%   { transform: translateX(-50%); }
     100% { transform: translateX(0); }
   }
-  /* Cinematic crossfade: slow ease-in-out dissolve, image settles from a gentle zoom */
+  /* Cinematic crossfade: slow dissolve while each image keeps drifting (alternating push-in / pull-out) */
   .hero-slide {
     opacity: 0;
     /* outgoing slide stays visible underneath until the incoming one has dissolved in */
-    transition: opacity 0s linear 1s;
+    transition: opacity 0s linear 2.5s;
   }
   .hero-slide.is-active {
     opacity: 1;
-    transition: opacity 1s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: opacity 2.5s cubic-bezier(0.45, 0, 0.55, 1);
   }
   .hero-slide-img {
-    transform: scale(1.14);
-    /* reset zoom only once the slide is hidden */
-    transition: transform 0s linear 1s;
+    transform: scale(1);
+    /* reset drift only once the slide is hidden */
+    transition: transform 0s linear 2.5s;
     will-change: transform;
   }
-  .hero-slide.is-active .hero-slide-img {
+  .hero-slide:nth-child(even) .hero-slide-img {
+    transform: scale(1.12);
+  }
+  .hero-slide.is-moving .hero-slide-img {
+    transform: scale(1.12);
+    transition: transform 9s linear;
+  }
+  .hero-slide:nth-child(even).is-moving .hero-slide-img {
     transform: scale(1);
-    transition: transform 3.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hero-rise {
     animation: hero-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -92,15 +98,8 @@
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .hero-progress {
-    animation: hero-progress linear forwards;
-  }
-  @keyframes hero-progress {
-    from { width: 0; }
-    to   { width: 100%; }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .hero-rise, .hero-progress { animation: none; }
+    .hero-rise { animation: none; }
     .hero-slide, .hero-slide-img { transition: none; }
   }
 }

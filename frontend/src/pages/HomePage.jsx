@@ -61,25 +61,22 @@ export default function HomePage() {
           secondary: { label: 'Get a Business Quote', to: '/quote' },
         }}
         slides={[
-          { image: content.home_hero_image_url, label: 'Featured' },
+          { image: content.home_hero_image_url },
           {
             image: content.home_uniform_image_url && content.home_uniform_image_url !== content.home_hero_image_url
               ? content.home_uniform_image_url
               : '/media/chefware/products/off-white-cotton-chef-jacket.jpeg',
             position: 'object-center',
-            label: 'Chef Uniforms',
           },
           {
             image: content.home_equipment_image_url || '/media/chefware/combi-oven.jpg',
             position: 'object-center',
-            label: 'Industrial Equipment',
           },
           {
             image: content.home_branding_image_url || '/media/chefware/chef-jacket-gold-stripe.jpeg',
             position: 'object-center',
-            label: 'Branding & Customization',
           },
-          { image: '/media/chefware/service-robot.jpg', label: 'Robotics' },
+          { image: '/media/chefware/service-robot.jpg' },
         ]}
       />
 
