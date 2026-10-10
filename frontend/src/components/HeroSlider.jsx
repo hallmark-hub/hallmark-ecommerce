@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import Button from './Button'
 
-const INTERVAL_MS = 7500
+const INTERVAL_MS = 4500
 
 export default function HeroSlider({ slides }) {
   const [index, setIndex] = useState(0)
@@ -64,13 +64,13 @@ export default function HeroSlider({ slides }) {
         <span className="hero-rise max-w-full bg-gold/90 backdrop-blur-sm text-[10px] sm:text-label uppercase px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 inline-block line-clamp-1">
           {slide.eyebrow}
         </span>
-        <h1 className="hero-rise [animation-delay:750ms] max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.08] text-white mb-3 sm:mb-6 break-words line-clamp-3 sm:line-clamp-none">
+        <h1 className="hero-rise [animation-delay:300ms] max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.08] text-white mb-3 sm:mb-6 break-words line-clamp-3 sm:line-clamp-none">
           {slide.title}
         </h1>
-        <p className="hero-rise [animation-delay:900ms] hidden sm:block text-body-lg text-white/80 mb-8 max-w-xl">
+        <p className="hero-rise [animation-delay:400ms] hidden sm:block text-body-lg text-white/80 mb-8 max-w-xl">
           {slide.body}
         </p>
-        <div className="hero-rise [animation-delay:1050ms] flex w-full max-w-sm flex-row justify-center gap-2 sm:w-auto sm:max-w-none sm:gap-4">
+        <div className="hero-rise [animation-delay:500ms] flex w-full max-w-sm flex-row justify-center gap-2 sm:w-auto sm:max-w-none sm:gap-4">
           <Button as={Link} to={slide.primary.to} variant="gold" size="md" iconRight={<ArrowRight />} className="min-w-0 flex-1 px-3 text-xs shadow-lg sm:flex-none sm:px-5 sm:text-body">
             {slide.primary.label}
           </Button>
