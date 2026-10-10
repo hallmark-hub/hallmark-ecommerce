@@ -53,52 +53,33 @@ export default function HomePage() {
     <main className="pt-20 overflow-x-hidden">
       {/* Hero */}
       <HeroSlider
+        hero={{
+          eyebrow: content.home_hero_eyebrow,
+          title: content.home_hero_title,
+          body: content.home_hero_body,
+          primary: { label: 'Shop Stocked Products', to: '/products' },
+          secondary: { label: 'Get a Business Quote', to: '/quote' },
+        }}
         slides={[
-          {
-            image: content.home_hero_image_url,
-            eyebrow: content.home_hero_eyebrow,
-            title: content.home_hero_title,
-            body: content.home_hero_body,
-            primary: { label: 'Shop Stocked Products', to: '/products' },
-            secondary: { label: 'Get a Business Quote', to: '/quote' },
-          },
+          { image: content.home_hero_image_url, label: 'Featured' },
           {
             image: content.home_uniform_image_url && content.home_uniform_image_url !== content.home_hero_image_url
               ? content.home_uniform_image_url
               : '/media/chefware/products/off-white-cotton-chef-jacket.jpeg',
             position: 'object-center',
-            eyebrow: 'Chef Uniforms',
-            title: 'Professional hospitality wear',
-            body: 'Chef jackets, aprons and kitchen uniforms, ready to order online.',
-            primary: { label: 'Shop Uniforms', to: '/products?category=chef-uniforms' },
-            secondary: { label: 'Get a Business Quote', to: '/quote' },
+            label: 'Chef Uniforms',
           },
           {
             image: content.home_equipment_image_url || '/media/chefware/combi-oven.jpg',
             position: 'object-center',
-            eyebrow: 'Industrial Equipment',
-            title: 'Kitchen equipment and full setup',
-            body: 'Equipment and tools for commercial kitchens, plus scoped quotes for complete installations.',
-            primary: { label: 'Shop Equipment', to: '/products?category=kitchen-equipment-tools' },
-            secondary: { label: 'Plan a Kitchen Setup', to: '/quote' },
+            label: 'Industrial Equipment',
           },
           {
             image: content.home_branding_image_url || '/media/chefware/chef-jacket-gold-stripe.jpeg',
             position: 'object-center',
-            eyebrow: 'Branding & Customization',
-            title: 'Embroidery and printing',
-            body: 'Put your brand on every uniform with embroidery and garment printing.',
-            primary: { label: 'View Services', to: '/services' },
-            secondary: { label: 'Request a Quote', to: '/quote' },
+            label: 'Branding & Customization',
           },
-          {
-            image: '/media/chefware/service-robot.jpg',
-            eyebrow: 'Robotics',
-            title: 'Smarter hospitality support',
-            body: 'Service, delivery and cleaning robots for hotels and restaurants.',
-            primary: { label: 'Explore Robotics', to: '/robotics' },
-            secondary: { label: 'Ask About Robotics', to: '/quote?category=robotics' },
-          },
+          { image: '/media/chefware/service-robot.jpg', label: 'Robotics' },
         ]}
       />
 
