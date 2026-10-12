@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ShieldCheck } from 'lucide-react'
 import Button from '../components/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const WARRANTY_ITEMS = [
   ['Uniforms & Branding', 'Quality guaranteed; exchange for manufacturing defects.'],
@@ -11,6 +12,7 @@ const WARRANTY_ITEMS = [
 ]
 
 export default function WarrantyReturnsPage() {
+  usePageTitle('Warranty & Returns')
   return (
     <main className="pt-20 min-h-screen bg-surface">
       <section className="border-b border-outline-variant bg-surface-container-low">

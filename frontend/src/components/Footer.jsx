@@ -133,7 +133,7 @@ export default function Footer() {
           <div className="hidden md:block md:col-span-2">
             <h5 className="text-xs font-bold uppercase tracking-widest text-primary-fixed mb-5">Business Enquiries</h5>
             <p className="text-sm text-secondary-fixed/70 mb-4">Tell the team about quantities, branding, a kitchen project, specialised equipment, or robotics.</p>
-            <Link to="/quote" className="inline-flex w-full justify-center py-2.5 px-4 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors">
+            <Link to="/quote" className="inline-flex w-full justify-center py-2.5 px-4 bg-gold-strong hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors">
               Request a Quote
             </Link>
           </div>

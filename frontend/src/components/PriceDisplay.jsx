@@ -3,6 +3,7 @@ import { formatPrice } from '../utils/format'
 const SIZES = {
   sm: 'text-body font-semibold',
   md: 'text-price',
+  card: 'text-base font-bold sm:text-price',
   lg: 'text-price-lg',
 }
 

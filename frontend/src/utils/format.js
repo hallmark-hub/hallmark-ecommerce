@@ -1,7 +1,7 @@
 export function formatPrice(pesewas) {
   if (pesewas === null || pesewas === undefined) return 'Request a quote'
   const amount = pesewas / 100
-  return `GH₵${amount.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  return `GH₵ ${amount.toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 export function formatPhone(phone) {
@@ -24,3 +24,5 @@ export function formatDate(isoString) {
     day: 'numeric',
   })
 }
+
+export const RETURNS_POLICY = 'No refunds. Exchange only within 3 days of purchase.'

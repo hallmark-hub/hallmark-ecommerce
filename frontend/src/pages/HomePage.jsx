@@ -9,6 +9,7 @@ import HeroMedia from '../components/HeroMedia'
 import HeroSlider from '../components/HeroSlider'
 import { mapsDirectionsUrl, mapsEmbedUrl } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const STATS = [
   { value: 'Uniforms', label: 'Professional hospitality wear' },
@@ -27,6 +28,7 @@ const TRUSTED_BY = [
 ]
 
 export default function HomePage() {
+  usePageTitle()
   const content = useSiteContentStore(state => state.content)
   const [featured, setFeatured] = useState([])
   const [loading, setLoading] = useState(true)
@@ -123,7 +125,7 @@ export default function HomePage() {
                 size="sm"
                 variant="ghost"
                 iconRight={<ArrowRight />}
-                className="!bg-white !text-primary hover:!bg-gold hover:!text-white"
+                className="!bg-white !text-primary hover:!bg-gold-strong hover:!text-white"
               >
                 Shop Collection
               </Button>
@@ -334,7 +336,7 @@ export default function HomePage() {
               href={mapsDirectionsUrl(content.company_name, content.contact_address)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-5 px-4 py-2.5 bg-gold hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 mt-5 px-4 py-2.5 bg-gold-strong hover:brightness-110 text-white text-sm font-semibold rounded-lg transition-colors"
             >
               <MapPin size={16} /> Get Directions on Google Maps
             </a>

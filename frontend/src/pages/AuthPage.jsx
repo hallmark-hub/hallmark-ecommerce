@@ -4,8 +4,10 @@ import { AlertTriangle, Eye, EyeOff } from 'lucide-react'
 import useAuthStore from '../store/authStore'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function AuthPage() {
+  usePageTitle('Sign In')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirect = searchParams.get('redirect') || '/account'

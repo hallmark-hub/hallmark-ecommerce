@@ -51,7 +51,7 @@ function DropdownGroup({ group, onClose }) {
             <div className="flex items-center gap-2">
               <span className="text-body-sm font-medium text-on-surface group-hover:text-primary transition-colors">{item.label}</span>
               {item.badge && (
-                <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold px-1.5 py-0.5 rounded-full">{item.badge}</span>
+                <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
               )}
             </div>
             <p className="text-[11px] text-secondary mt-0.5 leading-snug">{item.desc}</p>
@@ -182,7 +182,7 @@ export default function Navbar() {
             {/* Quote CTA */}
             <Link
               to="/quote"
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 bg-gold hover:bg-gold/90 text-white text-sm font-semibold whitespace-nowrap rounded-lg transition-colors cursor-pointer"
+              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 bg-gold-strong hover:bg-gold-strong/90 text-white text-sm font-semibold whitespace-nowrap rounded-lg transition-colors cursor-pointer"
             >
               <FileText size={14} />
               Get Quote
@@ -270,7 +270,7 @@ export default function Navbar() {
                       >
                         <span className="text-body-sm text-secondary">{item.label}</span>
                         {item.badge && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold px-1.5 py-0.5 rounded-full">{item.badge}</span>
+                          <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
                         )}
                       </Link>
                     ))}
@@ -294,7 +294,7 @@ export default function Navbar() {
 
             <div className="pt-sm pb-2 flex flex-col gap-2">
               <Link to={!token ? '/login' : isAdmin ? '/admin' : '/account'} onClick={() => setMobileOpen(false)} className="block py-2 text-body-sm font-medium text-secondary hover:text-primary">{!token ? 'Sign In' : isAdmin ? 'Admin Dashboard' : 'My Account'}</Link>
-              <Link to="/quote" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-2 px-3 bg-gold text-white text-body-sm font-semibold rounded-lg">
+              <Link to="/quote" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-2 px-3 bg-gold-strong text-white text-body-sm font-semibold rounded-lg">
                 <FileText size={14} /> Request a Quote
               </Link>
               {token && (

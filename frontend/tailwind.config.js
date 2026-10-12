@@ -32,7 +32,8 @@ export default {
         'on-tertiary-fixed': '#261900',
         'on-tertiary-fixed-variant': '#5d4200',
 
-        gold: '#C9951A',
+        gold: '#C9951A', // decorative accents only
+        'gold-strong': '#8A6410', // gold behind or as text (WCAG AA)
 
         surface: '#f8f9ff',
         'surface-dim': '#d1dbec',

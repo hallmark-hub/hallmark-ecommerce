@@ -37,8 +37,8 @@ export default function ProductCard({ product }) {
             <span className="bg-white text-on-surface px-3 py-1 rounded-full text-label uppercase">Out of Stock</span>
           </div>
         )}
-        <div className="absolute top-3 left-3">
-          <span className="block max-w-[90%] sm:max-w-full truncate bg-white/95 backdrop-blur-sm text-primary text-[9px] sm:text-label uppercase px-2 py-1 sm:px-2.5 rounded-full">
+        <div className="absolute top-3 left-3 hidden sm:block">
+          <span className="block truncate bg-white/95 backdrop-blur-sm text-primary text-label uppercase px-2.5 py-1 rounded-full">
             {product.category_slug?.replace(/-/g, ' ')}
           </span>
         </div>
@@ -55,7 +55,7 @@ export default function ProductCard({ product }) {
         </Link>
 
         <div className="mt-auto flex flex-col gap-2 sm:gap-3">
-          <PriceDisplay pesewas={product.price_pesewas} label={product.price_label} size="md" />
+          <PriceDisplay pesewas={product.price_pesewas} label={product.price_label} size="card" />
 
           {isQuote ? (
             <Button

@@ -57,7 +57,6 @@ function StorefrontLayout({ children }) {
   }, [location.pathname, location.search])
   useEffect(() => {
     if (!content) return
-    document.title = content.seo_title
     document.querySelector('meta[name="description"]')?.setAttribute('content', content.seo_description)
   }, [content])
 

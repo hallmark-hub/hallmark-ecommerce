@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AlertTriangle, CheckCircle, Printer, Home } from 'lucide-react'
 import Button from '../components/Button'
-import { formatPrice, formatDate } from '../utils/format'
+import { formatPrice, formatDate, RETURNS_POLICY } from '../utils/format'
 import { lookupOrder } from '../api/orders'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 export default function OrderConfirmationPage() {
+  usePageTitle('Order Confirmation')
   const { reference } = useParams()
   const [order, setOrder] = useState(null)
   const [error, setError] = useState('')
@@ -182,7 +184,7 @@ export default function OrderConfirmationPage() {
 
         {/* Returns notice */}
         <div className="bg-error-container/30 border border-error/30 rounded-lg p-md mb-xl">
-          <p className="text-body-sm text-error font-medium">{order.returns_policy}</p>
+          <p className="text-body-sm text-error font-medium">{order.returns_policy || RETURNS_POLICY}</p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-sm">

@@ -6,6 +6,7 @@ import { getCategories } from '../api/categories'
 import ProductCard from '../components/ProductCard'
 import { SkeletonCard } from '../components/PageLoader'
 import Button from '../components/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const CAT_ICONS = {
   'chef-uniforms': ChefHat,
@@ -28,6 +29,7 @@ const SORT_OPTIONS = [
 ]
 
 export default function ProductCatalogPage() {
+  usePageTitle('Shop')
   const [searchParams, setSearchParams] = useSearchParams()
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])

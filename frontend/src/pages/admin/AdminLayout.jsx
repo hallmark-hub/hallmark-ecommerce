@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen, ExternalLink } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import ErrorBoundary from '../../components/ErrorBoundary'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -13,6 +14,7 @@ const NAV = [
 ]
 
 export default function AdminLayout() {
+  usePageTitle('Admin')
   const { user, token, isAdmin, logout, refreshProfile } = useAuthStore()
   const [checkingRole, setCheckingRole] = useState(Boolean(token))
   const [mobileOpen, setMobileOpen] = useState(false)

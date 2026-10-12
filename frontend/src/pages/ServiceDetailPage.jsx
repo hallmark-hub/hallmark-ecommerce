@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react'
 import Button from '../components/Button'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const QUOTE_STEPS = [
   'Share your requirement and quantity',
@@ -21,6 +22,7 @@ export default function ServiceDetailPage() {
   const { slug } = useParams()
   const services = useSiteContentStore(state => state.content.services)
   const service = services.find(item => item.slug === slug)
+  usePageTitle(service?.title)
 
   if (!service) return <Navigate to="/services" replace />
 

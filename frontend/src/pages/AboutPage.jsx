@@ -2,10 +2,12 @@ import { Link, Navigate } from 'react-router-dom'
 import { ArrowRight, Building2, ChefHat, PackageSearch, Sparkles } from 'lucide-react'
 import Button from '../components/Button'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const CAPABILITY_ICONS = [ChefHat, PackageSearch, Building2, Sparkles]
 
 export default function AboutPage() {
+  usePageTitle('About Us')
   const content = useSiteContentStore(state => state.content)
   if (!content.show_about_page) return <Navigate to="/" replace />
 

@@ -7,6 +7,7 @@ import useAuthStore from '../store/authStore'
 import { getCustomerOrders } from '../api/auth'
 import { getCustomerQuotes } from '../api/quotes'
 import { formatQuoteCategory } from '../config/quoteCategories'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const STATUS_STYLES = {
   pending: 'bg-tertiary-fixed/30 text-tertiary',
@@ -15,6 +16,7 @@ const STATUS_STYLES = {
 }
 
 export default function AccountPage() {
+  usePageTitle('My Account')
   const navigate = useNavigate()
   const { profile, token, isAdmin, logout, refreshProfile } = useAuthStore()
   const [orders, setOrders] = useState([])

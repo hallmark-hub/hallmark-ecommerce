@@ -8,8 +8,10 @@ import HeroMedia from '../components/HeroMedia'
 import useAuthStore from '../store/authStore'
 import { whatsappLink } from '../config/contact'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function QuoteRequestPage() {
+  usePageTitle('Request a Quote')
   const [searchParams] = useSearchParams()
   const profile = useAuthStore(s => s.profile)
   const content = useSiteContentStore(s => s.content)
@@ -94,14 +96,14 @@ export default function QuoteRequestPage() {
       </div>
 
       {/* Right scrollable content */}
-      <div className="flex-1 min-w-0 px-8 lg:px-16 py-10 md:py-14 bg-surface">
+      <div className="flex-1 min-w-0 px-4 sm:px-8 lg:px-16 py-10 md:py-14 bg-surface">
         <div className="max-w-2xl mx-auto">
         <div className="mb-lg">
           <h1 className="text-h1 text-on-surface">Tell Us What You Need</h1>
           <p className="text-body-lg text-secondary mt-2">For uniforms, branding, kitchen projects, disposables or robotics, share the business context the team needs to scope the right response.</p>
         </div>
 
-        <div className="bg-white rounded-xl border border-outline-variant p-xl">
+        <div className="bg-white rounded-xl border border-outline-variant p-5 sm:p-xl">
           {error && (
             <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
               <AlertTriangle size={16} className="shrink-0" />

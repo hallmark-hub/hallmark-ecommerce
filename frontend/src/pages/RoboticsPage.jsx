@@ -3,6 +3,7 @@ import { ArrowRight, Bot, Building2, CheckCircle, Sparkles } from 'lucide-react'
 import Button from '../components/Button'
 import HeroMedia from '../components/HeroMedia'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const DISCOVERY = [
   'Your venue, operating environment and intended use case',
@@ -12,6 +13,7 @@ const DISCOVERY = [
 ]
 
 export default function RoboticsPage() {
+  usePageTitle('Hospitality Robotics')
   const content = useSiteContentStore(state => state.content)
   if (!content.show_robotics_page) return <Navigate to="/" replace />
 

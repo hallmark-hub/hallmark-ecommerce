@@ -5,10 +5,12 @@ import { verifyMoolre } from '../api/payments'
 import useCartStore from '../store/cartStore'
 import { PageLoader } from '../components/PageLoader'
 import Button from '../components/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 export default function PaymentVerifyPage() {
+  usePageTitle('Payment')
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const reference = searchParams.get('reference') || searchParams.get('trxref')

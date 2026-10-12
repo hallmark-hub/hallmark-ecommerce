@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import Button from '../components/Button'
 import useSiteContentStore from '../store/siteContentStore'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function ServicesPage() {
+  usePageTitle('Services')
   const services = useSiteContentStore(state => state.content.services)
 
   return (

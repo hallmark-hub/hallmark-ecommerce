@@ -8,12 +8,15 @@ import ProductCard from '../components/ProductCard'
 import Button from '../components/Button'
 import { PageLoader } from '../components/PageLoader'
 import { PRODUCT_IMAGE_FALLBACK, useFallbackImage } from '../utils/images'
+import { usePageTitle } from '../hooks/usePageTitle'
+import { RETURNS_POLICY } from '../utils/format'
 
 export default function ProductDetailPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const addItem = useCartStore(s => s.addItem)
   const [product, setProduct] = useState(null)
+  usePageTitle(product?.name)
   const [related, setRelated] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeImg, setActiveImg] = useState(0)
@@ -123,7 +126,7 @@ export default function ProductDetailPage() {
               </li>
               <li className="flex items-center gap-2 text-body-sm text-on-surface">
                 <RefreshCw size={16} className="text-error shrink-0" />
-                <span className="text-error font-medium">Exchange within 3 days for manufacturing defects. Custom-branded items are not returnable.</span>
+                <span className="text-error font-medium">{RETURNS_POLICY} Custom-branded items are not returnable.</span>
               </li>
               <li className="flex items-center gap-2 text-body-sm text-on-surface">
                 <ShoppingCart size={16} className="text-primary shrink-0" />
@@ -195,7 +198,7 @@ export default function ProductDetailPage() {
               ['SKU', product.slug.toUpperCase().slice(0, 12)],
               ['Stock Status', product.in_stock ? 'In Stock' : 'Out of Stock'],
               ['Availability', 'Confirmed at checkout'],
-              ['Warranty', product.category_slug?.includes('equipment') ? '6–12 months warranty, depending on supplier' : 'Exchange within 3 days for manufacturing defects'],
+              ['Warranty', product.category_slug?.includes('equipment') ? '6–12 months warranty, depending on supplier' : RETURNS_POLICY],
               ['Payment', 'MTN MoMo · Telecel Cash · AT Money'],
             ].map(([key, val], i) => (
               <div key={key} className={`flex justify-between px-md py-sm text-body-sm ${i % 2 === 0 ? 'bg-primary-fixed/10' : 'bg-white'}`}>

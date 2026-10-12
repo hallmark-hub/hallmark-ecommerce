@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, CreditCard, RotateCcw, ShieldCheck, Truck } from 'lucide-react'
 import Button from '../components/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const SECTIONS = [
   {
@@ -26,6 +27,7 @@ const SECTIONS = [
 ]
 
 export default function TermsConditionsPage() {
+  usePageTitle('Terms & Conditions')
   return (
     <main className="pt-20 min-h-screen bg-surface">
       <section className="border-b border-outline-variant bg-surface-container-low">

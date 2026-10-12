@@ -4,7 +4,7 @@ const VARIANTS = {
   primary:   'bg-primary text-white hover:bg-primary-container focus-visible:ring-primary',
   secondary: 'bg-white text-primary border border-primary hover:bg-primary hover:text-white focus-visible:ring-primary',
   ghost:     'bg-transparent text-primary hover:bg-surface-container-low focus-visible:ring-primary',
-  gold:      'bg-gold text-white hover:brightness-110 focus-visible:ring-gold',
+  gold:      'bg-gold-strong text-white hover:brightness-110 focus-visible:ring-gold-strong',
   danger:    'bg-error text-white hover:brightness-110 focus-visible:ring-error',
 }
 

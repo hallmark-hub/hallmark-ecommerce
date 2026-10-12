@@ -5,10 +5,11 @@ import useCartStore from '../store/cartStore'
 import useAuthStore from '../store/authStore'
 import { createOrder } from '../api/orders'
 import { initializeMoolre } from '../api/payments'
-import { formatPrice } from '../utils/format'
+import { formatPrice, RETURNS_POLICY } from '../utils/format'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
 import { productImage, useFallbackImage } from '../utils/images'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const STEP_SHIPPING = 1
 const STEP_PAYMENT = 2
@@ -23,6 +24,7 @@ const PAYMENT_METHODS = [
 const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
 
 export default function CheckoutPage() {
+  usePageTitle('Checkout')
   const items = useCartStore(s => s.items)
   const total = useCartStore(s => s.items.reduce((sum, i) => sum + i.price_pesewas * i.quantity, 0))
   const navigate = useNavigate()
@@ -183,7 +185,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Right scrollable content */}
-      <div className="flex-1 min-w-0 px-8 lg:px-12 py-10 md:py-14 bg-surface-container-low">
+      <div className="flex-1 min-w-0 px-4 sm:px-8 lg:px-12 py-10 md:py-14 bg-surface-container-low">
         <div className="max-w-2xl mx-auto lg:max-w-5xl">
 
         {/* Step Progress */}
@@ -212,11 +214,11 @@ export default function CheckoutPage() {
 
             {step === STEP_SHIPPING && (
               <div className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden">
-                <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
+                <div className="px-5 sm:px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
                   <h2 className="text-h2 text-on-surface">Shipping Information</h2>
                   <p className="text-body-sm text-secondary mt-1">We deliver within Greater Accra in 24 hours after payment.</p>
                 </div>
-                <div className="px-8 py-8">
+                <div className="px-5 sm:px-8 py-8">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {/* Full Name */}
                     <div>
@@ -254,7 +256,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                 </div>
-                <div className="px-8 pb-8">
+                <div className="px-5 sm:px-8 pb-8">
                   <Button onClick={handleShippingNext} variant="primary" size="lg" fullWidth iconRight={<ChevronRight />}>
                     Continue to Payment
                   </Button>
@@ -268,7 +270,7 @@ export default function CheckoutPage() {
 
             {step === STEP_PAYMENT && (
               <div className="bg-white rounded-2xl border border-outline-variant shadow-card overflow-hidden">
-                <div className="px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
+                <div className="px-5 sm:px-8 py-6 border-b border-outline-variant bg-surface-container-lowest">
                   <button
                     onClick={() => setStep(STEP_SHIPPING)}
                     className="flex items-center gap-1 text-body-sm text-secondary hover:text-primary mb-3 transition-colors focus:outline-none focus-visible:underline"
@@ -307,10 +309,10 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Returns Policy */}
-                <div className="px-8 pb-8 space-y-5">
+                <div className="px-5 sm:px-8 pb-8 space-y-5">
                   <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
                     <p className="text-body-sm font-semibold text-amber-900 mb-1">Returns Policy</p>
-                    <p className="text-body-sm text-amber-800">No refunds. Exchange only within 3 days of purchase. Ensure items are correct before placing your order.</p>
+                    <p className="text-body-sm text-amber-800">{RETURNS_POLICY} Ensure items are correct before placing your order.</p>
                   </div>
 
                   <label className="flex items-start gap-3 cursor-pointer group">
@@ -323,7 +325,7 @@ export default function CheckoutPage() {
                     </div>
                     <input type="checkbox" checked={acceptedPolicy} onChange={e => setAcceptedPolicy(e.target.checked)} className="sr-only" />
                     <span className="text-body-sm text-on-surface leading-relaxed">
-                      I have read and accept the returns policy — <span className="font-semibold">No refunds. Exchange only within 3 days of purchase.</span>
+                      I have read and accept the returns policy — <span className="font-semibold">{RETURNS_POLICY}</span>
                     </span>
                   </label>
 
