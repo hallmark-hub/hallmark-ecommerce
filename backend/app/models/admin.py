@@ -1,6 +1,15 @@
 from pydantic import BaseModel
 
 
+class CategorySales(BaseModel):
+    """Paid sales for one product category."""
+
+    category: str
+    orders: int
+    units: int
+    revenue_pesewas: int
+
+
 class AdminAnalyticsResponse(BaseModel):
     """Basic admin analytics response."""
 
@@ -13,3 +22,4 @@ class AdminAnalyticsResponse(BaseModel):
     paid_revenue_30d_pesewas: int = 0
     quote_requests_total: int = 0
     quote_requests_new: int = 0
+    sales_by_category: list[CategorySales] = []

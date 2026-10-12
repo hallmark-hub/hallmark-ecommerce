@@ -152,6 +152,32 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
+          {/* Paid sales by category: one series, sorted by revenue, bar length = share of the top category */}
+          {!loading && summary?.sales_by_category?.length > 0 && (
+            <div className={`${cardClass} p-5`}>
+              <h2 className="text-base font-semibold text-on-surface">Paid sales by category</h2>
+              <p className="text-xs text-gray-500 mt-0.5 mb-4">All paid orders</p>
+              <ul className="space-y-3">
+                {summary.sales_by_category.map(row => {
+                  const share = row.revenue_pesewas / summary.sales_by_category[0].revenue_pesewas
+                  const detail = `${row.orders} order${row.orders === 1 ? '' : 's'} · ${row.units} unit${row.units === 1 ? '' : 's'}`
+                  return (
+                    <li key={row.category} title={`${row.category}: ${formatPrice(row.revenue_pesewas)} (${detail})`} aria-label={`${row.category}: ${formatPrice(row.revenue_pesewas)}, ${detail}`}>
+                      <div className="flex justify-between gap-3 text-sm mb-1">
+                        <span className="text-on-surface truncate">{row.category}</span>
+                        <span className="font-semibold text-on-surface whitespace-nowrap">{formatPrice(row.revenue_pesewas)}</span>
+                      </div>
+                      <div className="h-2 rounded bg-gray-100" aria-hidden="true">
+                        <div className="h-2 rounded bg-primary" style={{ width: `${Math.max(share * 100, 2)}%` }} />
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">{detail}</p>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
+
           <div className={`${cardClass} overflow-hidden`}>
             <div className="px-5 py-4 border-b border-gray-200 flex justify-between items-center">
               <h2 className="text-base font-semibold text-on-surface">Recent orders</h2>

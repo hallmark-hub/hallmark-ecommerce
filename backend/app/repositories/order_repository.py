@@ -6,7 +6,7 @@ from uuid import uuid4
 from supabase import Client
 
 from app.db.supabase import get_supabase_client, response_data, supabase_is_configured
-from app.services.catalog_service import _PRODUCT_DATA
+from app.services.catalog_service import _CATEGORY_DATA, _PRODUCT_DATA
 
 
 class OrderReferenceConflictError(RuntimeError):
@@ -51,6 +51,9 @@ class OrderRepository(Protocol):
 
     def list_order_totals(self) -> list[dict[str, Any]]:
         """Return status, payment, total and date for every order (for analytics)."""
+
+    def list_paid_order_items(self) -> list[dict[str, Any]]:
+        """Return order_id, quantity, line total and category name for paid order lines."""
 
     def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return an order by reference."""
@@ -185,6 +188,24 @@ class InMemoryOrderRepository:
     def list_order_totals(self) -> list[dict[str, Any]]:
         """Return every in-memory order."""
         return list(self.orders.values())
+
+    def list_paid_order_items(self) -> list[dict[str, Any]]:
+        """Return in-memory paid order lines with their category name."""
+        products = {str(p["id"]): p for p in _PRODUCT_DATA}
+        category_names = {c["slug"]: c["name"] for c in _CATEGORY_DATA}
+        rows = []
+        for reference, order in self.orders.items():
+            if order["payment_status"] != "paid":
+                continue
+            for item in self.items.get(reference, []):
+                product = products.get(str(item["product_id"]), {})
+                rows.append({
+                    "order_id": order["id"],
+                    "quantity": item["quantity"],
+                    "line_total_pesewas": item["line_total_pesewas"],
+                    "category_name": category_names.get(product.get("category_slug")),
+                })
+        return rows
 
     def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent in-memory orders."""
@@ -335,6 +356,35 @@ class SupabaseOrderRepository:
             )
             page = response_data(response)
             rows.extend(page)
+            if len(page) < page_size:
+                return rows
+
+    def list_paid_order_items(self) -> list[dict[str, Any]]:
+        """Return paid order lines with their product's category, paging past the 1000-row cap."""
+        rows: list[dict[str, Any]] = []
+        fetched = 0
+        page_size = 1000
+        while True:
+            response = (
+                self.client.table("order_items")
+                .select(
+                    "order_id,quantity,line_total_pesewas,"
+                    "orders!inner(payment_status),products(categories(name))"
+                )
+                .eq("orders.payment_status", "paid")
+                .range(fetched, fetched + page_size - 1)
+                .execute()
+            )
+            page = response_data(response)
+            for row in page:
+                category = ((row.get("products") or {}).get("categories") or {})
+                rows.append({
+                    "order_id": row["order_id"],
+                    "quantity": row["quantity"],
+                    "line_total_pesewas": row["line_total_pesewas"],
+                    "category_name": category.get("name"),
+                })
+            fetched += len(page)
             if len(page) < page_size:
                 return rows
 

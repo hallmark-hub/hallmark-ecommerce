@@ -1,7 +1,7 @@
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from app.models.admin import AdminAnalyticsResponse
+from app.models.admin import AdminAnalyticsResponse, CategorySales
 from app.models.orders import PaymentStatus
 from app.repositories.order_repository import OrderRepository, get_order_repository
 from app.repositories.quote_repository import QuoteRepository, get_quote_repository
@@ -48,6 +48,7 @@ class AdminAnalyticsService:
                 revenue_30d += total
 
         quote_counts = self.quote_repository.count_quotes_by_status()
+        sales_by_category = self._sales_by_category(self.repository.list_paid_order_items())
         return AdminAnalyticsResponse(
             total_orders=len(orders),
             paid_revenue_pesewas=paid_revenue,
@@ -58,7 +59,24 @@ class AdminAnalyticsService:
             paid_revenue_30d_pesewas=revenue_30d,
             quote_requests_total=sum(quote_counts.values()),
             quote_requests_new=quote_counts.get("received", 0),
+            sales_by_category=sales_by_category,
         )
+
+    @staticmethod
+    def _sales_by_category(items: list[dict[str, Any]]) -> list[CategorySales]:
+        """Group paid order lines by category, biggest revenue first."""
+        groups: dict[str, dict[str, Any]] = {}
+        for item in items:
+            name = item.get("category_name") or "Uncategorised"
+            group = groups.setdefault(name, {"orders": set(), "units": 0, "revenue": 0})
+            group["orders"].add(item["order_id"])
+            group["units"] += int(item["quantity"])
+            group["revenue"] += int(item["line_total_pesewas"])
+        rows = [
+            CategorySales(category=name, orders=len(g["orders"]), units=g["units"], revenue_pesewas=g["revenue"])
+            for name, g in groups.items()
+        ]
+        return sorted(rows, key=lambda row: row.revenue_pesewas, reverse=True)
 
 
 async def get_admin_analytics_service() -> AdminAnalyticsService:

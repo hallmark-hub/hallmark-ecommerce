@@ -58,3 +58,16 @@ def test_admin_analytics_summary_returns_basic_counts() -> None:
     assert payload["data"]["total_orders"] >= 1
     assert payload["data"]["pending_payment_count"] >= 1
     assert "pending" in payload["data"]["orders_by_status"]
+
+
+def test_admin_analytics_summary_includes_paid_sales_by_category() -> None:
+    from app.repositories.order_repository import _IN_MEMORY_REPOSITORY
+
+    order = create_order()
+    _IN_MEMORY_REPOSITORY.orders[order["reference"]]["payment_status"] = "paid"
+
+    response = request("GET", "/api/v1/admin/analytics/summary")
+
+    rows = response.json()["data"]["sales_by_category"]
+    assert rows and all(row["revenue_pesewas"] > 0 and row["units"] > 0 for row in rows)
+    assert rows[0]["category"] != "Uncategorised"

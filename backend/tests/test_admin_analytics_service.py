@@ -5,11 +5,15 @@ from app.services.admin_analytics_service import AdminAnalyticsService
 
 
 class FakeOrderRepository:
-    def __init__(self, orders: list[dict[str, Any]]) -> None:
+    def __init__(self, orders: list[dict[str, Any]], paid_items: list[dict[str, Any]] | None = None) -> None:
         self.orders = orders
+        self.paid_items = paid_items or []
 
     def list_order_totals(self) -> list[dict[str, Any]]:
         return self.orders
+
+    def list_paid_order_items(self) -> list[dict[str, Any]]:
+        return self.paid_items
 
 
 class FakeQuoteRepository:
@@ -68,3 +72,21 @@ def test_summary_reports_all_quote_requests_and_new_ones() -> None:
 
     assert summary.quote_requests_total == 12
     assert summary.quote_requests_new == 7
+
+
+def test_summary_breaks_paid_sales_down_by_category() -> None:
+    item = lambda order_id, qty, total, name: {"order_id": order_id, "quantity": qty, "line_total_pesewas": total, "category_name": name}
+    paid_items = [
+        item("o1", 2, 36_000, "Chef Uniforms"),
+        item("o1", 1, 9_000, "Chef Uniforms"),
+        item("o2", 1, 1_200_000, "Industrial Kitchen Equipment & Tools"),
+        item("o3", 3, 54_000, "Chef Uniforms"),
+    ]
+    service = AdminAnalyticsService(FakeOrderRepository([], paid_items), FakeQuoteRepository({}))
+
+    summary = service.get_summary()
+
+    assert [row.model_dump() for row in summary.sales_by_category] == [
+        {"category": "Industrial Kitchen Equipment & Tools", "orders": 1, "units": 1, "revenue_pesewas": 1_200_000},
+        {"category": "Chef Uniforms", "orders": 2, "units": 6, "revenue_pesewas": 99_000},
+    ]
