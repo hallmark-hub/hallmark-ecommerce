@@ -433,3 +433,8 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **What was decided:** The product modal manages a gallery of up to 8 images. You can upload several files at once or paste links, the first image is the main one ("Make main" reorders), and × removes an image. On save, new files upload one by one with progress, and each is swapped for its uploaded URL, so retrying after a failed save does not re-upload. The product is saved with `images` in the order shown.
 **Why:** Evans asked for room to upload several images. `products.images` was already a list and the product page already shows a gallery, so this needs no migration. The earlier MEMORY note listing it as a schema change was wrong and has been corrected above.
 **What was rejected:** Uploading files as soon as they're picked (leaves orphaned Cloudinary images if the admin cancels); no limit on the number of images.
+
+## 2026-10-12, Hero slider gets a pause/play button
+**What was decided:** `HeroSlider` shows a 44px pause/play toggle in the hero's bottom-right corner. Autoplay stays on by default, so the 2026-10-10 "always auto-slides" decision still holds for visitors who don't touch it. Reduced-motion visitors start paused (previously autoplay was simply skipped for them).
+**Why:** WCAG 2.2.2 requires a way to pause content that moves on its own for more than 5 seconds. This came from the UI/UX audit, batch 6.
+**What was rejected:** Bringing back pause-on-hover (Evans removed it on 2026-10-10).

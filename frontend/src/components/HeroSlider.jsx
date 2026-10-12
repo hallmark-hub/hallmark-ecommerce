@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import Button from './Button'
 
 // Each image dissolves in over 2.5s (see .hero-slide in index.css), then holds for ~1s
@@ -11,6 +11,8 @@ export default function HeroSlider({ slides, hero }) {
   const [index, setIndex] = useState(0)
   // The first image is active on mount, so its drift needs a tick to start transitioning.
   const [moving, setMoving] = useState(false)
+  // Visitors can stop the autoplay (WCAG 2.2.2); reduced-motion users start paused
+  const [paused, setPaused] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const touchX = useRef(null)
   const count = slides.length
 
@@ -22,11 +24,10 @@ export default function HeroSlider({ slides, hero }) {
   }, [])
 
   useEffect(() => {
-    if (count < 2) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (count < 2 || paused) return
     const timer = setTimeout(() => go(index + 1), INTERVAL_MS)
     return () => clearTimeout(timer)
-  }, [index, count, go])
+  }, [index, count, go, paused])
 
   const onTouchEnd = e => {
     if (touchX.current === null) return
@@ -102,6 +103,14 @@ export default function HeroSlider({ slides, hero }) {
             className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/30 text-white transition hover:bg-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <ChevronRight size={22} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setPaused(p => !p)}
+            aria-label={paused ? 'Play slideshow' : 'Pause slideshow'}
+            className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6 z-20 h-11 w-11 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm border border-white/40 text-white transition hover:bg-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          >
+            {paused ? <Play size={18} /> : <Pause size={18} />}
           </button>
         </>
       )}
