@@ -14,9 +14,9 @@ class AdminOrderService:
     def __init__(self, repository: OrderRepository) -> None:
         self.repository = repository
 
-    def list_orders(self, limit: int = 50) -> list[AdminOrderSummary]:
-        """Return recent orders for admin views."""
-        orders = self.repository.list_orders(limit=limit)
+    def list_orders(self, limit: int = 50, offset: int = 0) -> list[AdminOrderSummary]:
+        """Return orders newest first for admin views, skipping `offset` orders."""
+        orders = self.repository.list_orders(limit=limit, offset=offset)
         return [AdminOrderSummary.model_validate(order) for order in orders]
 
     def get_order(self, reference: str) -> LookupOrderResponse | None:

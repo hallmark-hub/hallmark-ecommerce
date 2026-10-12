@@ -91,3 +91,15 @@ def test_admin_can_update_order_status() -> None:
     payload = response.json()
     assert payload["message"] == "Order status updated"
     assert payload["data"]["order_status"] == "confirmed"
+
+
+def test_admin_order_list_pages_with_offset() -> None:
+    for _ in range(3):
+        create_order()
+
+    first = request("GET", "/api/v1/admin/orders?limit=2&offset=0").json()["data"]
+    second = request("GET", "/api/v1/admin/orders?limit=2&offset=2").json()["data"]
+
+    assert len(first) == 2
+    assert second
+    assert not {o["reference"] for o in first} & {o["reference"] for o in second}

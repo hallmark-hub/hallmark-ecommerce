@@ -46,7 +46,7 @@ class OrderRepository(Protocol):
     ) -> dict[str, Any] | None:
         """Update an order payment status."""
 
-    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+    def list_orders(self, limit: int = 50, offset: int = 0) -> list[dict[str, Any]]:
         """Return recent orders for admin views."""
 
     def list_order_totals(self) -> list[dict[str, Any]]:
@@ -207,14 +207,14 @@ class InMemoryOrderRepository:
                 })
         return rows
 
-    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+    def list_orders(self, limit: int = 50, offset: int = 0) -> list[dict[str, Any]]:
         """Return recent in-memory orders."""
         orders = sorted(
             self.orders.values(),
             key=lambda order: order["created_at"],
             reverse=True,
         )
-        return orders[:limit]
+        return orders[offset:offset + limit]
 
     def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return an in-memory order by reference."""
@@ -388,7 +388,7 @@ class SupabaseOrderRepository:
             if len(page) < page_size:
                 return rows
 
-    def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
+    def list_orders(self, limit: int = 50, offset: int = 0) -> list[dict[str, Any]]:
         """Return recent orders for admin views."""
         response = (
             self.client.table("orders")
@@ -397,7 +397,7 @@ class SupabaseOrderRepository:
                 "payment_method,payment_status,order_status,created_at"
             )
             .order("created_at", desc=True)
-            .limit(limit)
+            .range(offset, offset + limit - 1)
             .execute()
         )
         return response_data(response)

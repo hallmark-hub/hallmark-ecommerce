@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { ShoppingBag } from 'lucide-react'
+import { Download, ShoppingBag } from 'lucide-react'
 import { getAdminOrders, updateAdminOrderStatus } from '../../api/admin'
 import { formatPrice, formatDate } from '../../utils/format'
+import { downloadCsv } from '../../utils/csv'
 import {
   Alert, EmptyState, FilterChips, PageHeader, SearchInput, SkeletonRows, StatusPill, StatusSelect,
-  cardClass, tableHeadClass,
+  cardClass, inputClass, secondaryButtonClass, tableHeadClass,
 } from '../../components/admin/AdminUI'
 import OrderDetailDrawer from '../../components/admin/OrderDetailDrawer'
 
@@ -14,6 +15,26 @@ const PAYMENT_STATUSES = ['all', 'paid', 'pending', 'failed']
 const ORDER_TONES = { pending: 'warning', confirmed: 'info', delivered: 'success' }
 const PAYMENT_TONES = { paid: 'success', pending: 'warning', failed: 'danger' }
 const toOptions = statuses => statuses.map(value => ({ value, label: value }))
+const PAGE_SIZE = 50
+const SORTS = {
+  newest: { label: 'Newest first', compare: (a, b) => new Date(b.created_at) - new Date(a.created_at) },
+  oldest: { label: 'Oldest first', compare: (a, b) => new Date(a.created_at) - new Date(b.created_at) },
+  amount_desc: { label: 'Amount: high to low', compare: (a, b) => b.total_pesewas - a.total_pesewas },
+  amount_asc: { label: 'Amount: low to high', compare: (a, b) => a.total_pesewas - b.total_pesewas },
+}
+const CSV_COLUMNS = [
+  { label: 'Reference', value: o => o.reference },
+  { label: 'Date', value: o => o.created_at },
+  { label: 'Customer', value: o => o.customer_name },
+  { label: 'Phone', value: o => o.customer_phone },
+  { label: 'Email', value: o => o.customer_email },
+  { label: 'Company', value: o => o.company_name },
+  { label: 'Delivery address', value: o => o.delivery_address },
+  { label: 'Total (GHS)', value: o => (o.total_pesewas / 100).toFixed(2) },
+  { label: 'Payment method', value: o => o.payment_method },
+  { label: 'Payment status', value: o => o.payment_status },
+  { label: 'Order status', value: o => o.order_status },
+]
 
 export default function AdminOrdersPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -26,6 +47,10 @@ export default function AdminOrdersPage() {
   const [error, setError] = useState('')
   const [selected, setSelected] = useState(null)
   const [notice, setNotice] = useState('')
+  const [sort, setSort] = useState('newest')
+  const [hasMore, setHasMore] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [exporting, setExporting] = useState(false)
   const closeDetail = useCallback(() => setSelected(null), [])
 
   function applyPaymentFilter(next) {
@@ -41,9 +66,10 @@ export default function AdminOrdersPage() {
       setLoading(true)
       setError('')
       try {
-        const res = await getAdminOrders(100)
+        const res = await getAdminOrders(PAGE_SIZE)
         if (!res.success) throw new Error(res.message)
         setOrders(res.data || [])
+        setHasMore((res.data || []).length === PAGE_SIZE)
       } catch (e) {
         setError(e.message || 'Unable to load admin orders.')
       } finally {
@@ -52,6 +78,41 @@ export default function AdminOrdersPage() {
     }
     loadOrders()
   }, [])
+
+  async function loadMore() {
+    setLoadingMore(true)
+    try {
+      const res = await getAdminOrders(PAGE_SIZE, orders.length)
+      if (!res.success) throw new Error(res.message)
+      const next = res.data || []
+      setOrders(prev => [...prev, ...next.filter(o => !prev.some(p => p.id === o.id))])
+      setHasMore(next.length === PAGE_SIZE)
+    } catch (e) {
+      setError(e.message || 'Unable to load more orders.')
+    } finally {
+      setLoadingMore(false)
+    }
+  }
+
+  // Exports every order, not just the loaded ones, fetching 100 at a time
+  async function exportCsv() {
+    setExporting(true)
+    setError('')
+    try {
+      const all = []
+      for (;;) {
+        const res = await getAdminOrders(100, all.length)
+        if (!res.success) throw new Error(res.message)
+        all.push(...(res.data || []))
+        if ((res.data || []).length < 100) break
+      }
+      downloadCsv(`chefware-orders-${new Date().toISOString().slice(0, 10)}.csv`, CSV_COLUMNS, all)
+    } catch (e) {
+      setError(e.message || 'Unable to export orders.')
+    } finally {
+      setExporting(false)
+    }
+  }
 
   async function updateStatus(reference, newStatus) {
     const order = orders.find(o => o.reference === reference)
@@ -80,20 +141,29 @@ export default function AdminOrdersPage() {
     const matchStatus = statusFilter === 'all' || o.order_status === statusFilter
     const matchPayment = paymentFilter === 'all' || o.payment_status === paymentFilter
     return matchSearch && matchStatus && matchPayment
-  })
+  }).sort(SORTS[sort].compare)
 
   return (
     <div>
       <PageHeader
         title="Orders"
-        subtitle={loading ? 'Loading orders…' : filtered.length === orders.length ? `${orders.length} total orders` : `Showing ${filtered.length} of ${orders.length} orders`}
-      />
+        subtitle={loading ? 'Loading orders…' : `Showing ${filtered.length} of ${orders.length}${hasMore ? '+' : ''} orders`}
+      >
+        <button type="button" onClick={exportCsv} disabled={exporting || loading} className={secondaryButtonClass}>
+          <Download size={16} /> {exporting ? 'Exporting…' : 'Export CSV'}
+        </button>
+      </PageHeader>
 
       {error && <Alert>{error}</Alert>}
       {notice && <Alert tone="success">{notice}</Alert>}
 
       <div className={`${cardClass} p-3 mb-4 space-y-3`}>
-        <SearchInput value={search} onChange={setSearch} placeholder="Search by order reference or client" />
+        <div className="flex flex-col sm:flex-row gap-3">
+          <SearchInput value={search} onChange={setSearch} placeholder="Search by order reference or client" />
+          <select value={sort} onChange={event => setSort(event.target.value)} aria-label="Sort orders" className={`${inputClass} sm:w-56`}>
+            {Object.entries(SORTS).map(([value, option]) => <option key={value} value={value}>{option.label}</option>)}
+          </select>
+        </div>
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           <FilterChips label="Order" value={statusFilter} onChange={setStatusFilter} options={toOptions(ORDER_STATUSES)} />
           <FilterChips label="Payment" value={paymentFilter} onChange={applyPaymentFilter} options={toOptions(PAYMENT_STATUSES)} />
@@ -153,6 +223,14 @@ export default function AdminOrdersPage() {
           </EmptyState>
         )}
       </div>
+
+      {hasMore && !loading && (
+        <div className="flex justify-center mt-4">
+          <button type="button" onClick={loadMore} disabled={loadingMore} className={secondaryButtonClass}>
+            {loadingMore ? 'Loading…' : 'Load more orders'}
+          </button>
+        </div>
+      )}
 
       {selected && <OrderDetailDrawer summary={selected} onClose={closeDetail} />}
     </div>

@@ -23,9 +23,10 @@ router = APIRouter(
 async def list_admin_orders(
     service: Annotated[AdminOrderService, Depends(get_admin_order_service)],
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ) -> dict[str, object]:
-    """Return recent orders for admin management."""
-    orders = await run_in_threadpool(service.list_orders, limit)
+    """Return orders newest first for admin management, a page at a time."""
+    orders = await run_in_threadpool(service.list_orders, limit, offset)
     return ok([order.model_dump(mode="json") for order in orders], "Orders retrieved")
 
 

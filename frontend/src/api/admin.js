@@ -4,8 +4,8 @@ export async function getAdminAnalyticsSummary() {
   return client.adminGet('/api/v1/admin/analytics/summary')
 }
 
-export async function getAdminOrders(limit = 50) {
-  return client.adminGet('/api/v1/admin/orders', { limit })
+export async function getAdminOrders(limit = 50, offset = 0) {
+  return client.adminGet('/api/v1/admin/orders', { limit, offset })
 }
 
 export async function getAdminOrder(reference) {
