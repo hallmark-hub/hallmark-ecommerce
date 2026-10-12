@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ShoppingBag } from 'lucide-react'
 import { getAdminOrders, updateAdminOrderStatus } from '../../api/admin'
@@ -7,6 +7,7 @@ import {
   Alert, EmptyState, FilterChips, PageHeader, SearchInput, SkeletonRows, StatusPill, StatusSelect,
   cardClass, tableHeadClass,
 } from '../../components/admin/AdminUI'
+import OrderDetailDrawer from '../../components/admin/OrderDetailDrawer'
 
 const ORDER_STATUSES = ['all', 'pending', 'confirmed', 'delivered']
 const PAYMENT_STATUSES = ['all', 'paid', 'pending', 'failed']
@@ -23,6 +24,8 @@ export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [selected, setSelected] = useState(null)
+  const closeDetail = useCallback(() => setSelected(null), [])
 
   function applyPaymentFilter(next) {
     setPaymentFilter(next)
@@ -103,9 +106,10 @@ export default function AdminOrdersPage() {
               {!loading && filtered.map(o => (
                 <tr key={o.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-3 sm:px-4 py-3">
-                    <p className="font-semibold text-primary">{o.reference}</p>
+                    <button type="button" onClick={() => setSelected(o)} className="font-semibold text-primary hover:underline cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded" aria-label={`View order ${o.reference}`}>{o.reference}</button>
                     <p className="text-xs text-gray-500 sm:hidden mt-0.5">{o.customer_name}</p>
                     <p className="text-xs font-semibold text-on-surface sm:hidden">{formatPrice(o.total_pesewas)}</p>
+                    <div className="md:hidden mt-1"><StatusPill tone={PAYMENT_TONES[o.payment_status]}>{o.payment_status}</StatusPill></div>
                   </td>
                   <td className="px-3 sm:px-4 py-3 hidden sm:table-cell">
                     <p className="font-medium text-on-surface">{o.customer_name}</p>
@@ -137,6 +141,8 @@ export default function AdminOrdersPage() {
           </EmptyState>
         )}
       </div>
+
+      {selected && <OrderDetailDrawer summary={selected} onClose={closeDetail} />}
     </div>
   )
 }

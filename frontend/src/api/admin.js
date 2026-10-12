@@ -8,6 +8,10 @@ export async function getAdminOrders(limit = 50) {
   return client.adminGet('/api/v1/admin/orders', { limit })
 }
 
+export async function getAdminOrder(reference) {
+  return client.adminGet(`/api/v1/admin/orders/${encodeURIComponent(reference)}`)
+}
+
 export async function updateAdminOrderStatus(reference, orderStatus) {
   return client.adminPatch(`/api/v1/admin/orders/${reference}/status`, { order_status: orderStatus })
 }
