@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, PackageSearch, Plus } from 'lucide-react'
+import { AlertTriangle, Download, PackageSearch, Plus } from 'lucide-react'
 import { getCategories } from '../../api/categories'
 import { getAdminProducts, setAdminProductActive, updateAdminProductStock } from '../../api/admin'
 import { formatPrice } from '../../utils/format'
+import { downloadCsv } from '../../utils/csv'
 import { productImage, useFallbackImage } from '../../utils/images'
 import AddProductModal from '../../components/admin/AddProductModal'
 import {
   Alert, EmptyState, FilterChips, PageHeader, SearchInput, SkeletonRows, StatusPill,
-  cardClass, primaryButtonClass, tableHeadClass,
+  cardClass, inputClass, primaryButtonClass, secondaryButtonClass, tableHeadClass,
 } from '../../components/admin/AdminUI'
 
 const DEFAULT_THRESHOLD = 5
@@ -36,6 +37,13 @@ const STOCK_BADGES = {
   out: { label: 'Out of stock', tone: 'danger', qty: 'text-red-700' },
 }
 
+const SORTS = {
+  newest: { label: 'Newest first', compare: () => 0 },
+  name: { label: 'Name A–Z', compare: (a, b) => a.name.localeCompare(b.name) },
+  stock_asc: { label: 'Stock: lowest first', compare: (a, b) => a.stock - b.stock },
+  price_desc: { label: 'Price: high to low', compare: (a, b) => (b.price_pesewas ?? -1) - (a.price_pesewas ?? -1) },
+}
+
 const stepButtonClass = 'h-8 min-w-8 px-2 rounded border border-gray-300 bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed'
 
 function toInventoryItem(product) {
@@ -60,6 +68,7 @@ export default function AdminInventoryPage() {
   const [notice, setNotice] = useState('')
   const [showAdd, setShowAdd] = useState(false)
   const [editing, setEditing] = useState(null)
+  const [sort, setSort] = useState('newest')
 
   useEffect(() => {
     async function loadInventory() {
@@ -158,15 +167,32 @@ export default function AdminInventoryPage() {
       : !item.is_active ? false
         : stockFilter === 'all' || stockStatus(item.stock, item.threshold) === stockFilter
     return matchSearch && matchStock
-  })
+  }).sort(SORTS[sort].compare)
+
+  function exportCsv() {
+    downloadCsv(`chefware-inventory-${new Date().toISOString().slice(0, 10)}.csv`, [
+      { label: 'Name', value: i => i.name },
+      { label: 'Slug', value: i => i.slug },
+      { label: 'Category', value: i => categoryNames[i.category] || i.category },
+      { label: 'Checkout', value: i => i.checkout_type },
+      { label: 'Price (GHS)', value: i => (i.price_pesewas == null ? '' : (i.price_pesewas / 100).toFixed(2)) },
+      { label: 'Stock', value: i => i.stock },
+      { label: 'Status', value: i => (i.is_active ? STOCK_BADGES[stockStatus(i.stock, i.threshold)].label : 'Archived') },
+    ], inventory)
+  }
   const restockNames = needsRestock.slice(0, 3).map(i => i.name).join(', ')
 
   return (
     <div>
       <PageHeader title="Inventory" subtitle={loading ? 'Loading products…' : `${inventory.length} product${inventory.length === 1 ? '' : 's'} tracked`}>
-        <button onClick={() => setShowAdd(true)} className={primaryButtonClass}>
-          <Plus size={16} /> Add product
-        </button>
+        <div className="flex gap-2">
+          <button type="button" onClick={exportCsv} disabled={loading || inventory.length === 0} className={secondaryButtonClass}>
+            <Download size={16} /> Export CSV
+          </button>
+          <button onClick={() => setShowAdd(true)} className={primaryButtonClass}>
+            <Plus size={16} /> Add product
+          </button>
+        </div>
       </PageHeader>
 
       {(showAdd || editing) && (
@@ -194,7 +220,12 @@ export default function AdminInventoryPage() {
       )}
 
       <div className={`${cardClass} p-3 mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3`}>
-        <SearchInput value={search} onChange={setSearch} placeholder="Search by name or SKU" />
+        <div className="flex flex-col sm:flex-row gap-3 flex-1">
+          <SearchInput value={search} onChange={setSearch} placeholder="Search by name or SKU" />
+          <select value={sort} onChange={event => setSort(event.target.value)} aria-label="Sort products" className={`${inputClass} sm:w-52`}>
+            {Object.entries(SORTS).map(([value, option]) => <option key={value} value={value}>{option.label}</option>)}
+          </select>
+        </div>
         <FilterChips
           label="Stock"
           value={stockFilter}
