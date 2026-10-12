@@ -85,7 +85,7 @@ export default function HomePage() {
         <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-5 gap-x-3 gap-y-5 sm:gap-6 text-center">
           {STATS.map(s => (
             <div key={s.label}>
-              <p className="text-xl sm:text-2xl md:text-h1 font-bold text-white break-words">{s.value}</p>
+              <p className="text-xl sm:text-2xl md:text-xl lg:text-2xl xl:text-3xl font-bold text-white">{s.value}</p>
               <p className="text-primary-fixed text-body-sm mt-1">{s.label}</p>
             </div>
           ))}

@@ -122,7 +122,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {NAV_GROUPS.map(group => (
               <div
                 key={group.label}
@@ -136,7 +136,7 @@ export default function Navbar() {
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={activeGroup === group.label}
-                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
                     activeGroup === group.label
                       ? 'bg-primary text-white'
                       : 'text-secondary hover:text-primary hover:bg-surface-container-low'
@@ -158,7 +158,7 @@ export default function Navbar() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-secondary hover:text-primary hover:bg-surface-container-low transition-colors"
+                className="px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap text-secondary hover:text-primary hover:bg-surface-container-low transition-colors"
               >
                 {item.label}
               </Link>
@@ -175,14 +175,14 @@ export default function Navbar() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search products..."
-                className="w-48 pl-8 pr-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:outline-none focus:ring-2 focus:ring-primary focus:w-60 transition-all duration-200"
+                className="w-28 xl:w-48 pl-8 pr-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-body-sm focus:outline-none focus:ring-2 focus:ring-primary xl:focus:w-60 transition-all duration-200"
               />
             </form>
 
             {/* Quote CTA */}
             <Link
               to="/quote"
-              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-gold hover:bg-gold/90 text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 bg-gold hover:bg-gold/90 text-white text-sm font-semibold whitespace-nowrap rounded-lg transition-colors cursor-pointer"
             >
               <FileText size={14} />
               Get Quote
@@ -224,7 +224,7 @@ export default function Navbar() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer"
+              className="lg:hidden p-2 hover:bg-surface-container-low rounded-full transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -234,7 +234,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-white border-t border-outline-variant px-gutter py-sm max-h-[80vh] overflow-y-auto">
+          <div className="lg:hidden bg-white border-t border-outline-variant px-gutter py-sm max-h-[80vh] overflow-y-auto">
             <form onSubmit={handleSearch} className="flex gap-2 mb-sm">
               <input
                 type="text"
