@@ -427,4 +427,9 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 - Image uploads: checked against the backend limits (JPEG/PNG/WebP, 5 MB) when the file is picked.
 **Why:** These are UI/UX audit findings. The old dashboard said "lifetime" but read only the last 100 orders, and quote totals were capped at 5.
 **What was rejected:** Switching to a data router just to block navigation; editable slugs (would break shared links).
-**Not done (need a schema change, so Evans must approve):** cancelled/processing/shipped order statuses (enum migration), quote notes/assignee/quoted amount, per-product reorder level, promo codes (deferred), multiple image upload in the modal. The Supabase join in `list_paid_order_items` was written from the migration schema and has not been run against the live database (the Supabase MCP was down).
+**Not done (need a schema change, so Evans must approve):** cancelled/processing/shipped order statuses (enum migration), quote notes/assignee/quoted amount, per-product reorder level, promo codes (deferred). The Supabase join in `list_paid_order_items` was written from the migration schema and has not been run against the live database (the Supabase MCP was down).
+
+## 2026-10-12, Several images per product (no schema change)
+**What was decided:** The product modal manages a gallery of up to 8 images. You can upload several files at once or paste links, the first image is the main one ("Make main" reorders), and × removes an image. On save, new files upload one by one with progress, and each is swapped for its uploaded URL, so retrying after a failed save does not re-upload. The product is saved with `images` in the order shown.
+**Why:** Evans asked for room to upload several images. `products.images` was already a list and the product page already shows a gallery, so this needs no migration. The earlier MEMORY note listing it as a schema change was wrong and has been corrected above.
+**What was rejected:** Uploading files as soon as they're picked (leaves orphaned Cloudinary images if the admin cancels); no limit on the number of images.

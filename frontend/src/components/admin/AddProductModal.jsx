@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { ImagePlus, Loader2, X } from 'lucide-react'
+import { ImagePlus, Loader2, Star, X } from 'lucide-react'
 import { createAdminProduct, updateAdminProduct, uploadAdminProductImage } from '../../api/admin'
 import { Alert, Field, inputClass, primaryButtonClass, secondaryButtonClass } from './AdminUI'
 import { imageFileError } from '../../utils/images'
+
+const MAX_IMAGES = 8
 
 const EMPTY_FORM = {
   name: '',
@@ -14,7 +16,6 @@ const EMPTY_FORM = {
   price_label: '',
   stock_qty: '0',
   tags: '',
-  image_url: '',
 }
 
 // Pre-fill the form from an existing product when editing
@@ -29,7 +30,6 @@ function formFromProduct(product) {
     price_label: product.price_label || '',
     stock_qty: String(product.stock_qty ?? 0),
     tags: (product.tags || []).join(', '),
-    image_url: product.images?.[0] || '',
   }
 }
 
@@ -38,25 +38,53 @@ export default function AddProductModal({ product, categories, categoriesLoading
   const [initialForm] = useState(() => (isEdit ? formFromProduct(product) : EMPTY_FORM))
   const [form, setForm] = useState(initialForm)
   const [slugEdited, setSlugEdited] = useState(isEdit)
-  const [imageFile, setImageFile] = useState(null)
-  const [filePreview, setFilePreview] = useState('')
+  // Gallery entries: saved images are { id, url }; new uploads also carry the File, with url as a local preview
+  const [initialImages] = useState(() => (product?.images || []).map(url => ({ id: url, url })))
+  const [images, setImages] = useState(initialImages)
+  const [linkInput, setLinkInput] = useState('')
   const [stage, setStage] = useState('')
   const [error, setError] = useState('')
   const saving = Boolean(stage)
 
-  // Previews are object URLs, so release them when the file changes or the modal closes.
-  useEffect(() => () => { if (filePreview) URL.revokeObjectURL(filePreview) }, [filePreview])
+  // Previews are object URLs, so release any still held when the modal closes
+  const imagesRef = useRef(images)
+  useEffect(() => { imagesRef.current = images })
+  useEffect(() => () => imagesRef.current.forEach(image => image.file && URL.revokeObjectURL(image.url)), [])
 
-  function chooseImage(file) {
-    const fileError = file && imageFileError(file)
-    if (fileError) { setError(fileError); return }
+  function addFiles(fileList) {
+    const files = Array.from(fileList || [])
+    const room = MAX_IMAGES - images.length
+    const problems = files.map(file => imageFileError(file) && `${file.name}: ${imageFileError(file)}`).filter(Boolean)
+    const valid = files.filter(file => !imageFileError(file))
+    if (valid.length > room) problems.push(`A product can have up to ${MAX_IMAGES} images, so ${valid.length - room} were not added.`)
+    setError(problems.join(' '))
+    setImages(current => [...current, ...valid.slice(0, room).map(file => ({ id: `${file.name}-${file.lastModified}-${Math.random()}`, url: URL.createObjectURL(file), file }))])
+  }
+
+  function addLink() {
+    const url = linkInput.trim()
+    if (!isValidImageUrl(url)) { setError('The image link must be a valid HTTPS address.'); return }
+    if (images.length >= MAX_IMAGES) { setError(`A product can have up to ${MAX_IMAGES} images.`); return }
     setError('')
-    setImageFile(file)
-    setFilePreview(file ? URL.createObjectURL(file) : '')
+    setImages(current => [...current, { id: url, url }])
+    setLinkInput('')
+  }
+
+  function removeImage(id) {
+    setImages(current => {
+      const removed = current.find(image => image.id === id)
+      if (removed?.file) URL.revokeObjectURL(removed.url)
+      return current.filter(image => image.id !== id)
+    })
+  }
+
+  function makeMain(id) {
+    setImages(current => [current.find(image => image.id === id), ...current.filter(image => image.id !== id)])
   }
 
   // Ask before throwing away typed changes (Escape, backdrop click, close and cancel all come here)
-  const dirty = Boolean(imageFile) || JSON.stringify(form) !== JSON.stringify(initialForm)
+  const dirty = JSON.stringify(form) !== JSON.stringify(initialForm)
+    || images.map(image => image.id).join() !== initialImages.map(image => image.id).join()
   function requestClose() {
     if (saving) return
     if (dirty && !window.confirm('Discard your changes to this product?')) return
@@ -92,18 +120,22 @@ export default function AddProductModal({ product, categories, categoriesLoading
   async function handleSubmit(event) {
     event.preventDefault()
     setError('')
-    const imageUrlInput = form.image_url.trim()
-    if (!imageFile && !imageUrlInput) { setError('Add a product image: upload a file or paste an image link.'); return }
-    if (!imageFile && !isValidImageUrl(imageUrlInput)) { setError('The image link must be a valid HTTPS address.'); return }
+    if (images.length === 0) { setError('Add at least one product image: upload a file or paste an image link.'); return }
     if (!form.category_slug) { setError('Choose a category.'); return }
     if (form.checkout_type === 'direct' && !form.price_ghs) { setError('Products sold online need a price.'); return }
     try {
-      let imageUrl = imageUrlInput
-      if (imageFile) {
-        setStage('Uploading image…')
-        const uploadRes = await uploadAdminProductImage(imageFile)
+      const pending = images.filter(image => image.file)
+      const urls = []
+      for (const image of images) {
+        if (!image.file) { urls.push(image.url); continue }
+        setStage(`Uploading image ${pending.indexOf(image) + 1} of ${pending.length}…`)
+        const uploadRes = await uploadAdminProductImage(image.file)
         if (!uploadRes.success) throw new Error(uploadRes.message)
-        imageUrl = uploadRes.data.secure_url
+        const uploadedUrl = uploadRes.data.secure_url
+        urls.push(uploadedUrl)
+        // Swap in the uploaded URL so a retry after a failed save doesn't upload it again
+        URL.revokeObjectURL(image.url)
+        setImages(current => current.map(item => item.id === image.id ? { id: image.id, url: uploadedUrl } : item))
       }
       setStage('Saving product…')
       const payload = {
@@ -114,8 +146,7 @@ export default function AddProductModal({ product, categories, categoriesLoading
         checkout_type: form.checkout_type,
         price_pesewas: form.checkout_type === 'direct' ? Math.round(Number(form.price_ghs) * 100) : null,
         price_label: form.checkout_type === 'quote' ? (form.price_label || 'Request a quote') : null,
-        // Editing replaces only the main image and keeps the rest of the gallery
-        images: isEdit ? [imageUrl, ...(product.images || []).slice(1)] : [imageUrl],
+        images: urls,
         in_stock: Number(form.stock_qty) > 0,
         stock_qty: Number(form.stock_qty),
         tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
@@ -128,8 +159,6 @@ export default function AddProductModal({ product, categories, categoriesLoading
       setStage('')
     }
   }
-
-  const previewSrc = filePreview || (isValidImageUrl(form.image_url.trim()) ? form.image_url.trim() : '')
 
   return (
     <div
@@ -195,43 +224,52 @@ export default function AddProductModal({ product, categories, categoriesLoading
             </Field>
 
             <div className="sm:col-span-2">
-              <p className="text-sm font-medium text-gray-700 mb-1.5">Product image <span className="text-red-600">*</span></p>
-              <div className="flex items-start gap-4 rounded-md border border-dashed border-gray-300 bg-gray-50 p-4">
-                <div className="w-20 h-20 shrink-0 rounded bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
-                  {previewSrc
-                    ? <img src={previewSrc} alt="Selected product" className="w-full h-full object-cover" />
-                    : <ImagePlus size={24} className="text-gray-400" />}
-                </div>
-                <div className="min-w-0 flex-1 space-y-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <label className={`${secondaryButtonClass} h-9 ${saving ? 'opacity-60 cursor-not-allowed' : ''}`}>
-                      {imageFile ? 'Change image' : 'Upload image'}
-                      <input
-                        type="file"
-                        accept="image/png,image/jpeg,image/webp"
-                        disabled={saving}
-                        onChange={event => chooseImage(event.target.files?.[0] || null)}
-                        className="sr-only"
-                      />
-                    </label>
-                    {imageFile && (
-                      <>
-                        <span className="text-sm text-gray-600 truncate max-w-[200px]">{imageFile.name}</span>
-                        <button type="button" onClick={() => chooseImage(null)} className="text-sm text-gray-500 hover:text-red-600 cursor-pointer">Remove</button>
-                      </>
-                    )}
-                  </div>
-                  {!imageFile && (
+              <p className="text-sm font-medium text-gray-700 mb-1.5">Product images <span className="text-red-600">*</span></p>
+              <p className="text-xs text-gray-500 mb-2">The first image is the main one shown in the shop. Up to {MAX_IMAGES} images; JPEG, PNG or WebP under 5 MB, stored on Cloudinary.</p>
+              <div className="rounded-md border border-dashed border-gray-300 bg-gray-50 p-4 space-y-3">
+                {images.length > 0 && (
+                  <ul className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {images.map((image, index) => (
+                      <li key={image.id} className="relative">
+                        <img src={image.url} alt={`Product image ${index + 1}`} className={`w-full aspect-square object-cover rounded border bg-white ${index === 0 ? 'border-primary ring-1 ring-primary' : 'border-gray-200'}`} />
+                        {index === 0
+                          ? <span className="absolute left-1 bottom-1 rounded bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-white">Main</span>
+                          : (
+                            <button type="button" onClick={() => makeMain(image.id)} disabled={saving} className="absolute left-1 bottom-1 flex items-center gap-1 rounded bg-white/95 px-1.5 py-0.5 text-[10px] font-semibold text-gray-700 shadow hover:text-primary cursor-pointer" aria-label={`Make image ${index + 1} the main image`}>
+                              <Star size={10} /> Make main
+                            </button>
+                          )}
+                        <button type="button" onClick={() => removeImage(image.id)} disabled={saving} className="absolute right-1 top-1 w-7 h-7 flex items-center justify-center rounded-full bg-white/95 text-gray-600 shadow hover:text-red-600 cursor-pointer" aria-label={`Remove image ${index + 1}`}>
+                          <X size={14} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className={`${secondaryButtonClass} h-9 ${saving || images.length >= MAX_IMAGES ? 'opacity-60 cursor-not-allowed' : ''}`}>
+                    <ImagePlus size={16} /> {images.length ? 'Add more images' : 'Upload images'}
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/png,image/jpeg,image/webp"
+                      disabled={saving || images.length >= MAX_IMAGES}
+                      onChange={event => { addFiles(event.target.files); event.target.value = '' }}
+                      className="sr-only"
+                    />
+                  </label>
+                  <div className="flex flex-1 min-w-[220px] gap-2">
                     <input
                       type="url"
-                      value={form.image_url}
-                      onChange={event => updateForm('image_url', event.target.value)}
+                      value={linkInput}
+                      onChange={event => setLinkInput(event.target.value)}
+                      onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); addLink() } }}
                       aria-label="Image link"
                       placeholder="…or paste an https:// image link"
                       className={`${inputClass} h-9`}
                     />
-                  )}
-                  <p className="text-xs text-gray-500">JPEG, PNG or WebP. Uploads are stored on Cloudinary.</p>
+                    <button type="button" onClick={addLink} disabled={saving || !linkInput.trim()} className={`${secondaryButtonClass} h-9`}>Add</button>
+                  </div>
                 </div>
               </div>
             </div>
