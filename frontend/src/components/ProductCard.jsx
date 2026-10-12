@@ -60,7 +60,7 @@ export default function ProductCard({ product }) {
           {isQuote ? (
             <Button
               as={Link}
-              to={`/quote?product=${product.id}`}
+              to={`/quote?product=${product.slug}`}
               variant="gold"
               size="sm"
               fullWidth

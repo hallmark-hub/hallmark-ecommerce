@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { CheckCircle, AlertTriangle } from 'lucide-react'
 import { submitQuote } from '../api/quotes'
+import { getProduct } from '../api/products'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
 import HeroMedia from '../components/HeroMedia'
@@ -30,6 +31,21 @@ export default function QuoteRequestPage() {
     preferred_delivery_date: '',
     message: '',
   })
+
+  // Arriving from a product's "Get Quote" button: name the product and pick its category
+  const productSlug = searchParams.get('product')
+  useEffect(() => {
+    if (!productSlug) return
+    getProduct(productSlug).then(res => {
+      if (!res.success) return
+      const options = content.quote_options?.length ? content.quote_options : content.services
+      setForm(prev => ({
+        ...prev,
+        category_slug: prev.category_slug || (options.some(o => o.slug === res.data.category_slug) ? res.data.category_slug : ''),
+        message: prev.message || `I'd like a quote for: ${res.data.name}\n\n`,
+      }))
+    })
+  }, [productSlug, content])
 
   function update(field, val) {
     setForm(prev => ({ ...prev, [field]: val }))

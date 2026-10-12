@@ -125,7 +125,7 @@ export default function Footer() {
               <Link to="/warranty-returns" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Warranty & Returns</Link>
               <Link to="/terms" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Terms & Conditions</Link>
               <Link to="/account" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">My Account</Link>
-              <Link to="/account" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Track Order</Link>
+              <Link to="/track" className="text-sm text-secondary-fixed/70 hover:text-white transition-colors">Track Order</Link>
             </nav>
           </div>
 

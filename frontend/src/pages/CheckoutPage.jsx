@@ -382,7 +382,6 @@ export default function CheckoutPage() {
             </div>
 
             <div className="px-6 pb-5 space-y-2">
-              <p className="text-label uppercase text-secondary">VAT treatment TBC. Prices shown inclusive.</p>
               <div className="flex items-center gap-2 pt-2">
                 <Truck size={14} className="text-primary shrink-0" />
                 <p className="text-label uppercase text-primary">Free delivery · Greater Accra · 24hrs</p>

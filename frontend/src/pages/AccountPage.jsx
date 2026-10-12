@@ -197,10 +197,17 @@ export default function AccountPage() {
             <div className="bg-white rounded-xl border border-outline-variant p-md mt-md">
               <h3 className="text-h3 text-on-surface mb-md">Quick Procurement</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-sm">
-                {['Chef Uniforms', 'Equipment', 'Branding', 'Kitchen Setup', 'Embroidery', 'Pre-orders'].map(cat => (
+                {[
+                  ['Chef Uniforms', '/products?category=chef-uniforms'],
+                  ['Equipment', '/products?category=kitchen-equipment-tools'],
+                  ['Branding & Embroidery', '/quote?category=branding-embroidery'],
+                  ['Kitchen Setup', '/quote?category=kitchen-setup'],
+                  ['Robotics', '/quote?category=robotics'],
+                  ['Machine Pre-orders', '/quote?category=kitchen-equipment'],
+                ].map(([cat, to]) => (
                   <Link
                     key={cat}
-                    to="/products"
+                    to={to}
                     className="flex items-center justify-between px-3 py-2 rounded-lg border border-outline-variant hover:border-primary hover:bg-surface-container-low transition-all text-body-sm text-on-surface cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                   >
                     {cat} <ArrowRight size={14} className="text-secondary" />
@@ -234,8 +241,8 @@ export default function AccountPage() {
             {/* Kitchen Audit CTA */}
             <div className="bg-primary-container rounded-xl p-md text-white">
               <h3 className="text-h3 mb-xs">Need a Kitchen Audit?</h3>
-              <p className="text-body-sm text-on-primary-container mb-sm">Free expert review of your current setup. We'll recommend upgrades and equipment.</p>
-              <Button as={Link} to="/quote" variant="gold" size="sm">Request Audit</Button>
+              <p className="text-body-sm text-on-primary-container mb-sm">Tell us about your current setup and we'll recommend upgrades and equipment.</p>
+              <Button as={Link} to="/quote?category=kitchen-setup" variant="gold" size="sm">Discuss Your Kitchen</Button>
             </div>
           </div>
         </div>

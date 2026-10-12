@@ -23,6 +23,7 @@ const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'))
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const PaymentVerifyPage = lazy(() => import('./pages/PaymentVerifyPage'))
 const OrderConfirmationPage = lazy(() => import('./pages/OrderConfirmationPage'))
+const TrackOrderPage = lazy(() => import('./pages/TrackOrderPage'))
 const QuoteRequestPage = lazy(() => import('./pages/QuoteRequestPage'))
 const AccountPage = lazy(() => import('./pages/AccountPage'))
 const AuthPage = lazy(() => import('./pages/AuthPage'))
@@ -96,6 +97,7 @@ export default function App() {
         <Route path="/checkout" element={<StorefrontLayout><CheckoutPage /></StorefrontLayout>} />
         <Route path="/payment/verify" element={<StorefrontLayout><PaymentVerifyPage /></StorefrontLayout>} />
         <Route path="/order-confirmation/:reference" element={<StorefrontLayout><OrderConfirmationPage /></StorefrontLayout>} />
+        <Route path="/track" element={<StorefrontLayout><TrackOrderPage /></StorefrontLayout>} />
         <Route path="/services" element={<StorefrontLayout><ServicesPage /></StorefrontLayout>} />
         <Route path="/services/:slug" element={<StorefrontLayout><ServiceDetailPage /></StorefrontLayout>} />
         <Route path="/robotics" element={<StorefrontLayout><RoboticsPage /></StorefrontLayout>} />
