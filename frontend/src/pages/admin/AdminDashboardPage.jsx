@@ -13,31 +13,11 @@ const ORDER_TONES = { pending: 'warning', confirmed: 'info', delivered: 'success
 const QUOTE_TONES = { received: 'warning', contacted: 'info', quoted: 'success', closed: 'neutral' }
 const QUOTE_STATUSES = ['received', 'contacted', 'quoted', 'closed']
 
-const DAY_MS = 24 * 60 * 60 * 1000
-
 function greeting() {
   const hour = new Date().getHours()
   if (hour < 12) return 'Good morning'
   if (hour < 18) return 'Good afternoon'
   return 'Good evening'
-}
-
-function bucketRevenue(orders) {
-  const now = Date.now()
-  const startOfDay = new Date()
-  startOfDay.setHours(0, 0, 0, 0)
-  const dayMs = startOfDay.getTime()
-  const buckets = { today: 0, week: 0, month: 0 }
-  for (const order of orders) {
-    if (order.payment_status !== 'paid') continue
-    const ts = new Date(order.created_at).getTime()
-    if (Number.isNaN(ts)) continue
-    const age = now - ts
-    if (ts >= dayMs) buckets.today += order.total_pesewas || 0
-    if (age <= 7 * DAY_MS) buckets.week += order.total_pesewas || 0
-    if (age <= 30 * DAY_MS) buckets.month += order.total_pesewas || 0
-  }
-  return buckets
 }
 
 export default function AdminDashboardPage() {
@@ -50,17 +30,16 @@ export default function AdminDashboardPage() {
   const user = useAuthStore(state => state.user)
   const firstName = (user?.name || '').trim().split(' ')[0]
   const lowStock = products.filter(product => product.stock_qty <= 5).slice(0, 4)
-  const revenue = useMemo(() => bucketRevenue(orders), [orders])
   const stats = useMemo(() => {
     const totalOrders = summary?.total_orders || 0
-    const newQuotes = quotes.filter(quote => quote.status === 'received').length
+    const newQuotes = summary?.quote_requests_new || 0
     return [
       { label: 'Paid Revenue', value: formatPrice(summary?.paid_revenue_pesewas || 0), sub: 'lifetime', icon: DollarSign, color: 'text-primary', bg: 'bg-primary/10', to: '/admin/orders?payment=paid' },
       { label: 'Total Orders', value: String(totalOrders), sub: 'all-time count', icon: ShoppingBag, color: 'text-blue-600', bg: 'bg-blue-50', to: '/admin/orders' },
       { label: 'Pending Payments', value: String(summary?.pending_payment_count || 0), sub: 'awaiting confirmation', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50', to: '/admin/orders?payment=pending' },
-      { label: 'Quote Requests', value: String(quotes.length), sub: newQuotes ? `${newQuotes} new` : 'none new', icon: MessageSquare, color: 'text-orange-600', bg: 'bg-orange-50', to: '/admin/quotes' },
+      { label: 'Quote Requests', value: String(summary?.quote_requests_total || 0), sub: newQuotes ? `${newQuotes} new` : 'none new', icon: MessageSquare, color: 'text-orange-600', bg: 'bg-orange-50', to: '/admin/quotes' },
     ]
-  }, [summary, quotes])
+  }, [summary])
 
   useEffect(() => {
     async function loadDashboard() {
@@ -68,7 +47,7 @@ export default function AdminDashboardPage() {
       try {
         const [summaryRes, ordersRes, productsRes, quotesRes] = await Promise.all([
           getAdminAnalyticsSummary(),
-          getAdminOrders(50),
+          getAdminOrders(5),
           getProducts({ limit: 100 }),
           getAdminQuoteRequests(5),
         ])
@@ -91,17 +70,22 @@ export default function AdminDashboardPage() {
 
   async function updateQuoteStatus(reference, status) {
     const previous = quotes
+    const previousSummary = summary
+    const wasNew = quotes.find(quote => quote.reference === reference)?.status === 'received'
+    const newDelta = (status === 'received' ? 1 : 0) - (wasNew ? 1 : 0)
     setQuotes(current => current.map(quote => quote.reference === reference ? { ...quote, status } : quote))
+    setSummary(current => current && { ...current, quote_requests_new: current.quote_requests_new + newDelta })
     try {
       const res = await updateAdminQuoteStatus(reference, status)
       if (!res.success) throw new Error(res.message)
     } catch (e) {
       setQuotes(previous)
+      setSummary(previousSummary)
       setError(e.message || 'Unable to update quote request.')
     }
   }
 
-  const newQuotes = quotes.filter(q => q.status === 'received').length
+  const newQuotes = summary?.quote_requests_new || 0
 
   return (
     <div className="space-y-6">
@@ -150,13 +134,13 @@ export default function AdminDashboardPage() {
           <div className={`${cardClass} p-5`}>
             <div className="mb-4">
               <h2 className="text-base font-semibold text-on-surface">Paid revenue</h2>
-              <p className="text-xs text-gray-500 mt-0.5">Based on your 50 most recent orders</p>
+              <p className="text-xs text-gray-500 mt-0.5">Paid orders only</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                { label: 'Today', value: revenue.today },
-                { label: 'Last 7 days', value: revenue.week },
-                { label: 'Last 30 days', value: revenue.month },
+                { label: 'Today', value: summary?.paid_revenue_today_pesewas || 0 },
+                { label: 'Last 7 days', value: summary?.paid_revenue_7d_pesewas || 0 },
+                { label: 'Last 30 days', value: summary?.paid_revenue_30d_pesewas || 0 },
               ].map(window => (
                 <div key={window.label} className="rounded bg-gray-50 border border-gray-200 p-4">
                   <p className="text-xs font-medium text-gray-500">{window.label}</p>

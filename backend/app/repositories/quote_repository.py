@@ -27,6 +27,9 @@ class QuoteRepository(Protocol):
     def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent quote requests."""
 
+    def count_quotes_by_status(self) -> dict[str, int]:
+        """Return how many quote requests are in each status."""
+
     def get_quote_request(self, reference: str) -> dict[str, Any] | None:
         """Return one quote request by reference."""
 
@@ -74,6 +77,13 @@ class InMemoryQuoteRepository:
         self.quote_requests[quote_request["reference"]] = quote_request
         self.product_ids[quote_request["reference"]] = product_ids
         return quote_request
+
+    def count_quotes_by_status(self) -> dict[str, int]:
+        """Count in-memory quote requests by status."""
+        counts: dict[str, int] = {}
+        for quote in self.quote_requests.values():
+            counts[quote["status"]] = counts.get(quote["status"], 0) + 1
+        return counts
 
     def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent in-memory quote requests."""
@@ -148,6 +158,25 @@ class SupabaseQuoteRepository:
             ]
             self.client.table("quote_request_products").insert(join_rows).execute()
         return created
+
+    def count_quotes_by_status(self) -> dict[str, int]:
+        """Count quote requests by status, paging past the 1000-row cap."""
+        counts: dict[str, int] = {}
+        fetched = 0
+        page_size = 1000
+        while True:
+            response = (
+                self.client.table("quote_requests")
+                .select("status")
+                .range(fetched, fetched + page_size - 1)
+                .execute()
+            )
+            page = response_data(response)
+            for row in page:
+                counts[row["status"]] = counts.get(row["status"], 0) + 1
+            fetched += len(page)
+            if len(page) < page_size:
+                return counts
 
     def list_quote_requests(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent quote requests."""

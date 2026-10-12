@@ -49,6 +49,9 @@ class OrderRepository(Protocol):
     def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent orders for admin views."""
 
+    def list_order_totals(self) -> list[dict[str, Any]]:
+        """Return status, payment, total and date for every order (for analytics)."""
+
     def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return an order by reference."""
 
@@ -178,6 +181,10 @@ class InMemoryOrderRepository:
             return None
         order["payment_status"] = payment_status
         return order
+
+    def list_order_totals(self) -> list[dict[str, Any]]:
+        """Return every in-memory order."""
+        return list(self.orders.values())
 
     def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent in-memory orders."""
@@ -313,6 +320,23 @@ class SupabaseOrderRepository:
         )
         rows = response_data(response)
         return rows[0] if rows else None
+
+    def list_order_totals(self) -> list[dict[str, Any]]:
+        """Return the fields analytics needs for every order, paging past the 1000-row cap."""
+        rows: list[dict[str, Any]] = []
+        page_size = 1000
+        while True:
+            response = (
+                self.client.table("orders")
+                .select("order_status,payment_status,total_pesewas,created_at")
+                .order("created_at", desc=True)
+                .range(len(rows), len(rows) + page_size - 1)
+                .execute()
+            )
+            page = response_data(response)
+            rows.extend(page)
+            if len(page) < page_size:
+                return rows
 
     def list_orders(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return recent orders for admin views."""
