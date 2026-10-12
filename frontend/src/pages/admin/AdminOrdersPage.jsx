@@ -25,6 +25,7 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selected, setSelected] = useState(null)
+  const [notice, setNotice] = useState('')
   const closeDetail = useCallback(() => setSelected(null), [])
 
   function applyPaymentFilter(next) {
@@ -53,11 +54,21 @@ export default function AdminOrdersPage() {
   }, [])
 
   async function updateStatus(reference, newStatus) {
+    const order = orders.find(o => o.reference === reference)
+    if (newStatus === 'delivered') {
+      const unpaid = order.payment_status !== 'paid'
+      const question = unpaid
+        ? `${reference} has NOT been paid (payment ${order.payment_status}). Mark it delivered anyway?`
+        : `Mark ${reference} as delivered?`
+      if (!window.confirm(question)) return
+    }
+    setNotice('')
     const previous = orders
     setOrders(prev => prev.map(o => o.reference === reference ? { ...o, order_status: newStatus } : o))
     try {
       const res = await updateAdminOrderStatus(reference, newStatus)
       if (!res.success) throw new Error(res.message)
+      setNotice(`${reference} marked ${newStatus}.`)
     } catch (e) {
       setOrders(previous)
       setError(e.message || 'Unable to update order status.')
@@ -79,6 +90,7 @@ export default function AdminOrdersPage() {
       />
 
       {error && <Alert>{error}</Alert>}
+      {notice && <Alert tone="success">{notice}</Alert>}
 
       <div className={`${cardClass} p-3 mb-4 space-y-3`}>
         <SearchInput value={search} onChange={setSearch} placeholder="Search by order reference or client" />
