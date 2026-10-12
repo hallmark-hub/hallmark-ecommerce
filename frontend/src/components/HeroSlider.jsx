@@ -62,7 +62,7 @@ export default function HeroSlider({ slides, hero }) {
       ))}
 
       <div className="relative z-10 w-full min-w-0 max-w-container-max mx-auto px-4 sm:px-gutter pb-16 sm:pb-20 md:pb-24 flex flex-col items-center text-center">
-        <span className="hero-rise max-w-full bg-gold-strong/90 backdrop-blur-sm text-[10px] sm:text-label uppercase px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 inline-block line-clamp-1">
+        <span className="hero-rise max-w-full bg-gold-strong/90 backdrop-blur-sm text-white text-xs sm:text-label uppercase px-3 sm:px-4 py-1.5 rounded-2xl sm:rounded-full mb-4 sm:mb-6 inline-block line-clamp-2 sm:line-clamp-1">
           {hero.eyebrow}
         </span>
         <h1 className="hero-rise [animation-delay:150ms] max-w-3xl text-[2rem] sm:text-4xl md:text-5xl lg:text-[56px] font-bold tracking-tight leading-[1.08] text-white mb-3 sm:mb-6 break-words line-clamp-3 sm:line-clamp-none">

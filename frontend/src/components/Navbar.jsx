@@ -37,7 +37,7 @@ const NAV_LINKS = [
 function DropdownGroup({ group, onClose }) {
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white rounded-xl shadow-xl border border-outline-variant min-w-[260px] py-2 z-50 animate-fade-in">
-      <p className="px-4 pt-1 pb-2 text-[10px] font-bold uppercase tracking-widest text-secondary border-b border-outline-variant mb-1">
+      <p className="px-4 pt-1 pb-2 text-xs font-bold uppercase tracking-widest text-secondary border-b border-outline-variant mb-1">
         {group.label}
       </p>
       {group.items.map(item => (
@@ -51,10 +51,10 @@ function DropdownGroup({ group, onClose }) {
             <div className="flex items-center gap-2">
               <span className="text-body-sm font-medium text-on-surface group-hover:text-primary transition-colors">{item.label}</span>
               {item.badge && (
-                <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
+                <span className="text-xs font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
               )}
             </div>
-            <p className="text-[11px] text-secondary mt-0.5 leading-snug">{item.desc}</p>
+            <p className="text-xs text-secondary mt-0.5 leading-snug">{item.desc}</p>
           </div>
         </Link>
       ))}
@@ -272,7 +272,7 @@ export default function Navbar() {
                       >
                         <span className="text-body-sm text-secondary">{item.label}</span>
                         {item.badge && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
+                          <span className="text-xs font-bold uppercase tracking-wider bg-gold/15 text-gold-strong px-1.5 py-0.5 rounded-full">{item.badge}</span>
                         )}
                       </Link>
                     ))}
