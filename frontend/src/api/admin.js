@@ -27,6 +27,18 @@ export async function createAdminProduct(payload) {
   return client.adminPost('/api/v1/admin/products', payload)
 }
 
+export async function updateAdminProduct(slug, payload) {
+  return client.adminPatch(`/api/v1/admin/products/${slug}`, payload)
+}
+
+export async function setAdminProductActive(slug, isActive) {
+  return client.adminPatch(`/api/v1/admin/products/${slug}/active`, { is_active: isActive })
+}
+
+export async function getAdminProducts() {
+  return client.adminGet('/api/v1/admin/products')
+}
+
 export async function uploadAdminProductImage(file) {
   const formData = new FormData()
   formData.append('file', file)

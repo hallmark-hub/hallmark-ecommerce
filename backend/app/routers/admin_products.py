@@ -23,6 +23,15 @@ router = APIRouter(
 )
 
 
+@router.get("/products")
+async def list_admin_products(
+    service: Annotated[AdminProductService, Depends(get_admin_product_service)],
+) -> dict[str, object]:
+    """Return every product for admin management, including archived ones."""
+    products = await run_in_threadpool(service.list_products)
+    return ok([product.model_dump(mode="json") for product in products], "Products retrieved")
+
+
 @router.post("/products", status_code=201)
 async def create_admin_product(
     request: AdminProductRequest,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ImagePlus, Loader2, X } from 'lucide-react'
-import { createAdminProduct, uploadAdminProductImage } from '../../api/admin'
+import { createAdminProduct, updateAdminProduct, uploadAdminProductImage } from '../../api/admin'
 import { Alert, Field, inputClass, primaryButtonClass, secondaryButtonClass } from './AdminUI'
 
 const EMPTY_FORM = {
@@ -16,9 +16,26 @@ const EMPTY_FORM = {
   image_url: '',
 }
 
-export default function AddProductModal({ categories, categoriesLoading, categoriesError, onClose, onCreated }) {
-  const [form, setForm] = useState(EMPTY_FORM)
-  const [slugEdited, setSlugEdited] = useState(false)
+// Pre-fill the form from an existing product when editing
+function formFromProduct(product) {
+  return {
+    name: product.name,
+    slug: product.slug,
+    description: product.description || '',
+    category_slug: product.category_slug || '',
+    checkout_type: product.checkout_type,
+    price_ghs: product.price_pesewas != null ? String(product.price_pesewas / 100) : '',
+    price_label: product.price_label || '',
+    stock_qty: String(product.stock_qty ?? 0),
+    tags: (product.tags || []).join(', '),
+    image_url: product.images?.[0] || '',
+  }
+}
+
+export default function AddProductModal({ product, categories, categoriesLoading, categoriesError, onClose, onSaved }) {
+  const isEdit = Boolean(product)
+  const [form, setForm] = useState(() => (isEdit ? formFromProduct(product) : EMPTY_FORM))
+  const [slugEdited, setSlugEdited] = useState(isEdit)
   const [imageFile, setImageFile] = useState(null)
   const [filePreview, setFilePreview] = useState('')
   const [stage, setStage] = useState('')
@@ -74,7 +91,7 @@ export default function AddProductModal({ categories, categoriesLoading, categor
         imageUrl = uploadRes.data.secure_url
       }
       setStage('Saving product…')
-      const createRes = await createAdminProduct({
+      const payload = {
         name: form.name,
         slug: form.slug,
         description: form.description,
@@ -82,15 +99,17 @@ export default function AddProductModal({ categories, categoriesLoading, categor
         checkout_type: form.checkout_type,
         price_pesewas: form.checkout_type === 'direct' ? Math.round(Number(form.price_ghs) * 100) : null,
         price_label: form.checkout_type === 'quote' ? (form.price_label || 'Request a quote') : null,
-        images: [imageUrl],
+        // Editing replaces only the main image and keeps the rest of the gallery
+        images: isEdit ? [imageUrl, ...(product.images || []).slice(1)] : [imageUrl],
         in_stock: Number(form.stock_qty) > 0,
         stock_qty: Number(form.stock_qty),
         tags: form.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-      })
-      if (!createRes.success) throw new Error(createRes.message)
-      onCreated(createRes.data)
+      }
+      const saveRes = isEdit ? await updateAdminProduct(product.slug, payload) : await createAdminProduct(payload)
+      if (!saveRes.success) throw new Error(saveRes.message)
+      onSaved(saveRes.data)
     } catch (e) {
-      setError(e.message || 'Unable to create product.')
+      setError(e.message || (isEdit ? 'Unable to save changes.' : 'Unable to create product.'))
       setStage('')
     }
   }
@@ -111,8 +130,8 @@ export default function AddProductModal({ categories, categoriesLoading, categor
       >
         <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-gray-200">
           <div>
-            <h2 id="add-product-title" className="text-lg font-bold text-on-surface">Add product</h2>
-            <p className="text-sm text-gray-500 mt-0.5">New products appear in the shop as soon as they are saved.</p>
+            <h2 id="add-product-title" className="text-lg font-bold text-on-surface">{isEdit ? 'Edit product' : 'Add product'}</h2>
+            <p className="text-sm text-gray-500 mt-0.5">{isEdit ? 'Changes show in the shop as soon as they are saved.' : 'New products appear in the shop as soon as they are saved.'}</p>
           </div>
           <button type="button" onClick={onClose} disabled={saving} className="p-1.5 -mr-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-on-surface cursor-pointer disabled:opacity-50" aria-label="Close">
             <X size={20} />
@@ -202,9 +221,10 @@ export default function AddProductModal({ categories, categoriesLoading, categor
               </div>
             </div>
 
-            <Field label="URL slug" hint="Part of the product link. Filled in from the name; edit only if you need to." wide>
+            <Field label="URL slug" hint={isEdit ? 'Fixed after creation so existing links keep working.' : 'Part of the product link. Filled in from the name; edit only if you need to.'} wide>
               <input
                 required
+                disabled={isEdit}
                 value={form.slug}
                 onChange={event => { setSlugEdited(true); updateForm('slug', event.target.value.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-{2,}/g, '-')) }}
                 onBlur={event => updateForm('slug', slugify(event.target.value))}
@@ -218,7 +238,7 @@ export default function AddProductModal({ categories, categoriesLoading, categor
           <button type="button" onClick={onClose} disabled={saving} className={secondaryButtonClass}>Cancel</button>
           <button type="submit" disabled={saving} className={primaryButtonClass}>
             {saving && <Loader2 size={16} className="animate-spin" />}
-            {saving ? stage : 'Create product'}
+            {saving ? stage : isEdit ? 'Save changes' : 'Create product'}
           </button>
         </div>
       </form>

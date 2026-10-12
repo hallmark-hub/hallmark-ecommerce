@@ -11,6 +11,9 @@ from app.services.catalog_service import _CATEGORY_DATA, _PRODUCT_DATA
 class AdminProductRepository(Protocol):
     """Admin product data access contract."""
 
+    def list_products(self) -> list[dict[str, Any]]:
+        """Return every product, newest first, including archived ones."""
+
     def create_product(self, product: dict[str, Any]) -> dict[str, Any]:
         """Create a product."""
 
@@ -31,6 +34,10 @@ class AdminProductRepository(Protocol):
 
 class InMemoryAdminProductRepository:
     """Local admin product repository for tests/dev without Supabase credentials."""
+
+    def list_products(self) -> list[dict[str, Any]]:
+        """Return every seed product, newest (last added) first."""
+        return list(reversed(_PRODUCT_DATA))
 
     def create_product(self, product: dict[str, Any]) -> dict[str, Any]:
         """Create a product in seed data."""
@@ -93,6 +100,23 @@ class SupabaseAdminProductRepository:
 
     def __init__(self, client: Client) -> None:
         self.client = client
+
+    def list_products(self) -> list[dict[str, Any]]:
+        """Return every product, newest first, including archived ones."""
+        response = (
+            self.client.table("products")
+            .select(
+                "id,name,slug,description,category_id,checkout_type,price_pesewas,"
+                "price_label,images,in_stock,stock_qty,tags,created_at,is_active,categories(slug)"
+            )
+            .order("created_at", desc=True)
+            .execute()
+        )
+        rows = response_data(response)
+        for row in rows:
+            category = row.pop("categories", None) or {}
+            row["category_slug"] = category.get("slug")
+        return rows
 
     def create_product(self, product: dict[str, Any]) -> dict[str, Any]:
         """Create a product."""

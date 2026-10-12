@@ -42,6 +42,12 @@ class Product(BaseModel):
     created_at: datetime
 
 
+class AdminProduct(Product):
+    """Product as admins see it, including archived (inactive) products."""
+
+    is_active: bool = True
+
+
 class ProductList(BaseModel):
     """Paginated product list response model."""
 

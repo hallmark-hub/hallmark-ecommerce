@@ -1,4 +1,5 @@
 from app.models.catalog import (
+    AdminProduct,
     AdminProductRequest,
     Product,
     UpdateProductActiveRequest,
@@ -19,6 +20,10 @@ class AdminProductService:
 
     def __init__(self, repository: AdminProductRepository) -> None:
         self.repository = repository
+
+    def list_products(self) -> list[AdminProduct]:
+        """Return every product, including archived ones."""
+        return [AdminProduct.model_validate(row) for row in self.repository.list_products()]
 
     def create_product(self, request: AdminProductRequest) -> Product:
         """Create a product."""

@@ -84,3 +84,15 @@ def test_admin_can_update_product_active_state() -> None:
 
     assert response.status_code == 200
     assert response.json()["message"] == "Product active state updated"
+
+
+def test_admin_product_list_includes_archived_products() -> None:
+    request("POST", "/api/v1/admin/products", json=product_payload("admin-archived-hat"))
+    request("PATCH", "/api/v1/admin/products/admin-archived-hat/active", json={"is_active": False})
+
+    response = request("GET", "/api/v1/admin/products")
+
+    assert response.status_code == 200
+    products = {product["slug"]: product for product in response.json()["data"]}
+    assert products["admin-archived-hat"]["is_active"] is False
+    assert any(product["is_active"] for product in products.values())

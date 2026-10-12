@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AlertTriangle, PackageSearch, Plus } from 'lucide-react'
-import { getProducts } from '../../api/products'
 import { getCategories } from '../../api/categories'
-import { updateAdminProductStock } from '../../api/admin'
+import { getAdminProducts, setAdminProductActive, updateAdminProductStock } from '../../api/admin'
 import { formatPrice } from '../../utils/format'
 import { productImage, useFallbackImage } from '../../utils/images'
 import AddProductModal from '../../components/admin/AddProductModal'
@@ -60,15 +59,16 @@ export default function AdminInventoryPage() {
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [showAdd, setShowAdd] = useState(false)
+  const [editing, setEditing] = useState(null)
 
   useEffect(() => {
     async function loadInventory() {
       setLoading(true)
       setError('')
       try {
-        const res = await getProducts({ limit: 100 })
+        const res = await getAdminProducts()
         if (!res.success) throw new Error(res.message)
-        setInventory((res.data?.items || []).map(toInventoryItem))
+        setInventory((res.data || []).map(toInventoryItem))
       } catch (e) {
         setError(e.message || 'Unable to load inventory.')
       } finally {
@@ -120,20 +120,43 @@ export default function AdminInventoryPage() {
     }
   }
 
-  function handleCreated(created) {
-    setInventory(prev => [toInventoryItem(created), ...prev])
+  function handleSaved(saved) {
+    const wasEdit = inventory.some(item => item.id === saved.id)
+    setInventory(prev => wasEdit
+      ? prev.map(item => item.id === saved.id ? toInventoryItem({ ...item, ...saved }) : item)
+      : [toInventoryItem({ ...saved, is_active: true }), ...prev])
     setShowAdd(false)
+    setEditing(null)
     setError('')
-    setNotice(`“${created.name}” was added to your inventory.`)
+    setNotice(wasEdit ? `“${saved.name}” was updated.` : `“${saved.name}” was added to your inventory.`)
+  }
+
+  async function toggleActive(item) {
+    const archiving = item.is_active
+    if (archiving && !window.confirm(`Archive “${item.name}”? It will be hidden from the shop until you restore it.`)) return
+    const previous = inventory
+    setInventory(prev => prev.map(row => row.id === item.id ? { ...row, is_active: !archiving } : row))
+    try {
+      const res = await setAdminProductActive(item.slug, !archiving)
+      if (!res.success) throw new Error(res.message)
+      setNotice(archiving ? `“${item.name}” was archived.` : `“${item.name}” is back in the shop.`)
+    } catch (e) {
+      setInventory(previous)
+      setError(e.message || 'Unable to update the product.')
+    }
   }
 
   const categoryNames = useMemo(() => Object.fromEntries(categories.map(c => [c.slug, c.name])), [categories])
-  const lowCount = inventory.filter(i => stockStatus(i.stock, i.threshold) === 'low').length
-  const outCount = inventory.filter(i => stockStatus(i.stock, i.threshold) === 'out').length
-  const needsRestock = inventory.filter(i => stockStatus(i.stock, i.threshold) !== 'ok')
+  const active = inventory.filter(i => i.is_active)
+  const archivedCount = inventory.length - active.length
+  const lowCount = active.filter(i => stockStatus(i.stock, i.threshold) === 'low').length
+  const outCount = active.filter(i => stockStatus(i.stock, i.threshold) === 'out').length
+  const needsRestock = active.filter(i => stockStatus(i.stock, i.threshold) !== 'ok')
   const filtered = inventory.filter(item => {
     const matchSearch = !search || item.name.toLowerCase().includes(search.toLowerCase()) || item.sku.includes(search.toUpperCase())
-    const matchStock = stockFilter === 'all' || stockStatus(item.stock, item.threshold) === stockFilter
+    const matchStock = stockFilter === 'archived' ? !item.is_active
+      : !item.is_active ? false
+        : stockFilter === 'all' || stockStatus(item.stock, item.threshold) === stockFilter
     return matchSearch && matchStock
   })
   const restockNames = needsRestock.slice(0, 3).map(i => i.name).join(', ')
@@ -146,13 +169,14 @@ export default function AdminInventoryPage() {
         </button>
       </PageHeader>
 
-      {showAdd && (
+      {(showAdd || editing) && (
         <AddProductModal
+          product={editing}
           categories={categories}
           categoriesLoading={categoriesLoading}
           categoriesError={categoriesError}
-          onClose={() => setShowAdd(false)}
-          onCreated={handleCreated}
+          onClose={() => { setShowAdd(false); setEditing(null) }}
+          onSaved={handleSaved}
         />
       )}
 
@@ -176,9 +200,10 @@ export default function AdminInventoryPage() {
           value={stockFilter}
           onChange={setStockFilter}
           options={[
-            { value: 'all', label: 'All', count: inventory.length },
+            { value: 'all', label: 'All', count: active.length },
             { value: 'low', label: 'Low', count: lowCount },
             { value: 'out', label: 'Out', count: outCount },
+            { value: 'archived', label: 'Archived', count: archivedCount },
           ]}
         />
       </div>
@@ -202,20 +227,24 @@ export default function AdminInventoryPage() {
                 const status = stockStatus(item.stock, item.threshold)
                 const { label, tone, qty } = STOCK_BADGES[status]
                 return (
-                  <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={item.id} className={`hover:bg-gray-50 transition-colors ${item.is_active ? '' : 'opacity-60'}`}>
                     <td className="px-3 sm:px-4 py-3">
                       <div className="flex items-center gap-3">
                         <img src={productImage(item)} alt="" onError={useFallbackImage} className="hidden sm:block w-10 h-10 rounded object-cover bg-gray-100 shrink-0" />
                         <div className="min-w-0">
                           <p className="font-medium text-on-surface truncate max-w-[110px] sm:max-w-[280px]">{item.name}</p>
                           <p className="text-xs text-gray-500 truncate max-w-[110px] sm:max-w-[280px]">{categoryNames[item.category] || item.category}</p>
+                          <div className="flex gap-3 mt-1 text-xs font-semibold">
+                            <button type="button" onClick={() => setEditing(item)} className="text-primary hover:underline cursor-pointer" aria-label={`Edit ${item.name}`}>Edit</button>
+                            <button type="button" onClick={() => toggleActive(item)} className={`${item.is_active ? 'text-gray-500' : 'text-primary'} hover:underline cursor-pointer`} aria-label={`${item.is_active ? 'Archive' : 'Restore'} ${item.name}`}>{item.is_active ? 'Archive' : 'Restore'}</button>
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-3 sm:px-4 py-3 text-gray-500 font-mono text-xs hidden md:table-cell">{item.sku}</td>
                     <td className="px-3 sm:px-4 py-3 font-semibold text-on-surface hidden sm:table-cell whitespace-nowrap">{formatPrice(item.price_pesewas)}</td>
                     <td className={`px-3 sm:px-4 py-3 font-semibold ${qty}`}>{item.stock}</td>
-                    <td className="px-3 sm:px-4 py-3 hidden sm:table-cell"><StatusPill tone={tone}>{label}</StatusPill></td>
+                    <td className="px-3 sm:px-4 py-3 hidden sm:table-cell">{item.is_active ? <StatusPill tone={tone}>{label}</StatusPill> : <StatusPill>Archived</StatusPill>}</td>
                     <td className="px-3 sm:px-4 py-3">
                       <div className="flex items-center gap-1">
                         <button onClick={() => updateStock(item.id, -1)} disabled={item.stock === 0} aria-label={`Remove 1 from ${item.name}`} className={stepButtonClass}>−1</button>
