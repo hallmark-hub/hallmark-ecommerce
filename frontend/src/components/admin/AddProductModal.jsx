@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ImagePlus, Loader2, X } from 'lucide-react'
 import { createAdminProduct, updateAdminProduct, uploadAdminProductImage } from '../../api/admin'
 import { Alert, Field, inputClass, primaryButtonClass, secondaryButtonClass } from './AdminUI'
@@ -34,7 +34,8 @@ function formFromProduct(product) {
 
 export default function AddProductModal({ product, categories, categoriesLoading, categoriesError, onClose, onSaved }) {
   const isEdit = Boolean(product)
-  const [form, setForm] = useState(() => (isEdit ? formFromProduct(product) : EMPTY_FORM))
+  const [initialForm] = useState(() => (isEdit ? formFromProduct(product) : EMPTY_FORM))
+  const [form, setForm] = useState(initialForm)
   const [slugEdited, setSlugEdited] = useState(isEdit)
   const [imageFile, setImageFile] = useState(null)
   const [filePreview, setFilePreview] = useState('')
@@ -50,9 +51,19 @@ export default function AddProductModal({ product, categories, categoriesLoading
     setFilePreview(file ? URL.createObjectURL(file) : '')
   }
 
+  // Ask before throwing away typed changes (Escape, backdrop click, close and cancel all come here)
+  const dirty = Boolean(imageFile) || JSON.stringify(form) !== JSON.stringify(initialForm)
+  function requestClose() {
+    if (saving) return
+    if (dirty && !window.confirm('Discard your changes to this product?')) return
+    onClose()
+  }
+  const requestCloseRef = useRef(requestClose)
+  useEffect(() => { requestCloseRef.current = requestClose })
+
   useEffect(() => {
     function onKeyDown(event) {
-      if (event.key === 'Escape' && !saving) onClose()
+      if (event.key === 'Escape') requestCloseRef.current()
     }
     document.addEventListener('keydown', onKeyDown)
     document.body.style.overflow = 'hidden'
@@ -60,7 +71,7 @@ export default function AddProductModal({ product, categories, categoriesLoading
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
     }
-  }, [saving, onClose])
+  }, [])
 
   function updateForm(field, value) {
     setForm(prev => {
@@ -119,7 +130,7 @@ export default function AddProductModal({ product, categories, categoriesLoading
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 sm:p-4"
-      onMouseDown={event => { if (event.target === event.currentTarget && !saving) onClose() }}
+      onMouseDown={event => { if (event.target === event.currentTarget) requestClose() }}
     >
       <form
         onSubmit={handleSubmit}
@@ -133,7 +144,7 @@ export default function AddProductModal({ product, categories, categoriesLoading
             <h2 id="add-product-title" className="text-lg font-bold text-on-surface">{isEdit ? 'Edit product' : 'Add product'}</h2>
             <p className="text-sm text-gray-500 mt-0.5">{isEdit ? 'Changes show in the shop as soon as they are saved.' : 'New products appear in the shop as soon as they are saved.'}</p>
           </div>
-          <button type="button" onClick={onClose} disabled={saving} className="p-1.5 -mr-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-on-surface cursor-pointer disabled:opacity-50" aria-label="Close">
+          <button type="button" onClick={requestClose} disabled={saving} className="p-1.5 -mr-1.5 rounded text-gray-500 hover:bg-gray-100 hover:text-on-surface cursor-pointer disabled:opacity-50" aria-label="Close">
             <X size={20} />
           </button>
         </div>
@@ -235,7 +246,7 @@ export default function AddProductModal({ product, categories, categoriesLoading
         </div>
 
         <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-gray-200 bg-gray-50 rounded-b-md">
-          <button type="button" onClick={onClose} disabled={saving} className={secondaryButtonClass}>Cancel</button>
+          <button type="button" onClick={requestClose} disabled={saving} className={secondaryButtonClass}>Cancel</button>
           <button type="submit" disabled={saving} className={primaryButtonClass}>
             {saving && <Loader2 size={16} className="animate-spin" />}
             {saving ? stage : isEdit ? 'Save changes' : 'Create product'}

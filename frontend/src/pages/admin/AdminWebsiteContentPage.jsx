@@ -6,6 +6,7 @@ import AdminContentField from '../../components/admin/AdminContentField'
 import { Alert, PageHeader, cardClass, primaryButtonClass } from '../../components/admin/AdminUI'
 import { SITE_CONTENT_SECTIONS } from '../../config/siteContentFields'
 import useSiteContentStore from '../../store/siteContentStore'
+import { useUnsavedChangesWarning } from '../../hooks/useUnsavedChangesWarning'
 
 const SECTION_ICONS = { company: Building2, home: Home, about: Info, services: Wrench, robotics: Bot, partners: Handshake, quote: MessageSquare }
 
@@ -16,6 +17,8 @@ export default function AdminWebsiteContentPage() {
   const [uploadingKey, setUploadingKey] = useState('')
   const [error, setError] = useState('')
   const [saved, setSaved] = useState(false)
+  const [dirty, setDirty] = useState(false)
+  useUnsavedChangesWarning(dirty)
   const replacePublicContent = useSiteContentStore(state => state.replace)
 
   useEffect(() => {
@@ -33,6 +36,7 @@ export default function AdminWebsiteContentPage() {
   function updateField(key, value) {
     setContent(current => ({ ...current, [key]: value }))
     setSaved(false)
+    setDirty(true)
   }
 
   function updateCard(collection, index, key, value) {
@@ -43,6 +47,7 @@ export default function AdminWebsiteContentPage() {
       )),
     }))
     setSaved(false)
+    setDirty(true)
   }
 
   async function uploadImage(file, fieldKey, onComplete) {
@@ -69,6 +74,7 @@ export default function AdminWebsiteContentPage() {
       setContent(response.data)
       replacePublicContent(response.data)
       setSaved(true)
+      setDirty(false)
     } catch (err) {
       setError(err.message || 'Unable to save website content.')
     } finally {
