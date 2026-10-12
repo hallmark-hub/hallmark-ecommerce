@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ImagePlus, Loader2, X } from 'lucide-react'
 import { createAdminProduct, updateAdminProduct, uploadAdminProductImage } from '../../api/admin'
 import { Alert, Field, inputClass, primaryButtonClass, secondaryButtonClass } from './AdminUI'
+import { imageFileError } from '../../utils/images'
 
 const EMPTY_FORM = {
   name: '',
@@ -47,6 +48,9 @@ export default function AddProductModal({ product, categories, categoriesLoading
   useEffect(() => () => { if (filePreview) URL.revokeObjectURL(filePreview) }, [filePreview])
 
   function chooseImage(file) {
+    const fileError = file && imageFileError(file)
+    if (fileError) { setError(fileError); return }
+    setError('')
     setImageFile(file)
     setFilePreview(file ? URL.createObjectURL(file) : '')
   }

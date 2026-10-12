@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Bot, Building2, Handshake, Home, Info, Loader2, MessageSquare, Save, Wrench } from 'lucide-react'
 import { uploadAdminProductImage } from '../../api/admin'
+import { imageFileError } from '../../utils/images'
 import { getAdminSiteContent, updateAdminSiteContent } from '../../api/siteContent'
 import AdminContentField from '../../components/admin/AdminContentField'
 import { Alert, PageHeader, cardClass, primaryButtonClass } from '../../components/admin/AdminUI'
@@ -51,6 +52,8 @@ export default function AdminWebsiteContentPage() {
   }
 
   async function uploadImage(file, fieldKey, onComplete) {
+    const fileError = imageFileError(file)
+    if (fileError) { setError(fileError); return }
     setError('')
     setUploadingKey(fieldKey)
     try {
@@ -83,7 +86,14 @@ export default function AdminWebsiteContentPage() {
   }
 
   if (loading) return <p className="text-sm text-gray-500">Loading website content…</p>
-  if (!content) return <Alert>{error || 'Website content is unavailable.'}</Alert>
+  if (!content) {
+    return (
+      <div>
+        <Alert>{error || 'Website content is unavailable.'}</Alert>
+        <button type="button" onClick={() => window.location.reload()} className={primaryButtonClass}>Try again</button>
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-4xl">
