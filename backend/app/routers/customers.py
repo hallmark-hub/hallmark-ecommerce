@@ -11,6 +11,8 @@ from app.models.customers import (
     CustomerProfile,
     CustomerRefreshRequest,
     CustomerRegisterRequest,
+    ForgotPasswordRequest,
+    ResetPasswordRequest,
 )
 from app.services.customer_service import (
     CustomerService,
@@ -85,6 +87,43 @@ async def refresh_customer_session(
     except CustomerServiceError as exc:
         raise HTTPException(status_code=401, detail=str(exc)) from exc
     return ok(auth.model_dump(mode="json"), "Session refreshed")
+
+
+@router.post(
+    "/auth/forgot-password",
+    dependencies=[Depends(rate_limit(limit=3, window_seconds=300))],
+)
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    service: Annotated[CustomerService, Depends(get_customer_service)],
+) -> dict[str, object]:
+    """Email a password reset link. The reply is the same for unknown emails."""
+    try:
+        await run_in_threadpool(service.request_password_reset, str(request.email))
+    except CustomerServiceError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="We couldn't send the reset email right now. Please try again shortly.",
+        ) from exc
+    return ok(None, "If an account exists for that email, a reset link is on its way.")
+
+
+@router.post(
+    "/auth/reset-password",
+    dependencies=[Depends(rate_limit(limit=10, window_seconds=300))],
+)
+async def reset_password(
+    request: ResetPasswordRequest,
+    service: Annotated[CustomerService, Depends(get_customer_service)],
+) -> dict[str, object]:
+    """Set a new password using the recovery token from the reset email."""
+    try:
+        await run_in_threadpool(service.reset_password, request.access_token, request.password)
+    except CustomerServiceError as exc:
+        raise HTTPException(
+            status_code=400, detail="This reset link is invalid or has expired."
+        ) from exc
+    return ok(None, "Password updated. You can now sign in.")
 
 
 @router.get("/auth/me")

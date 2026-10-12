@@ -45,6 +45,19 @@ class CustomerRefreshRequest(BaseModel):
     refresh_token: str = Field(min_length=1)
 
 
+class ForgotPasswordRequest(BaseModel):
+    """Request a password reset email."""
+
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    """Set a new password using the recovery token from the reset email."""
+
+    access_token: str = Field(min_length=1)
+    password: str = Field(min_length=8)
+
+
 class CustomerUser(BaseModel):
     """Authenticated Supabase user summary."""
 

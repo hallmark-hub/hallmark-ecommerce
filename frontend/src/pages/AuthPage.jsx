@@ -63,7 +63,7 @@ export default function AuthPage() {
           <p className="text-body text-secondary mt-2">ChefWare Enterprise — Accra</p>
         </div>
 
-        <div className="bg-white rounded-xl border border-outline-variant p-xl">
+        <div className="bg-white rounded-xl border border-outline-variant p-5 sm:p-xl">
           {error && (
             <div className="flex items-center gap-2 bg-error-container text-on-error-container px-md py-sm rounded-lg mb-md">
               <AlertTriangle size={16} className="shrink-0" />
@@ -96,6 +96,9 @@ export default function AuthPage() {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              {mode === 'login' && (
+                <Link to="/forgot-password" className="inline-block mt-xs text-body-sm text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">Forgot password?</Link>
+              )}
             </div>
             {mode === 'register' && (
               <div>

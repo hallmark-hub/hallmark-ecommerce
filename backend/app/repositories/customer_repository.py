@@ -60,6 +60,12 @@ class CustomerRepository(Protocol):
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
         """Return orders that belong to a customer profile."""
 
+    def send_password_reset(self, email: str, redirect_to: str) -> None:
+        """Email a password reset link that returns to `redirect_to`."""
+
+    def reset_password(self, access_token: str, password: str) -> None:
+        """Set a new password for the user the recovery token belongs to."""
+
 
 class InMemoryCustomerRepository:
     """Local customer repository for tests/dev without Supabase credentials."""
@@ -68,6 +74,7 @@ class InMemoryCustomerRepository:
         self.accounts: dict[str, dict[str, Any]] = {}
         self.tokens: dict[str, str] = {}
         self.refresh_tokens: dict[str, str] = {}
+        self.password_reset_requests: list[dict[str, str]] = []
 
     def _issue_session(self, email: str) -> dict[str, Any]:
         """Mint a new local access/refresh token pair for an account."""
@@ -132,6 +139,17 @@ class InMemoryCustomerRepository:
     def list_orders_for_profile(self, profile: dict[str, Any]) -> list[dict[str, Any]]:
         """Return local customer orders."""
         return []
+
+    def send_password_reset(self, email: str, redirect_to: str) -> None:
+        """Record a local reset request; nothing is emailed."""
+        self.password_reset_requests.append({"email": email.lower(), "redirect_to": redirect_to})
+
+    def reset_password(self, access_token: str, password: str) -> None:
+        """Set a new local password for the token's account."""
+        email = self.tokens.get(access_token)
+        if email is None:
+            raise CustomerRepositoryError("Invalid or expired reset token")
+        self.accounts[email]["password"] = password
 
 
 class SupabaseCustomerRepository:
@@ -289,6 +307,33 @@ class SupabaseCustomerRepository:
             .execute()
         )
         return response_data(response)
+
+    def send_password_reset(self, email: str, redirect_to: str) -> None:
+        """Ask Supabase Auth to email a recovery link.
+
+        Supabase answers the same way whether or not the email exists, so this
+        does not reveal which addresses have accounts.
+        """
+        try:
+            self.auth_client.auth.reset_password_for_email(email, {"redirect_to": redirect_to})
+        except Exception as exc:
+            raise CustomerRepositoryError("Password reset email could not be sent") from exc
+
+    def reset_password(self, access_token: str, password: str) -> None:
+        """Set a new password for the recovery token's user.
+
+        The token is verified like any bearer token, then the password is set
+        through the admin API, so no session is stored on either client.
+        """
+        profile = self.get_profile_for_token(access_token)
+        if profile is None:
+            raise CustomerRepositoryError("Invalid or expired reset token")
+        try:
+            self.client.auth.admin.update_user_by_id(
+                str(profile["auth_user_id"]), {"password": password}
+            )
+        except Exception as exc:
+            raise CustomerRepositoryError("Password could not be updated") from exc
 
     def _profile_for_auth_user(self, auth_user_id: str) -> dict[str, Any] | None:
         response = (

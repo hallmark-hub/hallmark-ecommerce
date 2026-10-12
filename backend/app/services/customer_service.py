@@ -1,3 +1,4 @@
+from app.core.config import get_settings
 from app.models.customers import (
     CustomerAuthResponse,
     CustomerLoginRequest,
@@ -58,6 +59,21 @@ class CustomerService:
         """Return order history for an authenticated customer."""
         rows = self.repository.list_orders_for_profile(profile.model_dump(mode="json"))
         return [CustomerOrderSummary.model_validate(row) for row in rows]
+
+    def request_password_reset(self, email: str) -> None:
+        """Email a reset link that lands on the storefront reset page."""
+        redirect_to = f"{get_settings().frontend_url.rstrip('/')}/reset-password"
+        try:
+            self.repository.send_password_reset(email, redirect_to)
+        except CustomerRepositoryError as exc:
+            raise CustomerServiceError(str(exc)) from exc
+
+    def reset_password(self, access_token: str, password: str) -> None:
+        """Replace the password of the user who owns the recovery token."""
+        try:
+            self.repository.reset_password(access_token, password)
+        except CustomerRepositoryError as exc:
+            raise CustomerServiceError(str(exc)) from exc
 
 
 async def get_customer_service() -> CustomerService:

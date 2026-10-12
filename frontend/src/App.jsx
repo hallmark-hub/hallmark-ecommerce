@@ -24,6 +24,8 @@ const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const PaymentVerifyPage = lazy(() => import('./pages/PaymentVerifyPage'))
 const OrderConfirmationPage = lazy(() => import('./pages/OrderConfirmationPage'))
 const TrackOrderPage = lazy(() => import('./pages/TrackOrderPage'))
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'))
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'))
 const QuoteRequestPage = lazy(() => import('./pages/QuoteRequestPage'))
 const AccountPage = lazy(() => import('./pages/AccountPage'))
 const AuthPage = lazy(() => import('./pages/AuthPage'))
@@ -107,6 +109,8 @@ export default function App() {
         <Route path="/quote" element={<StorefrontLayout><QuoteRequestPage /></StorefrontLayout>} />
         <Route path="/account" element={<StorefrontLayout><AccountPage /></StorefrontLayout>} />
         <Route path="/login" element={<StorefrontLayout><AuthPage /></StorefrontLayout>} />
+        <Route path="/forgot-password" element={<StorefrontLayout><ForgotPasswordPage /></StorefrontLayout>} />
+        <Route path="/reset-password" element={<StorefrontLayout><ResetPasswordPage /></StorefrontLayout>} />
 
         <Route path="/admin" element={<Suspense fallback={<PageLoader />}><AdminLayout /></Suspense>}>
           <Route index element={<Suspense fallback={<PageLoader />}><AdminDashboardPage /></Suspense>} />
