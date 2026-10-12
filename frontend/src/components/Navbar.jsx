@@ -171,7 +171,8 @@ export default function Navbar() {
             <form onSubmit={handleSearch} className="hidden lg:flex relative">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
               <input
-                type="text"
+                type="search"
+                aria-label="Search products"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search products..."
@@ -237,13 +238,14 @@ export default function Navbar() {
           <div className="lg:hidden bg-white border-t border-outline-variant px-gutter py-sm max-h-[80vh] overflow-y-auto">
             <form onSubmit={handleSearch} className="flex gap-2 mb-sm">
               <input
-                type="text"
+                type="search"
+                aria-label="Search products"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search..."
                 className="flex-1 px-3 py-2 rounded-lg border border-outline-variant text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              <button type="submit" className="px-3 py-2 bg-primary text-white rounded-lg cursor-pointer">
+              <button type="submit" aria-label="Search" className="px-3 py-2 bg-primary text-white rounded-lg cursor-pointer">
                 <Search size={16} />
               </button>
             </form>

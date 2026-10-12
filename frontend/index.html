@@ -17,6 +17,8 @@
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
       var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      // Sit above the floating WhatsApp button (bottom-6 right-6, 56px) instead of on top of it
+      Tawk_API.customStyle={visibility:{desktop:{position:'br',xOffset:20,yOffset:96},mobile:{position:'br',xOffset:12,yOffset:92}}};
       window.addEventListener('load', function(){
         setTimeout(function(){
           var s1=document.createElement("script");

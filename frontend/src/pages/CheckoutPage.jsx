@@ -308,7 +308,7 @@ export default function CheckoutPage() {
                     <p className="text-body-sm text-amber-800">{RETURNS_POLICY} Ensure items are correct before placing your order.</p>
                   </div>
 
-                  <label className="flex items-start gap-3 cursor-pointer group">
+                  <label className="flex items-start gap-3 cursor-pointer group rounded-lg has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:ring-offset-4">
                     <div className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 mt-0.5 transition-colors ${acceptedPolicy ? 'bg-primary border-primary' : 'border-outline-variant group-hover:border-primary'}`}>
                       {acceptedPolicy && (
                         <svg width="10" height="8" viewBox="0 0 10 8" fill="none">

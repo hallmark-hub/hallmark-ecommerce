@@ -117,7 +117,8 @@ export default function AccountPage() {
                 <h2 className="text-h3 text-on-surface">Recent Orders</h2>
                 <Link to="/products" className="text-label uppercase text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">Browse Catalog</Link>
               </div>
-              <table className="w-full">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[520px]">
                 <thead>
                   <tr className="bg-surface-container-low text-left">
                     <th className="px-md py-sm text-label uppercase text-secondary">Order ID</th>
@@ -134,7 +135,9 @@ export default function AccountPage() {
                       onClick={() => navigate(`/order-confirmation/${o.reference}`)}
                       className="hover:bg-surface-container-low transition-colors cursor-pointer focus-within:bg-surface-container-low"
                     >
-                      <td className="px-md py-sm text-body-sm font-medium text-primary">{o.reference}</td>
+                      <td className="px-md py-sm text-body-sm font-medium text-primary">
+                        <Link to={`/order-confirmation/${o.reference}`} onClick={e => e.stopPropagation()} className="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">{o.reference}</Link>
+                      </td>
                       <td className="px-md py-sm text-body-sm text-secondary">{formatDate(o.created_at)}</td>
                       <td className="px-md py-sm">
                         <span className={`px-2 py-0.5 rounded-full text-label uppercase capitalize ${STATUS_STYLES[o.order_status]}`}>{o.order_status}</span>
@@ -145,6 +148,7 @@ export default function AccountPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
               {ordersLoading && <div className="p-md text-body-sm text-secondary">Loading orders...</div>}
               {ordersError && <div className="p-md text-body-sm text-error">{ordersError}</div>}
               {!ordersLoading && !ordersError && orders.length === 0 && (
@@ -158,7 +162,8 @@ export default function AccountPage() {
                 <h2 className="text-h3 text-on-surface">Service Requests</h2>
                 <Link to="/quote" className="text-label uppercase text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">New Request</Link>
               </div>
-              <table className="w-full">
+              <div className="overflow-x-auto">
+              <table className="w-full min-w-[520px]">
                 <thead>
                   <tr className="bg-surface-container-low text-left">
                     <th className="px-md py-sm text-label uppercase text-secondary">Reference</th>
@@ -180,6 +185,7 @@ export default function AccountPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
               {quotesLoading && <div className="p-md text-body-sm text-secondary">Loading requests...</div>}
               {quotesError && <div className="p-md text-body-sm text-error">{quotesError}</div>}
               {!quotesLoading && !quotesError && quotes.length === 0 && (

@@ -172,11 +172,12 @@ export default function ProductCatalogPage() {
             </p>
           </div>
           <div className="flex items-center gap-sm min-w-0 sm:ml-auto">
-            <span className="text-label uppercase text-secondary">Sort by:</span>
+            <label htmlFor="catalog-sort" className="text-label uppercase text-secondary whitespace-nowrap">Sort by:</label>
             <select
+              id="catalog-sort"
               value={sort}
               onChange={e => setParam('sort', e.target.value)}
-              className="min-w-0 bg-white border border-outline-variant rounded-lg text-body-sm py-1 pl-3 pr-8 focus:ring-primary focus:ring-2 outline-none cursor-pointer"
+              className="min-w-0 bg-white border border-outline-variant rounded-lg text-body-sm h-10 pl-3 pr-8 focus:ring-primary focus:ring-2 outline-none cursor-pointer"
             >
               {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
@@ -187,7 +188,7 @@ export default function ProductCatalogPage() {
         <div className="md:hidden flex gap-2 overflow-x-auto pb-2 mb-md -mx-4 px-4">
           <button
             onClick={() => setParam('category', '')}
-            className={`shrink-0 px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+            className={`shrink-0 px-4 py-2.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${!category ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
           >
             All
           </button>
@@ -195,7 +196,7 @@ export default function ProductCatalogPage() {
             <button
               key={c.id}
               onClick={() => setParam('category', c.slug)}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
+              className={`shrink-0 px-4 py-2.5 rounded-full text-body-sm font-medium border cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${category === c.slug ? 'bg-primary text-white border-primary' : 'border-outline-variant text-secondary hover:border-primary'}`}
             >
               {c.name}
             </button>
@@ -248,7 +249,7 @@ export default function ProductCatalogPage() {
               onClick={() => setPage(page - 1)}
               disabled={page <= 1}
               aria-label="Previous page"
-              className="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="w-11 h-11 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <ChevronLeft size={18} />
             </button>
@@ -257,7 +258,7 @@ export default function ProductCatalogPage() {
                 key={p}
                 onClick={() => setPage(p)}
                 aria-current={p === page ? 'page' : undefined}
-                className={`w-9 h-9 rounded-lg text-body-sm font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${p === page ? 'bg-primary text-white' : 'border border-outline-variant hover:bg-surface-container'}`}
+                className={`w-11 h-11 rounded-lg text-body-sm font-semibold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${p === page ? 'bg-primary text-white' : 'border border-outline-variant hover:bg-surface-container'}`}
               >
                 {p}
               </button>
@@ -266,7 +267,7 @@ export default function ProductCatalogPage() {
               onClick={() => setPage(page + 1)}
               disabled={page >= pages}
               aria-label="Next page"
-              className="w-9 h-9 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="w-11 h-11 flex items-center justify-center rounded-lg border border-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <ChevronRight size={18} />
             </button>
