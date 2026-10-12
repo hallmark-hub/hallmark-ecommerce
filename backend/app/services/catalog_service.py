@@ -113,8 +113,9 @@ class CatalogService:
         in_stock: bool | None = None,
         page: int = 1,
         limit: int = 20,
+        sort: str | None = None,
     ) -> ProductList:
-        """Return products filtered and paginated according to API query params."""
+        """Return products filtered, sorted and paginated according to API query params."""
         if self.repository is not None:
             rows, total = self.repository.list_products(
                 category=category,
@@ -122,6 +123,7 @@ class CatalogService:
                 in_stock=in_stock,
                 page=page,
                 limit=limit,
+                sort=sort,
             )
             pages = ceil(total / limit) if total else 0
             return ProductList(

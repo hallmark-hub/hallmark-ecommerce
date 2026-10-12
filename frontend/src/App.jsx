@@ -55,6 +55,7 @@ function StorefrontLayout({ children }) {
         search: query.get('search') || undefined,
         page: parseInt(query.get('page') || '1', 10),
         limit: 12,
+        sort: query.get('sort') || undefined,
       }).catch(() => {})
     }
   }, [location.pathname, location.search])

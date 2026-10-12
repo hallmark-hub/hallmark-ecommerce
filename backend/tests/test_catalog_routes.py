@@ -55,3 +55,9 @@ def test_validation_errors_use_error_envelope() -> None:
     assert payload["success"] is False
     assert payload["message"] == "Validation failed"
     assert "errors" in payload["data"]
+
+
+def test_list_products_rejects_unknown_sort() -> None:
+    response = get("/api/v1/products", {"sort": "cheapest"})
+
+    assert response.status_code == 422

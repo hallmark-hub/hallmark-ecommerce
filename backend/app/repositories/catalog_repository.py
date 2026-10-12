@@ -18,6 +18,7 @@ class CatalogRepository(Protocol):
         in_stock: bool | None = None,
         page: int = 1,
         limit: int = 20,
+        sort: str | None = None,
     ) -> tuple[list[dict[str, Any]], int]:
         """Return active products and total count."""
 
@@ -49,6 +50,7 @@ class SupabaseCatalogRepository:
         in_stock: bool | None = None,
         page: int = 1,
         limit: int = 20,
+        sort: str | None = None,
     ) -> tuple[list[dict[str, Any]], int]:
         """Return active products filtered and paginated through Supabase."""
         query = self.client.table("products").select(
@@ -71,6 +73,9 @@ class SupabaseCatalogRepository:
 
         start = (page - 1) * limit
         end = start + limit - 1
+        if sort in ("price_asc", "price_desc"):
+            # Priced (direct) products before quote-only ones, whose price is empty
+            query = query.order("checkout_type").order("price_pesewas", desc=sort == "price_desc")
         response = query.order("created_at", desc=True).range(start, end).execute()
         rows = [self._with_category_slug(row) for row in response_data(response)]
         total = getattr(response, "count", None)

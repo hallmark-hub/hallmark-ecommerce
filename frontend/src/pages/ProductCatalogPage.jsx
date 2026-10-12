@@ -54,10 +54,8 @@ export default function ProductCatalogPage() {
       setLoading(true)
       setError('')
       try {
-        const res = await getProducts({ category: category || undefined, search: search || undefined, page, limit: 12 })
-        let items = res.data?.items || []
-        if (sort === 'price_asc') items = [...items].sort((a, b) => (a.price_pesewas || 0) - (b.price_pesewas || 0))
-        if (sort === 'price_desc') items = [...items].sort((a, b) => (b.price_pesewas || 0) - (a.price_pesewas || 0))
+        const res = await getProducts({ category: category || undefined, search: search || undefined, page, limit: 12, sort: sort || undefined })
+        const items = res.data?.items || []
         if (active) {
           setProducts(items)
           setTotal(res.data?.total || 0)

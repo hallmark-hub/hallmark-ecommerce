@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette.concurrency import run_in_threadpool
@@ -29,10 +29,11 @@ async def list_products(
     in_stock: bool | None = None,
     page: Annotated[int, Query(ge=1)] = 1,
     limit: Annotated[int, Query(ge=1, le=100)] = 20,
+    sort: Literal["newest", "price_asc", "price_desc"] | None = None,
 ) -> dict[str, object]:
-    """Return products with optional filters and pagination."""
+    """Return products with optional filters, sorting and pagination."""
     products = await run_in_threadpool(
-        service.list_products, category, search, in_stock, page, limit
+        service.list_products, category, search, in_stock, page, limit, sort
     )
     return ok(products.model_dump(mode="json"), "Products retrieved")
 
