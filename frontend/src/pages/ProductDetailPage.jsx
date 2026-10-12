@@ -161,9 +161,10 @@ export default function ProductDetailPage() {
                     </button>
                     <span className="px-4 text-body font-semibold min-w-[2ch] text-center">{qty}</span>
                     <button
-                      onClick={() => setQty(q => q + 1)}
+                      onClick={() => setQty(q => Math.min(q + 1, product.stock_qty ?? Infinity))}
+                      disabled={qty >= (product.stock_qty ?? Infinity)}
                       aria-label="Increase quantity"
-                      className="h-full px-4 hover:bg-surface-container cursor-pointer text-on-surface text-body font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+                      className="h-full px-4 hover:bg-surface-container cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-on-surface text-body font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                     >
                       +
                     </button>

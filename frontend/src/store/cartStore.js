@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+// Never let the cart hold more than the stock we know about
+function capToStock(item, quantity) {
+  return typeof item.stock_qty === 'number' ? Math.min(quantity, item.stock_qty) : quantity
+}
+
 const useCartStore = create(
   persist(
     (set, get) => ({
@@ -10,9 +15,9 @@ const useCartStore = create(
         const items = get().items
         const existing = items.find(i => i.id === product.id)
         if (existing) {
-          set({ items: items.map(i => i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i) })
+          set({ items: items.map(i => i.id === product.id ? { ...i, quantity: capToStock(i, i.quantity + quantity) } : i) })
         } else {
-          set({ items: [...items, { ...product, quantity }] })
+          set({ items: [...items, { ...product, quantity: capToStock(product, quantity) }] })
         }
       },
 
@@ -25,7 +30,7 @@ const useCartStore = create(
           get().removeItem(id)
           return
         }
-        set({ items: get().items.map(i => i.id === id ? { ...i, quantity } : i) })
+        set({ items: get().items.map(i => i.id === id ? { ...i, quantity: capToStock(i, quantity) } : i) })
       },
 
       clearCart() {

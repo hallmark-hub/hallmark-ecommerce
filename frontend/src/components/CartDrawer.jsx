@@ -46,7 +46,7 @@ export default function CartDrawer({ open, onClose }) {
                         <Minus size={14} />
                       </button>
                       <span className="text-body-sm font-medium w-6 text-center">{item.quantity}</span>
-                      <button onClick={() => updateQty(item.id, item.quantity + 1)} className="p-1 hover:bg-surface-container rounded cursor-pointer" aria-label="Increase quantity">
+                      <button onClick={() => updateQty(item.id, item.quantity + 1)} disabled={item.quantity >= (item.stock_qty ?? Infinity)} className="p-1 hover:bg-surface-container rounded cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed" aria-label="Increase quantity">
                         <Plus size={14} />
                       </button>
                     </div>

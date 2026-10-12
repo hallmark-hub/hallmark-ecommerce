@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { AlertTriangle, CheckCircle, Printer, Home } from 'lucide-react'
+import { AlertTriangle, CheckCircle, Clock, Printer, Home } from 'lucide-react'
 import Button from '../components/Button'
-import { formatPrice, formatDate, RETURNS_POLICY } from '../utils/format'
+import { formatPrice, formatDate, formatPhone, RETURNS_POLICY } from '../utils/format'
 import { lookupOrder } from '../api/orders'
 import { usePageTitle } from '../hooks/usePageTitle'
+import useAuthStore from '../store/authStore'
 
 const PENDING_ORDER_KEY = 'chefware-pending-order'
+const PAYMENT_METHOD_LABELS = { moolre: 'Mobile money (Moolre)' }
 
 export default function OrderConfirmationPage() {
   usePageTitle('Order Confirmation')
@@ -16,6 +18,7 @@ export default function OrderConfirmationPage() {
   const [loading, setLoading] = useState(true)
   const [phone, setPhone] = useState('')
   const [verifying, setVerifying] = useState(false)
+  const profilePhone = useAuthStore(s => s.profile?.phone)
 
   // Order status is only ever read from the backend. Never assume a payment
   // succeeded from the fact that the customer landed on this URL — they may be
@@ -31,28 +34,31 @@ export default function OrderConfirmationPage() {
       setLoading(true)
       setError('')
       const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
-      if (!stored.phone) {
+      // Signed-in customers opening an order from their account usually used their profile phone
+      const knownPhone = stored.phone || profilePhone
+      if (!knownPhone) {
         setLoading(false)
         return
       }
 
       try {
-        setOrder(await fetchOrder(stored.phone))
+        setOrder(await fetchOrder(knownPhone))
       } catch (e) {
-        setError(e.message || 'Unable to load order details.')
+        // Profile phone may differ from the checkout phone: fall back to asking
+        if (stored.phone) setError(e.message || 'Unable to load order details.')
       } finally {
         setLoading(false)
       }
     }
     loadOrder()
-  }, [reference, fetchOrder])
+  }, [reference, fetchOrder, profilePhone])
 
   async function handleVerify(e) {
     e.preventDefault()
     setVerifying(true)
     setError('')
     try {
-      setOrder(await fetchOrder(phone))
+      setOrder(await fetchOrder(formatPhone(phone)))
     } catch {
       setError('No order found for that reference and phone number.')
     } finally {
@@ -111,10 +117,12 @@ export default function OrderConfirmationPage() {
       <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section">
         {/* Success header */}
         <div className="text-center mb-xl">
-          <CheckCircle size={64} className="text-primary mx-auto mb-md" />
+          {order.payment_status === 'paid'
+            ? <CheckCircle size={64} className="text-primary mx-auto mb-md" />
+            : <Clock size={64} className="text-tertiary mx-auto mb-md" />}
           <h1 className="text-h1 text-on-surface mb-sm">{order.payment_status === 'paid' ? 'Order Confirmed!' : 'Order Received'}</h1>
           <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
-          {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">Save your reference above — quote it to our team on WhatsApp for any updates.</p>}
+          {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">Save your order reference below — quote it to our team on WhatsApp for any updates.</p>}
           {error && <p className="text-body-sm text-tertiary mt-xs">{error}</p>}
         </div>
 
@@ -175,7 +183,7 @@ export default function OrderConfirmationPage() {
           </div>
           <div className="bg-white rounded-xl border border-outline-variant p-md">
             <p className="text-label uppercase text-secondary mb-sm">Payment</p>
-            <p className="text-body-sm font-medium text-on-surface capitalize">{order.payment_method.replace('_', ' ')}</p>
+            <p className="text-body-sm font-medium text-on-surface">{PAYMENT_METHOD_LABELS[order.payment_method] || order.payment_method.replace('_', ' ')}</p>
             <p className={`text-label uppercase mt-xs ${order.payment_status === 'paid' ? 'text-primary' : 'text-tertiary'}`}>
               {order.payment_status === 'paid' ? '✓ Payment received' : 'Pending confirmation'}
             </p>

@@ -16,9 +16,9 @@ const STEP_PAYMENT = 2
 const PENDING_ORDER_KEY = 'chefware-pending-order'
 
 const PAYMENT_METHODS = [
-  { id: 'mtn_momo', label: 'MTN MoMo', desc: 'Pay instantly with MTN Mobile Money', icon: Smartphone },
-  { id: 'vodafone', label: 'Telecel Cash', desc: 'Pay with Telecel Cash (formerly Vodafone Cash)', icon: Smartphone },
-  { id: 'airteltigo', label: 'AT Money', desc: 'Pay with AT Money (formerly AirtelTigo Money)', icon: Smartphone },
+  { id: 'mtn_momo', label: 'MTN MoMo', desc: 'MTN Mobile Money', icon: Smartphone },
+  { id: 'vodafone', label: 'Telecel Cash', desc: 'Formerly Vodafone Cash', icon: Smartphone },
+  { id: 'airteltigo', label: 'AT Money', desc: 'Formerly AirtelTigo Money', icon: Smartphone },
 ]
 
 const inputCls = 'w-full h-12 px-4 bg-white border border-outline-variant rounded-xl text-body text-on-surface placeholder:text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors'
@@ -49,7 +49,6 @@ export default function CheckoutPage() {
     address: '',
     phone: profile?.phone || '',
   })
-  const [paymentMethod, setPaymentMethod] = useState('mtn_momo')
 
   function updateShipping(field, val) {
     setShipping(prev => ({ ...prev, [field]: val }))
@@ -94,6 +93,7 @@ export default function CheckoutPage() {
       const orderRes = await createOrder(payload)
       if (!orderRes.success) throw new Error(orderRes.message)
       sessionStorage.setItem(PENDING_ORDER_KEY, JSON.stringify({
+        id: orderRes.data.id,
         reference: orderRes.data.reference,
         phone: payload.customer.phone,
         customer: payload.customer,
@@ -277,35 +277,28 @@ export default function CheckoutPage() {
                   >
                     ← Back to Shipping
                   </button>
-                  <h2 className="text-h2 text-on-surface">Payment Method</h2>
+                  <h2 className="text-h2 text-on-surface">Pay with Mobile Money</h2>
                   <p className="text-body-sm text-secondary mt-1">All transactions are secured and encrypted.</p>
                 </div>
 
-                <div className="px-8 py-8 space-y-3">
-                  {PAYMENT_METHODS.map(m => {
-                    const Icon = m.icon
-                    const active = paymentMethod === m.id
-                    return (
-                      <label
-                        key={m.id}
-                        className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                          active ? 'border-primary bg-primary/5 shadow-sm' : 'border-outline-variant hover:border-primary/40 hover:bg-surface-container-lowest'
-                        }`}
-                      >
-                        <input type="radio" name="payment" value={m.id} checked={active} onChange={() => setPaymentMethod(m.id)} className="sr-only" />
-                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors ${active ? 'bg-primary text-white' : 'bg-surface-container text-secondary'}`}>
-                          <Icon size={22} />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-body font-semibold text-on-surface">{m.label}</p>
-                          <p className="text-body-sm text-secondary">{m.desc}</p>
-                        </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${active ? 'border-primary' : 'border-outline-variant'}`}>
-                          {active && <div className="w-2.5 h-2.5 rounded-full bg-primary" />}
-                        </div>
-                      </label>
-                    )
-                  })}
+                <div className="px-5 sm:px-8 py-8 space-y-3">
+                  <p className="text-body-sm text-secondary">You'll pick your network and approve the payment on Moolre's secure page. Supported:</p>
+                  <ul className="space-y-3">
+                    {PAYMENT_METHODS.map(m => {
+                      const Icon = m.icon
+                      return (
+                        <li key={m.id} className="flex items-center gap-4 p-4 rounded-xl border border-outline-variant">
+                          <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-surface-container text-secondary">
+                            <Icon size={22} />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-body font-semibold text-on-surface">{m.label}</p>
+                            <p className="text-body-sm text-secondary">{m.desc}</p>
+                          </div>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 </div>
 
                 {/* Returns Policy */}
