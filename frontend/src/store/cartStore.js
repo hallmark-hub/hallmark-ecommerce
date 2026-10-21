@@ -6,6 +6,9 @@ function capToStock(item, quantity) {
   return typeof item.stock_qty === 'number' ? Math.min(quantity, item.stock_qty) : quantity
 }
 
+// Carts saved by older versions of the site can hold ids the API rejects at checkout
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 const useCartStore = create(
   persist(
     (set, get) => ({
@@ -46,7 +49,13 @@ const useCartStore = create(
       },
 
     }),
-    { name: 'chefware-cart' }
+    {
+      name: 'chefware-cart',
+      merge: (persisted, current) => ({
+        ...current,
+        items: (persisted?.items ?? []).filter(item => UUID_PATTERN.test(item.id)),
+      }),
+    }
   )
 )
 
