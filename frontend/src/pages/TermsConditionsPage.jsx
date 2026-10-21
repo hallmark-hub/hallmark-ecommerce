@@ -7,7 +7,7 @@ const SECTIONS = [
   {
     icon: CreditCard,
     title: 'Orders & Payment',
-    body: 'Online orders are paid at checkout through Moolre, which supports mobile money. Payment is taken in Ghana Cedis (GH₵).',
+    body: 'Online orders are paid at checkout through Seev Plus, which supports mobile money. Payment is taken in Ghana Cedis (GH₵).',
   },
   {
     icon: Truck,

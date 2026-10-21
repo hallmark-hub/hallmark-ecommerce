@@ -4,7 +4,7 @@ import { Smartphone, ChevronRight, AlertTriangle, ShieldCheck, Truck, Lock } fro
 import useCartStore from '../store/cartStore'
 import useAuthStore from '../store/authStore'
 import { createOrder } from '../api/orders'
-import { initializeMoolre } from '../api/payments'
+import { initializeSeevcash } from '../api/payments'
 import { formatPrice, RETURNS_POLICY } from '../utils/format'
 import { validatePhone, formatPhone } from '../utils/format'
 import Button from '../components/Button'
@@ -85,7 +85,7 @@ export default function CheckoutPage() {
         delivery_address: shipping.address.trim(),
       },
       items: items.map(i => ({ product_id: i.id, quantity: i.quantity })),
-      payment_method: 'moolre',
+      payment_method: 'seevcash',
       accepted_returns_policy: true,
     }
 
@@ -102,7 +102,7 @@ export default function CheckoutPage() {
       setPendingOrderId(orderRes.data.id)
       setPendingTotal(orderRes.data.total_pesewas)
       if (orderRes.data.total_pesewas !== total) return
-      const payRes = await initializeMoolre(orderRes.data.id)
+      const payRes = await initializeSeevcash(orderRes.data.id)
       if (!payRes.success) throw new Error(payRes.message)
       window.location.href = payRes.data.authorization_url
     } catch (e) {
@@ -117,7 +117,7 @@ export default function CheckoutPage() {
     setError('')
     setLoading(true)
     try {
-      const payRes = await initializeMoolre(pendingOrderId)
+      const payRes = await initializeSeevcash(pendingOrderId)
       if (!payRes.success) throw new Error(payRes.message)
       window.location.href = payRes.data.authorization_url
     } catch (e) {
@@ -178,7 +178,7 @@ export default function CheckoutPage() {
             <p className="text-white text-h1 font-bold leading-tight mb-3">A Clear Path from<br />Cart to Confirmation</p>
             <div className="flex items-center gap-2 mt-3">
               <div className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-              <p className="text-white/75 text-body-sm">Secure online payment through Moolre</p>
+              <p className="text-white/75 text-body-sm">Secure online payment through Seev Plus</p>
             </div>
           </div>
         </div>
@@ -282,7 +282,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="px-5 sm:px-8 py-8 space-y-3">
-                  <p className="text-body-sm text-secondary">You'll pick your network and approve the payment on Moolre's secure page. Supported:</p>
+                  <p className="text-body-sm text-secondary">You'll pick your network and approve the payment on Seev Plus's secure page. Supported:</p>
                   <ul className="space-y-3">
                     {PAYMENT_METHODS.map(m => {
                       const Icon = m.icon

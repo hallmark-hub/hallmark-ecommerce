@@ -16,6 +16,9 @@ class PaymentRepository(Protocol):
     def get_payment_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return a payment by provider reference."""
 
+    def get_payments_by_order_id(self, order_id: str) -> list[dict[str, Any]]:
+        """Return every payment attempt for an order, newest first."""
+
     def update_payment_status(
         self,
         reference: str,
@@ -50,6 +53,11 @@ class InMemoryPaymentRepository:
     def get_payment_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return an in-memory payment by reference."""
         return self.payments.get(reference)
+
+    def get_payments_by_order_id(self, order_id: str) -> list[dict[str, Any]]:
+        """Return in-memory payments for an order, newest first."""
+        matches = [p for p in self.payments.values() if str(p["order_id"]) == order_id]
+        return sorted(matches, key=lambda payment: payment["created_at"], reverse=True)
 
     def update_payment_status(
         self,
@@ -117,6 +125,20 @@ class SupabasePaymentRepository:
         rows = response_data(response)
         return rows[0] if rows else None
 
+    def get_payments_by_order_id(self, order_id: str) -> list[dict[str, Any]]:
+        """Return every payment attempt for an order, newest first."""
+        response = (
+            self.client.table("payments")
+            .select(
+                "id,order_id,provider,reference,status,amount_pesewas,"
+                "provider_authorization_url,raw_response,created_at"
+            )
+            .eq("order_id", order_id)
+            .order("created_at", desc=True)
+            .execute()
+        )
+        return response_data(response)
+
     def update_payment_status(
         self,
         reference: str,
@@ -127,7 +149,6 @@ class SupabasePaymentRepository:
         response = (
             self.client.table("payments")
             .update({"status": status, "raw_response": raw_response})
-            .eq("provider", "paystack")
             .eq("reference", reference)
             .execute()
         )

@@ -46,3 +46,24 @@ class VerifyMoolreResponse(BaseModel):
     reference: str
     payment_status: PaymentStatus
     order_id: UUID
+
+
+class InitializeSeevcashRequest(BaseModel):
+    """SeevCash initialization request."""
+
+    order_id: UUID
+
+
+class InitializeSeevcashResponse(BaseModel):
+    """SeevCash initialization response."""
+
+    authorization_url: str
+    reference: str
+
+
+class VerifySeevcashResponse(BaseModel):
+    """SeevCash verification response."""
+
+    reference: str
+    payment_status: PaymentStatus
+    order_id: UUID

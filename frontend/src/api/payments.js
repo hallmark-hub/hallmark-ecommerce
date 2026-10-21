@@ -15,3 +15,11 @@ export async function initializeMoolre(orderId) {
 export async function verifyMoolre(reference) {
   return client.get(`/api/v1/payments/moolre/verify/${reference}`)
 }
+
+export async function initializeSeevcash(orderId) {
+  return client.post('/api/v1/payments/seevcash/initialize', { order_id: orderId })
+}
+
+export async function verifySeevcash(reference) {
+  return client.get(`/api/v1/payments/seevcash/verify/${reference}`)
+}

@@ -8,7 +8,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import useAuthStore from '../store/authStore'
 
 const PENDING_ORDER_KEY = 'chefware-pending-order'
-const PAYMENT_METHOD_LABELS = { moolre: 'Mobile money (Moolre)' }
+const PAYMENT_METHOD_LABELS = { moolre: 'Mobile money (Moolre)', seevcash: 'Mobile money (Seev Plus)' }
 
 export default function OrderConfirmationPage() {
   usePageTitle('Order Confirmation')
@@ -114,19 +114,27 @@ export default function OrderConfirmationPage() {
 
   return (
     <main className="pt-20 min-h-screen bg-surface">
-      <div className="max-w-2xl mx-auto px-gutter py-section-mobile md:py-section">
+      <div className="max-w-2xl mx-auto px-gutter py-md md:py-lg">
         {/* Success header */}
-        <div className="text-center mb-xl">
+        <div className="text-center mb-md">
           {order.payment_status === 'paid'
-            ? <CheckCircle size={64} className="text-primary mx-auto mb-md" />
-            : <Clock size={64} className="text-tertiary mx-auto mb-md" />}
-          <h1 className="text-h1 text-on-surface mb-sm">{order.payment_status === 'paid' ? 'Order Confirmed!' : 'Order Received'}</h1>
+            ? <CheckCircle size={44} className="text-primary mx-auto mb-sm" />
+            : <Clock size={44} className="text-tertiary mx-auto mb-sm" />}
+          <h1 className="text-h2 text-on-surface mb-xs">{order.payment_status === 'paid' ? 'Order Confirmed!' : 'Order Received'}</h1>
           <p className="text-body-lg text-secondary">Medaase! Thank you for your order.</p>
           {order.customer.phone && <p className="text-body-sm text-secondary mt-xs">Save your order reference below — quote it to our team on WhatsApp for any updates.</p>}
           {error && <p className="text-body-sm text-tertiary mt-xs">{error}</p>}
+          <div className="flex flex-col sm:flex-row gap-sm mt-md">
+            <Button as={Link} to="/" variant="primary" size="md" iconLeft={<Home />} className="flex-1">
+              Back to Home
+            </Button>
+            <Button variant="ghost" size="md" onClick={() => window.print()} iconLeft={<Printer />} className="flex-1">
+              Print Receipt
+            </Button>
+          </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-outline-variant p-xl mb-md">
+        <div className="bg-white rounded-xl border border-outline-variant p-md mb-md">
           <div className="flex justify-between items-start mb-md pb-md border-b border-outline-variant">
             <div>
               <p className="text-label uppercase text-secondary mb-xs">Order Reference</p>
@@ -191,17 +199,8 @@ export default function OrderConfirmationPage() {
         </div>
 
         {/* Returns notice */}
-        <div className="bg-error-container/30 border border-error/30 rounded-lg p-md mb-xl">
+        <div className="bg-error-container/30 border border-error/30 rounded-lg p-md">
           <p className="text-body-sm text-error font-medium">{order.returns_policy || RETURNS_POLICY}</p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-sm">
-          <Button as={Link} to="/" variant="primary" size="lg" iconLeft={<Home />} className="flex-1">
-            Back to Home
-          </Button>
-          <Button variant="ghost" size="lg" onClick={() => window.print()} iconLeft={<Printer />} className="flex-1">
-            Print Receipt
-          </Button>
         </div>
       </div>
     </main>

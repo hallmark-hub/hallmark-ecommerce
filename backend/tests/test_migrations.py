@@ -29,6 +29,7 @@ def test_migration_files_are_numbered_in_apply_order() -> None:
         "017_production_access_and_order_details.sql",
         "018_atomic_order_stock_reservations.sql",
         "019_add_moolre_payment_method.sql",
+        "020_add_seevcash_payment_method.sql",
     ]
 
 

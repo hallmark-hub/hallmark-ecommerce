@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { XCircle, Clock } from 'lucide-react'
-import { initializeMoolre, verifyMoolre } from '../api/payments'
+import { initializeSeevcash, verifySeevcash } from '../api/payments'
 import useCartStore from '../store/cartStore'
 import { PageLoader } from '../components/PageLoader'
 import Button from '../components/Button'
@@ -13,7 +13,8 @@ export default function PaymentVerifyPage() {
   usePageTitle('Payment')
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const reference = searchParams.get('reference') || searchParams.get('trxref')
+  // Seev Plus doesn't document which query parameter it appends, so our order reference travels as `order`.
+  const reference = searchParams.get('order') || searchParams.get('reference') || searchParams.get('trxref')
   const [status, setStatus] = useState(reference ? 'loading' : 'error')
   const [checkCount, setCheckCount] = useState(0)
   const [retrying, setRetrying] = useState(false)
@@ -24,7 +25,7 @@ export default function PaymentVerifyPage() {
     async function verify() {
       if (!reference) return
       try {
-        const res = await verifyMoolre(reference)
+        const res = await verifySeevcash(reference)
         if (res.success && res.data.payment_status === 'paid') {
           const stored = JSON.parse(sessionStorage.getItem(PENDING_ORDER_KEY) || '{}')
           const cartClearedKey = `chefware-cart-cleared-${reference}`
@@ -55,7 +56,7 @@ export default function PaymentVerifyPage() {
     setRetryError('')
     setRetrying(true)
     try {
-      const payRes = await initializeMoolre(stored.id)
+      const payRes = await initializeSeevcash(stored.id)
       if (!payRes.success) throw new Error(payRes.message)
       window.location.href = payRes.data.authorization_url
     } catch (e) {
