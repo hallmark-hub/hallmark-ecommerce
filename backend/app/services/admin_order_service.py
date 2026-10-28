@@ -24,6 +24,9 @@ class AdminOrderService:
         order = self.repository.get_order_by_reference(reference)
         if order is None:
             return None
+        images = self.repository.get_product_images(
+            [str(item["product_id"]) for item in order["items"] if item.get("product_id")]
+        )
         return LookupOrderResponse(
             id=order["id"],
             reference=order["reference"],
@@ -33,7 +36,12 @@ class AdminOrderService:
                 company_name=order.get("company_name") or "",
                 delivery_address=order["delivery_address"],
             ),
-            items=[LookupOrderItem.model_validate(item) for item in order["items"]],
+            items=[
+                LookupOrderItem.model_validate(
+                    {**item, "image_url": images.get(str(item.get("product_id")))}
+                )
+                for item in order["items"]
+            ],
             total_pesewas=order["total_pesewas"],
             payment_method=order["payment_method"],
             payment_status=order["payment_status"],

@@ -58,6 +58,9 @@ class OrderRepository(Protocol):
     def get_order_by_reference(self, reference: str) -> dict[str, Any] | None:
         """Return an order by reference."""
 
+    def get_product_images(self, product_ids: list[str]) -> dict[str, str]:
+        """Return each product's first image URL, keyed by product ID."""
+
     def update_order_status(
         self,
         reference: str,
@@ -222,6 +225,15 @@ class InMemoryOrderRepository:
         if order is None:
             return None
         return {**order, "items": self.items.get(reference, [])}
+
+    def get_product_images(self, product_ids: list[str]) -> dict[str, str]:
+        """Return each seed product's first image URL, keyed by product ID."""
+        ids = set(product_ids)
+        return {
+            str(product["id"]): product["images"][0]
+            for product in _PRODUCT_DATA
+            if str(product["id"]) in ids and product.get("images")
+        }
 
     def update_order_status(
         self,
@@ -420,11 +432,27 @@ class SupabaseOrderRepository:
         order = orders[0]
         items_response = (
             self.client.table("order_items")
-            .select("product_name,quantity,unit_price_pesewas")
+            .select("product_id,product_name,quantity,unit_price_pesewas")
             .eq("order_id", order["id"])
             .execute()
         )
         return {**order, "items": response_data(items_response)}
+
+    def get_product_images(self, product_ids: list[str]) -> dict[str, str]:
+        """Return each product's first image URL, keyed by product ID (archived products included)."""
+        if not product_ids:
+            return {}
+        response = (
+            self.client.table("products")
+            .select("id,images")
+            .in_("id", product_ids)
+            .execute()
+        )
+        return {
+            str(row["id"]): row["images"][0]
+            for row in response_data(response)
+            if row.get("images")
+        }
 
     def update_order_status(
         self,

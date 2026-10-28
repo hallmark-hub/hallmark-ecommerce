@@ -443,3 +443,13 @@ How to apply: Treat this as the active punch list. Hand items 1–4 to Codex (ba
 **What was decided:** `HeroSlider` shows a 44px pause/play toggle in the hero's bottom-right corner. Autoplay stays on by default, so the 2026-10-10 "always auto-slides" decision still holds for visitors who don't touch it. Reduced-motion visitors start paused (previously autoplay was simply skipped for them).
 **Why:** WCAG 2.2.2 requires a way to pause content that moves on its own for more than 5 seconds. This came from the UI/UX audit, batch 6.
 **What was rejected:** Bringing back pause-on-hover (Evans removed it on 2026-10-10).
+
+## 2026-10-28, Order detail drawer shows product images
+**What was decided:** `GET /admin/orders/{reference}` items now carry an optional `image_url` (the product's first image). `AdminOrderService.get_order` fills it through a new `OrderRepository.get_product_images`, which does a plain `products` lookup that includes archived products. The drawer shows a 56px thumbnail per line, or a package icon when there is no image. Drawer padding went from 20px to 24px and the close button no longer bleeds past it.
+**Why:** Evans wanted to identify items at a glance. The enrichment lives in the admin service so payment flows that call `get_order_by_reference` pay no extra query.
+**What was rejected:** A PostgREST `products(images)` embed inside `get_order_by_reference` (extra work on payment paths, and the live DB can't be checked while the Supabase MCP is down); the Unsplash fallback photo (a stock image would misidentify the product).
+
+## 2026-10-28, Cleared test data from production before client handover
+**What was decided:** Deleted 11 test orders (with their 13 order items, 10 payments and 1 payment event) and both test quote requests from the live Supabase project. Kept the 28 Oct SeevCash GH₵1 order from the "Chefware" account (`325b567f…`, with its item and payment). Kept all 14 products, including "Dress" at GH₵1 for the client's testing, and all 6 customer profiles. A JSON backup of the deleted rows was written to the session scratchpad before deleting.
+**Why:** Evans is handing the site to the client after the SeevCash payment went live and tested OK.
+**What was rejected:** Restoring stock (the client will correct quantities in the admin dashboard; Dress, Chef Uniform Combo and Blue Collar Chef Top still show stock deducted by the deleted paid orders). Deleting customer accounts (each needs a Supabase Auth user removed too; Evans chose to leave them).

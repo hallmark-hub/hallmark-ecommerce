@@ -70,6 +70,15 @@ def test_admin_can_get_order_by_reference() -> None:
     assert payload["data"]["customer"]["phone"] == "+233201987654"
 
 
+def test_admin_order_items_include_product_image() -> None:
+    order = create_order()
+
+    response = request("GET", f"/api/v1/admin/orders/{order['reference']}")
+
+    items = response.json()["data"]["items"]
+    assert items[0]["image_url"] == "https://example.com/test-direct-product.jpg"
+
+
 def test_admin_can_update_order_status() -> None:
     order = create_order()
     initialized = request(

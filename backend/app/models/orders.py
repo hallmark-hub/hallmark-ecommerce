@@ -105,6 +105,7 @@ class LookupOrderItem(BaseModel):
     product_name: str
     quantity: int
     unit_price_pesewas: int
+    image_url: str | None = None
 
 
 class LookupOrderResponse(BaseModel):

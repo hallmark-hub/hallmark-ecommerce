@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { X, Phone, Mail, MapPin, Building2 } from 'lucide-react'
+import { X, Phone, Mail, MapPin, Building2, Package } from 'lucide-react'
 import { getAdminOrder } from '../../api/admin'
 import { formatPrice, formatDate } from '../../utils/format'
 import { Alert, StatusPill } from './AdminUI'
@@ -42,17 +42,17 @@ export default function OrderDetailDrawer({ summary, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/40" onMouseDown={event => { if (event.target === event.currentTarget) onClose() }}>
       <aside role="dialog" aria-modal="true" aria-labelledby="order-detail-title" className="bg-white w-full max-w-md h-full flex flex-col shadow-xl">
-        <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-gray-200">
+        <div className="flex items-start justify-between gap-4 px-6 py-4 border-b border-gray-200">
           <div>
             <h2 id="order-detail-title" className="text-lg font-bold text-primary">{summary.reference}</h2>
             <p className="text-sm text-gray-500 mt-0.5">Placed {formatDate(summary.created_at)}</p>
           </div>
-          <button ref={closeRef} type="button" onClick={onClose} className="p-2 -mr-2 rounded text-gray-500 hover:bg-gray-100 hover:text-on-surface cursor-pointer" aria-label="Close order details">
+          <button ref={closeRef} type="button" onClick={onClose} className="p-2 rounded text-gray-500 hover:bg-gray-100 hover:text-on-surface cursor-pointer" aria-label="Close order details">
             <X size={20} />
           </button>
         </div>
 
-        <div className="overflow-y-auto px-5 py-5 space-y-6 text-sm">
+        <div className="overflow-y-auto px-6 py-5 space-y-6 text-sm">
           {error && <Alert>{error}</Alert>}
 
           <div className="flex flex-wrap gap-2">
@@ -66,8 +66,13 @@ export default function OrderDetailDrawer({ summary, onClose }) {
             {order && (
               <ul className="divide-y divide-gray-100 border border-gray-200 rounded">
                 {order.items.map((item, i) => (
-                  <li key={i} className="flex justify-between gap-3 px-3 py-2.5">
-                    <span className="text-on-surface"><span className="font-semibold">{item.quantity} ×</span> {item.product_name}</span>
+                  <li key={i} className="flex items-center gap-3 px-3 py-2.5">
+                    {item.image_url ? (
+                      <img src={item.image_url} alt="" className="w-14 h-14 rounded object-cover bg-gray-100 shrink-0" />
+                    ) : (
+                      <span className="w-14 h-14 rounded bg-gray-100 text-gray-400 flex items-center justify-center shrink-0"><Package size={20} /></span>
+                    )}
+                    <span className="flex-1 min-w-0 text-on-surface"><span className="font-semibold">{item.quantity} ×</span> {item.product_name}</span>
                     <span className="text-gray-600 whitespace-nowrap">{formatPrice(item.unit_price_pesewas * item.quantity)}</span>
                   </li>
                 ))}
