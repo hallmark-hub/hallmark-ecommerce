@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AlertTriangle, Download, PackageSearch, Plus } from 'lucide-react'
+import { AlertTriangle, Archive, ArchiveRestore, Download, PackageSearch, Pencil, Plus } from 'lucide-react'
 import { getCategories } from '../../api/categories'
 import { getAdminProducts, setAdminProductActive, updateAdminProductStock } from '../../api/admin'
 import { formatPrice } from '../../utils/format'
@@ -44,6 +44,7 @@ const SORTS = {
   price_desc: { label: 'Price: high to low', compare: (a, b) => (b.price_pesewas ?? -1) - (a.price_pesewas ?? -1) },
 }
 
+const rowActionClass = 'inline-flex items-center gap-1.5 h-8 px-2.5 rounded border text-xs font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors cursor-pointer'
 const stepButtonClass = 'h-8 min-w-8 px-2 rounded border border-gray-300 bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed'
 
 function toInventoryItem(product) {
@@ -265,9 +266,11 @@ export default function AdminInventoryPage() {
                         <div className="min-w-0">
                           <p className="font-medium text-on-surface truncate max-w-[110px] sm:max-w-[280px]">{item.name}</p>
                           <p className="text-xs text-gray-500 truncate max-w-[110px] sm:max-w-[280px]">{categoryNames[item.category] || item.category}</p>
-                          <div className="flex gap-3 mt-1 text-xs font-semibold">
-                            <button type="button" onClick={() => setEditing(item)} className="text-primary hover:underline cursor-pointer" aria-label={`Edit ${item.name}`}>Edit</button>
-                            <button type="button" onClick={() => toggleActive(item)} className={`${item.is_active ? 'text-gray-500' : 'text-primary'} hover:underline cursor-pointer`} aria-label={`${item.is_active ? 'Archive' : 'Restore'} ${item.name}`}>{item.is_active ? 'Archive' : 'Restore'}</button>
+                          <div className="flex gap-2 mt-2">
+                            <button type="button" onClick={() => setEditing(item)} className={`${rowActionClass} border-primary/40 bg-primary/5 text-primary hover:bg-primary/10`} aria-label={`Edit ${item.name}`}><Pencil size={14} />Edit</button>
+                            <button type="button" onClick={() => toggleActive(item)} className={`${rowActionClass} ${item.is_active ? 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' : 'border-primary/40 bg-primary/5 text-primary hover:bg-primary/10'}`} aria-label={`${item.is_active ? 'Archive' : 'Restore'} ${item.name}`}>
+                              {item.is_active ? <Archive size={14} /> : <ArchiveRestore size={14} />}{item.is_active ? 'Archive' : 'Restore'}
+                            </button>
                           </div>
                         </div>
                       </div>
