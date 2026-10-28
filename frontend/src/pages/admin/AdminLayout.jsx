@@ -1,25 +1,64 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen, ExternalLink } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, MessageSquare, FilePenLine, LogOut, Menu, X, PanelLeftClose, PanelLeftOpen, ExternalLink, Bell } from 'lucide-react'
 import useAuthStore from '../../store/authStore'
 import ErrorBoundary from '../../components/ErrorBoundary'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import useAdminAlerts from '../../hooks/useAdminAlerts'
+import useAlertSound from '../../hooks/useAlertSound'
+import { formatPrice } from '../../utils/format'
 
 const NAV = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/admin/orders', label: 'Orders', icon: ShoppingBag },
-  { to: '/admin/quotes', label: 'Quote Requests', icon: MessageSquare },
+  { to: '/admin/orders', label: 'Orders', icon: ShoppingBag, alertKind: 'orders' },
+  { to: '/admin/quotes', label: 'Quote Requests', icon: MessageSquare, alertKind: 'quotes' },
   { to: '/admin/inventory', label: 'Inventory', icon: Package },
   { to: '/admin/settings', label: 'Website Content', icon: FilePenLine },
 ]
 
+function AlertToast({ title, detail, actionLabel, onAction, onDismiss }) {
+  return (
+    <div className="flex items-start gap-3 rounded-md border border-primary/30 bg-white p-3 shadow-lg">
+      <Bell size={18} className="mt-0.5 shrink-0 text-primary" />
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-on-surface">{title}</p>
+        {detail && <p className="text-xs text-gray-500 truncate">{detail}</p>}
+        <button onClick={onAction} className="mt-1 text-sm font-semibold text-primary hover:underline cursor-pointer">{actionLabel}</button>
+      </div>
+      <button onClick={onDismiss} className="p-1 -mr-1 -mt-1 text-gray-400 hover:text-gray-600 cursor-pointer" aria-label="Dismiss" title="Hide and mute. The badge stays until you open it.">
+        <X size={16} />
+      </button>
+    </div>
+  )
+}
+
 export default function AdminLayout() {
-  usePageTitle('Admin')
   const { user, token, isAdmin, logout, refreshProfile } = useAuthStore()
   const [checkingRole, setCheckingRole] = useState(Boolean(token))
   const [mobileOpen, setMobileOpen] = useState(false)
   const [desktopCollapsed, setDesktopCollapsed] = useState(false)
+  const [refreshKey, setRefreshKey] = useState(0)
   const navigate = useNavigate()
+  const { newOrders, newQuotes, markSeen } = useAdminAlerts(isAdmin && !checkingRole)
+  // Dismissing a toast hides it and mutes the chime for the items already there; the sidebar badge
+  // and tab count stay until the section is opened. Stores how many items each dismissal covered.
+  const [dismissed, setDismissed] = useState({ orders: 0, quotes: 0 })
+  const alertCounts = { orders: newOrders.length, quotes: newQuotes.length }
+  const alertTotal = newOrders.length + newQuotes.length
+  const showOrdersToast = newOrders.length > dismissed.orders
+  const showQuotesToast = newQuotes.length > dismissed.quotes
+  useAlertSound(showOrdersToast || showQuotesToast)
+
+  // Opening a section with new items clears its alert and remounts the page so it reloads its list.
+  function openSection(kind) {
+    if (!alertCounts[kind]) return
+    markSeen(kind)
+    setDismissed(current => ({ ...current, [kind]: 0 }))
+    setRefreshKey(key => key + 1)
+  }
+
+  // The unread count in the tab title flags new items even when this tab is in the background.
+  usePageTitle(alertTotal ? `(${alertTotal}) Admin` : 'Admin')
 
   useEffect(() => {
     async function checkRole() {
@@ -86,17 +125,22 @@ export default function AdminLayout() {
         </div>
 
         <nav className="flex-1 px-3 py-2 space-y-1">
-          {NAV.map(({ to, label, icon: Icon, end }) => (
+          {NAV.map(({ to, label, icon: Icon, end, alertKind }) => (
             <NavLink
               key={to}
               to={to}
               end={end}
-              onClick={() => setMobileOpen(false)}
+              onClick={() => { setMobileOpen(false); if (alertKind) openSection(alertKind) }}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded text-sm font-medium transition-colors ${isActive ? 'bg-primary-container text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-on-surface'}`
               }
             >
               <Icon size={18} /> {label}
+              {alertKind && alertCounts[alertKind] > 0 && (
+                <span className="ml-auto min-w-5 h-5 px-1.5 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center">
+                  {alertCounts[alertKind]}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -144,8 +188,31 @@ export default function AdminLayout() {
           </Link>
         </div>
 
+        {(showOrdersToast || showQuotesToast) && (
+          <div role="status" aria-live="polite" className="fixed top-16 right-4 z-30 w-[calc(100%-2rem)] max-w-sm space-y-2">
+            {showOrdersToast && (
+              <AlertToast
+                title={newOrders.length === 1 ? 'New paid order' : `${newOrders.length} new paid orders`}
+                detail={newOrders.length === 1 ? `${newOrders[0].customer_name} · ${formatPrice(newOrders[0].total_pesewas)}` : ''}
+                actionLabel="View orders"
+                onAction={() => { navigate('/admin/orders'); openSection('orders') }}
+                onDismiss={() => setDismissed(current => ({ ...current, orders: newOrders.length }))}
+              />
+            )}
+            {showQuotesToast && (
+              <AlertToast
+                title={newQuotes.length === 1 ? 'New quote request' : `${newQuotes.length} new quote requests`}
+                detail={newQuotes.length === 1 ? newQuotes[0].name : ''}
+                actionLabel="View quote requests"
+                onAction={() => { navigate('/admin/quotes'); openSection('quotes') }}
+                onDismiss={() => setDismissed(current => ({ ...current, quotes: newQuotes.length }))}
+              />
+            )}
+          </div>
+        )}
+
         <div className="mx-auto w-full max-w-[1200px] px-4 py-6 md:px-8 md:py-8">
-          <ErrorBoundary><Outlet /></ErrorBoundary>
+          <ErrorBoundary><Outlet key={refreshKey} /></ErrorBoundary>
         </div>
       </main>
     </div>
